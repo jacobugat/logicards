@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>100 Phrasal Verbs — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #080808;
+      --bg2:        #0f0f0f;
+      --card:       #111111;
+      --card2:      #181818;
+      --cyan:       #00c8d4;
+      --cyan-dim:   rgba(0,200,212,0.10);
+      --cyan-glow:  rgba(0,200,212,0.06);
+      --border:     rgba(0,200,212,0.18);
+      --border2:    rgba(255,255,255,0.05);
+      --learned-bg: rgba(0,200,212,0.06);
+      --text:       #e4f8f9;
+      --muted:      #3d6e72;
+      --mono:       'Syne Mono', monospace;
+      --sans:       'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; bottom: -200px; left: -150px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,200,212,0.06) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--cyan); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cyan); border: 1px solid rgba(0,200,212,0.4);
+      background: var(--cyan-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    /* ── HEADER ── */
+    .wrapper { position: relative; z-index: 1; max-width: 1300px; margin: 0 auto; padding: 0 1.4rem 4rem; }
+
+    header {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.9rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before {
+      content: ''; display: block; width: 24px; height: 1px; background: var(--cyan); opacity: 0.5;
+    }
+    h1 {
+      font-family: var(--sans); font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.7rem;
+    }
+    h1 span { color: var(--cyan); }
+    .header-desc { color: var(--muted); font-size: 0.88rem; max-width: 520px; line-height: 1.7; }
+    .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.4rem; flex-wrap: wrap; }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '▪'; color: var(--cyan); font-size: 0.5rem; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      align-items: center; margin-bottom: 1.8rem;
+    }
+    .search-input {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 4px; padding: 0.55rem 1rem;
+      color: var(--text); font-family: var(--mono); font-size: 0.72rem;
+      outline: none; transition: border-color 0.2s; min-width: 200px;
+      letter-spacing: 0.04em;
+    }
+    .search-input:focus { border-color: var(--cyan); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .cat-btn {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 3px; padding: 0.3rem 0.8rem;
+      color: var(--muted); font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .cat-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .cat-btn.active { background: var(--cyan); border-color: var(--cyan); color: #000; font-weight: 600; }
+
+    .stats { display: flex; gap: 1.2rem; margin-left: auto; align-items: center; flex-wrap: wrap; }
+    .counter { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
+    .learned-count { font-family: var(--mono); font-size: 0.65rem; color: var(--cyan); white-space: nowrap; }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.8rem;
+    }
+
+    /* ── VERB CARD ── */
+    .verb-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; padding: 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .verb-card:hover { border-color: var(--border); transform: translateY(-2px); }
+    .verb-card.learned { background: var(--learned-bg); border-color: rgba(0,200,212,0.35); }
+    .verb-card.hidden { display: none; }
+
+    .card-top { display: flex; align-items: center; gap: 0.6rem; }
+    .num {
+      font-family: var(--mono); font-size: 0.65rem;
+      color: rgba(255,255,255,0.15); min-width: 24px;
+    }
+    .verb-name {
+      font-family: var(--mono); font-size: 0.92rem;
+      color: var(--cyan); font-weight: 400; flex: 1;
+    }
+    .cat-tag {
+      font-family: var(--mono); font-size: 0.55rem; padding: 0.15rem 0.45rem;
+      border-radius: 3px; border: 1px solid var(--border2);
+      color: var(--muted); white-space: nowrap; letter-spacing: 0.06em;
+    }
+
+    .translation {
+      font-size: 0.8rem; color: var(--muted);
+      font-style: italic; padding-left: 1.8rem; line-height: 1.4;
+    }
+
+    .card-btns { display: flex; gap: 0.45rem; padding-left: 1.8rem; flex-wrap: wrap; margin-top: 0.2rem; }
+
+    .copy-btn {
+      background: var(--cyan-dim); border: 1px solid rgba(0,200,212,0.3);
+      border-radius: 4px; color: var(--cyan);
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em;
+      padding: 0.3rem 0.7rem; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem;
+      text-transform: uppercase;
+    }
+    .copy-btn:hover { background: rgba(0,200,212,0.18); border-color: var(--cyan); transform: translateY(-1px); }
+    .copy-btn.copied { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.08); }
+
+    .learned-btn {
+      background: transparent; border: 1px solid var(--border2);
+      border-radius: 4px; color: var(--muted);
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em;
+      padding: 0.3rem 0.7rem; cursor: pointer;
+      transition: all 0.2s; text-transform: uppercase;
+    }
+    .learned-btn:hover { border-color: rgba(0,200,212,0.4); color: var(--cyan); }
+    .verb-card.learned .learned-btn { border-color: rgba(0,200,212,0.5); color: var(--cyan); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111111; border: 1px solid rgba(0,200,212,0.4);
+      color: var(--cyan); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.4rem; border-radius: 4px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--cyan); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .cat-tag { display: none; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">&larr; Logicards</a>
+      <span class="nav-title">100 Phrasal Verbs · Inglés</span>
+    </div>
+    <span class="nav-badge" id="learnedCount">0 / 100 aprendidos</span>
+  </nav>
+
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header>
+      <p class="level-tag">Inglés · Vocabulario</p>
+      <h1>100 Phrasal <span>Verbs</span></h1>
+      <p class="header-desc">
+        Los 100 phrasal verbs más usados en inglés. Copia el prompt de cualquier tarjeta, pégalo en tu IA favorita y practica hasta dominarlo.
+      </p>
+      <div class="header-meta">
+        <span class="meta-item">100 verbos frasales</span>
+        <span class="meta-item">6 categorías</span>
+        <span class="meta-item">Feedback en español</span>
+        <span class="meta-item">100% gratuito</span>
+      </div>
+    </header>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <input class="search-input" type="text" id="search" placeholder="🔍  Buscar phrasal verb…" oninput="applyFilters()" />
+      <button class="cat-btn active" data-cat="all"           onclick="selectCat(this)">Todos</button>
+      <button class="cat-btn"        data-cat="daily"         onclick="selectCat(this)">🏠 Vida diaria</button>
+      <button class="cat-btn"        data-cat="work"          onclick="selectCat(this)">💼 Trabajo</button>
+      <button class="cat-btn"        data-cat="relationships" onclick="selectCat(this)">❤️ Relaciones</button>
+      <button class="cat-btn"        data-cat="movement"      onclick="selectCat(this)">🏃 Movimiento</button>
+      <button class="cat-btn"        data-cat="communication" onclick="selectCat(this)">💬 Comunicación</button>
+      <button class="cat-btn"        data-cat="emotions"      onclick="selectCat(this)">😊 Emociones</button>
+      <div class="stats">
+        <span class="counter" id="counter">Mostrando 100</span>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid" id="grid"></div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; 100 Phrasal Verbs</span>
+    </footer>
+
+  </div>
+
+  <div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+
+  <script>
+  const verbs = [
+    { n:1,   verb:"bring out",        tr:"sacar / resaltar",                                  cat:"daily" },
+    { n:2,   verb:"come along",       tr:"venir / acompañar",                                 cat:"movement" },
+    { n:3,   verb:"look after",       tr:"cuidar a alguien",                                  cat:"daily" },
+    { n:4,   verb:"deal with",        tr:"lidiar con / encargarse de",                        cat:"work" },
+    { n:5,   verb:"come back",        tr:"volver / regresar",                                 cat:"movement" },
+    { n:6,   verb:"speed up",         tr:"acelerar / apurarse",                               cat:"movement" },
+    { n:7,   verb:"go on",            tr:"continuar / seguir",                                cat:"daily" },
+    { n:8,   verb:"break in",         tr:"entrar a la fuerza / robar",                        cat:"daily" },
+    { n:9,   verb:"bring up",         tr:"mencionar / sacar un tema",                         cat:"communication" },
+    { n:10,  verb:"look up",          tr:"buscar (información)",                              cat:"daily" },
+    { n:11,  verb:"go back",          tr:"ir de vuelta / volver",                             cat:"movement" },
+    { n:12,  verb:"give away",        tr:"regalar / revelar",                                 cat:"daily" },
+    { n:13,  verb:"get up",           tr:"levantarse",                                        cat:"daily" },
+    { n:14,  verb:"check in",         tr:"registrarse (hotel/vuelo)",                         cat:"daily" },
+    { n:15,  verb:"check out",        tr:"pagar y salir / revisar",                           cat:"daily" },
+    { n:16,  verb:"come out",         tr:"salir / aparecer",                                  cat:"movement" },
+    { n:17,  verb:"mix up",           tr:"confundir / mezclar",                               cat:"daily" },
+    { n:18,  verb:"work out",         tr:"ejercitarse / resolver",                            cat:"daily" },
+    { n:19,  verb:"cut off",          tr:"cortar / interrumpir",                              cat:"communication" },
+    { n:20,  verb:"hang out",         tr:"pasar el rato",                                     cat:"relationships" },
+    { n:21,  verb:"set up",           tr:"organizar / instalar",                              cat:"work" },
+    { n:22,  verb:"find out",         tr:"descubrir / averiguar",                             cat:"work" },
+    { n:23,  verb:"go through",       tr:"pasar por algo difícil",                            cat:"emotions" },
+    { n:24,  verb:"care for",         tr:"cuidar / querer a alguien",                         cat:"relationships" },
+    { n:25,  verb:"take over",        tr:"tomar el control / hacerse cargo",                  cat:"work" },
+    { n:26,  verb:"believe in",       tr:"creer en alguien/algo",                             cat:"emotions" },
+    { n:27,  verb:"take on",          tr:"asumir / aceptar un reto",                          cat:"work" },
+    { n:28,  verb:"clear up",         tr:"aclarar / despejar",                                cat:"communication" },
+    { n:29,  verb:"stand for",        tr:"representar / tolerar",                             cat:"communication" },
+    { n:30,  verb:"warm up",          tr:"calentar / entrar en calor",                        cat:"daily" },
+    { n:31,  verb:"end up",           tr:"terminar / acabar haciendo algo",                   cat:"daily" },
+    { n:32,  verb:"take off",         tr:"quitarse ropa / despegar (avión)",                  cat:"movement" },
+    { n:33,  verb:"try on",           tr:"probarse (ropa)",                                   cat:"daily" },
+    { n:34,  verb:"get along with",   tr:"llevarse bien con alguien",                         cat:"relationships" },
+    { n:35,  verb:"stand by",         tr:"esperar / mantenerse listo",                        cat:"daily" },
+    { n:36,  verb:"catch up with",    tr:"ponerse al día / alcanzar",                         cat:"relationships" },
+    { n:37,  verb:"build up",         tr:"construir / desarrollar",                           cat:"work" },
+    { n:38,  verb:"get in",           tr:"entrar / subirse",                                  cat:"movement" },
+    { n:39,  verb:"carry out",        tr:"llevar a cabo / ejecutar",                          cat:"work" },
+    { n:40,  verb:"carry on",         tr:"continuar / seguir adelante",                       cat:"daily" },
+    { n:41,  verb:"cut down on",      tr:"reducir / disminuir el consumo",                    cat:"daily" },
+    { n:42,  verb:"hurry up",         tr:"apurarse / darse prisa",                            cat:"daily" },
+    { n:43,  verb:"go by",            tr:"pasar por un lugar",                                cat:"movement" },
+    { n:44,  verb:"come down",        tr:"bajar / derrumbarse",                               cat:"movement" },
+    { n:45,  verb:"cheer up",         tr:"animarse / alegrar a alguien",                      cat:"emotions" },
+    { n:46,  verb:"pass out",         tr:"desmayarse",                                        cat:"daily" },
+    { n:47,  verb:"cheat on",         tr:"engañar / serle infiel a alguien",                  cat:"relationships" },
+    { n:48,  verb:"hang up",          tr:"colgar (teléfono) / colgar algo",                   cat:"communication" },
+    { n:49,  verb:"show up",          tr:"aparecer / presentarse",                            cat:"daily" },
+    { n:50,  verb:"turn on",          tr:"encender / prender",                                cat:"daily" },
+    { n:51,  verb:"meet up",          tr:"reunirse / encontrarse",                            cat:"relationships" },
+    { n:52,  verb:"follow up",        tr:"dar seguimiento",                                   cat:"work" },
+    { n:53,  verb:"break up",         tr:"terminar una relación / separarse",                 cat:"relationships" },
+    { n:54,  verb:"let down",         tr:"decepcionar / fallar a alguien",                    cat:"emotions" },
+    { n:55,  verb:"screw up",         tr:"arruinar / meter la pata",                          cat:"work" },
+    { n:56,  verb:"look forward to",  tr:"esperar con ansias algo",                           cat:"emotions" },
+    { n:57,  verb:"stay up",          tr:"quedarse despierto",                                cat:"daily" },
+    { n:58,  verb:"count on",         tr:"contar con / confiar en",                           cat:"relationships" },
+    { n:59,  verb:"pass down",        tr:"transmitir de generación en generación",            cat:"communication" },
+    { n:60,  verb:"blow away",        tr:"impresionar / dejar sin palabras",                  cat:"emotions" },
+    { n:61,  verb:"come up with",     tr:"idear / ocurrírsele algo",                          cat:"work" },
+    { n:62,  verb:"run over",         tr:"atropellar / repasar",                              cat:"movement" },
+    { n:63,  verb:"pull out",         tr:"retirarse / sacar",                                 cat:"daily" },
+    { n:64,  verb:"put on",           tr:"ponerse (ropa) / encender",                         cat:"daily" },
+    { n:65,  verb:"figure out",       tr:"descifrar / entender / resolver",                   cat:"work" },
+    { n:66,  verb:"stay in",          tr:"quedarse en casa",                                  cat:"daily" },
+    { n:67,  verb:"round up",         tr:"reunir / juntar",                                   cat:"work" },
+    { n:68,  verb:"fall behind",      tr:"quedarse atrás / atrasarse",                        cat:"work" },
+    { n:69,  verb:"let go",           tr:"soltar / dejar ir",                                 cat:"emotions" },
+    { n:70,  verb:"bargain for",      tr:"negociar / regatear",                               cat:"work" },
+    { n:71,  verb:"stay over",        tr:"quedarse a dormir en casa ajena",                   cat:"relationships" },
+    { n:72,  verb:"head back",        tr:"regresar / volver",                                 cat:"movement" },
+    { n:73,  verb:"call on",          tr:"llamar a alguien / darle la palabra",               cat:"communication" },
+    { n:74,  verb:"put away",         tr:"guardar / recoger",                                 cat:"daily" },
+    { n:75,  verb:"sit back",         tr:"recostarse / relajarse",                            cat:"daily" },
+    { n:76,  verb:"turn off",         tr:"apagar",                                            cat:"daily" },
+    { n:77,  verb:"wash up",          tr:"lavarse las manos/cara",                            cat:"daily" },
+    { n:78,  verb:"call off",         tr:"cancelar",                                          cat:"work" },
+    { n:79,  verb:"come across",      tr:"encontrarse con algo/alguien por casualidad",       cat:"daily" },
+    { n:80,  verb:"break down",       tr:"descomponerse / venirse abajo emocionalmente",      cat:"emotions" },
+    { n:81,  verb:"pick on",          tr:"meterse con / molestar a alguien",                  cat:"relationships" },
+    { n:82,  verb:"get through",      tr:"superar / atravesar una situación difícil",         cat:"emotions" },
+    { n:83,  verb:"eat out",          tr:"comer fuera / en restaurante",                      cat:"daily" },
+    { n:84,  verb:"make up",          tr:"inventar / reconciliarse",                          cat:"relationships" },
+    { n:85,  verb:"pick up",          tr:"recoger / comprar de paso",                         cat:"daily" },
+    { n:86,  verb:"fall for",         tr:"enamorarse / caer en una trampa",                   cat:"relationships" },
+    { n:87,  verb:"get over",         tr:"superar (a alguien o algo)",                        cat:"emotions" },
+    { n:88,  verb:"go about",         tr:"seguir con la rutina / abordar algo",               cat:"daily" },
+    { n:89,  verb:"butt in",          tr:"entrometerse / interrumpir",                        cat:"communication" },
+    { n:90,  verb:"get rid of",       tr:"deshacerse de algo/alguien",                        cat:"daily" },
+    { n:91,  verb:"watch out",        tr:"tener cuidado / ¡cuidado!",                         cat:"daily" },
+    { n:92,  verb:"brush up on",      tr:"repasar / ponerse al día en algo",                  cat:"work" },
+    { n:93,  verb:"talk down to",     tr:"hablarle a alguien con arrogancia",                 cat:"communication" },
+    { n:94,  verb:"go after",         tr:"ir tras alguien / perseguir",                       cat:"movement" },
+    { n:95,  verb:"give up",          tr:"rendirse / darse por vencido",                      cat:"emotions" },
+    { n:96,  verb:"keep on",          tr:"seguir haciendo algo / persistir",                  cat:"daily" },
+    { n:97,  verb:"go on at",         tr:"regañar / insistir repetidamente",                  cat:"communication" },
+    { n:98,  verb:"set back",         tr:"retrasar / hacer retroceder",                       cat:"work" },
+    { n:99,  verb:"run out of",       tr:"quedarse sin algo",                                 cat:"daily" },
+    { n:100, verb:"put up with",      tr:"aguantar / tolerar",                                cat:"emotions" },
+  ];
+
+  const catLabels = {
+    daily:         "🏠 Vida diaria",
+    work:          "💼 Trabajo",
+    relationships: "❤️ Relaciones",
+    movement:      "🏃 Movimiento",
+    communication: "💬 Comunicación",
+    emotions:      "😊 Emociones",
+  };
+
+  let activeCat = "all";
+  let learned   = JSON.parse(localStorage.getItem("pv_learned") || "{}");
+
+  function buildPrompt(verb) {
+    return `Eres un tutor de inglés. Vamos a practicar el phrasal verb "${verb}".
+
+1. Explícame en español qué significa "${verb}" y cuándo se usa (5-10 líneas).
+2. Dame 3 oraciones de ejemplo en inglés, con su traducción al español debajo de cada una.
+3. Ahora practiquemos en inglés: dame 4 oraciones en español una por una y espera mi respuesta, de este verbo frasal, para yo traducir las oraciones al inglés y practicar este verbo.
+4. Espera mi respuesta en inglés y luego corrígeme en español, explicándome si me equivoqué y por qué.
+
+¡Empecemos!`;
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    buildCards();
+    updateLearnedCount();
+  });
+
+  function buildCards() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    verbs.forEach(v => {
+      const card = document.createElement("div");
+      card.className = "verb-card" + (learned[v.n] ? " learned" : "");
+      card.dataset.verb = v.verb.toLowerCase();
+      card.dataset.cat  = v.cat;
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="num">${String(v.n).padStart(2, "0")}</span>
+          <span class="verb-name">${v.verb}</span>
+          <span class="cat-tag">${catLabels[v.cat]}</span>
+        </div>
+        <div class="translation">${v.tr}</div>
+        <div class="card-btns">
+          <button class="copy-btn" id="cb-${v.n}" onclick="copyPrompt(${v.n})">
+            ⧉ Copiar prompt
+          </button>
+          <button class="learned-btn" id="lb-${v.n}" onclick="toggleLearned(${v.n})">
+            ${learned[v.n] ? "✓ Aprendido" : "○ Marcar aprendido"}
+          </button>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function copyPrompt(n) {
+    const v   = verbs[n - 1];
+    const btn = document.getElementById(`cb-${n}`);
+    navigator.clipboard.writeText(buildPrompt(v.verb)).then(() => {
+      btn.textContent = "✓ Copiado";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "⧉ Copiar prompt";
+        btn.classList.remove("copied");
+      }, 2000);
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    });
+  }
+
+  function toggleLearned(n) {
+    if (learned[n]) { delete learned[n]; } else { learned[n] = true; }
+    localStorage.setItem("pv_learned", JSON.stringify(learned));
+    const card = document.querySelector(`.verb-card[data-verb="${verbs[n-1].verb.toLowerCase()}"]`);
+    const btn  = document.getElementById(`lb-${n}`);
+    if (learned[n]) {
+      card.classList.add("learned");
+      btn.textContent = "✓ Aprendido";
+    } else {
+      card.classList.remove("learned");
+      btn.textContent = "○ Marcar aprendido";
+    }
+    updateLearnedCount();
+  }
+
+  function updateLearnedCount() {
+    const count = Object.keys(learned).length;
+    document.getElementById("learnedCount").textContent = `${count} / 100 aprendidos`;
+  }
+
+  function selectCat(btn) {
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeCat = btn.dataset.cat;
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const q = document.getElementById("search").value.toLowerCase().trim();
+    let visible = 0;
+    document.querySelectorAll(".verb-card").forEach(c => {
+      const show = c.dataset.verb.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
+      c.classList.toggle("hidden", !show);
+      if (show) visible++;
+    });
+    document.getElementById("counter").textContent = `Mostrando ${visible}`;
+  }
+  </script>
+</body>
+</html>

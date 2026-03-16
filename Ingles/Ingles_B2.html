@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inglés B2 · Cambridge — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #080808;
+      --bg2:         #0f0f0f;
+      --card:        #111111;
+      --card2:       #181818;
+      --purple:      #9b59f5;
+      --purple-dim:  rgba(155,89,245,0.12);
+      --purple-glow: rgba(155,89,245,0.06);
+      --border:      rgba(155,89,245,0.2);
+      --border2:     rgba(255,255,255,0.05);
+      --text:        #ede8ff;
+      --muted:       #5e5080;
+      --mono:        'Syne Mono', monospace;
+      --sans:        'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; top: -150px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(155,89,245,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--purple); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple); border: 1px solid rgba(155,89,245,0.4);
+      background: var(--purple-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before {
+      content: ''; display: block; width: 24px; height: 1px; background: var(--purple); opacity: 0.5;
+    }
+    h1 {
+      font-family: var(--sans); font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.8rem;
+    }
+    h1 span { color: var(--purple); }
+    .header-desc { color: var(--muted); font-size: 0.9rem; max-width: 520px; line-height: 1.7; }
+    .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '▪'; color: var(--purple); font-size: 0.5rem; }
+
+    .instructions {
+      background: var(--purple-dim); border: 1px solid rgba(155,89,245,0.25); border-radius: 6px;
+      padding: 1.2rem 1.4rem; margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
+    }
+    .instructions-icon { font-size: 1.2rem; line-height: 1; margin-top: 0.1rem; }
+    .instructions p { font-size: 0.85rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
+    .instructions strong { color: var(--purple); font-weight: 600; }
+
+    .cards-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .flashcard {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .flashcard:hover { border-color: var(--border); }
+    .flashcard.open { border-color: rgba(155,89,245,0.45); }
+
+    .card-header {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 1rem; padding: 1.1rem 1.4rem;
+      cursor: pointer; user-select: none; transition: background 0.15s;
+    }
+    .card-header:hover { background: var(--card2); }
+    .card-num { font-family: var(--mono); font-size: 0.72rem; color: var(--purple); letter-spacing: 0.06em; min-width: 2.4rem; }
+    .card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .card-right { display: flex; align-items: center; gap: 0.8rem; }
+    .card-tag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border2); padding: 0.2rem 0.5rem; border-radius: 2px;
+    }
+    .card-chevron { color: var(--muted); font-size: 0.65rem; transition: transform 0.25s, color 0.2s; }
+    .flashcard.open .card-chevron { transform: rotate(180deg); color: var(--purple); }
+
+    .card-body {
+      display: none; border-top: 1px solid var(--border2);
+      padding: 1.4rem; background: var(--bg2);
+    }
+    .flashcard.open .card-body { display: block; }
+
+    .grammar-label {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--purple); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .grammar-label::after { content: ''; flex: 1; height: 1px; background: rgba(155,89,245,0.2); }
+
+    .copy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.85rem 1.2rem;
+      background: var(--purple-dim); border: 1px solid rgba(155,89,245,0.35); border-radius: 4px;
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      text-transform: uppercase;
+    }
+    .copy-btn:hover {
+      background: rgba(155,89,245,0.22); border-color: rgba(155,89,245,0.7); transform: translateY(-1px);
+    }
+    .copy-btn:active { transform: translateY(0); }
+    .copy-btn.copied { background: rgba(34,120,34,0.15); border-color: rgba(34,180,34,0.4); color: #6de06d; }
+    .copy-icon { font-size: 0.9rem; }
+    .copy-hint { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--muted); text-align: center; margin-top: 0.7rem; }
+
+    .prompt-text { display: none; }
+
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111111; border: 1px solid rgba(155,89,245,0.4);
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.4rem; border-radius: 4px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--purple); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .card-tag { display: none; }
+      .card-header { padding: 1rem; gap: 0.6rem; }
+      .card-body { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">&larr; Logicards</a>
+      <span class="nav-title">Inglés B2 &middot; Cambridge</span>
+    </div>
+    <span class="nav-badge">26 temas</span>
+  </nav>
+
+  <div class="wrapper">
+    <header>
+      <p class="level-tag">Cambridge &middot; Nivel B2</p>
+      <h1>Inglés <span>B2</span></h1>
+      <p class="header-desc">
+        26 temas del nivel B2. Abre cualquier tarjeta, copia el prompt y pégalo en tu IA favorita. Ella te explicará la gramática exacta y luego practicará contigo.
+      </p>
+      <div class="header-meta">
+        <span class="meta-item">26 temas</span>
+        <span class="meta-item">Gramática Cambridge original</span>
+        <span class="meta-item">Feedback en español</span>
+        <span class="meta-item">100% gratuito</span>
+      </div>
+    </header>
+
+    <div class="instructions">
+      <div class="instructions-icon">&#128161;</div>
+      <p>
+        Haz clic en una tarjeta para abrirla. Presiona <strong>Copiar prompt</strong>, abre tu IA (ChatGPT, Claude, Gemini&hellip;) y pégalo. La IA te explicará la gramática y después practicará contigo.
+      </p>
+    </div>
+
+    <div class="cards-list">
+      <div class="flashcard" id="card-1">
+        <div class="card-header" onclick="toggle(1)">
+          <span class="card-num">01.</span>
+          <span class="card-title">Verbs followed by gerunds</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(1)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-1">Quiero aprender inglés B2. El tema de hoy es "Verbs followed by gerunds".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR
+Verbs followed by gerunds
+Use the gerund form after these verbs.
+I enjoy going to parties where I don't know everyone. 
+I avoid expressing my feelings and ideas in public.
+I don't mind giving up my time to help other people.
+Use the gerund or infinitive form after these verbs.
+I can't stand being / to be in a messy room.
+I love taking / to take my friends to cool new clubs.
+I hate getting up / to get up for early morning classes.
+Use the gerund form after these expressions containing prepositions.
+I insist on making my own decisions.
+I always feel like going dancing!
+I'm into going out to new foreign restaurants.
+
+BONUS
+Verbs followed by gerunds
+These verbs are followed by a gerund. 
+deny
+discuss 
+finish
+mention 
+practice 
+quit 
+resist 
+suggest
+These verbs are followed by an infinitive.
+arrange 
+claim 
+decide 
+demand 
+deserve 
+expect 
+pretend 
+refuse 
+volunteer
+
+Some common expressions are always followed by gerunds.
+She had fun / a good time arranging the party.
+He has trouble / a tough time getting his assignments in on time.
+He's busy cooking dinner right now.
+She never worries about cleaning up after herself.
+Some verbs take either a gerund or an infinitive, but the meaning of the sentence will be different.
+I stopped to drink some coffee. (I ended one activity and began another.)
+I stopped drinking coffee. (I don't do that activity anymore.)
+I stopped running when I got tired. (I temporarily ended the activity.)
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-2">
+        <div class="card-header" onclick="toggle(2)">
+          <span class="card-num">02.</span>
+          <span class="card-title">Noun clauses after be</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(2)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-2">Quiero aprender inglés B2. El tema de hoy es "Noun clauses after be".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR
+Noun clauses after be
+A noun clause is a part of a sentence with a subject and a predicate that functions as a noun. That is optional in noun clauses after be. Also notice the prepositions followed by gerunds in the first part of the sentences.
+The only trouble with being a two-income family is (that) we don't spend as much time together. 
+The big advantage of having Grandma at home is (that) she can babysit more often.
+
+BONUS
+Noun clauses after be
+The downside of, the upside of, the hard part about, the good thing about, the only thing about, the trick to, the secret to, and one difficulty with are used in complex phrases that introduce noun clauses after be.
+The downside of sharing a bedroom is (that) it's hard to have any privacy.
+The hard part about being a twin is (that) people are always calling you by the wrong name. 
+The trick to living in a crowded house is (that) you have to find a private space of your own.
+One difficulty with being the youngest is (that) everyone is always telling you what to do.
+
+The phrases ending with a preposition can be followed by a gerund phrase, not + a gerund phrase, or a noun phrase.
+The secret to getting along with your siblings is (that) you have to respect their privacy.
+The good thing about not being in a big family is (that) you always get to choose what's on TV.
+The upside of a large family is (that) you always have someone to spend time with.
+The only thing about working moms is (that) they have less time to spend with you.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-3">
+        <div class="card-header" onclick="toggle(3)">
+          <span class="card-num">03.</span>
+          <span class="card-title">Past modals and phrasal modals of obligation</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(3)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-3">Quiero aprender inglés B2. El tema de hoy es "Past modals and phrasal modals of obligation".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Past modals and phrasal modals of obligation
+Should have, was supposed to, had to, and needed to all describe obligations in the past, although they have slightly different uses.
+I should have stayed home and studied! (It was a good idea, but I didn't do it.)
+I was supposed to be studying this weekend. (It was expected, but I didn't do it.)
+I had to wear a uniform. (We were forced to do this.)
+I didn't have to go with my friends, but I did. (There was no obligation.)
+I thought I needed to have more clothes. (I thought this was necessary.)
+
+BONUS
+Past modals and phrasal modals of obligation
+Some past modals and phrasal modals of obligation are stronger than others.
+Strong obligation: To show that there was no choice about doing the action, use had to. (Note that must is not used in the past.)
+My parents had to go to school on Saturdays.
+Expectation: There was a general expectation that an action was required or prohibited. 
+She was supposed to talk to her professor after class. (But she probably didn't.)
+He wasn't supposed to drive the car to school. (But he probably did.)
+Advisability: There was a good idea or a correct action in a particular situation, but it was or was not done.
+He should have taken better notes in class. (But he didn't.)
+She shouldn't have bought such an expensive jacket. (But she did.)
+Necessity: The action was considered to be necessary or unnecessary. However, unlike had to, there is a choice about doing or not doing the action.
+I needed to make an appointment with the counselor.
+I didn't need to buy the textbook, but I thought it looked interesting.
+No obligation: There is complete choice about doing the action.
+I didn't have to take piano lessons, but I wanted to.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-4">
+        <div class="card-header" onclick="toggle(4)">
+          <span class="card-num">04.</span>
+          <span class="card-title">Modals with multiple uses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(4)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-4">Quiero aprender inglés B2. El tema de hoy es "Modals with multiple uses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Modals with multiple uses
+To express degrees of certainty, use must (not), can't, could (not), might (not), or may (not). 
+I'm certain Banksy must have wanted to win that Oscar.
+People thought he could have been trying to get publicity for the movie.
+That website hoax might have been planned by Banksy himself.
+To express obligation, advice, or opinions, use should (not). Do not use must (not) have for obligations, advice, or opinions about the past.
+Banksy shouldn't have painted on other people's property. (obligation)
+He should be more careful. (advice)
+The magazine readers shouldn't have expected Banksy to reveal his identity just because of an article. (opinion)
+Also notice how these modals are used in the passive and continuous.
+
+BONUS
+Modals with multiple uses
+Degrees of certainty range from very certain to uncertain.
+Very certain: To show that you think something was probable in the past, use must have, must not have, can't have, or couldn't have.
+Jake had a stomachache last night after dinner. He must have eaten too much.
+Sofia was at a movie with me last night. You couldn't have seen her at the mall!
+Uncertain: To show that you think something was possible in the past, use could have, may have, might have, may not have, or might not have.
+Jun Ho is usually here by now. He could / may / might have missed the bus this morning. 
+Tanya was supposed to meet me before school. She may / might not have gotten the message.
+To give opinions or advice, there are a greater number of modals available for talking about the present or future than there are for the past.
+Present or future: Use must (not), have to, have got to, had better (not), or should (not). 
+Parents have got to monitor the shows their children watch.
+The kids had better not spend so much time indoors playing computer games.
+Past: Use should (not) have.
+I should have listened to the advice my parents gave me about having a healthy lifestyle. 
+We should not have ignored the scientists' warnings about global warming.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-5">
+        <div class="card-header" onclick="toggle(5)">
+          <span class="card-num">05.</span>
+          <span class="card-title">Defining and non-defining relative clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(5)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-5">Quiero aprender inglés B2. El tema de hoy es "Defining and non-defining relative clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Defining and non-defining relative clauses
+A defining relative clause defines or gives essential information about a noun. 
+The Myeong-dong area has dozens of shops that sell the latest fashions.
+The spring and fall are the seasons when most people come to visit.
+A non-defining relative clause gives optional information about a noun and cannot begin with the pronoun that. Notice the use of commas.
+Most restaurants here stay open until midnight, when many locals are still enjoying dinner. 
+Beijing has many popular tourist attractions, which include the Summer Palace and the Forbidden City.
+
+BONUS
+Defining and non-defining relative clauses
+That can be used for people or things in defining relative clauses. However, it cannot be used as a replacement for where or when with the meaning "in which," "at which," or "during which." 
+Many of the people that live in Paris leave the city in August to vacation in other places. 
+A statue of ducks that can be found in Boston is a popular tourist attraction for children. 
+Pamplona is that city in Spain where the bulls run through the streets during a summer festival. 
+Summer is the season when New York is crowded with tourists from all over the world.
+That cannot be used in non-defining relative clauses. Who, which, or where are used instead. 
+Cairo, which has fascinated Europeans for ages, draws countless tourists each year.
+Our tour guide, who knew a great deal about souvenirs in Otavalo, helped us buy some beautiful presents for our friends.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-6">
+        <div class="card-header" onclick="toggle(6)">
+          <span class="card-num">06.</span>
+          <span class="card-title">Order of modifiers</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(6)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-6">Quiero aprender inglés B2. El tema de hoy es "Order of modifiers".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Order of modifiers
+When two or more modifiers occur in a sentence, they usually follow this order.
+Article → quality → size → age → type → noun → descriptive phrase
+Article → quality → size → noun → descriptive phrase
+This, exciting, large, city, with bustling streets
+Article → quality → size → type → noun → descriptive phrase
+A, picturesque, little, resort, town, with year-round outdoor activities
+Article → quality → age → type → noun → descriptive phrase
+A, run-down, old, port, town, that has seen better days
+
+BONUS
+Order of modifiers
+Shape (round, thin), color (red, blue), and material (silk, plastic) are also used to describe nouns. They appear in the following order:
+Quality → Size → Shape → Age → Color → Туре → Material → Noun
+quaint → little → winding → streets
+picturesque → old → brightly colored → resort → hotels
+small → Thai → wooden → fishing boats
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-7">
+        <div class="card-header" onclick="toggle(7)">
+          <span class="card-num">07.</span>
+          <span class="card-title">Connecting contrasting ideas</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(7)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-7">Quiero aprender inglés B2. El tema de hoy es "Connecting contrasting ideas".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Connecting contrasting ideas
+You can use these words and phrases to connect contrasting ideas.
+despite
+in spite of
+although 
+even though
+however
+nevertheless
+on the other hand
+
+BONUS
+Connecting contrasting ideas
+There are three ways to connect contrasting ideas.
+To begin an adverb clause, use although or even though.
+I'd like to live in a small town someday even though I love all the opportunities in big cities. 
+Although I love all the opportunities in big cities, I'd like to live in a small town someday.
+To begin an independent clause, use the transition words however, nevertheless, or on the other hand. Note the punctuation with transition words.
+I love big cities. However / On the other hand, I'd like to live in a small town someday. 
+I love big cities; nevertheless / however, I'd like to live in a small town someday.
+To begin a noun phrase, use the prepositions despite or in spite of.
+Despite all the opportunities in big cities, I'd like to live in a small town someday. 
+I'd like to live in a small town someday in spite of all the opportunities in big cities.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-8">
+        <div class="card-header" onclick="toggle(8)">
+          <span class="card-num">08.</span>
+          <span class="card-title">Reduce time clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(8)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-8">Quiero aprender inglés B2. El tema de hoy es "Reduce time clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Reduce time clauses
+Notice how these clauses show time relationships. If the subject is the same in both clauses of the sentence, time clauses with (right) before, (right) after, and while can be reduced.
+After I finish / After finishing my workout, I head to the office.
+While I take / While taking my lunch break at work, I often sneak a five-minute nap.
+I'm not very approachable right after I wake up / right after waking up!
+However, other time clauses cannot usually be reduced.
+Ever since I was a kid, I've had trouble getting up early.
+As soon as I get up in the morning, I race off to the gym.
+Until I've had my coffee, I'm such a grouch.
+Whenever you have to work with numbers, plan to do it around noon. 
+I've been a night person from the moment I started college.
+
+BONUS
+Reduce time clauses
+In a reduced time clause, the subject of the clause is omitted and the verb is changed to an -ing form. A time clause with before, after, or while can be reduced only if the subject in the sentence's other clause is the same.
+Before I go to sleep, I like to read. 
+Before going to sleep, I like to read.
+I like to read before going to sleep.
+Before the baby goes to sleep, his mother reads to him.
+Once, every time, till, as, the first / next / last time, and many other time expressions can be used in time clauses. Time clauses beginning with these expressions cannot be reduced.
+As soon as / Once I drink that first cup of coffee, I'm ready for the day.
+Whenever / Every time I stay out late, I have trouble getting up the next morning.
+I always stay at the office until / till I've finished all my work.
+I like to watch TV as I'm eating dinner.
+The last time I drank too much coffee, I was jittery all day.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-9">
+        <div class="card-header" onclick="toggle(9)">
+          <span class="card-num">09.</span>
+          <span class="card-title">Clauses stating reasons and conditions</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(9)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-9">Quiero aprender inglés B2. El tema de hoy es "Clauses stating reasons and conditions".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Clauses stating reasons and conditions
+Even if introduces a condition that does not influence the main clause. 
+I sometimes lie awake at night, even if I'm really tired.
+Considering that introduces causes and reasons that explain the main clause. 
+I'm lucky I can get by on six hours of sleep, considering that most people need eight. 
+As long as introduces a condition on which the main clause depends.
+I can manage on five hours of sleep, as long as I take a nap during the day.
+Unless introduces something that must happen in order to avoid a consequence. 
+Unless I get a good night's sleep, I can easily fall asleep at school, at work, or even on the bus.
+(Just) in case introduces an undesirable circumstance that needs to be taken into account. 
+I always set two alarm clocks (just) in case one of them doesn't go off.
+Only if or only ... if introduces a condition that must be met for the main clause to be true. 
+I only wake up early if I have somewhere to be in the morning.
+I wake up early only if I have somewhere to be in the morning.
+
+BONUS
+Clauses stating reasons and conditions
+The following are all additional commonly used clauses that state reasons and conditions.
+Now that introduces a change in general circumstances that explains the main clause. Now that means "because now."
+Now that I have a job that starts early, I have to leave the house by 6:30.
+Whether or not introduces a condition that might or might not occur and which will not influence the main clause. Note its two possible positions.
+She goes jogging every morning whether or not it's bad weather.
+She goes jogging every morning whether it's bad weather or not.
+Provided / Providing (that) introduces a condition that must be met for the main clause to be true.
+Provided that I get all my schoolwork done, my weekend will be free.
+Providing that I get a promotion, I'll stay with my company a few more years.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-10">
+        <div class="card-header" onclick="toggle(10)">
+          <span class="card-num">10.</span>
+          <span class="card-title">Infinitive and gerund phrases</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(10)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-10">Quiero aprender inglés B2. El tema de hoy es "Infinitive and gerund phrases".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Infinitive and gerund phrases
+It + be + adjective/noun + infinitive phrase is often used to comment on behavior. These sentences can also be restated with gerund phrases.
+It's rude to ignore your conversation partner.
+Ignoring your conversation partner is rude.
+It's a good idea to try out different topics.
+Trying out different topics is a good idea.
+The word considered may also follow be in this kind of sentence. 
+It's considered impolite to interrupt people.
+Interrupting people is considered impolite.
+These sentences can also include the phrase for + person/pronoun. 
+It's customary for the complimenter to say nice things about others.
+Saying nice things about others is customary for the complimenter.
+
+BONUS
+Infinitive and gerund phrases
+In a sentence with It's + adjective + infinitive, it is possible to follow the adjective with for and an object. The object can be a pronoun or a noun.
+It's difficult for her to talk about her feelings openly.
+It's customary for North Americans to make frequent eye contact.
+For sentences in the negative, use not + infinitive or not + gerund.
+It's considered rude not to thank people who give you gifts.
+Not thanking people who give you gifts is considered rude.
+Adjectives of feeling (glad, happy, pleased) cannot be used with the It's + adjective + infinitive structure. Instead, the sentence needs to say who has (or doesn't have) these feelings.
+Most parents are happy to see their children go to college.
+People are always delighted to get compliments.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-11">
+        <div class="card-header" onclick="toggle(11)">
+          <span class="card-num">11.</span>
+          <span class="card-title">Reported speech</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(11)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-11">Quiero aprender inglés B2. El tema de hoy es "Reported speech".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Reported speech
+Statements
+It's a big secret.
+Reported statements
+He said (that) it was a big secret.
+Statements
+I'm getting a terrible grade.
+Reported statements
+He said (that) he was getting a terrible grade.
+Statements
+They got engaged.
+Reported statements
+He said (that) they had gotten engaged.
+Statements
+We weren't talking about you.
+Reported statements
+They claimed (that) they hadn't been talking about me.
+Statements
+She's been absent since Tuesday.
+Reported statements
+He said (that) she had been absent since Tuesday.
+Statements
+We had never been there before. 
+Reported statements
+She said (that) they had never been there before.
+Statements
+I'll meet you at the café. 
+Reported statements
+He said (that) he would meet me at the café.
+Questions
+Did you know about the layoffs?
+Reported questions
+I asked him if he had known about the layoffs.
+Questions
+What are you saying?
+Reported questions
+I asked them what they were saying.
+Commands
+Don't say anything!
+Reported commands
+He warned his friend not to say anything.
+General truths
+The sun rises in the east.
+Reported general truths
+She said (that) the sun rises in the east. (No change in tense.)
+
+BONUS
+Reported speech
+The modals can, may, must, have to, and don't have to change in reported speech. Might and should do not change. Also notice how the pronouns change in reported speech.
+Statements
+You can go to the party with me.
+Reported statements
+She said I could go to the party with her. 
+Statements
+I may go to a movie tonight.
+Reported statements
+He said he might go to a movie tonight. 
+Statements
+We must tell him the truth.
+Reported statements
+They said they had to tell him the truth. 
+Statements
+He has to go to the bank.
+Reported statements
+He said he had to go to the bank. 
+Statements
+You don't have to pay me back.
+Reported statements
+She said I didn't have to pay her back.
+Statements
+We might get married.
+Reported statements
+She said they might get married.
+Statements
+I should replace my old laptop.
+Reported statements
+He said he should replace his old laptop.
+Say and tell are used differently in reported speech. Tell must be followed by a noun or object pronoun. Say is not followed by a noun/pronoun object.
+Statements
+Don't park the car there.
+Reported statements
+She told me not to park the car there.
+She said not to park the car there.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 statements una por una, en ingles con sustantivos diferentes, para yo responder pasarlas a Reported statements.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-12">
+        <div class="card-header" onclick="toggle(12)">
+          <span class="card-num">12.</span>
+          <span class="card-title">Present perfect vs. simple past</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(12)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-12">Quiero aprender inglés B2. El tema de hoy es "Present perfect vs. simple past".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Present perfect vs. simple past
+Use the present perfect to report a recent event without giving a specific time reference. 
+I've locked my keys in the car.
+Use the simple past to report an event with a specific time reference.
+After a day at the mall, the woman went out to her car.
+I started teaching her to paint last year.
+
+BONUS
+Present perfect vs. simple past
+Use the present perfect to report a repeated past event that could continue into the present. 
+Thieves have robbed three banks this year. 
+The seal has painted four pictures so far.
+Use the present perfect to report an event that has an effect on the present, or is still relevant.
+She's been more careful since she lost her car keys. 
+The store has had a security camera for a month now.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-13">
+        <div class="card-header" onclick="toggle(13)">
+          <span class="card-num">13.</span>
+          <span class="card-title">Present perfect vs. present perfect continuous</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(13)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-13">Quiero aprender inglés B2. El tema de hoy es "Present perfect vs. present perfect continuous".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Present perfect vs. present perfect continuous
+Use the present perfect continuous to describe temporary situations and actions that are not yet completed. The present perfect describes permanent situations and recently completed actions. 
+A dog has been stealing all the attention. (temporary situation)
+I've always surfed with my dog. (permanent situation)
+Maggie has been amazing visitors by painting for her supper. (not yet completed action)
+I've locked my keys in the car. (recently completed action)
+Use the present perfect with the passive or with stative verbs such as be, love, and have. 
+He's always loved it.
+
+BONUS
+Present perfect vs. present perfect continuous
+Some verbs, such as live, work, study, give/take (lessons), and teach, express the idea of an ongoing action. They can usually be used in either the present perfect or the present perfect continuous.
+He has lived in London for eight years.
+He has been living in London for eight years.
+I have taken violin lessons since I was three.
+I have been taking violin lessons since I was three.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-14">
+        <div class="card-header" onclick="toggle(14)">
+          <span class="card-num">14.</span>
+          <span class="card-title">Adverbs with the simple past and past perfect</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(14)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-14">Quiero aprender inglés B2. El tema de hoy es "Adverbs with the simple past and past perfect".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Adverbs with the simple past and past perfect
+Use these adverbs with the simple past to describe something that happened at a later time. 
+Afterwards, / Later, / The next day, we all laughed about it.
+Use these adverbs with the simple past to describe two things that happened at the same time. 
+When / As soon as / The moment I got to work, my boss asked to speak to me.
+Use these adverbs with the past perfect to describe something that was true or that happened before another event in the past.
+Up until then, / Before that, / Until that time, I had never lost anything important.
+
+BONUS
+Adverbs with the simple past and past perfect
+When and the simple past and past perfect can be used to express different time relationships. 
+When I arrived in Bangkok, my connecting flight had already departed.
+When I arrived in Bangkok, my friend met me at the airport.
+When before makes the sequence of events clear, the simple past or past perfect can be used. 
+It began to rain before she boarded the plane.
+It had begun to rain before she boarded the plane.
+Yet and already are used with both the present perfect and past perfect to show that an event took place earlier.
+It had already started raining when I arrived in Bangkok.
+It hadn't started raining yet when I arrived in Bangkok.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-15">
+        <div class="card-header" onclick="toggle(15)">
+          <span class="card-num">15.</span>
+          <span class="card-title">Passive of present continuous, present perfect, future</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(15)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-15">Quiero aprender inglés B2. El tema de hoy es "Passive of present continuous, present perfect, future".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Passive of present continuous, present perfect, future
+Use the passive for actions where the emphasis is on the object of the action. 
+Use the passive of the present continuous for ongoing actions.
+More employees are being allowed to work remotely for part of their workweek.
+Use the passive of the present perfect for recently completed actions. 
+Music fans have been given access to nearly unlimited music libraries in "the cloud.”
+Use will + passive or be going to + passive for actions that will begin in the future. 
+Most store purchases will be made by using a mobile device linked to an online account. 
+More and more doctor's examinations are likely going to be done over the Internet.
+
+BONUS
+Passive of present continuous, present perfect, future
+If the agent (the person or thing doing the action) is unknown or obvious from the context, it's better to use a passive form. However, if the person or thing doing the action needs to be emphasized, it's better to use an active form.
+The spyware is being used to collect information about college students. (Agent is unknown.) 
+Social networking sites have been used in criminal investigations. (Agent is clear from context.) 
+A criminal organization has created this virus, not an amateur hacker. (Agent is emphasized.)
+The passive is very rarely used with the present perfect continuous. Use the passive of the present perfect instead.
+People have been posting more videos to the Internet this year than ever before.
+More videos have been posted to the Internet this year than ever before.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-16">
+        <div class="card-header" onclick="toggle(16)">
+          <span class="card-num">16.</span>
+          <span class="card-title">Negative and tag questions for giving opinions</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(16)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-16">Quiero aprender inglés B2. El tema de hoy es "Negative and tag questions for giving opinions".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Negative and tag questions for giving opinions 
+Use negative questions or tag questions to offer an opinion and invite someone to react.
+Isn't it weird how some people use mobile devices constantly?
+Doesn't it seem like kids spend too much time playing violent video games?
+Wouldn't it be great if phones came loaded with even more apps?
+Shouldn't the government fine sites that contain false information?
+Apps are cool, aren't they?
+It makes kids more aggressive, doesn't it?
+Use the phrase don't you think to form negative or tag questions for opinions. 
+Don't you think there are too many websites full of misinformation?
+It's actually dangerous, don't you think?
+
+BONUS
+Negative and tag questions for giving opinions
+Use past negative and tag questions to offer an opinion about a past event and invite someone to react.
+Wasn't it weird how the manager's microphone kept turning on and off during his speech?
+Didn't it seem like the manager's speech would never end?
+Shouldn't the company have provided us with coffee before the speech?
+The manager's speech was really boring, wasn't it?
+The manager has given some pretty boring speeches, hasn't he?
+The manager's speech had just put about everyone to sleep when the fire alarm rang, hadn't it?
+In informal spoken English, they can be used as the pronoun in tag questions when the subject is somebody, someone, everybody, everyone, nobody, or no one. 
+Everyone we know had a cell phone in school, didn't they? 
+Yes, they did.
+Somebody has hacked into your computer, haven't they?
+Yes, they have. / No, they haven't.
+Use an affirmative tag question when the subject is a negative, such as nobody or nothing. 
+Nobody left any voice mail messages, did they?
+Yes, they did. / No, they didn't.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Necesito practicar creando las preguntas, crea 4 escenarios, uno por uno.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-17">
+        <div class="card-header" onclick="toggle(17)">
+          <span class="card-num">17.</span>
+          <span class="card-title">Reduced relative clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(17)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-17">Quiero aprender inglés B2. El tema de hoy es "Reduced relative clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Reduced relative clauses
+You can shorten a relative clause by dropping the relative pronoun and the verb be. 
+Someone (who / that is) able to think quickly might be a good surgeon.
+A person (who / that is) looking for adventure could be a private detective.
+A person (who / that is) trained in music might be a good DJ.
+You can also drop who / that and change the verb to the gerund. 
+Someone who / that needs job security might not want to be a jazz musician. 
+Someone needing job security might not want to be a jazz musician.
+In many relative clauses, who/ that + the verb have can be replaced by with. 
+A person who / that has a good voice could be a good TV journalist. 
+A person with a good voice could be a good TV journalist.
+
+BONUS
+Reduced relative clauses
+Non-defining relative clauses with be can be reduced in the same way as defining relative clauses. Notice the use of commas.
+Einstein, who is thought to be one of the greatest minds of the twentieth century, struggled in school. 
+Einstein, thought to be one of the greatest minds of the twentieth century, struggled in school.
+Curtis James Jackson III, who is better known as the singer 50 Cent, used to be a boxer.
+Curtis James Jackson III, better known as the singer 50 Cent, used to be a boxer.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-18">
+        <div class="card-header" onclick="toggle(18)">
+          <span class="card-num">18.</span>
+          <span class="card-title">Non-defining relative clauses as sentence modifiers</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(18)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-18">Quiero aprender inglés B2. El tema de hoy es "Non-defining relative clauses as sentence modifiers".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Non-defining relative clauses as sentence modifiers
+You can use non-defining relative clauses with which to make a comment about an entire sentence.
+I have three cats, which means there's usually a lot of cat fur on my clothes.
+My roommate is a slob, which is why I want to get my own apartment.
+
+BONUS
+Non-defining relative clauses as sentence modifiers
+Non-defining relative clauses can be used as sentence modifiers and can contain almost any verb. Some of the most common ones are surprise, depress, encourage, suggest (that), contribute to, and result in. Note that the verbs that describe emotion must be followed by an object.
+My husband tried to repair a leak with aluminum foil, which has resulted in a ruined silk carpet. 
+My teacher praised my English today, which encourages me to study harder.
+Peter has been happier since he took up golf, which suggests that hobbies are good for a person both mentally and physically.
+I learned how to clean jewelry with toothpaste, which depressed me because it meant I had wasted a fortune on expensive cleaners.
+I've started making my own clothes, which has contributed to financial savings and a full closet!
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-19">
+        <div class="card-header" onclick="toggle(19)">
+          <span class="card-num">19.</span>
+          <span class="card-title">Clauses and phrases showing contrast and exception</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(19)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-19">Quiero aprender inglés B2. El tema de hoy es "Clauses and phrases showing contrast and exception".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Clauses and phrases showing contrast and exception
+Use while, unlike, and in contrast to in order to present contrasting information, especially in writing. 
+While the typical Italian person studies until the age of 22, the typical Japanese person studies until the age of 24. 
+Unlike the Japanese, Italians seem to drink a lot of bottled water.
+In contrast to Italians, the Japanese travel a lot more by rail.
+Use except (that), except (for), and except for the fact (that) to show an exception.
+Both like TV, except (that) the typical Italian person watches more.
+Italian and Japanese people are fairly different, except for the age they get married. 
+Japanese people typically consume less, except for the fact that they drink more tea.
+
+BONUS
+Clauses and phrases showing contrast and exception
+The following are additional common phrases that show contrast and exception.
+Use whereas, especially in formal writing, to present contrasting information. 
+Whereas the bottled water market is huge in Italy, it is very small in Japan.
+Use except (for) or with the exception of to show an exception within a group. 
+Everyone in my family, except for my mother, plays a musical instrument. 
+Everyone in my family, with the exception of my mother, plays a musical instrument.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-20">
+        <div class="card-header" onclick="toggle(20)">
+          <span class="card-num">20.</span>
+          <span class="card-title">Past habitual with used to and would</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(20)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-20">Quiero aprender inglés B2. El tema de hoy es "Past habitual with used to and would".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Past habitual with used to and would
+Used to and would can both be used to describe past habitual actions or situations which are no longer true. However, would cannot be used with stative verbs such as live, be, have, or like.
+You always used to make me laugh.
+My job didn't use to be so demanding!
+Remember the way we would sit around talking?
+I would see some great jacket, but you wouldn't let me buy it.
+
+BONUS
+Past habitual with used to and would
+To ask questions about a habitual action or situation in the past, use Did... use to...? (NOT Would...?).
+Did you use to listen to rock music when you were younger?
+Did you use to share a bedroom with your little brother?
+Use the negative question Didn't... use to... ? to confirm a guess about habitual actions or a situation in the past.
+Didn't you use to work at a grocery store after school?
+Didn't he use to play on the school soccer team?
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 2 preguntas en ingles una por una con sustantivos diferentes (wh-questions o how) para yo responder, y luego déjame construir a mi 2 preguntas una por una.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-21">
+        <div class="card-header" onclick="toggle(21)">
+          <span class="card-num">21.</span>
+          <span class="card-title">Relative clauses and noun clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(21)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-21">Quiero aprender inglés B2. El tema de hoy es "Relative clauses and noun clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR
+Relative clauses and noun clauses
+A relative clause can occur in the subject or the object of a sentence.
+Something that bugs me is people who take up two seats on a crowded bus.
+The thing (that) I can't stand is co-workers who / that leave their cell phones ringing on their desks.
+Some sentences use a relative clause and a noun clause beginning with a question word such as when.
+The thing (that) I hate is when kids ride their scooters on the sidewalk.
+One thing that bothers me is when my friends don't show up on time for things.
+
+BONUS
+Relative clauses and noun clauses
+In some relative clauses, the relative pronoun (who, that, or which) can be omitted.
+In an object relative clause, a relative pronoun (who, that, or which) is optional. Relative pronouns are only required when they function as the subject of a relative clause.
+My friend told our classmates a secret. I had told him that secret.
+My friend told our classmates a secret (that) I had told him.
+In a subject relative clause, a relative pronoun (who, that, or which) is necessary because it functions as the subject of the relative clause.
+I have a roommate. She never cleans the kitchen.
+I have a roommate who never cleans the kitchen.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-22">
+        <div class="card-header" onclick="toggle(22)">
+          <span class="card-num">22.</span>
+          <span class="card-title">Simple and complex indirect questions</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(22)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-22">Quiero aprender inglés B2. El tema de hoy es "Simple and complex indirect questions".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Simple and complex indirect questions
+Simple indirect questions use statement word order and begin with expressions such as I wonder, I'd like to know, or I can't understand.
+Why don't they have more buses at rush hour? 
+I wonder why they don't have more buses at rush hour.
+Complex indirect questions also use statement word order. In addition, they begin or end with clauses or phrases with be.
+Will I be able to get into the class? 
+My big concern is whether I'll be able to get into the class.
+How can anyone afford them?
+How anyone can afford them is beyond me.
+
+BONUS
+Simple and complex indirect questions
+If the beginning clause of an indirect question is in statement word order, the sentence is a statement and ends with a period.
+I'm curious about why he didn't complain to the landlord.
+I'm not sure who is responsible for repairing the roads.
+The big question is if/whether we can get the city officials to listen to our concerns.
+If the beginning clause of an indirect question is in question word order, the sentence is a question and ends with a question mark.
+Do you have any idea if/whether I need a visa to visit China?
+Could you tell me where I can go to pay my parking ticket?
+Don't you wonder how a place with such poor service stays in business?
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-23">
+        <div class="card-header" onclick="toggle(23)">
+          <span class="card-num">23.</span>
+          <span class="card-title">Present unreal conditional with unless, only if, and even if</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(23)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-23">Quiero aprender inglés B2. El tema de hoy es "Present unreal conditional with unless, only if, and even if".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Present unreal conditional with unless, only if, and even if
+Unless clauses include exceptions that would change the speaker's decision. 
+I wouldn't try to return it unless it were a large amount.
+I would keep it a secret unless my boss asked me directly about it.
+Only if clauses stress the condition for the result.
+I would keep it a secret only if I liked my co-worker.
+Even if clauses are followed by unexpected results. 
+Even if I were really broke, I'd give the money to the police.
+
+BONUS 
+Present unreal conditional with unless, only if, and even if
+To ask a follow-up question after a yes/no question, a shortened conditional can be used, especially in spoken or informal English. The positive shortened conditional is if so, and the negative shortened conditional is if not.
+Would you consider lying to a good friend to avoid hurting your friend's feelings? If so, what kinds of things would you lie about?
+Are you sure your friends are loyal and trusting? If not, you shouldn't tell them your secrets.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-24">
+        <div class="card-header" onclick="toggle(24)">
+          <span class="card-num">24.</span>
+          <span class="card-title">Wishes and regrets</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(24)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-24">Quiero aprender inglés B2. El tema de hoy es "Wishes and regrets".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR
+Wishes and regrets
+For wishes about the present and future, use wish + simple past, past continuous, or could I would + verb.
+I wish I had enough nerve to ask for a promotion.
+I wish I could find the time to do volunteer work.
+For regrets about the past, use wish + past perfect.
+I wish I'd taken a few Spanish classes.
+I wish I hadn't given my parents such a hard time when I was growing up.
+For regrets about the past, use if + past perfect and could I would have + past participle.
+If I had stuck with something, I could have gotten good at it.
+For strong wishes about the present or future, or for strong regrets about the past, use if only. If only clauses are often used without a main clause.
+If only my boss would consider promoting me!
+
+BONUS 
+Wishes and regrets
+Wishes and regrets often use comparative words, such as (not) enough, more, less, and better, and intensifiers, such as really and very.
+I didn't save enough money last summer.
+I wish I had saved more money last summer.
+I spent too much money on video games last year. 
+If only I had spent less money on video games last year.
+I bought too many clothes this weekend.
+I wish I had bought fewer clothes this weekend.
+I don't understand math very well.
+I wish I understood math better.
+I got really angry at my friend last night.
+If only I hadn't gotten so angry at my friend last night.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-25">
+        <div class="card-header" onclick="toggle(25)">
+          <span class="card-num">25.</span>
+          <span class="card-title">Future perfect and future perfect continuous</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(25)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-25">Quiero aprender inglés B2. El tema de hoy es "Future perfect and future perfect continuous".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Future perfect and future perfect continuous
+Use the future perfect to emphasize that something will be completed or achieved by a particular point in the future.
+By this time next year, your self-confidence will have increased.
+Use the future perfect continuous to emphasize the duration of an activity in progress at a particular point in the future.
+By the end of next year, you will have been studying your chosen language for 12 months.
+
+BONUS
+Future perfect and future perfect continuous
+When using the future perfect or future perfect continuous, the particular point in the future is often referred to in another part of the sentence.
+By this time next year, your commitment to language study is going to have gotten stronger.
+On August 1, I will have been living overseas for six months.
+After a few months, you're going to have made real progress with English.
+Before next spring, he will have finished most of his course work.
+By the time you arrive in New York, Marisa will have already received the package you sent. 
+When the van arrives, I will have been packing for two days, and I probably won't have finished.
+Before I leave for Paris, I will already have sold my house and put my things in storage.
+After I finish this, I will have completed everything on my "to do" list.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-26">
+        <div class="card-header" onclick="toggle(26)">
+          <span class="card-num">26.</span>
+          <span class="card-title">Mixed conditionals</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(26)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-26">Quiero aprender inglés B2. El tema de hoy es "Mixed conditionals".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Mixed conditionals
+Use had / hadn't + past participle and would / wouldn't to talk about hypothetical events in the past that have effects on the present.
+If you hadn't been so nice, you would probably still have your wallet!
+If someone had broken into your room, you would probably still be trying to get home!
+
+BONUS
+Mixed conditionals
+Conditionals can appear in many forms. They can describe how situations in the past affect situations in the past, the present, or the future.
+Use a past form in both the if clause and the result clause to talk about true events in the past. 
+When I was younger, if I didn't behave well, my parents were disappointed.
+If we got lost during our trip last year, we just asked someone for directions.
+Use the past perfect in the if clause and would / wouldn't have + the past participle of the verb in the result clause to talk about hypothetical situations in the past that had effects on the more recent past.
+If I had been born with a good voice, I would have started my own band a long time ago.
+Use the past perfect in the if clause and would/wouldn't + verb in the result clause to describe hypothetical situations in the past that have effects on the present.
+If I had studied harder when I was in school, I would have a better job today.
+Use the past perfect in the if clause and would I wouldn't + verb in the result clause to talk about hypothetical situations in the past that have effects on the future.
+If she had booked her flight before now, she would be in Paris next week. 
+If I hadn't taken a year off from school, I would be graduating this June.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Inglés B2 Cambridge</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">&#10003; Prompt copiado &mdash; pégalo en tu IA</div>
+
+  <script>
+    function toggle(n) {
+      const card = document.getElementById('card-' + n);
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.flashcard.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
+    function copyPrompt(n) {
+      const ta = document.getElementById('prompt-' + n);
+      navigator.clipboard.writeText(ta.value).then(() => markCopied(n)).catch(() => {
+        ta.style.display = 'block'; ta.select(); document.execCommand('copy');
+        ta.style.display = 'none'; markCopied(n);
+      });
+    }
+    function markCopied(n) {
+      const btn = document.querySelector('#card-' + n + ' .copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span class="copy-icon">&#10003;</span> Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="copy-icon">&#10087;</span> Copiar prompt';
+      }, 2200);
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superbad · Slangs y Frases — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #080808;
+      --bg2:         #0f0f0f;
+      --card:        #111111;
+      --card2:       #181818;
+      --fuchsia:     #e040fb;
+      --fuchsia-dim: rgba(224,64,251,0.10);
+      --fuchsia-glow:rgba(224,64,251,0.06);
+      --border:      rgba(224,64,251,0.18);
+      --border2:     rgba(255,255,255,0.05);
+      --learned-bg:  rgba(224,64,251,0.06);
+      --text:        #f5e6ff;
+      --muted:       #6b3d7a;
+      --mono:        'Syne Mono', monospace;
+      --sans:        'Syne', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-weight: 400;
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; top: -180px; right: -180px;
+      width: 650px; height: 650px;
+      background: radial-gradient(circle, rgba(224,64,251,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.93); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--fuchsia); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fuchsia); border: 1px solid rgba(224,64,251,0.4);
+      background: var(--fuchsia-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+    .wrapper { position: relative; z-index: 1; max-width: 1300px; margin: 0 auto; padding: 0 1.4rem 4rem; }
+    header { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--fuchsia); margin-bottom: 0.9rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--fuchsia); opacity: 0.5; }
+    h1 { font-family: var(--sans); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.7rem; }
+    h1 span { color: var(--fuchsia); }
+    .header-desc { color: var(--muted); font-size: 0.88rem; max-width: 560px; line-height: 1.7; }
+    .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.4rem; flex-wrap: wrap; }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '▪'; color: var(--fuchsia); font-size: 0.5rem; }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      align-items: center; margin-bottom: 1.8rem;
+    }
+    .search-input {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 4px; padding: 0.55rem 1rem;
+      color: var(--text); font-family: var(--mono); font-size: 0.72rem;
+      outline: none; transition: border-color 0.2s; min-width: 200px; letter-spacing: 0.04em;
+    }
+    .search-input:focus { border-color: var(--fuchsia); }
+    .search-input::placeholder { color: var(--muted); }
+    .cat-btn {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 3px; padding: 0.3rem 0.8rem;
+      color: var(--muted); font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .cat-btn:hover { border-color: var(--fuchsia); color: var(--fuchsia); }
+    .cat-btn.active { background: var(--fuchsia); border-color: var(--fuchsia); color: #000; font-weight: 600; }
+    .stats { display: flex; gap: 1.2rem; margin-left: auto; align-items: center; flex-wrap: wrap; }
+    .counter { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 0.8rem;
+    }
+    .verb-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; padding: 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .verb-card:hover { border-color: var(--border); transform: translateY(-2px); }
+    .verb-card.learned { background: var(--learned-bg); border-color: rgba(224,64,251,0.35); }
+    .verb-card.hidden { display: none; }
+    .card-top { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .num { font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.12); min-width: 24px; padding-top: 2px; }
+    .card-main { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+    .verb-name { font-family: var(--mono); font-size: 0.82rem; color: var(--fuchsia); font-weight: 400; line-height: 1.35; }
+    .word-tr { font-family: var(--mono); font-size: 0.7rem; color: rgba(224,64,251,0.65); letter-spacing: 0.02em; line-height: 1.3; }
+    .sentence { font-size: 0.78rem; color: var(--text); opacity: 0.7; font-style: italic; line-height: 1.4; }
+    .translation { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+    .cat-tag {
+      font-family: var(--mono); font-size: 0.52rem; padding: 0.12rem 0.4rem;
+      border-radius: 3px; border: 1px solid var(--border2);
+      color: var(--muted); white-space: nowrap; letter-spacing: 0.06em; align-self: flex-start; margin-top: 2px;
+    }
+    .card-btns { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.25rem; }
+    .copy-btn {
+      background: var(--fuchsia-dim); border: 1px solid rgba(224,64,251,0.3);
+      border-radius: 4px; color: var(--fuchsia);
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em;
+      padding: 0.28rem 0.65rem; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem;
+      text-transform: uppercase;
+    }
+    .copy-btn:hover { background: rgba(224,64,251,0.18); border-color: var(--fuchsia); transform: translateY(-1px); }
+    .copy-btn.copied { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.08); }
+    .learned-btn {
+      background: transparent; border: 1px solid var(--border2);
+      border-radius: 4px; color: var(--muted);
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em;
+      padding: 0.28rem 0.65rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+    }
+    .learned-btn:hover { border-color: rgba(224,64,251,0.4); color: var(--fuchsia); }
+    .verb-card.learned .learned-btn { border-color: rgba(224,64,251,0.5); color: var(--fuchsia); }
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111111; border: 1px solid rgba(224,64,251,0.4);
+      color: var(--fuchsia); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.4rem; border-radius: 4px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--fuchsia); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+    @media (max-width: 500px) {
+      .cat-tag { display: none; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">&larr; Logicards</a>
+    <span class="nav-title">Superbad 2007 · Slangs y Frases</span>
+  </div>
+  <span class="nav-badge" id="learnedCount">0 / 250 aprendidas</span>
+</nav>
+
+<div class="wrapper">
+  <header>
+    <p class="level-tag">Inglés coloquial · Superbad 2007</p>
+    <h1>Slangs y Frases de <span>Superbad</span></h1>
+    <p class="header-desc">
+      250 expresiones reales, groserías, slangs y frases icónicas de la película Superbad (2007). Inglés auténtico como se habla de verdad. Copia el prompt, pégalo en tu IA y aprende con un profe.
+    </p>
+    <div class="header-meta">
+      <span class="meta-item">250 frases</span>
+      <span class="meta-item">Inglés coloquial real</span>
+      <span class="meta-item">Explicación en español colombiano</span>
+      <span class="meta-item">100% gratuito</span>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar frase o slang…" oninput="applyFilters()" />
+    <button class="cat-btn active" data-cat="all"       onclick="selectCat(this)">Todas</button>
+    <button class="cat-btn" data-cat="slang"            onclick="selectCat(this)">🤙 Slang</button>
+    <button class="cat-btn" data-cat="iconic"           onclick="selectCat(this)">🎬 Icónica</button>
+    <button class="cat-btn" data-cat="insult"           onclick="selectCat(this)">💢 Insulto</button>
+    <button class="cat-btn" data-cat="expression"       onclick="selectCat(this)">💬 Expresión</button>
+    <button class="cat-btn" data-cat="curse"            onclick="selectCat(this)">🤬 Grosería</button>
+    <div class="stats">
+      <span class="counter" id="counter">Mostrando 250</span>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Superbad 2007</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+
+<script>
+const phrases = [
+  // ── SLANGS ──────────────────────────────────────────────────────────────────
+  { n:1,   key:"man", wtr:"tío / parce / bro",            sentence:"Hey, man. I was doing research for next year.",                     tr:"Oye, man. Estaba investigando para el próximo año.",                   cat:"slang" },
+  { n:2,   key:"dude", wtr:"ey man / bro / parce",           sentence:"Dude, Jules is having a fucking party.",                            tr:"Ey man, Jules está tirando una fiesta.",                               cat:"slang" },
+  { n:3,   key:"psyched", wtr:"encendido / emocionadísimo",        sentence:"I'd be psyched if I got with her.",                                 tr:"Estaría emocionadísimo / como loco si saliera con ella.",               cat:"slang" },
+  { n:4,   key:"shitfaced", wtr:"hasta atrás / borracho perdido",      sentence:"You know when girls say, 'I was so shitfaced last night'?",        tr:"¿Sabes cuando las chicas dicen 'anoche estaba re borracha'?",          cat:"slang" },
+  { n:5,   key:"chill-lax", wtr:"chillaxear = chill + relax",      sentence:"We hung out in the chill zone where we chill-lax.",                tr:"Chillaxear = relajarse + chill. Parchar en la zona de relax.",          cat:"slang" },
+  { n:6,   key:"bang", wtr:"tirarse a alguien / coger",           sentence:"They invite them into a van and then they bang them.",              tr:"Las invitan a una van y luego se las tiran.",                          cat:"slang" },
+  { n:7,   key:"nail", wtr:"clavársela / cogérsela",           sentence:"Stop being a pussy and nail her.",                                  tr:"Deja de ser miedoso y cógetela.",                                      cat:"slang" },
+  { n:8,   key:"get with", wtr:"acostarse con / salir con",       sentence:"I'd be psyched if I got with her.",                                 tr:"Estaría feliz si saliera / me acostara con ella.",                     cat:"slang" },
+  { n:9,   key:"hook up", wtr:"acostarse / enredarse con alguien",        sentence:"I would do terrible things to hook up with Jules.",                 tr:"Haría cosas terribles por acostarme con Jules.",                       cat:"slang" },
+  { n:10,  key:"make out", wtr:"besarse / morrearse",       sentence:"At the very least, I'll make out with her.",                        tr:"Como mínimo, me voy a besar con ella.",                                cat:"slang" },
+  { n:11,  key:"get laid", wtr:"pegarla / acostarse con alguien",       sentence:"Oh, we are so gonna get laid tonight.",                             tr:"Esta noche sí la vamos a pegar / nos vamos a acostar con alguien.",   cat:"slang" },
+  { n:12,  key:"DTF", wtr:"down to fuck = dispuesta a hacerlo",            sentence:"She's D.T.F. She's down to fuck, man.",                            tr:"Ella está dispuesta a hacerlo, man.",                                  cat:"slang" },
+  { n:13,  key:"pimp", wtr:"brutal / chévere / demasiado cool",           sentence:"That is fucking pimp.",                                            tr:"Eso está demasiado cool / brutal.",                                    cat:"slang" },
+  { n:14,  key:"crunk", wtr:"borracho y loco / fiestero",          sentence:"We're gonna get crunk and rock out, dude.",                        tr:"Nos vamos a emborrachar y a armarla, dude.",                           cat:"slang" },
+  { n:15,  key:"boner", wtr:"erección / erecta",          sentence:"I have to hide every erection I get. I flip my boner up.",         tr:"Tengo que esconder cada erección. Levanto la erecta.",                 cat:"slang" },
+  { n:16,  key:"handjob", wtr:"paja / masturbación manual",        sentence:"You got like two dozen handjobs.",                                  tr:"Te hizo como dos docenas de pajas.",                                   cat:"slang" },
+  { n:17,  key:"blowjob", wtr:"mamada / sexo oral",        sentence:"Three-quarters of a blowjob, but who's counting?",                 tr:"Tres cuartos de una mamada, ¿pero quién cuenta?",                     cat:"slang" },
+  { n:18,  key:"pounding", wtr:"darle duro / cogérsela",       sentence:"I'll be like the Iron Chef of pounding vag.",                      tr:"Seré como el Iron Chef de acostarme con chicas.",                      cat:"slang" },
+  { n:19,  key:"ass-getting", wtr:"conseguir mujeres / ligar",    sentence:"It was the peak of my ass-getting career.",                        tr:"Fue el pico de mi carrera de conseguir damas.",                        cat:"slang" },
+  { n:20,  key:"top dollar", wtr:"precio completo / a full precio",     sentence:"If I'm paying top dollar, I want production value.",                tr:"Si estoy pagando a precio completo, quiero calidad.",                  cat:"slang" },
+  { n:21,  key:"sick of", wtr:"harto de / cansado de",        sentence:"I'm just sick of all the amateur stuff.",                          tr:"Ya estoy harto / cansado de todo lo amateur.",                         cat:"slang" },
+  { n:22,  key:"weirded out", wtr:"incomodado / darle asco",    sentence:"Just imagine if girls weren't weirded out by our boners.",         tr:"Imagina que a las chicas no les diera asco nuestras erecciones.",      cat:"slang" },
+  { n:23,  key:"insanely hot", wtr:"buenísima / una diosa",   sentence:"She was insanely hot.",                                            tr:"Ella estaba buenísima / una diosa.",                                   cat:"slang" },
+  { n:24,  key:"paced myself", wtr:"calmarme / medirme",   sentence:"If I'd paced myself, I'd be having steady sex.",                   tr:"Si me hubiera calmado, ya estaría teniendo sexo regular.",             cat:"slang" },
+  { n:25,  key:"flaunt", wtr:"lucirse / mostrar / presumir",         sentence:"It's not fair they get to flaunt that stuff.",                     tr:"No es justo que puedan mostrar esas cosas / lucirse así.",             cat:"slang" },
+  { n:26,  key:"six-pack", wtr:"abdominales / tableta de chocolate",       sentence:"She dated Dan Remick who's had a six-pack since kindergarten.",    tr:"Salió con Dan Remick que tiene abdominales desde el jardín.",          cat:"slang" },
+  { n:27,  key:"step up", wtr:"una mejora / un avance",        sentence:"You're actually a step up from that dick-load.",                   tr:"En realidad eres una mejora respecto a ese imbécil.",                  cat:"slang" },
+  { n:28,  key:"dick-load", wtr:"imbécil / idiota completo",      sentence:"You're a step up from that dick-load.",                            tr:"Un completo imbécil / idiota.",                                        cat:"slang" },
+  { n:29,  key:"give my middle nut", wtr:"daría lo que fuera", sentence:"I'd give my middle nut to start dating Becca.",               tr:"Daría lo que fuera por salir con Becca.",                              cat:"slang" },
+  { n:30,  key:"fellash", wtr:"mamada (inventado cómicamente)",        sentence:"Girls half as smart and twice as likely to fellash me.",            tr:"Chicas que me la mamen (forma inventada cómica de 'fellatio').",       cat:"slang" },
+  { n:31,  key:"hammered", wtr:"borracho / jincho / pasado",       sentence:"But she's totally hammered.",                                      tr:"Pero ella está totalmente borracha.",                                  cat:"slang" },
+  { n:32,  key:"wasted", wtr:"borracho / hasta atrás",         sentence:"I'm already pretty wasted.",                                       tr:"Ya estoy bastante pasado de copas.",                                   cat:"slang" },
+  { n:33,  key:"road beers", wtr:"cervezas para el camino",     sentence:"Hell yeah, we should get some road beers.",                        tr:"¡Claro que sí! Deberíamos conseguir unas cervezas para el camino.",   cat:"slang" },
+  { n:34,  key:"get shitfaced", wtr:"ponerse hasta atrás",  sentence:"We can get shitfaced again, yeah?",                                tr:"¿Nos podemos poner hasta atrás otra vez, verdad?",                    cat:"slang" },
+  { n:35,  key:"get our drinks on", wtr:"echarse unos tragos", sentence:"We're gonna get our drinks on.",                               tr:"Vamos a echarnos unos tragos / ponernos a beber.",                     cat:"slang" },
+  { n:36,  key:"a shitload of", wtr:"un montón de / cantidad",  sentence:"Should I just get a shitload of different shit?",                  tr:"¿Simplemente consigo un montón de cosas diferentes?",                 cat:"slang" },
+  { n:37,  key:"tight", wtr:"chévere / cool / brutal",          sentence:"Tight.",                                                            tr:"Chévere / cool / brutal.",                                            cat:"slang" },
+  { n:38,  key:"sweet", wtr:"genial / buenísimo",          sentence:"It was so sweet.",                                                  tr:"Estuvo buenísimo / genial.",                                          cat:"slang" },
+  { n:39,  key:"what a rush", wtr:"qué adrenalina / qué emoción",    sentence:"What a rush.",                                                      tr:"Qué emoción / qué adrenalina.",                                        cat:"slang" },
+  { n:40,  key:"anti-poon", wtr:"destructor de tu vida sexual",      sentence:"That guy's the fucking anti-poon.",                                tr:"Ese man es el anti-conquista / destruye tu vida sexual.",              cat:"slang" },
+  { n:41,  key:"lay low", wtr:"pasar desapercibido / calmarse",        sentence:"You wanna lay low tonight?",                                       tr:"¿Quieres quedarte quieto / pasar desapercibido esta noche?",           cat:"slang" },
+  { n:42,  key:"bailing", wtr:"rajarse / dejar tirado",        sentence:"That's bailing. You said you'd do something and you didn't.",      tr:"Eso es rajarse. Dijiste que harías algo y no lo hiciste.",             cat:"slang" },
+  { n:43,  key:"bail on", wtr:"fallarle a alguien / dejar colgado",        sentence:"You bailed on me.",                                                 tr:"Me dejaste colgado / me fallaste.",                                    cat:"slang" },
+  { n:44,  key:"a move", wtr:"el intento / tirársele a alguien",         sentence:"Why didn't you make a move?",                                      tr:"¿Por qué no hiciste el intento / te le declaraste?",                  cat:"slang" },
+  { n:45,  key:"left me hanging", wtr:"me dejó colgado / tirado", sentence:"You fucking left me hanging over there.",                         tr:"Me dejaste colgado ahí.",                                              cat:"slang" },
+  { n:46,  key:"piss off", wtr:"vete a la mierda / largo",       sentence:"Piss off!",                                                        tr:"¡Vete a la mierda! / ¡Largo!",                                        cat:"slang" },
+  { n:47,  key:"dick around", wtr:"pendejear / perder el tiempo",    sentence:"Stop dicking around.",                                             tr:"Deja de perder el tiempo / dejar de pendejear.",                      cat:"slang" },
+  { n:48,  key:"dance around it", wtr:"andarse con rodeos", sentence:"I'm not gonna dance around it.",                                  tr:"No voy a andarme con rodeos.",                                        cat:"slang" },
+  { n:49,  key:"come at", wtr:"irse encima / atacar",        sentence:"He just came at me.",                                              tr:"Él se me fue encima / me atacó.",                                      cat:"slang" },
+  { n:50,  key:"took him down", wtr:"lo tumbé / lo noqueé",  sentence:"He came at me. I took him down.",                                  tr:"Se me fue encima. Lo tumbé / lo noqueé.",                             cat:"slang" },
+
+  // ── FRASES ICÓNICAS ──────────────────────────────────────────────────────────
+  { n:51,  key:"I am McLovin", wtr:"frase icónica de Fogell",   sentence:"I am McLovin.",                                                     tr:"Yo soy McLovin. (frase icónica de Fogell).",                          cat:"iconic" },
+  { n:52,  key:"normal as shit", wtr:"completamente normal", sentence:"I'm normal as shit.",                                               tr:"Soy completamente normal.",                                            cat:"iconic" },
+  { n:53,  key:"I love you man", wtr:"te quiero, man / hermano", sentence:"I love you. I love you, man. I'm not even embarrassed to say it.", tr:"Te quiero. Te quiero, man. Ni me da pena decirlo.",                   cat:"iconic" },
+  { n:54,  key:"crying myself to sleep", wtr:"dormirse llorando", sentence:"I'm gonna cry myself to sleep every night.",               tr:"Me voy a dormir llorando todas las noches.",                           cat:"iconic" },
+  { n:55,  key:"the world I wanna live in", wtr:"ese mundo quiero", sentence:"That's the world I one day wanna live in.",             tr:"En ese mundo quiero vivir algún día.",                                 cat:"iconic" },
+  { n:56,  key:"McLovin fake ID", wtr:"la ID falsa icónica", sentence:"Wait, you changed your name to McLovin?",                         tr:"¿Espera, cambiaste tu nombre a McLovin?",                             cat:"iconic" },
+  { n:57,  key:"who are you, Seal?", wtr:"¿quién te crees?", sentence:"What? One name? Who are you, Seal?",                           tr:"¿Qué? ¿Un solo nombre? ¿Quién eres tú, Seal?",                       cat:"iconic" },
+  { n:58,  key:"Hawaiian organ donor", wtr:"donante hawaiano", sentence:"Here's McLovin, the 25-year-old Hawaiian organ donor.",      tr:"Aquí está McLovin, el donante de órganos hawaiano de 25 años.",       cat:"iconic" },
+  { n:59,  key:"0.08 motherfuckers", wtr:"¡0.08 hp! Fogell celebra", sentence:"0.08, motherfuckers!",                                         tr:"¡0.08, maldita sea! (Fogell celebrando el resultado del alcoholímetro)", cat:"iconic" },
+  { n:60,  key:"I'll be fine", wtr:"estaré bien / no hay problema",   sentence:"I got into some schools, some pretty good ones. So I'll be fine.", tr:"Entré a unas escuelas bastante buenas. Estaré bien.",                  cat:"iconic" },
+  { n:61,  key:"she wants my dick in or around her mouth", wtr:"frase absurda de Seth", sentence:"She wants my dick in or around her mouth.", tr:"Ella quiere mi… (frase absurdamente directa de Seth).",            cat:"iconic" },
+  { n:62,  key:"Seth's Own dressing", wtr:"aderezo Seth's Own", sentence:"She said Seth, mama's making a pubic salad and I need some Seth's Own dressing.", tr:"Dijo: Seth, necesito el aderezo Seth's Own. (Seth delirando)", cat:"iconic" },
+  { n:63,  key:"I would get killed for pussy", wtr:"morir por conseguir", sentence:"I would get killed for pussy, no questions asked.",  tr:"Me mataría por conseguir una mujer, sin dudarlo.",                     cat:"iconic" },
+  { n:64,  key:"like the first time I heard the Beatles", wtr:"como los Beatles", sentence:"It was like the first time I heard the Beatles.", tr:"Fue como la primera vez que escuché a los Beatles.",          cat:"iconic" },
+  { n:65,  key:"I missed you", wtr:"te extrañé",   sentence:"When you went away for Easter, I missed you.",                     tr:"Cuando te fuiste en Semana Santa, te extrañé.",                        cat:"iconic" },
+  { n:66,  key:"pizza bagels", wtr:"pizza bagels de la mamá",   sentence:"Does your mom still have pizza bagels?",                           tr:"¿Tu mamá todavía tiene pizza bagels?",                                 cat:"iconic" },
+  { n:67,  key:"blood brothers", wtr:"hermanos de sangre", sentence:"Oh, you got a stain too. We're blood brothers.",                   tr:"Oh, tú también tienes una mancha. Somos hermanos de sangre.",          cat:"iconic" },
+  { n:68,  key:"break yourself fool", wtr:"ubícate / péinate", sentence:"Break yourself, fool.",                                       tr:"¡Péinate! / ¡Ubícate, tonto! (expresión callejera).",                  cat:"iconic" },
+  { n:69,  key:"the joint can't hold me", wtr:"la cárcel no me retiene", sentence:"The joint can't hold me.",                                tr:"La cárcel no me puede retener.",                                       cat:"iconic" },
+  { n:70,  key:"let's show these fuckers how we roll", wtr:"cómo lo hacemos / nuestro estilo", sentence:"Let's show these fuckers how we roll!",      tr:"¡Demostrémosle a estos manes cómo lo hacemos!",                       cat:"iconic" },
+
+  // ── INSULTOS ────────────────────────────────────────────────────────────────
+  { n:71,  key:"dipshit", wtr:"idiota / estúpido",        sentence:"Plus your parents are gonna be looking at the bill, dipshit.",      tr:"Además tus papás van a ver la cuenta, idiota.",                        cat:"insult" },
+  { n:72,  key:"pussy", wtr:"cobarde / miedoso",          sentence:"Stop being a pussy and nail her.",                                  tr:"Deja de ser cobarde / miedoso.",                                       cat:"insult" },
+  { n:73,  key:"retard", wtr:"tarado / idiota",         sentence:"I'll talk to that retard, Fogell.",                                 tr:"Yo hablo con ese tarado de Fogell.",                                   cat:"insult" },
+  { n:74,  key:"ass-face", wtr:"cara de culo",       sentence:"Listen up, ass-face.",                                              tr:"Escúchame, cara de culo.",                                             cat:"insult" },
+  { n:75,  key:"idiot", wtr:"idiota",          sentence:"He's a fucking idiot.",                                             tr:"Es un completo idiota.",                                               cat:"insult" },
+  { n:76,  key:"vagine", wtr:"gallina / cobarde",         sentence:"Don't be such a vagine, man.",                                      tr:"No seas tan cobarde / gallina, man.",                                  cat:"insult" },
+  { n:77,  key:"future pedophile", wtr:"pedófilo potencial", sentence:"You look like a future pedophile in this picture.",              tr:"Te ves como un pedófilo potencial en esta foto.",                      cat:"insult" },
+  { n:78,  key:"Pinocchio", wtr:"Pinocho / ridículo",      sentence:"You look like Pinocchio.",                                          tr:"Pareces Pinocho.",                                                     cat:"insult" },
+  { n:79,  key:"sack of shit", wtr:"inútil / mierda de persona",   sentence:"Where is that sack of shit, Fogell?",                              tr:"¿Dónde está ese inútil / mierda de Fogell?",                          cat:"insult" },
+  { n:80,  key:"dick-mouth", wtr:"bocachancla",     sentence:"Nobody said anything about you, dick-mouth.",                       tr:"Nadie dijo nada sobre ti, bocachancla.",                               cat:"insult" },
+  { n:81,  key:"Judas", wtr:"traidor / Judas",          sentence:"You fucking Judas. You fucking left me hanging.",                   tr:"Eres un Judas de mierda. Me dejaste tirado.",                          cat:"insult" },
+  { n:82,  key:"prick", wtr:"cabrón / hijueputa",          sentence:"You fucking prick.",                                                tr:"Eres un hijueputa / maldito cabrón.",                                  cat:"insult" },
+  { n:83,  key:"piece of shit", wtr:"basura / mierda de persona",  sentence:"Fuck you, you're a piece of shit.",                                 tr:"Que te jodan, eres una basura / mierda.",                             cat:"insult" },
+  { n:84,  key:"backstabber", wtr:"traicionero / cuchillero",    sentence:"You're a backstabber and you lied to your best friend.",            tr:"Eres un traicionero y le mentiste a tu mejor amigo.",                  cat:"insult" },
+  { n:85,  key:"bitch", wtr:"cobarde / perra",          sentence:"Fuck you, Seth! You're a bitch.",                                   tr:"¡Que te jodan, Seth! Eres un cobarde.",                                cat:"insult" },
+  { n:86,  key:"faggot", wtr:"marica / gay (insulto ofensivo)",         sentence:"Tell your fucking faggot friend he can't come.",                    tr:"Dile a tu amigo marica que no puede venir.",                           cat:"insult" },
+  { n:87,  key:"roid monkey", wtr:"mono lleno de esteroides",    sentence:"Wanna do this, roid monkey?",                                       tr:"¿Quieres armarla, mono lleno de esteroides?",                         cat:"insult" },
+  { n:88,  key:"bum", wtr:"vago / indigente",            sentence:"Eat shit, bum.",                                                    tr:"Cómete una mierda, vago.",                                             cat:"insult" },
+  { n:89,  key:"you look like", wtr:"te ves como / pareces",  sentence:"You look like a guy that thing happened to.",                       tr:"Te ves como alguien a quien le pasó eso.",                             cat:"insult" },
+  { n:90,  key:"fucking idiot", wtr:"maldito idiota",  sentence:"He's a fucking idiot. You're a step up from that.",                tr:"Es un maldito idiota. Tú eres una mejora.",                           cat:"insult" },
+
+  // ── EXPRESIONES ─────────────────────────────────────────────────────────────
+  { n:91,  key:"no worries", wtr:"sin problema / tranquilo",     sentence:"No worries. You just keep it.",                                     tr:"Sin problema. Quédatelo.",                                             cat:"expression" },
+  { n:92,  key:"fair enough", wtr:"tiene sentido / está bien",    sentence:"Fair enough.",                                                      tr:"Está bien / Tiene sentido.",                                           cat:"expression" },
+  { n:93,  key:"that's the thing", wtr:"el asunto es / el tema es", sentence:"That's the thing, I've never even tried it.",                    tr:"El asunto es que nunca lo he intentado.",                              cat:"expression" },
+  { n:94,  key:"I don't know what I'm gonna be into", wtr:"lo que me va a gustar", sentence:"I don't know what I'm gonna be into ten years from now.", tr:"No sé qué me va a gustar dentro de diez años.",      cat:"expression" },
+  { n:95,  key:"that's what sucks", wtr:"eso es lo malo / lo que jode", sentence:"She was too hot, okay? That's what sucks.",                     tr:"Ella era demasiado buena. Eso es lo malo.",                            cat:"expression" },
+  { n:96,  key:"who's counting", wtr:"¿quién está contando?", sentence:"Three-quarters of a blowjob, but who's counting?",                 tr:"Tres cuartos, ¿pero quién está contando?",                             cat:"expression" },
+  { n:97,  key:"out of your mind", wtr:"loco / fuera de la realidad", sentence:"Are you out of your mind?",                                      tr:"¿Estás loco? / ¿Te volviste loco?",                                   cat:"expression" },
+  { n:98,  key:"change of pace", wtr:"cambio / algo diferente", sentence:"It was a nice change of pace.",                                     tr:"Fue un cambio agradable / algo diferente.",                            cat:"expression" },
+  { n:99,  key:"that's how I roll", wtr:"así soy yo / mi estilo", sentence:"That's how I roll.",                                            tr:"Así es como yo lo hago / así soy yo.",                                cat:"expression" },
+  { n:100, key:"either way", wtr:"de cualquier manera",     sentence:"Either way's fine.",                                               tr:"De cualquier manera está bien.",                                       cat:"expression" },
+  { n:101, key:"I'd be fine", wtr:"estaré bien",    sentence:"I'll be fine.",                                                    tr:"Estaré bien.",                                                         cat:"expression" },
+  { n:102, key:"kind of", wtr:"como que / en cierta forma",        sentence:"I kind of had this problem.",                                       tr:"Como que tenía este problema / en cierta forma.",                      cat:"expression" },
+  { n:103, key:"whatever", wtr:"lo que sea / me da igual",       sentence:"Whatever, whatever. Two weeks, handjob.",                           tr:"Lo que sea, lo que sea. Dos semanas, paja.",                          cat:"expression" },
+  { n:104, key:"the least they could do", wtr:"lo mínimo que pueden hacer", sentence:"They should be sucking on my ballsack. It's the least they could do.", tr:"Es lo menos que pueden hacer.",                       cat:"expression" },
+  { n:105, key:"land on", wtr:"quedarse con / decidirse por",        sentence:"And you landed on McLovin?",                                       tr:"¿Y decidiste ponerte McLovin? / ¿Y te quedaste con eso?",             cat:"expression" },
+  { n:106, key:"for once", wtr:"por una vez / de vez en cuando",       sentence:"Read a fucking book for once.",                                     tr:"Lee un maldito libro de vez en cuando.",                               cat:"expression" },
+  { n:107, key:"give it another shot", wtr:"darle otra oportunidad", sentence:"I'll give it another shot.",                                 tr:"Le daré otra oportunidad.",                                            cat:"expression" },
+  { n:108, key:"by some divine miracle", wtr:"por milagro divino", sentence:"By some divine miracle, we were paired up.",               tr:"Por algún milagro divino, nos emparejaron.",                           cat:"expression" },
+  { n:109, key:"down the hatch", wtr:"fondo blanco / de una", sentence:"Just down the hatch.",                                             tr:"Fondo blanco / de una.",                                               cat:"expression" },
+  { n:110, key:"I can't even process this", wtr:"no puedo ni procesar", sentence:"I'm so drunk. I can't even process this.",              tr:"Estoy tan borracho que no puedo ni procesar esto.",                    cat:"expression" },
+  { n:111, key:"pretty good", wtr:"bastante bueno / no está mal",    sentence:"I got into some pretty good schools.",                              tr:"Entré a unas escuelas bastante buenas.",                               cat:"expression" },
+  { n:112, key:"I call it a night", wtr:"terminar la noche / irse", sentence:"Then we called it a night.",                                    tr:"Luego decidimos terminar la noche.",                                   cat:"expression" },
+  { n:113, key:"full throttle", wtr:"a full / sin parar / con todo",  sentence:"I'm gonna be there for sure. Full throttle.",                      tr:"Ahí voy a estar sin falta. A full.",                                   cat:"expression" },
+  { n:114, key:"I missed you", wtr:"te extrañé",   sentence:"I missed you. I missed you too.",                                   tr:"Te extrañé. Yo también te extrañé.",                                   cat:"expression" },
+  { n:115, key:"samesies", wtr:"igualmente / lo mismo (infantil)",       sentence:"I, samesies.",                                                     tr:"Igualmente / lo mismo (informal/infantil).",                           cat:"expression" },
+  { n:116, key:"that's that", wtr:"y ya está / punto final",    sentence:"And that's that.",                                                  tr:"Y ya está / eso es todo.",                                             cat:"expression" },
+  { n:117, key:"no questions asked", wtr:"sin dudarlo / sin preguntar", sentence:"I would get killed for pussy, no questions asked.",            tr:"Lo haría sin dudarlo / sin hacerse preguntas.",                        cat:"expression" },
+  { n:118, key:"cooking up", wtr:"armando / planeando algo",     sentence:"Me and Seth are always cooking up these fun little events.",        tr:"Seth y yo siempre estamos armando estos eventos divertidos.",          cat:"expression" },
+  { n:119, key:"by the time", wtr:"para cuando / cuando llegue",    sentence:"By the time college rolls around, I'll be the Iron Chef.",         tr:"Para cuando llegue la universidad, seré el Iron Chef.",                cat:"expression" },
+  { n:120, key:"I've wasted", wtr:"desperdicié / tiré a la basura",    sentence:"I've wasted the last three years of my life talking bullshit with you.", tr:"Desperdicié los últimos tres años de mi vida hablando mierdas contigo.", cat:"expression" },
+
+  // ── GROSERÍAS ───────────────────────────────────────────────────────────────
+  { n:121, key:"fuck it", wtr:"al diablo / que le jodan",        sentence:"Fuck it. I'm about to graduate.",                                   tr:"Al diablo. Ya voy a graduarme.",                                       cat:"curse" },
+  { n:122, key:"fuck me", wtr:"mierda / no puede ser",        sentence:"Oh, fuck me.",                                                      tr:"Oh, mierda. / ¡No puede ser!",                                        cat:"curse" },
+  { n:123, key:"what the fuck", wtr:"¿qué diablos? / ¿qué mierda?",  sentence:"What the fuck?",                                                    tr:"¿Qué diablos? / ¿Qué mierda?",                                        cat:"curse" },
+  { n:124, key:"holy shit", wtr:"¡dios mío! / ¡qué mierda!",      sentence:"Holy shit, holy shit, holy shit.",                                  tr:"¡Dios mío! / ¡Qué mierda!",                                           cat:"curse" },
+  { n:125, key:"oh, shit", wtr:"uy, mierda / ¡cagada!",       sentence:"Oh, shit, oh, shit, oh, shit. What do we do?",                     tr:"¡Uy, mierda! ¿Qué hacemos?",                                          cat:"curse" },
+  { n:126, key:"son of a bitch", wtr:"hijo de puta / maldito", sentence:"Son-of-a-fucking-bitch phone company.",                            tr:"Maldita empresa de teléfonos.",                                        cat:"curse" },
+  { n:127, key:"bullshit", wtr:"mentira / mierda / pura carreta",       sentence:"This is bullshit.",                                                 tr:"Esto es una mierda / mentira.",                                        cat:"curse" },
+  { n:128, key:"goddamn", wtr:"maldito / de la hijueputa",        sentence:"You almost gave me a goddamn heart attack.",                        tr:"Casi me provocas un maldito infarto.",                                 cat:"curse" },
+  { n:129, key:"pissed off", wtr:"bravo / encabronado / furioso",     sentence:"Don't keep it inside for ten years. Next time you're pissed off, say it.", tr:"No guardes eso por diez años. La próxima que estés bravo, dilo.", cat:"curse" },
+  { n:130, key:"motherfucker", wtr:"hijo de puta / hdp",   sentence:"0.08, motherfuckers!",                                             tr:"¡0.08, hijos de puta!",                                               cat:"curse" },
+  { n:131, key:"bitched out", wtr:"rajarse / acobardarse",    sentence:"You really bitched out back there, man.",                           tr:"De verdad te rajaste ahí, man.",                                       cat:"curse" },
+  { n:132, key:"shut the fuck up", wtr:"cierra la maldita boca", sentence:"Shut the fuck up, Fogell.",                                      tr:"Cierra la maldita boca, Fogell.",                                      cat:"curse" },
+  { n:133, key:"fucking bitch", wtr:"maldita cobarde / perra",  sentence:"Fucking bitch.",                                                    tr:"Maldita cobarde.",                                                     cat:"curse" },
+  { n:134, key:"hell yeah", wtr:"¡claro que sí! / ¡eso es!",      sentence:"Hell yeah, we should get some road beers.",                        tr:"¡Claro que sí! / ¡Eso es!",                                           cat:"curse" },
+  { n:135, key:"damn it", wtr:"¡mierda! / ¡rayos!",        sentence:"Damn it!",                                                          tr:"¡Mierda! / ¡Rayos!",                                                  cat:"curse" },
+  { n:136, key:"piss your pants", wtr:"mearse los pantalones", sentence:"Hey Greg, why don't you go piss your pants again?",               tr:"Oye Greg, ¿por qué no vas a mearte los pantalones otra vez?",         cat:"curse" },
+  { n:137, key:"I never had a choice", wtr:"nunca tuve opción", sentence:"I never had a choice.",                                      tr:"Nunca tuve opción.",                                                   cat:"curse" },
+  { n:138, key:"fuck", wtr:"mierda / coño",           sentence:"Fuck. You suck. Bullshit phone. Piece of shit.",                   tr:"Mierda. Eres una porquería. Teléfono de mierda.",                     cat:"curse" },
+  { n:139, key:"fucking crazy", wtr:"demasiado loco / una locura",  sentence:"That's insane. This is fucking crazy.",                            tr:"Eso está demasiado loco.",                                             cat:"curse" },
+  { n:140, key:"no shit", wtr:"obvio / claro / ¡no me digas!",        sentence:"No shit, it's really fucked up.",                                   tr:"Obvio que está muy mal. (No shit = obvio / claro)",                   cat:"curse" },
+
+  // ── MÁS SLANGS ──────────────────────────────────────────────────────────────
+  { n:141, key:"I don't give a shit", wtr:"no me importa un carajo", sentence:"I don't give a shit how pants look.",                         tr:"No me importa un carajo cómo lucen los pantalones.",                  cat:"slang" },
+  { n:142, key:"unbecoming", wtr:"inapropiado / que no sienta bien",     sentence:"It's completely unbecoming.",                                       tr:"Está completamente inapropiado / no sienta bien.",                     cat:"slang" },
+  { n:143, key:"no one's gotten a handjob", wtr:"nadie ha recibido", sentence:"No one's gotten a handjob in cargo shorts since Nam.", tr:"Nadie ha conseguido una paja con shorts cargo desde Vietnam.",        cat:"slang" },
+  { n:144, key:"multiply like bunnies", wtr:"multiplicarse como conejos", sentence:"These terrorists multiply like bunnies.",                    tr:"Estos terroristas se multiplican como conejos.",                       cat:"slang" },
+  { n:145, key:"I got one bar everywhere", wtr:"una barrita de señal", sentence:"I get one bar everywhere I fucking go.",                  tr:"Tengo una barrita de señal a donde sea que voy.",                     cat:"slang" },
+  { n:146, key:"unethical", wtr:"poco ético / sin moral",      sentence:"But she's hammered and I'm not drunk. Isn't that unethical?",      tr:"Pero ella está borracha y yo no. ¿No es eso poco ético?",             cat:"slang" },
+  { n:147, key:"all we've talked about", wtr:"de lo único que hablamos", sentence:"That's all we've ever talked about. Us going to college together.", tr:"De eso es de lo único que hemos hablado. Ir juntos a la universidad.", cat:"expression" },
+  { n:148, key:"slow me down", wtr:"frenarme / retrasar mi vida",   sentence:"I'm not gonna let you slow me down anymore, Seth.",                 tr:"No voy a dejar que me frenes más, Seth.",                              cat:"expression" },
+  { n:149, key:"friendless virgin", wtr:"sin amigos y sin experiencia", sentence:"I'm going to college a fucking friendless virgin.",              tr:"Voy a ir a la universidad sin amigos y sin experiencia.",              cat:"slang" },
+  { n:150, key:"camel toe", wtr:"bulto visible / cameltoe",      sentence:"Yeah, the camel toe. The male camel toe.",                          tr:"El cameltoe masculino. (bulto visible del hombre).",                   cat:"slang" },
+  { n:151, key:"division sign", wtr:"signo de división ÷",  sentence:"It's like a division sign.",                                       tr:"Es como el signo de división.",                                        cat:"slang" },
+  { n:152, key:"upgrade", wtr:"mejorar / actualizar",        sentence:"You need to upgrade.",                                              tr:"Necesitas mejorar / actualizar.",                                      cat:"expression" },
+  { n:153, key:"run laps", wtr:"correr vueltas / castigado",       sentence:"They're gonna make me run laps again.",                             tr:"Me van a hacer correr vueltas otra vez.",                              cat:"expression" },
+  { n:154, key:"security breach", wtr:"brecha de seguridad", sentence:"There was a security breach.",                                    tr:"Hubo una brecha de seguridad.",                                        cat:"expression" },
+  { n:155, key:"it's passable", wtr:"aceptable / que puede pasar",  sentence:"It's a fine ID. It'll work. It's passable.",                       tr:"Es una identificación aceptable. Va a funcionar. Pasa.",               cat:"expression" },
+  { n:156, key:"calling strategy", wtr:"estrategia", sentence:"It's called fucking strategy, all right?",                       tr:"Se llama maldita estrategia, ¿está bien?",                             cat:"expression" },
+  { n:157, key:"cover it with chocolate", wtr:"cubrirlo / disimularlo", sentence:"Hayworth won't notice if we cover it with chocolate.",   tr:"Hayworth no lo notará si lo cubrimos con chocolate.",                  cat:"expression" },
+  { n:158, key:"a little production value", wtr:"calidad de producción", sentence:"If I'm paying top dollar, I want a little production value.", tr:"Si pago bien, quiero un poco de calidad de producción.",         cat:"slang" },
+  { n:159, key:"I gotta tell you", wtr:"tengo que decirte algo", sentence:"I gotta tell you something, Evan.",                              tr:"Tengo que decirte algo, Evan.",                                        cat:"expression" },
+  { n:160, key:"slip out the back", wtr:"escabullirse por atrás", sentence:"We can slip out the back, man.",                                tr:"Podemos escabullirnos por atrás, man.",                                cat:"expression" },
+  { n:161, key:"last chance", wtr:"última oportunidad",    sentence:"It was my last chance and I fucked it up.",                        tr:"Era mi última oportunidad y la cagué.",                                cat:"expression" },
+  { n:162, key:"I need my nuts", wtr:"necesito mis atributos", sentence:"Not me. I need my nuts for a lot of things.",                      tr:"Yo no. Necesito mis atributos para muchas cosas.",                    cat:"slang" },
+  { n:163, key:"act cool", wtr:"actuar cool / calmado",       sentence:"Just act cool and act casual, and try to look old.",               tr:"Solo actúa cool y casual, e intenta verte mayor.",                    cat:"expression" },
+  { n:164, key:"what's the big deal", wtr:"gran cosa / problema", sentence:"What's the big deal? Jeez.",                                  tr:"¿Cuál es el problema? / ¿Qué tiene de malo?",                         cat:"expression" },
+  { n:165, key:"I owe you my life", wtr:"te debo la vida", sentence:"Of course. I owe you guys my life.",                            tr:"Claro. Les debo la vida a ustedes.",                                   cat:"expression" },
+  { n:166, key:"keep it inside", wtr:"guardárselo / no decir nada", sentence:"Don't keep it inside for ten years.",                               tr:"No te lo guardes por diez años.",                                      cat:"expression" },
+  { n:167, key:"say it like a man", wtr:"dilo como un hombre", sentence:"Say it like a fucking man!",                                    tr:"¡Dilo como un hombre!",                                               cat:"expression" },
+  { n:168, key:"unforgivable things", wtr:"cosas imperdonables", sentence:"I would do terrible, disgusting, unforgivable things.",       tr:"Haría cosas terribles, asquerosas, imperdonables.",                    cat:"expression" },
+  { n:169, key:"I respect her", wtr:"la respeto",  sentence:"I respect her, Seth. I'm not gonna put unfair pressure on her.",   tr:"La respeto, Seth. No voy a ponerle presión injusta.",                  cat:"expression" },
+  { n:170, key:"get a move on", wtr:"ponerse en marcha / irse",  sentence:"I should get moving. I should be getting a move on.",              tr:"Debo irme. Debo ponerme en marcha.",                                   cat:"expression" },
+
+  // ── EXPRESIONES EXTRA ────────────────────────────────────────────────────────
+  { n:171, key:"that way you know she'll be drunk", wtr:"va a estar borracha", sentence:"That way you know she'll be drunk.",            tr:"Así sabes que va a estar borracha.",                                   cat:"expression" },
+  { n:172, key:"we could be that mistake", wtr:"ser el error que ella cometa", sentence:"We could be that mistake!",                               tr:"¡Podríamos ser ese error que ella cometa!",                            cat:"expression" },
+  { n:173, key:"I'll make her my girlfriend", wtr:"hacerla mi novia", sentence:"I make her my girlfriend for the summer.",             tr:"La hago mi novia para el verano.",                                     cat:"expression" },
+  { n:174, key:"it comes with the site", wtr:"viene incluido con el sitio", sentence:"I'm not saying I'll look at it. It just comes with the site.", tr:"No digo que lo vea. Solo viene incluido con el sitio.",          cat:"expression" },
+  { n:175, key:"put her there", wtr:"choca esos cinco",  sentence:"So put her there.",                                                  tr:"Entonces choca esos cinco. / Estrecha la mano.",                       cat:"expression" },
+  { n:176, key:"I have your information", wtr:"tengo tus datos", sentence:"I have your information. So I'll call you.",              tr:"Tengo tu información. Entonces te llamo.",                             cat:"expression" },
+  { n:177, key:"unbelievable night", wtr:"noche increíble / inimaginable", sentence:"It was an incredible, unbelievable night.",                    tr:"Fue una noche increíble, inimaginable.",                               cat:"expression" },
+  { n:178, key:"my dick-giving abilities", wtr:"habilidades amatorias", sentence:"If some woman complimented me on my dick-giving abilities, I'd be psyched.", tr:"Si una mujer me elogiara en mis habilidades amatorias, estaría feliz.", cat:"slang" },
+  { n:179, key:"she flips out", wtr:"pierde la cabeza / se descontrola",  sentence:"She starts crying. She flips out.",                                 tr:"Empieza a llorar. Se descontrola / pierde la cabeza.",                 cat:"expression" },
+  { n:180, key:"he rats me out", wtr:"me delata / me sopla", sentence:"And she rats me out to the principal.",                             tr:"Y ella me delata / me sopla al director.",                             cat:"expression" },
+  { n:181, key:"dick devil", wtr:"demonio del falo",     sentence:"He thinks I'm possessed by some dick devil.",                       tr:"Cree que estoy poseído por algún demonio del falo.",                   cat:"iconic" },
+  { n:182, key:"dick treasure chest", wtr:"tesoro de dibujos obscenos", sentence:"He finds this Ghostbusters lunchbox dick treasure chest.",    tr:"Encuentra esta lonchera Ghostbusters con el tesoro de dibujos.",      cat:"iconic" },
+  { n:183, key:"ghost of a chance", wtr:"ni la más mínima oportunidad", sentence:"Why would she end her high school career with me?",             tr:"¿Por qué acabaría su carrera de bachillerato conmigo?",                cat:"expression" },
+  { n:184, key:"stealing three years of my life", wtr:"robar años de mi vida", sentence:"They should be sucking on my ballsack for stealing three years of my life.", tr:"Por robarme tres años de mi vida.", cat:"iconic" },
+  { n:185, key:"you don't negotiate with terrorists", wtr:"no se negocia", sentence:"You know why I have to kill these guys? Because you don't negotiate with terrorists.", tr:"No se negocia con terroristas.", cat:"iconic" },
+  { n:186, key:"I'm nobody", wtr:"no soy nadie / soy invisible",     sentence:"I'm nobody.",                                                       tr:"Yo no soy nadie. (Evan siendo humilde).",                             cat:"expression" },
+  { n:187, key:"the chill zone", wtr:"zona de relax / para parchar", sentence:"I hung out in the basement, the chill zone.",                      tr:"Me quedé en el sótano, la zona de relax.",                             cat:"slang" },
+  { n:188, key:"a lot of loves", wtr:"muchos amores", sentence:"These eyes have seen a lot of loves.",                             tr:"Estos ojos han visto muchos amores.",                                  cat:"iconic" },
+  { n:189, key:"It's my treat", wtr:"yo invito / corre por mi cuenta",  sentence:"No, no, it's my treat, miss.",                                     tr:"No, no, yo invito / corre por mi cuenta, señorita.",                  cat:"expression" },
+  { n:190, key:"you'll learn that", wtr:"ya aprenderás eso", sentence:"You'll learn that. I love talking and conversing with you.",    tr:"Ya aprenderás eso. Me encanta hablar y conversar contigo.",            cat:"expression" },
+  { n:191, key:"I'm tight", wtr:"soy lo máximo / estoy full",      sentence:"Fake ID. Fake ID. I'm tight.",                                     tr:"ID falsa. ID falsa. Soy lo máximo / estoy full.",                     cat:"slang" },
+  { n:192, key:"let's stay calm", wtr:"mantengamos la calma", sentence:"Let's stay calm, okay? Let's not lose our heads.",                tr:"Mantengamos la calma. No perdamos la cabeza.",                         cat:"expression" },
+  { n:193, key:"I fooled those cops", wtr:"engañé a esos policías", sentence:"I fooled those cops. I'm McLovin.",                           tr:"Engañé a esos policías. Soy McLovin.",                                 cat:"iconic" },
+  { n:194, key:"because I fucking rule", wtr:"la rompo / soy el mejor", sentence:"Because I fucking rule.",                                  tr:"Porque soy demasiado bueno / porque la rompo.",                        cat:"slang" },
+  { n:195, key:"how am I supposed to", wtr:"¿cómo se supone que?", sentence:"How the fuck am I supposed to get into Dartmouth?",          tr:"¿Cómo mierda se supone que voy a entrar a Dartmouth?",                cat:"expression" },
+  { n:196, key:"selfish", wtr:"egoísta / egocéntrico",        sentence:"How fucking selfish are you?",                                      tr:"¿Qué tan egoísta puedes ser?",                                         cat:"expression" },
+  { n:197, key:"I'm saving you", wtr:"te estoy salvando", sentence:"I'm saving you from the cops.",                                    tr:"Te estoy salvando de los policías.",                                   cat:"iconic" },
+  { n:198, key:"I love talking to you", wtr:"la persona más cool", sentence:"You're the coolest person that's ever talked to me.",       tr:"Eres la persona más cool que me ha hablado en la vida.",               cat:"iconic" },
+  { n:199, key:"your mom's got huge tits", wtr:"tetas enormes", sentence:"Your mom's got huge tits.",                              tr:"Tu mamá tiene… (frase clásica de Seth al final).",                    cat:"iconic" },
+  { n:200, key:"go to the rooftops", wtr:"ir a los tejados a gritar", sentence:"I just wanna go to the rooftops and scream I love my best friend.", tr:"Solo quiero ir a los tejados a gritar que amo a mi mejor amigo.", cat:"iconic" },
+
+  // ── SLANG 2000s EXTRA ────────────────────────────────────────────────────────
+  { n:201, key:"badass", wtr:"brutal / duro / impresionante",         sentence:"That fake ID plan was totally badass, McLovin.",                    tr:"Brutal / duro / que no se deja. Alguien o algo impresionante y sin miedo.", cat:"slang" },
+  { n:202, key:"sick", wtr:"genial / brutal (no = enfermo)",           sentence:"Dude, that party was fucking sick.",                                tr:"Cuando 'sick' = genial / brutal / una chimba. No significa enfermo.",  cat:"slang" },
+  { n:203, key:"dope", wtr:"chévere / bacano / lo máximo",           sentence:"That move was dope as hell.",                                       tr:"Chévere / bacano / una chimba. Lo máximo.",                            cat:"slang" },
+  { n:204, key:"lit", wtr:"prendida / buenísima / de moda",            sentence:"This party's about to get lit.",                                    tr:"La fiesta se va a prender / va a estar buenísima.",                    cat:"slang" },
+  { n:205, key:"stoked", wtr:"encendido / emocionadísimo",         sentence:"I'm so stoked for tonight, man.",                                   tr:"Estoy encendido / emocionadísimo / como loco por esta noche.",         cat:"slang" },
+  { n:206, key:"gnarly", wtr:"extremo / brutal / impresionante",         sentence:"Dude, that was gnarly as fuck.",                                    tr:"Extremo / brutal / horrible o impresionante según el contexto.",       cat:"slang" },
+  { n:207, key:"sketchy", wtr:"sospechoso / de mala pinta",        sentence:"That liquor store was sketchy as hell.",                            tr:"Sospechoso / de mala pinta / raro / poco confiable.",                  cat:"slang" },
+  { n:208, key:"legit", wtr:"legítimo / de verdad / en serio",          sentence:"Is that ID legit? No way, man.",                                    tr:"¿Esa ID es legítima / de verdad? Para nada.",                          cat:"slang" },
+  { n:209, key:"wicked", wtr:"increíble (slang) / no = malvado",         sentence:"That was wicked, man. Seriously wicked.",                           tr:"En slang americano = increíble / brutal. No significa malvado.",       cat:"slang" },
+  { n:210, key:"creep", wtr:"acosador / tipo raro y perturbador",          sentence:"Don't be such a creep about it.",                                   tr:"Acosador / tipo raro y perturbador. No seas tan repugnante.",          cat:"insult" },
+  { n:211, key:"screw you", wtr:"que te jodan (suave de fuck you)",      sentence:"Screw you, man. Seriously.",                                        tr:"Que te jodan. Versión más suave de 'fuck you'.",                       cat:"curse" },
+  { n:212, key:"jackass", wtr:"burro / imbécil / idiota",        sentence:"Don't be such a jackass your whole life.",                          tr:"Burro / imbécil / idiota. Muy usado en los 2000s.",                    cat:"insult" },
+  { n:213, key:"douche", wtr:"detestable / creído / imbécil",         sentence:"That guy is such a douche.",                                        tr:"Detestable / imbécil / creído. Muy 2000s.",                            cat:"insult" },
+  { n:214, key:"douchebag", wtr:"el máximo idiota / insoportable",      sentence:"He's a total douchebag. Always has been.",                          tr:"El máximo idiota / creído / insoportable. Nivel avanzado de douche.",  cat:"insult" },
+  { n:215, key:"tool", wtr:"lameculo / idiota útil / bobo",           sentence:"Look at that tool over there.",                                     tr:"Alguien que se deja manipular / un lameculo / un idiota útil.",        cat:"insult" },
+  { n:216, key:"loser", wtr:"perdedor / fracasado",          sentence:"We're not gonna die as losers, okay?",                              tr:"Perdedor / fracasado. Clásico insulto escolar de los 2000s.",          cat:"insult" },
+  { n:217, key:"nerd", wtr:"nerd / geek / cerebrito",           sentence:"Stop being such a nerd and just go talk to her.",                   tr:"Nerd / geek / ratón de biblioteca. En 2007 era insulto, hoy es badge.", cat:"insult" },
+  { n:218, key:"freak", wtr:"bicho raro / perturbado",          sentence:"You're a fucking freak, you know that?",                            tr:"Bicho raro / perturbado. Puede ser insulto o cumplido dependiendo.",   cat:"insult" },
+  { n:219, key:"get some", wtr:"conseguir sexo / pegarla",       sentence:"Tonight we're finally gonna get some.",                             tr:"Conseguir sexo / acostarse con alguien. Clásico eufemismo.",           cat:"slang" },
+  { n:220, key:"score", wtr:"anotar / acostarse con alguien",          sentence:"I'm gonna score tonight, I can feel it.",                           tr:"Anotar = conseguir lo que quieres, especialmente acostarte con alguien.", cat:"slang" },
+  { n:221, key:"that's messed up", wtr:"mal / qué vaina fea / cagada", sentence:"That's messed up, man. Really messed up.",                       tr:"Eso está mal / qué cagada / qué vaina tan fea.",                       cat:"expression" },
+  { n:222, key:"screw up", wtr:"cagarlo / meter la pata",       sentence:"I screwed up big time last night.",                                 tr:"Cagarlo / meter la pata / arruinar algo.",                             cat:"slang" },
+  { n:223, key:"blow it", wtr:"cagarlo / arruinar tu oportunidad",        sentence:"Don't blow it, man. This is your chance.",                          tr:"No la cagues / no arruines tu oportunidad.",                           cat:"slang" },
+  { n:224, key:"tank", wtr:"hundirse / fracasar rotundamente",           sentence:"That whole plan tanked hard.",                                      tr:"Hundirse / fracasar estrepitosamente.",                                cat:"slang" },
+  { n:225, key:"owned", wtr:"te destruyeron / te pusieron en lugar",          sentence:"Dude, you just got owned.",                                         tr:"Te destruyeron / te pusieron en tu lugar / te humillaron.",            cat:"slang" },
+  { n:226, key:"epic fail", wtr:"fracaso épico / monumental",      sentence:"That was an epic fail, bro.",                                       tr:"Un fracaso épico / monumental. Muy popular en los 2000s.",             cat:"slang" },
+  { n:227, key:"no biggie", wtr:"no es gran cosa / no es para tanto",      sentence:"It's no biggie. Don't worry about it.",                             tr:"No es gran cosa / no es para tanto.",                                  cat:"expression" },
+  { n:228, key:"my bad", wtr:"mi culpa / perdón",         sentence:"My bad, dude. Totally my bad.",                                     tr:"Mi culpa / perdón. Clásico de los 2000s.",                             cat:"expression" },
+  { n:229, key:"solid", wtr:"sólido / confiable / buena idea",          sentence:"Yeah, that plan sounds pretty solid.",                               tr:"Sólido / confiable / buena idea. Muy usado coloquialmente.",           cat:"slang" },
+  { n:230, key:"for real", wtr:"¿en serio? / ¿de verdad?",       sentence:"Is that for real? Are you serious right now?",                      tr:"¿En serio? / ¿De verdad? Pedir confirmación de algo increíble.",       cat:"expression" },
+  { n:231, key:"dead serious", wtr:"completamente en serio",   sentence:"I'm dead serious about this, man.",                                 tr:"Completamente en serio / hablo sin broma.",                            cat:"expression" },
+  { n:232, key:"balls", wtr:"huevos / valor / agallas",          sentence:"You don't have the balls to do it.",                                tr:"No tienes los huevos / el valor para hacerlo.",                        cat:"slang" },
+  { n:233, key:"ballsy", wtr:"con huevos / atrevido / descaro",         sentence:"That was pretty ballsy, not gonna lie.",                             tr:"Eso fue muy atrevido / con mucho descaro / con huevos.",               cat:"slang" },
+  { n:234, key:"chickenshit", wtr:"cagón / cobarde / miedoso",    sentence:"Don't be such a chickenshit all your life.",                        tr:"Cagón / cobarde / miedoso. Más fuerte que 'chicken'.",                 cat:"insult" },
+  { n:235, key:"jerk off", wtr:"hacerse la paja / perder el tiempo",       sentence:"Stop jerking off and do something useful.",                         tr:"Masturbarse / perder el tiempo haciendo nada.",                        cat:"slang" },
+  { n:236, key:"scumbag", wtr:"escoria / miserable",        sentence:"He's a total scumbag, always has been.",                            tr:"Escoria / persona sin valor / miserable.",                             cat:"insult" },
+  { n:237, key:"asshole", wtr:"imbécil / idiota / hdp",        sentence:"You're being a complete asshole right now.",                        tr:"Imbécil / idiota / hdp. Clásico insulto americano.",                   cat:"insult" },
+  { n:238, key:"jerk", wtr:"idiota / imbécil / desagradable",           sentence:"Don't be such a jerk about it.",                                    tr:"Idiota / imbécil / desagradable. Más suave que asshole.",              cat:"insult" },
+  { n:239, key:"knock it off", wtr:"para ya / deja de hacer eso",   sentence:"Knock it off, man. People are looking.",                            tr:"Para ya / deja de hacer eso / cállate.",                              cat:"expression" },
+  { n:240, key:"catch a break", wtr:"tener suerte / que te vaya bien",  sentence:"Can we just catch a break tonight? Please?",                        tr:"¿Podemos tener un poco de suerte? / Que nos vaya bien por una vez.",  cat:"expression" },
+  { n:241, key:"all over", wtr:"encima de / pegado a alguien",       sentence:"She was all over him at the party.",                                tr:"Ella estaba encima de él en la fiesta / lo acosaba.",                  cat:"slang" },
+  { n:242, key:"get your shit together", wtr:"organízate / ponte pilas", sentence:"Get your shit together before tonight.",                    tr:"Organízate / ponte las pilas / arma tu plan.",                         cat:"curse" },
+  { n:243, key:"I'm done", wtr:"ya no más / me rendí / terminé",       sentence:"I'm done. I can't deal with this.",                                 tr:"Ya no más / ya terminé / me rendí con esto.",                          cat:"expression" },
+  { n:244, key:"hit on", wtr:"coquetear / tirarle los perros",         sentence:"Was he hitting on her or just being friendly?",                     tr:"¿La estaba tirando/coqueteando o solo siendo amable?",                cat:"slang" },
+  { n:245, key:"make a move on", wtr:"tíresele / hágale algo", sentence:"Just make a move on her already, dude.",                            tr:"Tíresele / hágale algo / deje de esperar.",                            cat:"slang" },
+  { n:246, key:"cock block", wtr:"el que arruina tu conquista",     sentence:"Don't be a cock block all night, man.",                             tr:"El que arruina el intento de alguien de conseguir pareja.",            cat:"slang" },
+  { n:247, key:"wingman", wtr:"cómplice de conquista",        sentence:"I need you to be my wingman tonight.",                               tr:"El amigo que te ayuda a conquistar. El cómplice de la noche.",         cat:"slang" },
+  { n:248, key:"drama", wtr:"drama / exageración innecesaria",          sentence:"Stop with the drama, man. It's not that deep.",                     tr:"Drama / exageración. 'No hagas drama' = no exageres.",                cat:"expression" },
+  { n:249, key:"overreacting", wtr:"exagerando / dramatizando",   sentence:"You're totally overreacting right now.",                            tr:"Estás exagerando / dramatizando sin razón.",                           cat:"expression" },
+  { n:250, key:"that's deep", wtr:"eso es profundo / tiene peso",    sentence:"That's deep, man. Like, actually deep.",                            tr:"Eso es profundo / tiene mucho significado. Puede ser irónico también.", cat:"expression" },
+];
+
+const catLabels = {
+  slang:      "🤙 Slang",
+  iconic:     "🎬 Icónica",
+  insult:     "💢 Insulto",
+  expression: "💬 Expresión",
+  curse:      "🤬 Grosería",
+};
+
+let activeCat = "all";
+let learned   = JSON.parse(localStorage.getItem("sb_learned") || "{}");
+
+function buildPrompt(p) {
+  return `Hola profe, soy colombiano y estoy aprendiendo inglés coloquial con la película Superbad (2007).
+
+Hoy quiero entender esta expresión:
+
+"${p.key}"
+Oración original: "${p.sentence}"
+
+Por favor explícame en español colombiano:
+1. ¿Qué significa exactamente "${p.key}" en esta oración? (5-10 líneas, con ejemplos del día a día).
+2. ¿En qué contextos se usa? ¿Es muy vulgar o se puede decir en cualquier lado?
+3. Dame 3 oraciones de ejemplo en inglés con su traducción al español colombiano abajo de cada una.
+4. Ahora practiquemos: dame 4 oraciones en español colombiano, una por una, para que yo las traduzca al inglés usando esta expresión. Espera mi respuesta antes de pasar a la siguiente. Después de cada una corrígeme en español y explícame si me equivoqué y por qué.
+
+¡Empecemos!`;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  buildCards();
+  updateLearnedCount();
+});
+
+function buildCards() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  phrases.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "verb-card" + (learned[p.n] ? " learned" : "");
+    card.dataset.key = (p.key + " " + p.sentence).toLowerCase();
+    card.dataset.cat  = p.cat;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="num">${String(p.n).padStart(3, "0")}</span>
+        <div class="card-main">
+          <span class="verb-name">${p.key}</span>
+          <span class="word-tr">${p.wtr}</span>
+          <span class="sentence">"${p.sentence}"</span>
+          <span class="translation">${p.tr}</span>
+        </div>
+        <span class="cat-tag">${catLabels[p.cat]}</span>
+      </div>
+      <div class="card-btns">
+        <button class="copy-btn" id="cb-${p.n}" onclick="copyPrompt(${p.n})">
+          ⧉ Copiar prompt
+        </button>
+        <button class="learned-btn" id="lb-${p.n}" onclick="toggleLearned(${p.n})">
+          ${learned[p.n] ? "✓ Aprendida" : "○ Marcar aprendida"}
+        </button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function copyPrompt(n) {
+  const p   = phrases[n - 1];
+  const btn = document.getElementById(`cb-${n}`);
+  navigator.clipboard.writeText(buildPrompt(p)).then(() => {
+    btn.textContent = "✓ Copiado";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "⧉ Copiar prompt"; btn.classList.remove("copied"); }, 2000);
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  });
+}
+
+function toggleLearned(n) {
+  if (learned[n]) { delete learned[n]; } else { learned[n] = true; }
+  localStorage.setItem("sb_learned", JSON.stringify(learned));
+  const p    = phrases[n-1];
+  const card = document.querySelector(`.verb-card[data-key="${(p.key + " " + p.sentence).toLowerCase()}"]`);
+  const btn  = document.getElementById(`lb-${n}`);
+  if (learned[n]) { card.classList.add("learned"); btn.textContent = "✓ Aprendida"; }
+  else            { card.classList.remove("learned"); btn.textContent = "○ Marcar aprendida"; }
+  updateLearnedCount();
+}
+
+function updateLearnedCount() {
+  document.getElementById("learnedCount").textContent = `${Object.keys(learned).length} / 250 aprendidas`;
+}
+
+function selectCat(btn) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  activeCat = btn.dataset.cat;
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll(".verb-card").forEach(c => {
+    const show = c.dataset.key.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
+    c.classList.toggle("hidden", !show);
+    if (show) visible++;
+  });
+  document.getElementById("counter").textContent = `Mostrando ${visible}`;
+}
+</script>
+</body>
+</html>

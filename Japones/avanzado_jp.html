@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Japonés Automotriz · Avanzado — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:         #080706;
+      --bg2:        #0e0c0a;
+      --card:       #121008;
+      --card2:      #1a1710;
+      --copper:     #cd7f32;
+      --copper-dim: rgba(205,127,50,0.11);
+      --copper-glow:rgba(205,127,50,0.07);
+      --border:     rgba(205,127,50,0.22);
+      --border2:    rgba(255,255,255,0.05);
+      --text:       #f5ede0;
+      --muted:      #6b4e1a;
+      --mono:       'Syne Mono', monospace;
+      --sans:       'Syne', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 400; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; bottom: -150px; right: -150px;
+      width: 650px; height: 650px;
+      background: radial-gradient(circle, rgba(205,127,50,0.08) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    /* shimmer top bar */
+    .shimmer-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200;
+      background: linear-gradient(90deg, transparent 0%, rgba(205,127,50,0) 20%, rgba(205,127,50,0.85) 50%, rgba(205,127,50,0) 80%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 5s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0% { background-position: -100% 0; } 100% { background-position: 200% 0; } }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,7,6,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s; }
+    .back-link:hover { color: var(--copper); }
+    .nav-title { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badges { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--copper); border: 1px solid rgba(205,127,50,0.5);
+      background: var(--copper-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+    .nav-badge-level { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.2rem 0.6rem; border-radius: 2px; }
+    .wrapper { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 1.4rem 4rem; }
+    header { padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .header-inner { position: relative; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--copper); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--copper); opacity: 0.5; }
+    h1 { font-family: var(--sans); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    h1 span {
+      background: linear-gradient(135deg, #e8a84a 0%, #cd7f32 50%, #a05c1a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .jp-deco { font-size: clamp(2.5rem, 7vw, 5rem); color: rgba(205,127,50,0.05); font-family: serif; position: absolute; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; line-height: 1; }
+    .header-desc { color: var(--muted); font-size: 0.85rem; max-width: 580px; line-height: 1.7; margin-top: 0.4rem; }
+    .header-meta { display: flex; align-items: center; gap: 1.4rem; margin-top: 1.2rem; flex-wrap: wrap; }
+    .meta-item { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+    .meta-item::before { content: '✦'; color: var(--copper); font-size: 0.45rem; }
+    .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-bottom: 1.6rem; }
+    .search-input { background: var(--card); border: 1px solid var(--border2); border-radius: 3px; padding: 0.5rem 0.9rem; color: var(--text); font-family: var(--mono); font-size: 0.7rem; outline: none; transition: border-color 0.2s; min-width: 200px; letter-spacing: 0.04em; }
+    .search-input:focus { border-color: var(--copper); }
+    .search-input::placeholder { color: var(--muted); }
+    .cat-btn { background: var(--card); border: 1px solid var(--border2); border-radius: 2px; padding: 0.28rem 0.75rem; color: var(--muted); font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .cat-btn:hover { border-color: var(--copper); color: var(--copper); }
+    .cat-btn.active { background: var(--copper); border-color: var(--copper); color: #000; font-weight: 600; }
+    .stats { display: flex; gap: 1.2rem; margin-left: auto; align-items: center; }
+    .counter { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.7rem; }
+    .vocab-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 4px; padding: 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .vocab-card:hover { border-color: rgba(205,127,50,0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(205,127,50,0.05); }
+    .vocab-card.learned { background: rgba(205,127,50,0.05); border-color: rgba(205,127,50,0.35); }
+    .vocab-card.hidden { display: none; }
+    .card-top { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .card-num { font-family: var(--mono); font-size: 0.6rem; color: rgba(255,255,255,0.10); min-width: 22px; padding-top: 3px; }
+    .card-body-inner { flex: 1; display: flex; flex-direction: column; gap: 0.18rem; }
+    .vocab-jp { font-family: serif; font-size: 1.2rem; color: var(--text); line-height: 1.3; }
+    .vocab-romaji {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+      background: linear-gradient(90deg, #e8a84a, #cd7f32);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .vocab-es { font-size: 0.8rem; color: rgba(245,237,224,0.62); line-height: 1.4; }
+    .card-meta { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.2rem; }
+    .level-badge { font-family: var(--mono); font-size: 0.52rem; padding: 0.12rem 0.4rem; border-radius: 2px; border: 1px solid var(--border2); color: var(--muted); letter-spacing: 0.08em; }
+    .cat-badge { font-family: var(--mono); font-size: 0.52rem; padding: 0.12rem 0.4rem; border-radius: 2px; border: 1px solid var(--border2); color: var(--muted); letter-spacing: 0.06em; }
+    .audio-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; }
+    .play-btn { background: var(--copper-dim); border: 1px solid rgba(205,127,50,0.32); border-radius: 3px; color: var(--copper); font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; padding: 0.22rem 0.55rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.25rem; text-transform: uppercase; }
+    .play-btn:hover { background: rgba(205,127,50,0.18); border-color: var(--copper); }
+    .play-btn.playing { background: rgba(205,127,50,0.22); border-color: var(--copper); }
+    .speed-btn { background: transparent; border: 1px solid var(--border2); border-radius: 3px; color: var(--muted); font-family: var(--mono); font-size: 0.55rem; padding: 0.22rem 0.45rem; cursor: pointer; transition: all 0.2s; }
+    .speed-btn:hover { border-color: rgba(205,127,50,0.35); color: var(--copper); }
+    .speed-btn.active { border-color: rgba(205,127,50,0.5); color: var(--copper); background: var(--copper-dim); }
+    .card-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.2rem; }
+    .copy-btn { background: var(--copper-dim); border: 1px solid rgba(205,127,50,0.3); border-radius: 3px; color: var(--copper); font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; padding: 0.25rem 0.6rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.25rem; text-transform: uppercase; }
+    .copy-btn:hover { background: rgba(205,127,50,0.2); border-color: var(--copper); transform: translateY(-1px); }
+    .copy-btn.copied { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.08); }
+    .learned-btn { background: transparent; border: 1px solid var(--border2); border-radius: 3px; color: var(--muted); font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; padding: 0.25rem 0.6rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+    .learned-btn:hover { border-color: rgba(205,127,50,0.38); color: var(--copper); }
+    .vocab-card.learned .learned-btn { border-color: rgba(205,127,50,0.45); color: var(--copper); }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: #121008; border: 1px solid rgba(205,127,50,0.45); color: var(--copper); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.65rem 1.4rem; border-radius: 3px; box-shadow: 0 0 20px rgba(205,127,50,0.1); opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--copper); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+    @media (max-width: 500px) { .cat-badge, .level-badge { display: none; } .grid { grid-template-columns: 1fr; } .jp-deco { display: none; } }
+  </style>
+</head>
+<body>
+
+<div class="shimmer-bar"></div>
+
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">Japonés Automotriz</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nav-badge-level">Manual Toyota Corolla</span>
+    <span class="nav-badge" id="learnedCount">✦ 0 / 260 dominadas</span>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <header>
+    <div class="header-inner">
+      <p class="level-tag">✦ Nivel Avanzado · Técnico y especializado</p>
+      <h1>Japonés <span>Automotriz</span></h1>
+      <div class="jp-deco">技術者</div>
+    </div>
+    <p class="header-desc">
+      260 términos de nivel avanzado del manual oficial Toyota Corolla. Vocabulario de diagnóstico técnico, electrónica, normativas y documentación especializada. Nivel de técnico certificado.
+    </p>
+    <div class="header-meta">
+      <span class="meta-item">260 términos</span>
+      <span class="meta-item">Audio integrado</span>
+      <span class="meta-item">Nivel avanzado · N3–N2</span>
+      <span class="meta-item">Manual Toyota Corolla</span>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar término técnico…" oninput="applyFilters()" />
+    <button class="cat-btn active" data-cat="all"         onclick="selectCat(this)">Todos</button>
+    <button class="cat-btn" data-cat="electronica"        onclick="selectCat(this)">🖥 Electrónica</button>
+    <button class="cat-btn" data-cat="motor_adv"          onclick="selectCat(this)">⚙ Motor avanzado</button>
+    <button class="cat-btn" data-cat="normativa"          onclick="selectCat(this)">📄 Normativa</button>
+    <button class="cat-btn" data-cat="hibrido"            onclick="selectCat(this)">⚡ Híbrido/EV</button>
+    <button class="cat-btn" data-cat="diagnostico_adv"    onclick="selectCat(this)">🔬 Diagnóstico</button>
+    <button class="cat-btn" data-cat="estructura"         onclick="selectCat(this)">🔩 Estructura</button>
+    <button class="cat-btn" data-cat="documentacion"      onclick="selectCat(this)">📋 Documentación</button>
+    <div class="stats"><span class="counter" id="counter">Mostrando 260</span></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · Japonés Automotriz · Avanzado</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast">✦ Prompt copiado — pégalo en tu IA</div>
+
+<script>
+const vocab = [
+  // ── ELECTRÓNICA AVANZADA ───────────────────────────────────────────────────
+  { n:1,   jp:"電子制御ユニット",        ro:"denshi seigyo yunitto",      es:"Unidad de control electrónico (ECU)",                   cat:"electronica",    lvl:"N3" },
+  { n:2,   jp:"エンジンコントロールモジュール", ro:"enjin kontorōru mojūru", es:"Módulo de control del motor (ECM)",                  cat:"electronica",    lvl:"N3" },
+  { n:3,   jp:"トランスミッションコントロールモジュール", ro:"toransumishshon kontorōru mojūru", es:"Módulo de control de la transmisión (TCM)", cat:"electronica", lvl:"N3" },
+  { n:4,   jp:"ボディコントロールモジュール", ro:"bodi kontorōru mojūru",  es:"Módulo de control de carrocería (BCM)",                  cat:"electronica",    lvl:"N3" },
+  { n:5,   jp:"CANバス",                ro:"kan basu",                   es:"Bus CAN / red de comunicación interna del vehículo",    cat:"electronica",    lvl:"N3" },
+  { n:6,   jp:"LINバス",                ro:"rin basu",                   es:"Bus LIN / protocolo de red local del vehículo",         cat:"electronica",    lvl:"N3" },
+  { n:7,   jp:"フラッシュメモリー",       ro:"furasshu memorī",            es:"Memoria flash / almacenamiento de datos del ECU",       cat:"electronica",    lvl:"N3" },
+  { n:8,   jp:"アクチュエーター",         ro:"akuchyuētā",                 es:"Actuador / elemento de acción del sistema",             cat:"electronica",    lvl:"N3" },
+  { n:9,   jp:"ソレノイドバルブ",         ro:"sorenoidoba rubu",           es:"Válvula solenoide / electroválvula",                    cat:"electronica",    lvl:"N3" },
+  { n:10,  jp:"酸素センサー",            ro:"sanso sensā",                es:"Sensor de oxígeno (sonda lambda)",                      cat:"electronica",    lvl:"N3" },
+  { n:11,  jp:"クランク角センサー",       ro:"kuranku kaku sensā",         es:"Sensor de posición del cigüeñal",                       cat:"electronica",    lvl:"N3" },
+  { n:12,  jp:"カム角センサー",          ro:"kamu kaku sensā",            es:"Sensor de posición del árbol de levas",                 cat:"electronica",    lvl:"N3" },
+  { n:13,  jp:"スロットルポジションセンサー", ro:"surottoru pojishon sensā", es:"Sensor de posición del acelerador (TPS)",             cat:"electronica",    lvl:"N3" },
+  { n:14,  jp:"マスエアフローセンサー",   ro:"masu ea furō sensā",         es:"Sensor de flujo de masa de aire (MAF)",                 cat:"electronica",    lvl:"N3" },
+  { n:15,  jp:"マニホールド圧力センサー",  ro:"manifōrudo atsuryoku sensā", es:"Sensor de presión del colector de admisión (MAP)",     cat:"electronica",    lvl:"N3" },
+  { n:16,  jp:"ノックセンサー",          ro:"nokku sensā",                es:"Sensor de detonación / knock sensor",                   cat:"electronica",    lvl:"N3" },
+  { n:17,  jp:"車輪速センサー",          ro:"sharin soku sensā",          es:"Sensor de velocidad de rueda (para ABS/VSC)",           cat:"electronica",    lvl:"N3" },
+  { n:18,  jp:"ヨーレートセンサー",       ro:"yō rēto sensā",              es:"Sensor de velocidad de guiñada (yaw rate sensor)",      cat:"electronica",    lvl:"N3" },
+  { n:19,  jp:"加速度センサー",          ro:"kasokudo sensā",             es:"Acelerómetro / sensor de aceleración G",                cat:"electronica",    lvl:"N3" },
+  { n:20,  jp:"操舵角センサー",          ro:"sōda kaku sensā",            es:"Sensor de ángulo de giro del volante",                  cat:"electronica",    lvl:"N3" },
+  { n:21,  jp:"レーダーセンサー",         ro:"rēdā sensā",                 es:"Sensor de radar (milimétrico) para ADAS",               cat:"electronica",    lvl:"N3" },
+  { n:22,  jp:"ミリ波レーダー",          ro:"miriha rēdā",                es:"Radar de onda milimétrica",                             cat:"electronica",    lvl:"N3" },
+  { n:23,  jp:"カメラユニット",          ro:"kamera yunitto",             es:"Unidad de cámara del sistema de visión",                cat:"electronica",    lvl:"N3" },
+  { n:24,  jp:"超音波センサー",          ro:"chōonpa sensā",              es:"Sensor ultrasónico (sonar de proximidad)",              cat:"electronica",    lvl:"N3" },
+  { n:25,  jp:"赤外線センサー",          ro:"sekigaisen sensā",           es:"Sensor infrarrojo",                                     cat:"electronica",    lvl:"N3" },
+  { n:26,  jp:"電子インジェクター",       ro:"denshi injekutā",            es:"Inyector electrónico de combustible",                   cat:"electronica",    lvl:"N3" },
+  { n:27,  jp:"点火プラグ",             ro:"tenka puragu",               es:"Bujía de encendido",                                    cat:"electronica",    lvl:"N3" },
+  { n:28,  jp:"イグニッションコイル",     ro:"igunisshon koiru",           es:"Bobina de encendido",                                   cat:"electronica",    lvl:"N3" },
+  { n:29,  jp:"オルタネーター",          ro:"orutanētā",                  es:"Alternador / generador de corriente alterna",           cat:"electronica",    lvl:"N3" },
+  { n:30,  jp:"スターターモーター",       ro:"sutātā mōtā",                es:"Motor de arranque / starter",                          cat:"electronica",    lvl:"N3" },
+
+  // ── MOTOR AVANZADO ─────────────────────────────────────────────────────────
+  { n:31,  jp:"可変バルブタイミング",     ro:"kahen barubu taimingu",      es:"Distribución variable (VVT / VVT-i Toyota)",            cat:"motor_adv",      lvl:"N3" },
+  { n:32,  jp:"直噴エンジン",           ro:"chokufu enjin",              es:"Motor de inyección directa de combustible",             cat:"motor_adv",      lvl:"N3" },
+  { n:33,  jp:"吸気バルブ",             ro:"kyūki barubu",               es:"Válvula de admisión",                                   cat:"motor_adv",      lvl:"N3" },
+  { n:34,  jp:"排気バルブ",             ro:"haiki barubu",               es:"Válvula de escape",                                     cat:"motor_adv",      lvl:"N3" },
+  { n:35,  jp:"ピストン",               ro:"pisuton",                    es:"Pistón / émbolo",                                       cat:"motor_adv",      lvl:"N3" },
+  { n:36,  jp:"シリンダー",             ro:"shirindā",                   es:"Cilindro del motor",                                    cat:"motor_adv",      lvl:"N3" },
+  { n:37,  jp:"クランクシャフト",         ro:"kurankushafuto",             es:"Cigüeñal",                                              cat:"motor_adv",      lvl:"N3" },
+  { n:38,  jp:"カムシャフト",            ro:"kamushafuto",                es:"Árbol de levas",                                        cat:"motor_adv",      lvl:"N3" },
+  { n:39,  jp:"タイミングチェーン",       ro:"taimingu chēn",              es:"Cadena de distribución / cadena de tiempo",             cat:"motor_adv",      lvl:"N3" },
+  { n:40,  jp:"ターボチャージャー",       ro:"tābo chājā",                 es:"Turbocompresor",                                        cat:"motor_adv",      lvl:"N3" },
+  { n:41,  jp:"インタークーラー",         ro:"intākūrā",                   es:"Intercooler / enfriador de aire cargado",               cat:"motor_adv",      lvl:"N3" },
+  { n:42,  jp:"コモンレール",            ro:"komon rēru",                 es:"Riel común / common rail (diésel)",                     cat:"motor_adv",      lvl:"N3" },
+  { n:43,  jp:"圧縮比",                ro:"asshuku hi",                 es:"Relación de compresión",                                cat:"motor_adv",      lvl:"N3" },
+  { n:44,  jp:"燃焼室",                ro:"nenshōshitsu",               es:"Cámara de combustión",                                  cat:"motor_adv",      lvl:"N3" },
+  { n:45,  jp:"EGR",                   ro:"ījīāru",                     es:"Recirculación de gases de escape (EGR)",                cat:"motor_adv",      lvl:"N3" },
+  { n:46,  jp:"PCV バルブ",             ro:"pīshībī barubu",             es:"Válvula PCV / ventilación del cárter",                  cat:"motor_adv",      lvl:"N3" },
+  { n:47,  jp:"スロットルボディ",         ro:"surottoru bodi",             es:"Cuerpo del acelerador / throttle body",                 cat:"motor_adv",      lvl:"N3" },
+  { n:48,  jp:"オイルポンプ",            ro:"oiru ponpu",                 es:"Bomba de aceite",                                       cat:"motor_adv",      lvl:"N3" },
+  { n:49,  jp:"燃料ポンプ",             ro:"nenryō ponpu",               es:"Bomba de combustible",                                  cat:"motor_adv",      lvl:"N3" },
+  { n:50,  jp:"ウォーターポンプ",         ro:"wōtā ponpu",                 es:"Bomba de agua / bomba del refrigerante",                cat:"motor_adv",      lvl:"N3" },
+
+  // ── HÍBRIDO / ELÉCTRICO ─────────────────────────────────────────────────────
+  { n:51,  jp:"ハイブリッドバッテリー",   ro:"haiburiddo batterī",         es:"Batería del sistema híbrido (alta tensión)",            cat:"hibrido",        lvl:"N3" },
+  { n:52,  jp:"インバーター",            ro:"inbātā",                     es:"Inversor / convertidor DC-AC del híbrido",              cat:"hibrido",        lvl:"N3" },
+  { n:53,  jp:"トランスアクスル",         ro:"toransakusuru",              es:"Transeje / unidad motriz del híbrido",                  cat:"hibrido",        lvl:"N3" },
+  { n:54,  jp:"MG1 / MG2",             ro:"emujī wan / emujī tsū",      es:"Motores eléctricos 1 y 2 del sistema híbrido Toyota",   cat:"hibrido",        lvl:"N3" },
+  { n:55,  jp:"動力分割機構",            ro:"dōryoku bunkatsu kikō",      es:"Dispositivo de distribución de potencia (THS)",         cat:"hibrido",        lvl:"N3" },
+  { n:56,  jp:"充電状態",               ro:"jūden jōtai",                es:"Estado de carga de la batería (SOC)",                   cat:"hibrido",        lvl:"N3" },
+  { n:57,  jp:"プラグインハイブリッド",   ro:"puragu in haiburiddo",       es:"Híbrido enchufable (PHEV)",                             cat:"hibrido",        lvl:"N3" },
+  { n:58,  jp:"急速充電",               ro:"kyūsoku jūden",              es:"Carga rápida (fast charge)",                            cat:"hibrido",        lvl:"N3" },
+  { n:59,  jp:"普通充電",               ro:"futsū jūden",                es:"Carga estándar / carga normal",                         cat:"hibrido",        lvl:"N3" },
+  { n:60,  jp:"EV走行モード",            ro:"ībī sōkō mōdo",              es:"Modo de conducción 100% eléctrica (EV mode)",           cat:"hibrido",        lvl:"N3" },
+  { n:61,  jp:"電動コンプレッサー",       ro:"dendō konpuressa",           es:"Compresor eléctrico del aire acondicionado",            cat:"hibrido",        lvl:"N3" },
+  { n:62,  jp:"高電圧系統",             ro:"kōden'atsu keitō",           es:"Sistema de alta tensión del vehículo eléctrico",        cat:"hibrido",        lvl:"N3" },
+  { n:63,  jp:"絶縁抵抗",               ro:"zetsuen teikō",              es:"Resistencia de aislamiento (seguridad alta tensión)",   cat:"hibrido",        lvl:"N3" },
+  { n:64,  jp:"温度管理システム",         ro:"ondo kanri shisutemu",       es:"Sistema de gestión térmica de la batería",              cat:"hibrido",        lvl:"N3" },
+  { n:65,  jp:"WLTC燃費",              ro:"daburyū eru tī shī nenpi",   es:"Consumo según ciclo de prueba WLTC",                    cat:"hibrido",        lvl:"N3" },
+
+  // ── DIAGNÓSTICO AVANZADO ───────────────────────────────────────────────────
+  { n:66,  jp:"故障コード",             ro:"koshō kōdo",                 es:"Código de diagnóstico de falla (DTC)",                  cat:"diagnostico_adv", lvl:"N3" },
+  { n:67,  jp:"スキャンツール",          ro:"sukyan tsūru",               es:"Escáner / herramienta de diagnóstico OBD",              cat:"diagnostico_adv", lvl:"N3" },
+  { n:68,  jp:"ライブデータ",            ro:"raibu dēta",                 es:"Datos en tiempo real del vehículo",                     cat:"diagnostico_adv", lvl:"N3" },
+  { n:69,  jp:"フリーズフレーム",         ro:"furīzu furēmu",              es:"Freeze frame / datos congelados al momento de la falla", cat:"diagnostico_adv", lvl:"N3" },
+  { n:70,  jp:"診断ポート",             ro:"shindan pōto",               es:"Puerto de diagnóstico OBD-II (DLC)",                    cat:"diagnostico_adv", lvl:"N3" },
+  { n:71,  jp:"モニターステータス",       ro:"monitā sutētasu",            es:"Estado de los monitores del sistema OBD",               cat:"diagnostico_adv", lvl:"N3" },
+  { n:72,  jp:"整備モード",             ro:"seibi mōdo",                 es:"Modo de servicio / modo taller",                        cat:"diagnostico_adv", lvl:"N3" },
+  { n:73,  jp:"アクティブテスト",         ro:"akuteibu tesuto",            es:"Test activo / prueba de actuadores",                    cat:"diagnostico_adv", lvl:"N3" },
+  { n:74,  jp:"アダプテーション",         ro:"adaputēshon",                es:"Adaptación / calibración del sistema",                  cat:"diagnostico_adv", lvl:"N3" },
+  { n:75,  jp:"コーディング",            ro:"kōdingu",                    es:"Codificación de control electrónico",                   cat:"diagnostico_adv", lvl:"N3" },
+  { n:76,  jp:"フォルトメモリー",         ro:"foruto memorī",              es:"Memoria de fallos / historial de errores",              cat:"diagnostico_adv", lvl:"N3" },
+  { n:77,  jp:"ステアリングアングルセンサーキャリブレーション", ro:"sutearingu anguru sensā kyaribureshon", es:"Calibración del sensor de ángulo de dirección", cat:"diagnostico_adv", lvl:"N3" },
+  { n:78,  jp:"ゼロ点キャリブレーション",  ro:"zero ten kyaribureshon",     es:"Calibración del punto cero (sensores)",                 cat:"diagnostico_adv", lvl:"N3" },
+  { n:79,  jp:"学習値",                ro:"gakushū chi",                es:"Valor aprendido / valor de adaptación del ECU",         cat:"diagnostico_adv", lvl:"N3" },
+  { n:80,  jp:"初期学習",              ro:"shoki gakushū",              es:"Aprendizaje inicial del sistema",                       cat:"diagnostico_adv", lvl:"N3" },
+  { n:81,  jp:"エアフロリセット",         ro:"ea furo risetto",            es:"Restablecimiento del sensor de flujo de aire",          cat:"diagnostico_adv", lvl:"N3" },
+  { n:82,  jp:"EGRバルブ清掃",          ro:"ījīāru barubu seisō",        es:"Limpieza de la válvula EGR",                            cat:"diagnostico_adv", lvl:"N3" },
+  { n:83,  jp:"燃料トリム",             ro:"nenryō torimu",              es:"Corrección de combustible / fuel trim (STFT/LTFT)",    cat:"diagnostico_adv", lvl:"N3" },
+  { n:84,  jp:"空燃比",                ro:"kū nenhi",                   es:"Relación aire-combustible (AFR)",                       cat:"diagnostico_adv", lvl:"N3" },
+  { n:85,  jp:"ノッキング",             ro:"nokkingu",                   es:"Detonación / cascabeleo del motor",                     cat:"diagnostico_adv", lvl:"N3" },
+
+  // ── ESTRUCTURA ─────────────────────────────────────────────────────────────
+  { n:86,  jp:"モノコックボディ",         ro:"monokokku bodi",             es:"Carrocería monocasco / estructura autoportante",        cat:"estructura",     lvl:"N3" },
+  { n:87,  jp:"フレーム",               ro:"furēmu",                     es:"Chasis / bastidor",                                     cat:"estructura",     lvl:"N4" },
+  { n:88,  jp:"サブフレーム",            ro:"sabu furēmu",                es:"Subchasis / bastidor auxiliar",                         cat:"estructura",     lvl:"N3" },
+  { n:89,  jp:"クロスメンバー",          ro:"kurosu menbā",               es:"Travesaño / miembro transversal del chasis",            cat:"estructura",     lvl:"N3" },
+  { n:90,  jp:"サイドシル",             ro:"saido shiru",                es:"Umbral / larguero lateral de la carrocería",            cat:"estructura",     lvl:"N3" },
+  { n:91,  jp:"Aピラー",               ro:"ē pirā",                     es:"Pilar A / montante delantero del parabrisas",           cat:"estructura",     lvl:"N3" },
+  { n:92,  jp:"Bピラー",               ro:"bī pirā",                    es:"Pilar B / montante central entre puertas",              cat:"estructura",     lvl:"N3" },
+  { n:93,  jp:"Cピラー",               ro:"shī pirā",                   es:"Pilar C / montante trasero",                            cat:"estructura",     lvl:"N3" },
+  { n:94,  jp:"ルーフパネル",           ro:"rūfu paneru",                es:"Panel del techo / techo de la carrocería",              cat:"estructura",     lvl:"N3" },
+  { n:95,  jp:"フロアパネル",           ro:"furoa paneru",               es:"Panel del piso / plancha del suelo",                    cat:"estructura",     lvl:"N3" },
+  { n:96,  jp:"クォーターパネル",        ro:"kwōtā paneru",               es:"Panel del cuarto trasero / aleta trasera",              cat:"estructura",     lvl:"N3" },
+  { n:97,  jp:"エンジンルーム",          ro:"enjin rūmu",                 es:"Compartimento del motor / sala del motor",              cat:"estructura",     lvl:"N4" },
+  { n:98,  jp:"サスペンションタワー",     ro:"sasupenshon tawā",           es:"Torre de la suspensión / paso de rueda",               cat:"estructura",     lvl:"N3" },
+  { n:99,  jp:"衝撃吸収構造",           ro:"shōgeki kyūshū kōzō",        es:"Estructura de absorción de impactos / crumple zone",    cat:"estructura",     lvl:"N3" },
+  { n:100, jp:"溶接",                  ro:"yōsetsu",                    es:"Soldadura / unión soldada",                             cat:"estructura",     lvl:"N3" },
+
+  // ── NORMATIVA Y REGLAMENTOS ────────────────────────────────────────────────
+  { n:101, jp:"排ガス規制",             ro:"haigasu kisei",              es:"Norma de emisiones / regulación de gases de escape",    cat:"normativa",      lvl:"N3" },
+  { n:102, jp:"燃費基準",              ro:"nenpi kijun",                es:"Estándar de consumo de combustible",                    cat:"normativa",      lvl:"N3" },
+  { n:103, jp:"騒音規制",              ro:"sōon kisei",                 es:"Normativa de ruido vehicular",                          cat:"normativa",      lvl:"N3" },
+  { n:104, jp:"安全基準",              ro:"anzen kijun",                es:"Norma de seguridad vehicular",                          cat:"normativa",      lvl:"N3" },
+  { n:105, jp:"衝突安全性",            ro:"shōtotsu anzensei",          es:"Seguridad en colisiones / crash safety",                cat:"normativa",      lvl:"N3" },
+  { n:106, jp:"歩行者保護",            ro:"hokōsha hogo",               es:"Protección de peatones (normativa frontal)",            cat:"normativa",      lvl:"N3" },
+  { n:107, jp:"リコール",              ro:"rikōru",                     es:"Llamado a revisión / recall oficial",                   cat:"normativa",      lvl:"N3" },
+  { n:108, jp:"保証期間",              ro:"hoshō kikan",                es:"Período de garantía del vehículo",                      cat:"normativa",      lvl:"N3" },
+  { n:109, jp:"保証書",               ro:"hoshōsho",                   es:"Certificado de garantía / documento de garantía",       cat:"normativa",      lvl:"N3" },
+  { n:110, jp:"車検",                 ro:"shaken",                     es:"Inspección técnica vehicular obligatoria (ITV japonesa)", cat:"normativa",    lvl:"N3" },
+  { n:111, jp:"型式認定",             ro:"katashiki nintei",            es:"Homologación / certificación del modelo de vehículo",   cat:"normativa",      lvl:"N3" },
+  { n:112, jp:"指定燃料",             ro:"shitei nenryō",              es:"Combustible especificado / tipo de gasolina recomendada", cat:"normativa",    lvl:"N3" },
+  { n:113, jp:"オクタン価",           ro:"okutan ka",                  es:"Octanaje / índice de octano",                           cat:"normativa",      lvl:"N3" },
+  { n:114, jp:"最高出力",             ro:"saikō shutsuryoku",          es:"Potencia máxima del motor (kW o CV)",                   cat:"normativa",      lvl:"N3" },
+  { n:115, jp:"最大トルク",           ro:"saidai toruku",              es:"Par máximo del motor (N·m)",                            cat:"normativa",      lvl:"N3" },
+
+  // ── DOCUMENTACIÓN TÉCNICA ─────────────────────────────────────────────────
+  { n:116, jp:"整備マニュアル",         ro:"seibi manyuaru",             es:"Manual de servicio / manual técnico del taller",        cat:"documentacion",  lvl:"N3" },
+  { n:117, jp:"修理書",               ro:"shūrisho",                   es:"Manual de reparación / libro de servicio",              cat:"documentacion",  lvl:"N3" },
+  { n:118, jp:"配線図",               ro:"haisenzū",                   es:"Diagrama de cableado / esquema eléctrico",              cat:"documentacion",  lvl:"N3" },
+  { n:119, jp:"部品番号",             ro:"buhin bangō",                es:"Número de parte / referencia de repuesto",              cat:"documentacion",  lvl:"N3" },
+  { n:120, jp:"部品カタログ",          ro:"buhin katarogu",             es:"Catálogo de repuestos",                                 cat:"documentacion",  lvl:"N3" },
+  { n:121, jp:"メンテナンスノート",      ro:"mentenansu nōto",            es:"Cuadernillo de mantenimiento / libreta de servicio",    cat:"documentacion",  lvl:"N3" },
+  { n:122, jp:"作業手順",             ro:"sagyō tejun",                es:"Procedimiento de trabajo / pasos de la reparación",     cat:"documentacion",  lvl:"N3" },
+  { n:123, jp:"締付けトルク",          ro:"shimeuke toruku",            es:"Par de apriete / torque de ajuste (N·m)",               cat:"documentacion",  lvl:"N3" },
+  { n:124, jp:"クリアランス",          ro:"kuriaransu",                 es:"Holgura / espacio entre piezas (tolerancia)",           cat:"documentacion",  lvl:"N3" },
+  { n:125, jp:"規定値",              ro:"kitei chi",                  es:"Valor especificado / valor de referencia técnica",      cat:"documentacion",  lvl:"N3" },
+  { n:126, jp:"許容範囲",            ro:"kyoyō han'i",                es:"Rango de tolerancia / margen aceptable",                cat:"documentacion",  lvl:"N3" },
+  { n:127, jp:"取扱説明書",          ro:"toriatsukai setsumeisho",    es:"Manual del propietario / instrucciones de uso",         cat:"documentacion",  lvl:"N3" },
+  { n:128, jp:"車両識別番号",         ro:"sharyō shikibetsu bangō",    es:"Número de identificación vehicular (VIN / NIV)",        cat:"documentacion",  lvl:"N3" },
+  { n:129, jp:"製造番号",            ro:"seizō bangō",                es:"Número de serie / número de fabricación",               cat:"documentacion",  lvl:"N3" },
+  { n:130, jp:"改訂版",              ro:"kaitei ban",                 es:"Edición revisada / versión actualizada del manual",     cat:"documentacion",  lvl:"N3" },
+
+  // ── ELECTRÓNICA EXTRA ──────────────────────────────────────────────────────
+  { n:131, jp:"プリウス型制御",         ro:"puriusu gata seigyo",        es:"Control tipo Prius / lógica del sistema híbrido Toyota", cat:"electronica",  lvl:"N3" },
+  { n:132, jp:"パワーマネジメント",      ro:"pawā manejimento",           es:"Gestión de potencia / power management",                cat:"electronica",    lvl:"N3" },
+  { n:133, jp:"エネルギー回収",         ro:"enerugī kaishū",             es:"Recuperación de energía (frenado regenerativo)",        cat:"electronica",    lvl:"N3" },
+  { n:134, jp:"電磁波障害",            ro:"denjīha shōgai",             es:"Interferencia electromagnética (EMI)",                  cat:"electronica",    lvl:"N3" },
+  { n:135, jp:"シールドケーブル",        ro:"shīrudo kēburu",             es:"Cable apantallado / blindado contra interferencias",    cat:"electronica",    lvl:"N3" },
+  { n:136, jp:"グランド接続",           ro:"gurando setsuzoku",          es:"Conexión a masa / conexión a tierra eléctrica",         cat:"electronica",    lvl:"N3" },
+  { n:137, jp:"コネクタピン",           ro:"konekuta pin",               es:"Pin del conector / terminal del arnés",                 cat:"electronica",    lvl:"N3" },
+  { n:138, jp:"ハーネス",              ro:"hānesu",                     es:"Arnés de cables / mazo de cables",                      cat:"electronica",    lvl:"N3" },
+  { n:139, jp:"電気回路図",            ro:"denki kairo zu",             es:"Diagrama de circuito eléctrico",                        cat:"electronica",    lvl:"N3" },
+  { n:140, jp:"負荷テスト",            ro:"fuka tesuto",                es:"Prueba de carga eléctrica",                             cat:"electronica",    lvl:"N3" },
+
+  // ── DIAGNÓSTICO AVANZADO EXTRA ────────────────────────────────────────────
+  { n:141, jp:"圧縮測定",             ro:"asshuku sokutei",            es:"Medición de compresión del motor",                      cat:"diagnostico_adv", lvl:"N3" },
+  { n:142, jp:"漏れ診断",             ro:"more shindan",               es:"Diagnóstico de fugas / prueba de estanqueidad",         cat:"diagnostico_adv", lvl:"N3" },
+  { n:143, jp:"振動解析",             ro:"shindō kaiseki",             es:"Análisis de vibraciones",                               cat:"diagnostico_adv", lvl:"N3" },
+  { n:144, jp:"騒音解析",             ro:"sōon kaiseki",               es:"Análisis de ruidos / diagnóstico acústico",             cat:"diagnostico_adv", lvl:"N3" },
+  { n:145, jp:"熱画像診断",           ro:"netsu gazō shindan",         es:"Diagnóstico termográfico / cámara infrarroja",          cat:"diagnostico_adv", lvl:"N3" },
+  { n:146, jp:"排ガス測定",           ro:"haigasu sokutei",            es:"Medición de emisiones de gases de escape",              cat:"diagnostico_adv", lvl:"N3" },
+  { n:147, jp:"煙幕テスト",           ro:"enmaku tesuto",              es:"Prueba de humo / smoke test para fugas",                cat:"diagnostico_adv", lvl:"N3" },
+  { n:148, jp:"油圧測定",            ro:"yūatsu sokutei",             es:"Medición de presión de aceite",                         cat:"diagnostico_adv", lvl:"N3" },
+  { n:149, jp:"デジタルマルチメーター",  ro:"dejitaru maruchi mētā",      es:"Multímetro digital / tester eléctrico",                 cat:"diagnostico_adv", lvl:"N3" },
+  { n:150, jp:"オシロスコープ",         ro:"oshirosukopu",               es:"Osciloscopio / analizador de señales",                  cat:"diagnostico_adv", lvl:"N3" },
+
+  // ── ESTRUCTURA EXTRA ───────────────────────────────────────────────────────
+  { n:151, jp:"防錆処理",             ro:"bōsei shori",                es:"Tratamiento anticorrosión / recubrimiento protector",   cat:"estructura",     lvl:"N3" },
+  { n:152, jp:"防音材",              ro:"bōon zai",                   es:"Material de insonorización / aislante acústico",        cat:"estructura",     lvl:"N3" },
+  { n:153, jp:"制振材",              ro:"seishin zai",                es:"Material amortiguador de vibraciones",                  cat:"estructura",     lvl:"N3" },
+  { n:154, jp:"ボディシーラー",        ro:"bodi shīrā",                 es:"Sellante de carrocería / sellador de juntas",           cat:"estructura",     lvl:"N3" },
+  { n:155, jp:"アンダーコート",        ro:"andā kōto",                  es:"Revestimiento inferior / undercoat anticorrosión",      cat:"estructura",     lvl:"N3" },
+  { n:156, jp:"スポット溶接",          ro:"supotto yōsetsu",            es:"Soldadura por puntos",                                  cat:"estructura",     lvl:"N3" },
+  { n:157, jp:"MIG溶接",             ro:"migu yōsetsu",               es:"Soldadura MIG / soldadura por arco con gas",            cat:"estructura",     lvl:"N3" },
+  { n:158, jp:"接着剤",              ro:"setchakuzai",                es:"Adhesivo estructural / pegamento técnico",              cat:"estructura",     lvl:"N3" },
+  { n:159, jp:"板金",               ro:"bankin",                     es:"Chapa / laminado metálico de la carrocería",            cat:"estructura",     lvl:"N3" },
+  { n:160, jp:"フレーム修正",         ro:"furēmu shūsei",              es:"Enderezado de chasis / corrección de bastidor",         cat:"estructura",     lvl:"N3" },
+
+  // ── NORMATIVA EXTRA ────────────────────────────────────────────────────────
+  { n:161, jp:"CO排出量",            ro:"shīō haishutsuryō",          es:"Emisiones de monóxido de carbono (CO)",                 cat:"normativa",      lvl:"N3" },
+  { n:162, jp:"HC排出量",            ro:"eichishī haishutsuryō",      es:"Emisiones de hidrocarburos (HC)",                       cat:"normativa",      lvl:"N3" },
+  { n:163, jp:"NOx排出量",           ro:"enutiokkusu haishutsuryō",   es:"Emisiones de óxidos de nitrógeno (NOx)",                cat:"normativa",      lvl:"N3" },
+  { n:164, jp:"EURO規制",            ro:"yūro kisei",                 es:"Norma Euro de emisiones (Euro 5, Euro 6)",              cat:"normativa",      lvl:"N3" },
+  { n:165, jp:"触媒コンバーター",      ro:"shokubai konbātā",           es:"Catalizador / convertidor catalítico",                  cat:"normativa",      lvl:"N3" },
+  { n:166, jp:"DPF",                ro:"dīpīefu",                    es:"Filtro de partículas diésel (DPF)",                     cat:"normativa",      lvl:"N3" },
+  { n:167, jp:"アイドルストップ",       ro:"aidoru sutoppu",             es:"Sistema start-stop / parada automática en ralentí",     cat:"normativa",      lvl:"N3" },
+  { n:168, jp:"エコカー減税",          ro:"eko kā genzei",              es:"Reducción fiscal por vehículo ecológico (Japón)",       cat:"normativa",      lvl:"N3" },
+  { n:169, jp:"型式指定",            ro:"katashiki shitei",           es:"Designación oficial del modelo / tipo homologado",       cat:"normativa",      lvl:"N3" },
+  { n:170, jp:"保安基準",            ro:"hoan kijun",                 es:"Norma de seguridad vial / requisito de inspección",     cat:"normativa",      lvl:"N3" },
+
+  // ── DOCUMENTACIÓN EXTRA ───────────────────────────────────────────────────
+  { n:171, jp:"技術情報",            ro:"gijutsu jōhō",               es:"Información técnica / boletín técnico",                 cat:"documentacion",  lvl:"N3" },
+  { n:172, jp:"サービスキャンペーン",  ro:"sābisu kyanpēn",             es:"Campaña de servicio / recall preventivo",               cat:"documentacion",  lvl:"N3" },
+  { n:173, jp:"テクニカルサービスブレティン", ro:"tekunikaru sābisu buretin", es:"Boletín de servicio técnico (TSB)",             cat:"documentacion",  lvl:"N3" },
+  { n:174, jp:"作業指示書",          ro:"sagyō shijisho",             es:"Orden de trabajo / hoja de instrucciones",              cat:"documentacion",  lvl:"N3" },
+  { n:175, jp:"修理見積書",          ro:"shūri mitsumorisho",         es:"Presupuesto de reparación",                             cat:"documentacion",  lvl:"N3" },
+  { n:176, jp:"納車整備",           ro:"nōsha seibi",                es:"Preparación preentrega / revisión antes de entrega",    cat:"documentacion",  lvl:"N3" },
+  { n:177, jp:"保証修理",           ro:"hoshō shūri",                es:"Reparación en garantía",                                cat:"documentacion",  lvl:"N3" },
+  { n:178, jp:"有償修理",           ro:"yūshō shūri",                es:"Reparación de pago / fuera de garantía",                cat:"documentacion",  lvl:"N3" },
+  { n:179, jp:"車両診断書",          ro:"sharyō shindansho",          es:"Informe de diagnóstico del vehículo",                   cat:"documentacion",  lvl:"N3" },
+  { n:180, jp:"修理完了報告",        ro:"shūri kanryō hōkoku",        es:"Reporte de conclusión de reparación",                   cat:"documentacion",  lvl:"N3" },
+
+  // ── HÍBRIDO/EV EXTRA ──────────────────────────────────────────────────────
+  { n:181, jp:"電費",               ro:"denpi",                      es:"Consumo eléctrico / eficiencia energética (kWh/km)",    cat:"hibrido",        lvl:"N3" },
+  { n:182, jp:"走行可能距離（EV）",   ro:"sōkō kanō kyori ībī",       es:"Autonomía eléctrica / rango en modo EV",                cat:"hibrido",        lvl:"N3" },
+  { n:183, jp:"充電口",             ro:"jūden guchi",                es:"Puerto de carga / toma de carga del vehículo",          cat:"hibrido",        lvl:"N3" },
+  { n:184, jp:"充電ケーブル",         ro:"jūden kēburu",               es:"Cable de carga eléctrica",                              cat:"hibrido",        lvl:"N3" },
+  { n:185, jp:"V2H",               ro:"bītsuūeichī",                es:"Vehicle-to-Home / alimentar el hogar con el vehículo",  cat:"hibrido",        lvl:"N3" },
+  { n:186, jp:"モーター出力",         ro:"mōtā shutsuryoku",           es:"Potencia del motor eléctrico (kW)",                     cat:"hibrido",        lvl:"N3" },
+  { n:187, jp:"電池容量",            ro:"denchi yōryō",               es:"Capacidad de la batería (kWh)",                         cat:"hibrido",        lvl:"N3" },
+  { n:188, jp:"熱マネジメント",        ro:"netsu manejimento",          es:"Gestión térmica del sistema de batería",                cat:"hibrido",        lvl:"N3" },
+  { n:189, jp:"電動四輪駆動",         ro:"dendō yonrin kudō",          es:"Tracción integral eléctrica (eAWD)",                    cat:"hibrido",        lvl:"N3" },
+  { n:190, jp:"自動車税",            ro:"jidōsha zei",                es:"Impuesto vehicular / impuesto sobre automóviles",       cat:"normativa",      lvl:"N3" },
+
+  // ── MOTOR AVANZADO EXTRA ──────────────────────────────────────────────────
+  { n:191, jp:"インジェクション量",    ro:"injekushon ryō",             es:"Cantidad de inyección de combustible",                  cat:"motor_adv",      lvl:"N3" },
+  { n:192, jp:"噴射タイミング",        ro:"funsha taimingu",            es:"Momento de inyección / timing de inyección",           cat:"motor_adv",      lvl:"N3" },
+  { n:193, jp:"点火時期",            ro:"tenka jiki",                 es:"Avance de encendido / timing del encendido",            cat:"motor_adv",      lvl:"N3" },
+  { n:194, jp:"バルブクリアランス",    ro:"barubu kuriaransu",          es:"Holgura de válvulas / juego de válvulas",               cat:"motor_adv",      lvl:"N3" },
+  { n:195, jp:"エンジン暖機",         ro:"enjin danki",                es:"Calentamiento del motor / warm-up del motor",           cat:"motor_adv",      lvl:"N3" },
+  { n:196, jp:"過負荷",             ro:"kafuka",                     es:"Sobrecarga del motor / trabajo excesivo",               cat:"motor_adv",      lvl:"N3" },
+  { n:197, jp:"オーバーヒート",        ro:"ōbāhīto",                    es:"Sobrecalentamiento del motor",                          cat:"motor_adv",      lvl:"N3" },
+  { n:198, jp:"焼き付き",            ro:"yakitsuki",                  es:"Agarrotamiento / seizure del motor",                    cat:"motor_adv",      lvl:"N3" },
+  { n:199, jp:"オイル漏れ",          ro:"oiru more",                  es:"Fuga de aceite / derrame de aceite",                    cat:"motor_adv",      lvl:"N3" },
+  { n:200, jp:"冷却水漏れ",          ro:"reikyakusui more",           es:"Fuga de líquido refrigerante",                          cat:"motor_adv",      lvl:"N3" },
+
+  // ── ESTRUCTURA FINAL ──────────────────────────────────────────────────────
+  { n:201, jp:"クロスメンバー補強",    ro:"kurosu menbā hokkyō",        es:"Refuerzo del travesaño del chasis",                    cat:"estructura",     lvl:"N3" },
+  { n:202, jp:"ロールケージ",          ro:"rōru kēji",                  es:"Jaula de seguridad / roll cage",                        cat:"estructura",     lvl:"N3" },
+  { n:203, jp:"エンジンマウント",       ro:"enjin maunto",               es:"Soporte del motor / cojín del motor",                   cat:"estructura",     lvl:"N3" },
+  { n:204, jp:"トランスミッションマウント", ro:"toransumishshon maunto",  es:"Soporte de la transmisión",                             cat:"estructura",     lvl:"N3" },
+  { n:205, jp:"サブフレームブッシュ",   ro:"sabu furēmu busshu",         es:"Silentblock del subchasis",                             cat:"estructura",     lvl:"N3" },
+  { n:206, jp:"スタッドボルト",         ro:"sutaddo boruto",             es:"Espárrago / perno de sujeción",                         cat:"estructura",     lvl:"N3" },
+  { n:207, jp:"ナット",               ro:"natto",                      es:"Tuerca",                                                cat:"estructura",     lvl:"N4" },
+  { n:208, jp:"ボルト",               ro:"boruto",                     es:"Perno / tornillo estructural",                          cat:"estructura",     lvl:"N4" },
+  { n:209, jp:"ワッシャー",            ro:"wasshā",                     es:"Arandela / rondana",                                    cat:"estructura",     lvl:"N4" },
+  { n:210, jp:"クリップ",             ro:"kurippu",                    es:"Grapa / clip de fijación de paneles",                   cat:"estructura",     lvl:"N4" },
+
+  // ── DIAGNÓSTICO AVANZADO FINAL ────────────────────────────────────────────
+  { n:211, jp:"連続モニタリング",       ro:"renzoku monitaringu",        es:"Monitoreo continuo del sistema en tiempo real",         cat:"diagnostico_adv", lvl:"N3" },
+  { n:212, jp:"不連続モニタリング",     ro:"fu renzoku monitaringu",     es:"Monitoreo no continuo (OBD intermitente)",              cat:"diagnostico_adv", lvl:"N3" },
+  { n:213, jp:"データロガー",          ro:"dēta rogā",                  es:"Registrador de datos / data logger",                    cat:"diagnostico_adv", lvl:"N3" },
+  { n:214, jp:"インピーダンス測定",     ro:"inpīdansu sokutei",          es:"Medición de impedancia eléctrica",                      cat:"diagnostico_adv", lvl:"N3" },
+  { n:215, jp:"バランステスト",         ro:"baransu tesuto",             es:"Prueba de balance de cilindros",                        cat:"diagnostico_adv", lvl:"N3" },
+  { n:216, jp:"インジェクターテスト",    ro:"injekutā tesuto",            es:"Prueba de inyectores",                                  cat:"diagnostico_adv", lvl:"N3" },
+  { n:217, jp:"コイルテスト",          ro:"koiru tesuto",               es:"Prueba de la bobina de encendido",                      cat:"diagnostico_adv", lvl:"N3" },
+  { n:218, jp:"バッテリー負荷テスト",   ro:"batterī fuka tesuto",        es:"Prueba de carga de batería",                            cat:"diagnostico_adv", lvl:"N3" },
+  { n:219, jp:"充電システムテスト",     ro:"jūden shisutemu tesuto",     es:"Prueba del sistema de carga del alternador",            cat:"diagnostico_adv", lvl:"N3" },
+  { n:220, jp:"スターターテスト",       ro:"sutātā tesuto",              es:"Prueba del motor de arranque",                          cat:"diagnostico_adv", lvl:"N3" },
+
+  // ── DOCUMENTACIÓN FINAL ───────────────────────────────────────────────────
+  { n:221, jp:"フィールドサービス情報",  ro:"fīrudo sābisu jōhō",         es:"Información de servicio de campo / FSI",                cat:"documentacion",  lvl:"N3" },
+  { n:222, jp:"アップデート情報",        ro:"appudēto jōhō",              es:"Información de actualización del sistema",              cat:"documentacion",  lvl:"N3" },
+  { n:223, jp:"改善対策",             ro:"kaizen taisaku",             es:"Medidas de mejora / acción correctiva",                 cat:"documentacion",  lvl:"N3" },
+  { n:224, jp:"品質管理",             ro:"hinshitsu kanri",            es:"Control de calidad",                                    cat:"documentacion",  lvl:"N3" },
+  { n:225, jp:"不具合情報",           ro:"fuguai jōhō",                es:"Información de defectos / informe de fallas",           cat:"documentacion",  lvl:"N3" },
+  { n:226, jp:"再現性確認",           ro:"saigensei kakunin",          es:"Verificación de reproducibilidad del fallo",            cat:"documentacion",  lvl:"N3" },
+  { n:227, jp:"原因特定",            ro:"gen'in tokutei",             es:"Identificación de la causa raíz",                       cat:"documentacion",  lvl:"N3" },
+  { n:228, jp:"対策実施",            ro:"taisaku jisshi",             es:"Implementación de la solución / acción correctiva",     cat:"documentacion",  lvl:"N3" },
+  { n:229, jp:"効果確認",            ro:"kōka kakunin",               es:"Verificación de la efectividad de la reparación",       cat:"documentacion",  lvl:"N3" },
+  { n:230, jp:"水平展開",            ro:"suihei tenkai",              es:"Aplicación horizontal / extensión de la solución",      cat:"documentacion",  lvl:"N3" },
+
+  // ── ELECTRÓNICA FINAL ─────────────────────────────────────────────────────
+  { n:231, jp:"PWM制御",             ro:"pīdaburyūemu seigyo",        es:"Control PWM / modulación de ancho de pulso",            cat:"electronica",    lvl:"N3" },
+  { n:232, jp:"デューティ比",          ro:"dyūtī hi",                   es:"Ciclo de trabajo / duty cycle (porcentaje PWM)",        cat:"electronica",    lvl:"N3" },
+  { n:233, jp:"パルス信号",           ro:"parusu shingō",              es:"Señal de pulso / señal digital del sensor",             cat:"electronica",    lvl:"N3" },
+  { n:234, jp:"アナログ信号",          ro:"anarogu shingō",             es:"Señal analógica del sensor (tensión variable)",         cat:"electronica",    lvl:"N3" },
+  { n:235, jp:"デジタル信号",          ro:"dejitaru shingō",            es:"Señal digital (0/1 binario)",                          cat:"electronica",    lvl:"N3" },
+  { n:236, jp:"基準電圧",            ro:"kijun den'atsu",             es:"Tensión de referencia (5V del sensor)",                 cat:"electronica",    lvl:"N3" },
+  { n:237, jp:"接地",               ro:"setti",                      es:"Conexión a tierra / masa eléctrica",                    cat:"electronica",    lvl:"N3" },
+  { n:238, jp:"電気抵抗",            ro:"denki teikō",                es:"Resistencia eléctrica (Ohmios)",                        cat:"electronica",    lvl:"N3" },
+  { n:239, jp:"コンデンサー",          ro:"kondensā",                   es:"Condensador / capacitor eléctrico",                     cat:"electronica",    lvl:"N3" },
+  { n:240, jp:"リレー",              ro:"rirē",                       es:"Relé / interruptor electromagnético",                   cat:"electronica",    lvl:"N3" },
+
+  // ── MOTOR FINAL ───────────────────────────────────────────────────────────
+  { n:241, jp:"エンジン寿命",          ro:"enjin jumyō",                es:"Vida útil del motor",                                   cat:"motor_adv",      lvl:"N3" },
+  { n:242, jp:"摩耗",               ro:"mamō",                       es:"Desgaste / abrasión de piezas en movimiento",           cat:"motor_adv",      lvl:"N3" },
+  { n:243, jp:"クリアランス管理",      ro:"kuriaransu kanri",           es:"Control de holguras / gestión de tolerancias",          cat:"motor_adv",      lvl:"N3" },
+  { n:244, jp:"ホーニング",           ro:"hōningu",                    es:"Honrado / acabado interior del cilindro",               cat:"motor_adv",      lvl:"N3" },
+  { n:245, jp:"バルブシール",          ro:"barubu shīru",               es:"Sello de válvula / retén de tallo",                     cat:"motor_adv",      lvl:"N3" },
+  { n:246, jp:"ヘッドガスケット",       ro:"heddo gasuketto",            es:"Junta de culata",                                       cat:"motor_adv",      lvl:"N3" },
+  { n:247, jp:"オイルシール",          ro:"oiru shīru",                 es:"Retén de aceite / sello de aceite",                     cat:"motor_adv",      lvl:"N3" },
+  { n:248, jp:"ピストンリング",         ro:"pisuton ringu",              es:"Anillo del pistón / aro del émbolo",                    cat:"motor_adv",      lvl:"N3" },
+  { n:249, jp:"コンロッド",           ro:"konroddo",                   es:"Biela / varilla de conexión",                           cat:"motor_adv",      lvl:"N3" },
+  { n:250, jp:"メインベアリング",       ro:"mein bearingu",              es:"Cojinete principal del cigüeñal",                       cat:"motor_adv",      lvl:"N3" },
+
+  // ── NORMATIVA FINAL ────────────────────────────────────────────────────────
+  { n:251, jp:"リサイクル法",          ro:"risaikuru hō",               es:"Ley de reciclaje vehicular (Japón)",                    cat:"normativa",      lvl:"N3" },
+  { n:252, jp:"廃車",               ro:"haisha",                     es:"Desguace / baja definitiva del vehículo",               cat:"normativa",      lvl:"N3" },
+  { n:253, jp:"適合証明書",          ro:"tekigō shōmeisho",           es:"Certificado de conformidad / homologación",             cat:"normativa",      lvl:"N3" },
+  { n:254, jp:"認証整備工場",         ro:"ninshō seibi kōjō",          es:"Taller de reparación certificado / autorizado",         cat:"normativa",      lvl:"N3" },
+  { n:255, jp:"特定整備",           ro:"tokutei seibi",              es:"Mantenimiento específico / servicio especializado",      cat:"normativa",      lvl:"N3" },
+  { n:256, jp:"自動車検査登録情報",    ro:"jidōsha kensa tōroku jōhō", es:"Información de inspección y registro vehicular",        cat:"normativa",      lvl:"N3" },
+  { n:257, jp:"改造申請",           ro:"kaizō shinsei",              es:"Solicitud de modificación vehicular / trámite de tuning", cat:"normativa",     lvl:"N3" },
+  { n:258, jp:"使用過程車",          ro:"shiyō katei sha",            es:"Vehículo en uso / vehículo con años de uso",            cat:"normativa",      lvl:"N3" },
+  { n:259, jp:"新型認可",           ro:"shingata ninka",             es:"Aprobación de nuevo modelo vehicular",                  cat:"normativa",      lvl:"N3" },
+  { n:260, jp:"整備士資格",          ro:"seibishi shikaku",           es:"Certificación de técnico automotriz / licencia mecánica", cat:"normativa",    lvl:"N3" },
+];
+
+const catLabels = {
+  electronica:"🖥 Electrónica", motor_adv:"⚙ Motor avanzado", normativa:"📄 Normativa",
+  hibrido:"⚡ Híbrido/EV", diagnostico_adv:"🔬 Diagnóstico", estructura:"🔩 Estructura", documentacion:"📋 Documentación"
+};
+
+let activeCat = "all";
+let learned = JSON.parse(localStorage.getItem("ja_adv_learned") || "{}");
+let speeds = {};
+
+function buildPrompt(v) {
+  return `Eres un profesor experto en japonés automotriz a nivel técnico avanzado. Hoy estudiamos:
+
+「${v.jp}」 (${v.ro}) = ${v.es}
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN TÉCNICA: Explícame en español qué es exactamente este término a nivel técnico. Cómo funciona el componente o sistema, cuándo aparece este vocabulario en el trabajo real de un técnico certificado, en diagnósticos, documentación de taller o manuales de servicio. Sé preciso pero claro, sin simplificar en exceso.
+
+2. EJEMPLOS: Dame 3 oraciones técnicas en japonés usando este término. Para cada una:
+   - Japonés: (con kanji)
+   - Romaji: (pronunciación)
+   - Español: (traducción técnica)
+
+3. Pregúntame si tengo dudas antes de la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 frases en español, una por una, para que yo las traduzca al japonés. Espera mi respuesta antes de continuar.
+
+5. Corrígeme con detalle tras cada respuesta. Explica los errores y cómo mejorar.
+
+6. Al finalizar dime si domino el término o necesito más práctica.
+
+Todas las explicaciones en español por favor.`;
+}
+
+window.addEventListener("DOMContentLoaded", () => { buildCards(); updateLearnedCount(); });
+
+function buildCards() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  vocab.forEach(v => {
+    speeds[v.n] = 1.0;
+    const card = document.createElement("div");
+    card.className = "vocab-card" + (learned[v.n] ? " learned" : "");
+    card.dataset.search = (v.jp + " " + v.ro + " " + v.es).toLowerCase();
+    card.dataset.cat = v.cat;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-num">${String(v.n).padStart(3,"0")}</span>
+        <div class="card-body-inner">
+          <div class="vocab-jp">${v.jp}</div>
+          <div class="vocab-romaji">${v.ro}</div>
+          <div class="vocab-es">${v.es}</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="level-badge">${v.lvl}</span>
+        <span class="cat-badge">${catLabels[v.cat]}</span>
+      </div>
+      <div class="audio-row">
+        <button class="play-btn" id="play-${v.n}" onclick="speak(${v.n})">▶ Audio</button>
+        <button class="speed-btn active" data-n="${v.n}" data-sp="1.0" onclick="setSpeed(${v.n},1.0,this)">1.0×</button>
+        <button class="speed-btn" data-n="${v.n}" data-sp="0.75" onclick="setSpeed(${v.n},0.75,this)">0.75×</button>
+        <button class="speed-btn" data-n="${v.n}" data-sp="0.5" onclick="setSpeed(${v.n},0.5,this)">0.5×</button>
+      </div>
+      <div class="card-btns">
+        <button class="copy-btn" id="cb-${v.n}" onclick="copyPrompt(${v.n})">✦ Copiar prompt</button>
+        <button class="learned-btn" id="lb-${v.n}" onclick="toggleLearned(${v.n})">${learned[v.n] ? "✦ Dominada" : "○ Marcar"}</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function speak(n) {
+  const v = vocab[n-1];
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(v.jp);
+  utt.lang = "ja-JP"; utt.rate = speeds[n];
+  const btn = document.getElementById(`play-${n}`);
+  btn.classList.add("playing"); btn.textContent = "◼ Stop";
+  utt.onend = () => { btn.classList.remove("playing"); btn.innerHTML = "▶ Audio"; };
+  utt.onerror = () => { btn.classList.remove("playing"); btn.innerHTML = "▶ Audio"; };
+  window.speechSynthesis.speak(utt);
+}
+
+function setSpeed(n, sp, btn) {
+  speeds[n] = sp;
+  document.querySelectorAll(`[data-n="${n}"]`).forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function copyPrompt(n) {
+  const v = vocab[n-1];
+  const btn = document.getElementById(`cb-${n}`);
+  navigator.clipboard.writeText(buildPrompt(v)).then(() => {
+    btn.textContent = "✦ Copiado"; btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "✦ Copiar prompt"; btn.classList.remove("copied"); }, 2000);
+    const t = document.getElementById("toast");
+    t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500);
+  });
+}
+
+function toggleLearned(n) {
+  if (learned[n]) delete learned[n]; else learned[n] = true;
+  localStorage.setItem("ja_adv_learned", JSON.stringify(learned));
+  document.querySelectorAll(".vocab-card").forEach(c => {
+    if (c.dataset.search.includes(vocab[n-1].ro.toLowerCase())) {
+      if (learned[n]) c.classList.add("learned"); else c.classList.remove("learned");
+    }
+  });
+  const btn = document.getElementById(`lb-${n}`);
+  if (btn) btn.textContent = learned[n] ? "✦ Dominada" : "○ Marcar";
+  updateLearnedCount();
+}
+
+function updateLearnedCount() {
+  document.getElementById("learnedCount").textContent = `✦ ${Object.keys(learned).length} / 260 dominadas`;
+}
+
+function selectCat(btn) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active"); activeCat = btn.dataset.cat; applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll(".vocab-card").forEach(c => {
+    const show = c.dataset.search.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
+    c.classList.toggle("hidden", !show); if (show) visible++;
+  });
+  document.getElementById("counter").textContent = `Mostrando ${visible}`;
+}
+</script>
+</body>
+</html>

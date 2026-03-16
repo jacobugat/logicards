@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Japonés Automotriz · Básico — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #060606;
+      --bg2:      #0d0d0d;
+      --card:     #0f0f0f;
+      --card2:    #161616;
+      --red:      #e01e1e;
+      --red-dim:  rgba(224,30,30,0.10);
+      --red-glow: rgba(224,30,30,0.06);
+      --border:   rgba(224,30,30,0.18);
+      --border2:  rgba(255,255,255,0.06);
+      --text:     #f0e8e8;
+      --muted:    #5a2020;
+      --mono:     'Syne Mono', monospace;
+      --sans:     'Syne', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 400; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; bottom: -180px; left: -180px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(224,30,30,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(6,6,6,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--red); }
+    .nav-title { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badges { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--red); border: 1px solid rgba(224,30,30,0.4);
+      background: var(--red-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+    .nav-badge-level {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    .wrapper { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 1.4rem 4rem; }
+
+    /* HEADER */
+    header { padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .header-inner { position: relative; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--red); opacity: 0.5; }
+    h1 { font-family: var(--sans); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    h1 span { color: var(--red); }
+    .jp-deco { font-size: clamp(2rem, 6vw, 4rem); color: rgba(224,30,30,0.05); font-family: serif; position: absolute; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; line-height: 1; letter-spacing: -0.05em; }
+    .header-desc { color: var(--muted); font-size: 0.85rem; max-width: 580px; line-height: 1.7; margin-top: 0.4rem; }
+    .header-meta { display: flex; align-items: center; gap: 1.4rem; margin-top: 1.2rem; flex-wrap: wrap; }
+    .meta-item { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+    .meta-item::before { content: '▪'; color: var(--red); font-size: 0.5rem; }
+
+    /* CONTROLS */
+    .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-bottom: 1.6rem; }
+    .search-input {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 3px; padding: 0.5rem 0.9rem;
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem;
+      outline: none; transition: border-color 0.2s; min-width: 200px; letter-spacing: 0.04em;
+    }
+    .search-input:focus { border-color: var(--red); }
+    .search-input::placeholder { color: var(--muted); }
+    .cat-btn {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 2px; padding: 0.28rem 0.75rem;
+      color: var(--muted); font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .cat-btn:hover { border-color: var(--red); color: var(--red); }
+    .cat-btn.active { background: var(--red); border-color: var(--red); color: #000; font-weight: 600; }
+    .stats { display: flex; gap: 1.2rem; margin-left: auto; align-items: center; }
+    .counter { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+
+    /* GRID */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.7rem; }
+
+    /* VOCAB CARD */
+    .vocab-card {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 4px; padding: 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .vocab-card:hover { border-color: rgba(224,30,30,0.25); transform: translateY(-2px); }
+    .vocab-card.learned { background: rgba(224,30,30,0.05); border-color: rgba(224,30,30,0.3); }
+    .vocab-card.hidden { display: none; }
+
+    .card-top { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .card-num { font-family: var(--mono); font-size: 0.6rem; color: rgba(255,255,255,0.12); min-width: 22px; padding-top: 3px; }
+    .card-body-inner { flex: 1; display: flex; flex-direction: column; gap: 0.18rem; }
+
+    .vocab-jp { font-family: serif; font-size: 1.25rem; color: var(--text); line-height: 1.3; }
+    .vocab-romaji { font-family: var(--mono); font-size: 0.68rem; color: var(--red); letter-spacing: 0.06em; }
+    .vocab-es { font-size: 0.8rem; color: rgba(240,232,232,0.65); line-height: 1.4; }
+
+    .card-meta { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.2rem; }
+    .level-badge {
+      font-family: var(--mono); font-size: 0.52rem; padding: 0.12rem 0.4rem;
+      border-radius: 2px; border: 1px solid var(--border2); color: var(--muted); letter-spacing: 0.08em;
+    }
+    .cat-badge {
+      font-family: var(--mono); font-size: 0.52rem; padding: 0.12rem 0.4rem;
+      border-radius: 2px; border: 1px solid var(--border2); color: var(--muted); letter-spacing: 0.06em;
+    }
+
+    /* AUDIO */
+    .audio-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; }
+    .play-btn {
+      background: var(--red-dim); border: 1px solid rgba(224,30,30,0.3);
+      border-radius: 3px; color: var(--red);
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+      padding: 0.22rem 0.55rem; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 0.25rem;
+      text-transform: uppercase;
+    }
+    .play-btn:hover { background: rgba(224,30,30,0.18); border-color: var(--red); }
+    .play-btn.playing { background: rgba(224,30,30,0.22); border-color: var(--red); }
+    .speed-btn {
+      background: transparent; border: 1px solid var(--border2);
+      border-radius: 3px; color: var(--muted);
+      font-family: var(--mono); font-size: 0.55rem;
+      padding: 0.22rem 0.45rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .speed-btn:hover { border-color: rgba(224,30,30,0.3); color: var(--red); }
+    .speed-btn.active { border-color: rgba(224,30,30,0.4); color: var(--red); background: var(--red-dim); }
+
+    /* BUTTONS */
+    .card-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.2rem; }
+    .copy-btn {
+      background: var(--red-dim); border: 1px solid rgba(224,30,30,0.28);
+      border-radius: 3px; color: var(--red);
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem; cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 0.25rem;
+      text-transform: uppercase;
+    }
+    .copy-btn:hover { background: rgba(224,30,30,0.18); border-color: var(--red); transform: translateY(-1px); }
+    .copy-btn.copied { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.08); }
+    .learned-btn {
+      background: transparent; border: 1px solid var(--border2);
+      border-radius: 3px; color: var(--muted);
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+    }
+    .learned-btn:hover { border-color: rgba(224,30,30,0.35); color: var(--red); }
+    .vocab-card.learned .learned-btn { border-color: rgba(224,30,30,0.4); color: var(--red); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #0f0f0f; border: 1px solid rgba(224,30,30,0.4);
+      color: var(--red); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em;
+      padding: 0.65rem 1.4rem; border-radius: 3px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--red); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .cat-badge, .level-badge { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      .jp-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">Japonés Automotriz</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nav-badge-level">Manual Toyota Corolla</span>
+    <span class="nav-badge" id="learnedCount">0 / 120 aprendidas</span>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <header>
+    <div class="header-inner">
+      <p class="level-tag">Nivel Básico · Vocabulario automotriz</p>
+      <h1>Japonés <span>Automotriz</span></h1>
+      <div class="jp-deco">整備</div>
+    </div>
+    <p class="header-desc">
+      120 términos esenciales extraídos del manual oficial Toyota Corolla. Vocabulario real, nivel básico. Escucha, estudia y practica con tu IA.
+    </p>
+    <div class="header-meta">
+      <span class="meta-item">120 términos</span>
+      <span class="meta-item">Audio integrado</span>
+      <span class="meta-item">Nivel básico</span>
+      <span class="meta-item">Manual Toyota Corolla</span>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar en japonés o español…" oninput="applyFilters()" />
+    <button class="cat-btn active" data-cat="all"         onclick="selectCat(this)">Todos</button>
+    <button class="cat-btn" data-cat="motor"              onclick="selectCat(this)">⚙ Motor</button>
+    <button class="cat-btn" data-cat="seguridad"          onclick="selectCat(this)">🛡 Seguridad</button>
+    <button class="cat-btn" data-cat="conduccion"         onclick="selectCat(this)">🚗 Conducción</button>
+    <button class="cat-btn" data-cat="frenos"             onclick="selectCat(this)">🔴 Frenos</button>
+    <button class="cat-btn" data-cat="carroceria"         onclick="selectCat(this)">🚪 Carrocería</button>
+    <button class="cat-btn" data-cat="electrico"          onclick="selectCat(this)">⚡ Eléctrico</button>
+    <button class="cat-btn" data-cat="mantenimiento"      onclick="selectCat(this)">🔧 Mantenimiento</button>
+    <div class="stats"><span class="counter" id="counter">Mostrando 120</span></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · Japonés Automotriz · Básico</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+
+<script>
+const vocab = [
+  // ── MOTOR ──────────────────────────────────────────────────────────────────
+  { n:1,   jp:"エンジン",          ro:"enjin",              es:"Motor / Engine",                       cat:"motor",       lvl:"N5" },
+  { n:2,   jp:"エンジンスイッチ",   ro:"enjin suicchi",      es:"Interruptor del motor / Switch de encendido", cat:"motor", lvl:"N4" },
+  { n:3,   jp:"エンジンオイル",     ro:"enjin oiru",         es:"Aceite de motor",                      cat:"motor",       lvl:"N5" },
+  { n:4,   jp:"エンジン始動",       ro:"enjin kidō",         es:"Arranque del motor",                   cat:"motor",       lvl:"N4" },
+  { n:5,   jp:"冷却水",            ro:"reikyakusui",        es:"Agua de enfriamiento / refrigerante",   cat:"motor",       lvl:"N4" },
+  { n:6,   jp:"水温計",            ro:"suionkei",           es:"Termómetro del agua / indicador de temperatura", cat:"motor", lvl:"N3" },
+  { n:7,   jp:"燃料",              ro:"nenryō",             es:"Combustible / gasolina",                cat:"motor",       lvl:"N5" },
+  { n:8,   jp:"燃料計",            ro:"nenryōkei",          es:"Indicador de combustible",              cat:"motor",       lvl:"N4" },
+  { n:9,   jp:"給油",              ro:"kyūyu",              es:"Recarga de combustible / repostar",     cat:"motor",       lvl:"N4" },
+  { n:10,  jp:"タコメーター",       ro:"takomētā",           es:"Tacómetro / contador de RPM",           cat:"motor",       lvl:"N3" },
+  { n:11,  jp:"アクセルペダル",     ro:"akuseru pedaru",     es:"Pedal del acelerador",                  cat:"motor",       lvl:"N4" },
+  { n:12,  jp:"点火",              ro:"tenka",              es:"Ignición / chispa",                     cat:"motor",       lvl:"N3" },
+  { n:13,  jp:"排気ガス",          ro:"haiki gasu",         es:"Gases de escape / emisiones",           cat:"motor",       lvl:"N3" },
+  { n:14,  jp:"アイドリング",       ro:"aidoringu",          es:"Ralentí / motor en marcha sin moverse", cat:"motor",       lvl:"N3" },
+  { n:15,  jp:"ターボ",            ro:"tābo",               es:"Turbo / turbocompresor",                cat:"motor",       lvl:"N4" },
+
+  // ── CONDUCCIÓN ─────────────────────────────────────────────────────────────
+  { n:16,  jp:"運転",              ro:"unten",              es:"Conducir / manejar",                    cat:"conduccion",  lvl:"N5" },
+  { n:17,  jp:"走行",              ro:"sōkō",               es:"Circulación / marcha del vehículo",     cat:"conduccion",  lvl:"N4" },
+  { n:18,  jp:"車速",              ro:"shaso",              es:"Velocidad del vehículo",                cat:"conduccion",  lvl:"N3" },
+  { n:19,  jp:"スピードメーター",   ro:"supīdo mētā",        es:"Velocímetro",                           cat:"conduccion",  lvl:"N4" },
+  { n:20,  jp:"ハンドル",          ro:"handoru",            es:"Volante / timón",                       cat:"conduccion",  lvl:"N5" },
+  { n:21,  jp:"シフトレバー",       ro:"shifuto rebā",       es:"Palanca de cambios",                    cat:"conduccion",  lvl:"N4" },
+  { n:22,  jp:"オートマチックトランスミッション", ro:"ōtomachikku toransumishshon", es:"Transmisión automática", cat:"conduccion", lvl:"N3" },
+  { n:23,  jp:"方向指示",          ro:"hōkō shiji",         es:"Indicador de dirección / señal de giro", cat:"conduccion", lvl:"N3" },
+  { n:24,  jp:"走行距離",          ro:"sōkō kyori",         es:"Distancia recorrida / kilometraje",     cat:"conduccion",  lvl:"N3" },
+  { n:25,  jp:"燃費",              ro:"nenpi",              es:"Consumo de combustible / rendimiento",  cat:"conduccion",  lvl:"N3" },
+  { n:26,  jp:"クルーズコントロール", ro:"kurūzu kontorōru", es:"Control de crucero",                   cat:"conduccion",  lvl:"N3" },
+  { n:27,  jp:"発進",              ro:"hasshin",            es:"Arranque / salida del vehículo",        cat:"conduccion",  lvl:"N4" },
+  { n:28,  jp:"加速",              ro:"kasoku",             es:"Aceleración",                           cat:"conduccion",  lvl:"N4" },
+  { n:29,  jp:"減速",              ro:"gensoku",            es:"Desaceleración / reducción de velocidad", cat:"conduccion", lvl:"N4" },
+  { n:30,  jp:"停車",              ro:"teisha",             es:"Parada / detención del vehículo",       cat:"conduccion",  lvl:"N4" },
+
+  // ── FRENOS ─────────────────────────────────────────────────────────────────
+  { n:31,  jp:"ブレーキ",          ro:"burēki",             es:"Freno",                                 cat:"frenos",      lvl:"N5" },
+  { n:32,  jp:"ブレーキペダル",     ro:"burēki pedaru",      es:"Pedal del freno",                       cat:"frenos",      lvl:"N4" },
+  { n:33,  jp:"パーキングブレーキ", ro:"pākingu burēki",     es:"Freno de mano / freno de estacionamiento", cat:"frenos",   lvl:"N4" },
+  { n:34,  jp:"ブレーキパッド",     ro:"burēki paddo",       es:"Pastilla de freno",                     cat:"frenos",      lvl:"N3" },
+  { n:35,  jp:"ABS",               ro:"eibīesu",            es:"Sistema antibloqueo de frenos (ABS)",   cat:"frenos",      lvl:"N3" },
+  { n:36,  jp:"制動距離",          ro:"seidō kyori",        es:"Distancia de frenado",                  cat:"frenos",      lvl:"N3" },
+  { n:37,  jp:"ブレーキホールド",   ro:"burēki hōrudo",      es:"Retención de freno / brake hold",       cat:"frenos",      lvl:"N3" },
+  { n:38,  jp:"制動力",            ro:"seidōryoku",         es:"Fuerza de frenado",                     cat:"frenos",      lvl:"N3" },
+
+  // ── SEGURIDAD ──────────────────────────────────────────────────────────────
+  { n:39,  jp:"安全",              ro:"anzen",              es:"Seguridad",                             cat:"seguridad",   lvl:"N5" },
+  { n:40,  jp:"シートベルト",       ro:"shīto beruto",       es:"Cinturón de seguridad",                 cat:"seguridad",   lvl:"N5" },
+  { n:41,  jp:"エアバッグ",         ro:"eabaggu",            es:"Airbag / bolsa de aire",                cat:"seguridad",   lvl:"N4" },
+  { n:42,  jp:"SRSエアバッグ",      ro:"esuāresu eabaggu",   es:"Airbag SRS (Sistema de Retención Suplementaria)", cat:"seguridad", lvl:"N3" },
+  { n:43,  jp:"チャイルドシート",   ro:"chaiurudo shīto",    es:"Silla para niños / asiento infantil",   cat:"seguridad",   lvl:"N4" },
+  { n:44,  jp:"警告灯",            ro:"keikōtō",            es:"Luz de advertencia / testigo",          cat:"seguridad",   lvl:"N4" },
+  { n:45,  jp:"警告音",            ro:"keikōon",            es:"Señal sonora de advertencia / buzzer",  cat:"seguridad",   lvl:"N4" },
+  { n:46,  jp:"衝突",              ro:"shōtotsu",           es:"Colisión / impacto",                    cat:"seguridad",   lvl:"N4" },
+  { n:47,  jp:"プリクラッシュセーフティ", ro:"purikurasshu sēfutī", es:"Sistema de seguridad precolisión (PCS)", cat:"seguridad", lvl:"N3" },
+  { n:48,  jp:"非常点滅灯",        ro:"hijō tentōtō",       es:"Luces de emergencia / intermitentes de avería", cat:"seguridad", lvl:"N3" },
+  { n:49,  jp:"盗難防止装置",       ro:"tōnan bōshi sōchi",  es:"Dispositivo antirrobo",                 cat:"seguridad",   lvl:"N3" },
+  { n:50,  jp:"イモビライザー",     ro:"imobairaizā",        es:"Inmovilizador / antirrobo electrónico", cat:"seguridad",   lvl:"N3" },
+  { n:51,  jp:"シートベルトプリテンショナー", ro:"shīto beruto puriteNshonā", es:"Pretensor del cinturón de seguridad", cat:"seguridad", lvl:"N3" },
+
+  // ── CARROCERÍA ─────────────────────────────────────────────────────────────
+  { n:52,  jp:"ドア",              ro:"doa",                es:"Puerta",                                cat:"carroceria",  lvl:"N5" },
+  { n:53,  jp:"トランク",          ro:"toranku",            es:"Maletero / baúl",                       cat:"carroceria",  lvl:"N5" },
+  { n:54,  jp:"ボンネット",         ro:"bonnetto",           es:"Capó / cofre del motor",                cat:"carroceria",  lvl:"N4" },
+  { n:55,  jp:"フロント",          ro:"furonto",            es:"Parte delantera / frente",              cat:"carroceria",  lvl:"N5" },
+  { n:56,  jp:"リヤ",              ro:"riya",               es:"Parte trasera / atrás",                 cat:"carroceria",  lvl:"N5" },
+  { n:57,  jp:"ウインドウ",         ro:"uindou",             es:"Ventana / cristal",                     cat:"carroceria",  lvl:"N5" },
+  { n:58,  jp:"ミラー",            ro:"mirā",               es:"Espejo retrovisor",                     cat:"carroceria",  lvl:"N5" },
+  { n:59,  jp:"インナーミラー",     ro:"innā mirā",          es:"Espejo retrovisor interior",            cat:"carroceria",  lvl:"N4" },
+  { n:60,  jp:"ドアミラー",         ro:"doa mirā",           es:"Espejo lateral / espejo de puerta",     cat:"carroceria",  lvl:"N4" },
+  { n:61,  jp:"シート",            ro:"shīto",              es:"Asiento",                               cat:"carroceria",  lvl:"N5" },
+  { n:62,  jp:"フロントシート",     ro:"furonto shīto",      es:"Asiento delantero",                     cat:"carroceria",  lvl:"N4" },
+  { n:63,  jp:"リヤシート",         ro:"riya shīto",         es:"Asiento trasero",                       cat:"carroceria",  lvl:"N4" },
+  { n:64,  jp:"ヘッドレスト",       ro:"heddoresuto",        es:"Apoyacabezas / reposacabezas",          cat:"carroceria",  lvl:"N4" },
+  { n:65,  jp:"パワーウインドウ",    ro:"pawā uindou",        es:"Ventana eléctrica / elevalunas eléctrico", cat:"carroceria", lvl:"N4" },
+  { n:66,  jp:"バンパー",           ro:"banpā",              es:"Parachoques / bumper",                  cat:"carroceria",  lvl:"N4" },
+  { n:67,  jp:"タイヤ",            ro:"taiya",              es:"Neumático / llanta",                    cat:"carroceria",  lvl:"N5" },
+  { n:68,  jp:"タイヤ空気圧",       ro:"taiya kūkiatsu",     es:"Presión del neumático",                 cat:"carroceria",  lvl:"N4" },
+  { n:69,  jp:"ホイール",           ro:"hoīru",              es:"Rin / llanta de aleación",              cat:"carroceria",  lvl:"N4" },
+  { n:70,  jp:"ワイパー",           ro:"waipā",              es:"Limpiaparabrisas / plumilla",           cat:"carroceria",  lvl:"N4" },
+
+  // ── ELÉCTRICO ──────────────────────────────────────────────────────────────
+  { n:71,  jp:"バッテリー",         ro:"batterī",            es:"Batería",                               cat:"electrico",   lvl:"N5" },
+  { n:72,  jp:"バッテリーあがり",    ro:"batterī agari",      es:"Batería descargada / batería muerta",   cat:"electrico",   lvl:"N4" },
+  { n:73,  jp:"電球",              ro:"denkyū",             es:"Bombilla / foco",                       cat:"electrico",   lvl:"N4" },
+  { n:74,  jp:"ヒューズ",           ro:"hyūzu",              es:"Fusible",                               cat:"electrico",   lvl:"N4" },
+  { n:75,  jp:"ランプ",            ro:"ranpu",              es:"Lámpara / luz",                         cat:"electrico",   lvl:"N5" },
+  { n:76,  jp:"ヘッドランプ",        ro:"heddoranpu",         es:"Faro delantero / luz delantera",        cat:"electrico",   lvl:"N4" },
+  { n:77,  jp:"フォグランプ",        ro:"foguranpu",          es:"Luz antiniebla / neblinero",            cat:"electrico",   lvl:"N4" },
+  { n:78,  jp:"ランプスイッチ",      ro:"ranpu suicchi",      es:"Interruptor de luces",                  cat:"electrico",   lvl:"N4" },
+  { n:79,  jp:"充電",              ro:"jūden",              es:"Carga eléctrica / recarga",              cat:"electrico",   lvl:"N4" },
+  { n:80,  jp:"USB",               ro:"yūesubī",            es:"Puerto USB / conexión USB",             cat:"electrico",   lvl:"N5" },
+  { n:81,  jp:"スイッチ",           ro:"suicchi",            es:"Interruptor / switch / botón",          cat:"electrico",   lvl:"N5" },
+  { n:82,  jp:"センサー",           ro:"sensā",              es:"Sensor",                                cat:"electrico",   lvl:"N4" },
+  { n:83,  jp:"警告ブザー",         ro:"keikō buzā",         es:"Buzzer de advertencia / alarma sonora", cat:"electrico",   lvl:"N4" },
+  { n:84,  jp:"表示灯",            ro:"hyōjitō",            es:"Luz indicadora / testigo luminoso",     cat:"electrico",   lvl:"N4" },
+  { n:85,  jp:"ディスプレイ",        ro:"disupurei",          es:"Pantalla / display",                    cat:"electrico",   lvl:"N4" },
+
+  // ── MANTENIMIENTO ──────────────────────────────────────────────────────────
+  { n:86,  jp:"整備",              ro:"seibi",              es:"Mantenimiento / servicio técnico",      cat:"mantenimiento", lvl:"N3" },
+  { n:87,  jp:"点検",              ro:"tenken",             es:"Inspección / revisión técnica",         cat:"mantenimiento", lvl:"N4" },
+  { n:88,  jp:"交換",              ro:"kōkan",              es:"Cambio / reemplazo de una pieza",       cat:"mantenimiento", lvl:"N4" },
+  { n:89,  jp:"部品",              ro:"buhin",              es:"Repuesto / pieza de repuesto",          cat:"mantenimiento", lvl:"N4" },
+  { n:90,  jp:"オイル交換",         ro:"oiru kōkan",         es:"Cambio de aceite",                      cat:"mantenimiento", lvl:"N4" },
+  { n:91,  jp:"洗車",              ro:"sensha",             es:"Lavado del vehículo",                   cat:"mantenimiento", lvl:"N4" },
+  { n:92,  jp:"修理",              ro:"shūri",              es:"Reparación / arreglo",                  cat:"mantenimiento", lvl:"N4" },
+  { n:93,  jp:"故障",              ro:"koshō",              es:"Avería / falla mecánica",               cat:"mantenimiento", lvl:"N4" },
+  { n:94,  jp:"異常",              ro:"ijō",                es:"Anomalía / falla / funcionamiento anormal", cat:"mantenimiento", lvl:"N4" },
+  { n:95,  jp:"メンテナンス",        ro:"mentenansu",         es:"Mantenimiento preventivo",              cat:"mantenimiento", lvl:"N4" },
+  { n:96,  jp:"消耗品",            ro:"shōmōhin",           es:"Consumibles / piezas de desgaste",      cat:"mantenimiento", lvl:"N3" },
+  { n:97,  jp:"タイヤ交換",         ro:"taiya kōkan",        es:"Cambio de neumáticos",                  cat:"mantenimiento", lvl:"N4" },
+  { n:98,  jp:"オイル量",           ro:"oiru ryō",           es:"Nivel de aceite / cantidad de aceite",  cat:"mantenimiento", lvl:"N4" },
+  { n:99,  jp:"フィルター",         ro:"firutā",             es:"Filtro",                                cat:"mantenimiento", lvl:"N4" },
+  { n:100, jp:"エアフィルター",      ro:"ea firutā",          es:"Filtro de aire",                        cat:"mantenimiento", lvl:"N4" },
+
+  // ── MOTOR EXTRA ────────────────────────────────────────────────────────────
+  { n:101, jp:"ハイブリッド",        ro:"haiburiddo",         es:"Híbrido / sistema de propulsión mixto", cat:"motor",       lvl:"N4" },
+  { n:102, jp:"エンジン回転数",      ro:"enjin kaitensū",     es:"Revoluciones del motor (RPM)",          cat:"motor",       lvl:"N3" },
+  { n:103, jp:"馬力",              ro:"bariki",             es:"Caballos de fuerza / potencia",         cat:"motor",       lvl:"N3" },
+  { n:104, jp:"トルク",            ro:"toruku",             es:"Par motor / torque",                    cat:"motor",       lvl:"N3" },
+
+  // ── CONDUCCIÓN EXTRA ───────────────────────────────────────────────────────
+  { n:105, jp:"車線",              ro:"shason",             es:"Carril / línea de tráfico",             cat:"conduccion",  lvl:"N4" },
+  { n:106, jp:"駐車",              ro:"chūsha",             es:"Estacionamiento / parking",             cat:"conduccion",  lvl:"N4" },
+  { n:107, jp:"後退",              ro:"kōtai",              es:"Retroceso / marcha atrás",              cat:"conduccion",  lvl:"N4" },
+  { n:108, jp:"車間距離",          ro:"shakan kyori",       es:"Distancia de seguridad entre vehículos", cat:"conduccion", lvl:"N3" },
+  { n:109, jp:"信号",              ro:"shingō",             es:"Semáforo / señal de tráfico",           cat:"conduccion",  lvl:"N5" },
+  { n:110, jp:"交差点",            ro:"kōsaten",            es:"Intersección / cruce",                  cat:"conduccion",  lvl:"N4" },
+
+  // ── SEGURIDAD EXTRA ────────────────────────────────────────────────────────
+  { n:111, jp:"緊急",              ro:"kinkyū",             es:"Emergencia / urgencia",                 cat:"seguridad",   lvl:"N4" },
+  { n:112, jp:"事故",              ro:"jiko",               es:"Accidente de tráfico",                  cat:"seguridad",   lvl:"N4" },
+  { n:113, jp:"保険",              ro:"hoken",              es:"Seguro de vehículo",                    cat:"seguridad",   lvl:"N4" },
+  { n:114, jp:"レーンキープ",       ro:"rēnkīpu",            es:"Asistente de mantenimiento de carril",  cat:"seguridad",   lvl:"N3" },
+
+  // ── ELÉCTRICO EXTRA ────────────────────────────────────────────────────────
+  { n:115, jp:"ナビゲーション",      ro:"nabigēshon",         es:"Sistema de navegación / GPS",           cat:"electrico",   lvl:"N4" },
+  { n:116, jp:"エアコン",           ro:"eakon",              es:"Aire acondicionado",                    cat:"electrico",   lvl:"N5" },
+  { n:117, jp:"ブルートゥース",      ro:"burūtūsu",           es:"Bluetooth / conexión inalámbrica",      cat:"electrico",   lvl:"N4" },
+  { n:118, jp:"カーナビ",           ro:"kānabi",             es:"GPS del coche / navegador GPS",         cat:"electrico",   lvl:"N4" },
+
+  // ── CARROCERÍA EXTRA ───────────────────────────────────────────────────────
+  { n:119, jp:"スペアタイヤ",        ro:"supea taiya",        es:"Llanta de repuesto / neumático de emergencia", cat:"carroceria", lvl:"N4" },
+  { n:120, jp:"けん引",            ro:"ken'in",             es:"Remolque / arrastre del vehículo",      cat:"carroceria",  lvl:"N3" },
+];
+
+const catLabels = {
+  motor:"⚙ Motor", seguridad:"🛡 Seguridad", conduccion:"🚗 Conducción",
+  frenos:"🔴 Frenos", carroceria:"🚪 Carrocería", electrico:"⚡ Eléctrico", mantenimiento:"🔧 Mantenimiento"
+};
+
+let activeCat = "all";
+let learned = JSON.parse(localStorage.getItem("ja_basic_learned") || "{}");
+let speeds = {}; // per-card speed: 0.6, 0.8, 1.0
+
+function buildPrompt(v) {
+  return `Eres un profesor experto en japonés automotriz. Hoy vamos a estudiar el término:
+
+「${v.jp}」 (${v.ro}) = ${v.es}
+
+Por favor:
+1. Explícame en español qué significa exactamente esta palabra en el contexto automotriz. Cuándo se usa, cómo suena, y si tiene algún matiz especial. Usa ejemplos de la vida real del taller o del manejo, nada técnico innecesario.
+
+2. Dame 3 oraciones de ejemplo en japonés con esta palabra. Para cada una incluye:
+   - Japonés: (con kanji)
+   - Romaji: (pronunciación)
+   - Español: (traducción)
+
+3. Pregúntame si tengo dudas antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 frases en español, una por una, para que yo las traduzca al japonés usando este término. Espera mi respuesta antes de pasar a la siguiente.
+
+5. Después de cada respuesta: corrígeme, explícame los errores y cómo mejorar. Pregúntame si tengo dudas.
+
+6. Al finalizar dime si estoy listo para continuar o si debo practicar más.
+
+Todas las explicaciones en español por favor.`;
+}
+
+window.addEventListener("DOMContentLoaded", () => { buildCards(); updateLearnedCount(); });
+
+function buildCards() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  vocab.forEach(v => {
+    speeds[v.n] = 1.0;
+    const card = document.createElement("div");
+    card.className = "vocab-card" + (learned[v.n] ? " learned" : "");
+    card.dataset.search = (v.jp + " " + v.ro + " " + v.es).toLowerCase();
+    card.dataset.cat = v.cat;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-num">${String(v.n).padStart(3,"0")}</span>
+        <div class="card-body-inner">
+          <div class="vocab-jp">${v.jp}</div>
+          <div class="vocab-romaji">${v.ro}</div>
+          <div class="vocab-es">${v.es}</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="level-badge">${v.lvl}</span>
+        <span class="cat-badge">${catLabels[v.cat]}</span>
+      </div>
+      <div class="audio-row">
+        <button class="play-btn" id="play-${v.n}" onclick="speak(${v.n})">▶ Audio</button>
+        <button class="speed-btn active" data-n="${v.n}" data-sp="1.0" onclick="setSpeed(${v.n},1.0,this)">1.0×</button>
+        <button class="speed-btn" data-n="${v.n}" data-sp="0.75" onclick="setSpeed(${v.n},0.75,this)">0.75×</button>
+        <button class="speed-btn" data-n="${v.n}" data-sp="0.5" onclick="setSpeed(${v.n},0.5,this)">0.5×</button>
+      </div>
+      <div class="card-btns">
+        <button class="copy-btn" id="cb-${v.n}" onclick="copyPrompt(${v.n})">⧉ Copiar prompt</button>
+        <button class="learned-btn" id="lb-${v.n}" onclick="toggleLearned(${v.n})">${learned[v.n] ? "✓ Aprendida" : "○ Marcar"}</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function speak(n) {
+  const v = vocab[n-1];
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(v.jp);
+  utt.lang = "ja-JP";
+  utt.rate = speeds[n];
+  const btn = document.getElementById(`play-${n}`);
+  btn.classList.add("playing");
+  btn.textContent = "◼ Stop";
+  utt.onend = () => { btn.classList.remove("playing"); btn.innerHTML = "▶ Audio"; };
+  utt.onerror = () => { btn.classList.remove("playing"); btn.innerHTML = "▶ Audio"; };
+  window.speechSynthesis.speak(utt);
+}
+
+function setSpeed(n, sp, btn) {
+  speeds[n] = sp;
+  document.querySelectorAll(`[data-n="${n}"]`).forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function copyPrompt(n) {
+  const v = vocab[n-1];
+  const btn = document.getElementById(`cb-${n}`);
+  navigator.clipboard.writeText(buildPrompt(v)).then(() => {
+    btn.textContent = "✓ Copiado";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "⧉ Copiar prompt"; btn.classList.remove("copied"); }, 2000);
+    const t = document.getElementById("toast");
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2500);
+  });
+}
+
+function toggleLearned(n) {
+  if (learned[n]) delete learned[n]; else learned[n] = true;
+  localStorage.setItem("ja_basic_learned", JSON.stringify(learned));
+  const card = document.querySelector(`.vocab-card[data-search*="${vocab[n-1].ro}"]`);
+  const btn = document.getElementById(`lb-${n}`);
+  if (learned[n]) { card?.classList.add("learned"); if(btn) btn.textContent = "✓ Aprendida"; }
+  else { card?.classList.remove("learned"); if(btn) btn.textContent = "○ Marcar"; }
+  updateLearnedCount();
+}
+
+function updateLearnedCount() {
+  document.getElementById("learnedCount").textContent = `${Object.keys(learned).length} / 120 aprendidas`;
+}
+
+function selectCat(btn) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  activeCat = btn.dataset.cat;
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll(".vocab-card").forEach(c => {
+    const show = c.dataset.search.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
+    c.classList.toggle("hidden", !show);
+    if (show) visible++;
+  });
+  document.getElementById("counter").textContent = `Mostrando ${visible}`;
+}
+</script>
+</body>
+</html>

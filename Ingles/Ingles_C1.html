@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inglés C1 · Cambridge — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #07070a;
+      --bg2:        #0e0e12;
+      --card:       #111115;
+      --card2:      #18181e;
+      --gold:       #e8b84b;
+      --gold2:      #f5d47a;
+      --gold-dim:   rgba(232,184,75,0.12);
+      --gold-glow:  rgba(232,184,75,0.06);
+      --border:     rgba(232,184,75,0.22);
+      --border2:    rgba(255,255,255,0.05);
+      --text:       #f5f0e0;
+      --muted:      #6b6040;
+      --mono:       'Syne Mono', monospace;
+      --sans:       'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* noise grain */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03; pointer-events: none; z-index: 0;
+    }
+
+    /* golden crown glow — top center */
+    body::after {
+      content: '';
+      position: fixed; top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(232,184,75,0.13) 0%, rgba(232,184,75,0.04) 40%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* animated shimmer bar at very top */
+    .shimmer-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(232,184,75,0.0) 20%,
+        rgba(232,184,75,0.9) 50%,
+        rgba(232,184,75,0.0) 80%,
+        transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,7,10,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(232,184,75,0.45);
+      background: var(--gold-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    /* HEADER */
+    header {
+      padding: 4.5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    /* trophy icon */
+    .trophy {
+      font-size: 3.2rem;
+      display: block;
+      margin-bottom: 1.2rem;
+      animation: floatTrophy 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(232,184,75,0.5));
+    }
+    @keyframes floatTrophy {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+    }
+    .level-tag::before, .level-tag::after {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+    }
+
+    h1 {
+      font-family: var(--sans); font-size: clamp(2.4rem, 7vw, 4.2rem);
+      font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.6rem;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--gold2) 0%, var(--gold) 50%, #c8943a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-desc { color: var(--muted); font-size: 0.9rem; max-width: 500px; line-height: 1.75; margin: 0.8rem auto 0; }
+
+    .header-meta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; margin-top: 1.8rem; flex-wrap: wrap;
+    }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '✦'; color: var(--gold); font-size: 0.45rem; }
+
+    /* achievement strip */
+    .achievement {
+      background: linear-gradient(135deg, rgba(232,184,75,0.07) 0%, rgba(232,184,75,0.03) 100%);
+      border: 1px solid rgba(232,184,75,0.28);
+      border-radius: 8px;
+      padding: 1.3rem 1.6rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .achievement-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .achievement-text { flex: 1; }
+    .achievement-text strong {
+      display: block;
+      font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
+      color: var(--gold); margin-bottom: 0.25rem; letter-spacing: 0.02em;
+    }
+    .achievement-text p {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+    }
+    .achievement-text p em { color: var(--text); font-style: normal; }
+
+    /* CARDS */
+    .cards-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .flashcard {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .flashcard:hover {
+      border-color: rgba(232,184,75,0.2);
+      box-shadow: 0 0 20px rgba(232,184,75,0.04);
+    }
+    .flashcard.open {
+      border-color: rgba(232,184,75,0.45);
+      box-shadow: 0 0 30px rgba(232,184,75,0.07);
+    }
+
+    .card-header {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 1rem; padding: 1.1rem 1.4rem;
+      cursor: pointer; user-select: none; transition: background 0.15s;
+    }
+    .card-header:hover { background: var(--card2); }
+
+    .card-num {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; min-width: 2.4rem;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .card-right { display: flex; align-items: center; gap: 0.8rem; }
+    .card-tag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border2); padding: 0.2rem 0.5rem; border-radius: 2px;
+    }
+    .card-chevron { color: var(--muted); font-size: 0.65rem; transition: transform 0.25s, color 0.2s; }
+    .flashcard.open .card-chevron { transform: rotate(180deg); color: var(--gold); }
+
+    .card-body {
+      display: none; border-top: 1px solid var(--border2);
+      padding: 1.4rem; background: var(--bg2);
+    }
+    .flashcard.open .card-body { display: block; }
+
+    .grammar-label {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .grammar-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(232,184,75,0.3), transparent); }
+
+    .copy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.9rem 1.2rem;
+      background: linear-gradient(135deg, rgba(232,184,75,0.14) 0%, rgba(232,184,75,0.08) 100%);
+      border: 1px solid rgba(232,184,75,0.38); border-radius: 4px;
+      color: var(--gold2); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: all 0.2s;
+      text-transform: uppercase; font-weight: 500;
+    }
+    .copy-btn:hover {
+      background: linear-gradient(135deg, rgba(232,184,75,0.24) 0%, rgba(232,184,75,0.14) 100%);
+      border-color: rgba(232,184,75,0.7);
+      box-shadow: 0 0 20px rgba(232,184,75,0.12);
+      transform: translateY(-1px);
+    }
+    .copy-btn:active { transform: translateY(0); }
+    .copy-btn.copied { background: rgba(34,120,34,0.15); border-color: rgba(34,180,34,0.4); color: #6de06d; }
+    .copy-icon { font-size: 0.9rem; }
+    .copy-hint {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
+      color: var(--muted); text-align: center; margin-top: 0.7rem;
+    }
+
+    .prompt-text { display: none; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111115;
+      border: 1px solid rgba(232,184,75,0.45);
+      color: var(--gold2); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.6rem; border-radius: 4px;
+      box-shadow: 0 0 30px rgba(232,184,75,0.12);
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* FOOTER */
+    footer {
+      margin-top: 4rem; padding-top: 2rem;
+      border-top: 1px solid rgba(232,184,75,0.12);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+      text-align: center;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .card-tag { display: none; }
+      .card-header { padding: 1rem; gap: 0.6rem; }
+      .card-body { padding: 1rem; }
+      .achievement { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shimmer-bar"></div>
+
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">&larr; Logicards</a>
+      <span class="nav-title">Inglés C1 &middot; Cambridge</span>
+    </div>
+    <span class="nav-badge">✦ Nivel final · 24 temas</span>
+  </nav>
+
+  <div class="wrapper">
+
+    <header>
+      <span class="trophy">🏆</span>
+      <p class="level-tag">Cambridge &middot; Nivel C1</p>
+      <h1>Inglés <span>C1</span></h1>
+      <p class="header-desc">
+        El nivel más avanzado de la colección. Domina estas 24 estructuras y habrás completado el camino completo de A1 a C1.
+      </p>
+      <div class="header-meta">
+        <span class="meta-item">24 temas</span>
+        <span class="meta-item">Gramática Cambridge original</span>
+        <span class="meta-item">Nivel avanzado</span>
+        <span class="meta-item">100% gratuito</span>
+      </div>
+    </header>
+
+    <div class="achievement">
+      <div class="achievement-icon">🎖️</div>
+      <div class="achievement-text">
+        <strong>Nivel final desbloqueado</strong>
+        <p>Estás en el techo. Cada tema que domines aquí te acerca a la fluidez real. Abre una tarjeta, copia el prompt y llévalo a tu IA — <em>ella te explica, tú practicas.</em></p>
+      </div>
+    </div>
+
+    <div class="cards-list">
+      <div class="flashcard" id="card-1">
+        <div class="card-header" onclick="toggle(1)">
+          <span class="card-num">01.</span>
+          <span class="card-title">Phrasal verbs</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(1)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-1">Quiero aprender inglés C1. El tema de hoy es "Phrasal verbs".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR
+Phrasal verbs
+A phrasal verb is a verb plus a particle, such as down, into, out, or up. The meaning of a phrasal verb is usually different from the meaning of its parts. 
+Separable phrasal verbs can take objects before or after the particle.
+If the object is a pronoun, it always appears before the particle.
+A friend is someone who brings out the best in you.
+A friend is someone who brings the best out in you.
+A friend is someone who cheers you up when you're feeling bad.
+With inseparable phrasal verbs, the object cannot go between the verb and the particle.
+Good friends are always happy to help when you run into a problem.
+Three-word phrasal verbs have a particle and a preposition. 
+Make new friends, but hang on to the old ones.
+Intransitive phrasal verbs don't take objects. 
+True friends don't drift apart.
+
+BONUS
+Phrasal verbs
+Additional phrasal verbs
+Separable: call off, count out, cut off, get across, hand over, pass up, take back.
+Inseparable: go over, hang around, live up to, look after, pick on, run out of, touch on.
+Intransitive: catch on, come along, come over, fall apart, show up, turn out.
+Certain intransitive two-word phrasal verbs, when followed by a preposition, can then take an object.
+back down (from)
+cut back (on)
+drop out (of)
+give in (to)
+catch up (to)
+cut down (on)
+get along (with)
+give up (on)
+check out (of)
+drop in (on)
+get away (with)
+look back (on)
+When confronted with an argument, Mark never backs down.
+Mark never backs down from an argument.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-2">
+        <div class="card-header" onclick="toggle(2)">
+          <span class="card-num">02.</span>
+          <span class="card-title">Gerund and infinitive constructions</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(2)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-2">Quiero aprender inglés C1. El tema de hoy es "Gerund and infinitive constructions".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Gerund and infinitive constructions
+These verbs are normally followed by a gerund: appreciate, consider, enjoy, give up, keep, put off, suggest.
+They're considering starting a company team!
+These verbs are normally followed by an infinitive: ask, decide, expect, intend, need, refuse, seem, tend.
+I never expected to meet so many nice people!
+These verbs are followed by either a gerund or an infinitive: begin, bother, continue, hate, prefer, start.
+Last month I started taking / to take a cooking class.
+Infinitives and gerunds can also occur in the passive voice. They follow the pattern subject + verb + being / to be + past participle.
+I kept being invited by my co-workers to a lunchtime yoga class.
+She asked to be chosen for the job.
+
+BONUS
+Gerund and infinitive constructions
+The verbs forget, mean, and regret can be followed by either an infinitive or a gerund. However, the meaning is significantly different in each case.
+Forget followed by an infinitive refers to something you didn't actually do. Forget followed by a gerund refers to an action that you in fact did earlier.
+Marcello forgot to meet his best friend at the train station. 
+Marcello never forgot meeting his favorite actor.
+Mean followed by an infinitive means "intend." In this case, mean is usually used in the negative or in the past tense. Mean followed by a gerund means "involve or necessitate."
+I meant to visit Sheila while I was in Hawaii, but I didn't have the chance.
+Inviting Emile to the party means inviting Eva, too. She'd be so insulted if we didn't.
+Regret followed by infinitives such as inform, announce, and say is a polite way of introducing bad news in official communication. Regret followed by a gerund means "be sorry for/about." 
+The corporation regrets to inform you that all job vacancies have been filled.
+Donna really regretted missing her best friend's wedding.
+Be + adjective expressions are often followed by an infinitive.
+be amazed
+be determined
+be ashamed 
+be eager
+be happy 
+be hesitant
+be lucky 
+be ready
+Be + adjective + preposition and verb + preposition expressions are often followed by a gerund. 
+be bored with 
+be convinced of 
+apologize for 
+complain about
+be good at 
+be used to 
+object to 
+participate in
+be worried about
+take part in 
+think of
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-3">
+        <div class="card-header" onclick="toggle(3)">
+          <span class="card-num">03.</span>
+          <span class="card-title">Review of verb patterns</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(3)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-3">Quiero aprender inglés C1. El tema de hoy es "Review of verb patterns".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Review of verb patterns
+Study the following common verb patterns. 
+a. verb + infinitive
+When I choose clothes, I tend to think of comfort first and appearance second.
+b. verb + object + infinitive
+Celebrities sometimes inspire me to change the way I look.
+c. verb + gerund
+I hate choosing my outfits in the morning.
+d. verb + object + preposition + gerund 
+High prices rarely prevent me from buying quality clothing.
+
+BONUS
+Review of verb patterns
+Here are some verbs that are used with each pattern.
+a. verb + infinitive
+afford, fail, hasten, learn, prepare, proceed, seek, strive
+I really strive to wear the latest styles and trends.
+b. verb + object + infinitive
+advise, allow, authorize, cause, convince, encourage, instruct, permit, persuade, urge 
+The salesperson convinced me to buy a dress I knew I didn't need.
+c. verb + gerund
+can't help, can't see, can't stand, enjoy, get through, keep on, (not) mind, miss, postpone, risk
+I can't see paying high prices for clothes that will be out of style in a year.
+d. verb + object + preposition + gerund/noun
+blame (for), dissuade (from), forgive (for), interest (in), keep (from), suspect (of), thank (for) 
+Can I interest you in going on a shopping spree with me?
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes (wh-questions o how), para yo responder practicando Simple and complex indirect questions.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-4">
+        <div class="card-header" onclick="toggle(4)">
+          <span class="card-num">04.</span>
+          <span class="card-title">Cleft sentences with what</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(4)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-4">Quiero aprender inglés C1. El tema de hoy es "Cleft sentences with what".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Cleft sentences with what
+You can add what and a form of be to a sentence when you want to emphasize information. The resulting sentence is called a cleft sentence.
+A person's smile is really important to me.
+What's really important to me is a person's smile.
+For sentences with verbs other than be, insert what at the beginning of the sentence and a form of be after the main verb.
+I always notice a person's hands.
+What I always notice is a person's hands.
+
+BONUS
+Cleft sentences with what
+To emphasize the whole sentence rather than just the part following the main verb, use a cleft sentence with what and a form of the verb do.
+I try to project a positive attitude.
+What I try to project is a positive attitude. (emphasizes a positive attitude)
+What I do is try to project a positive attitude. (emphasizes the whole sentence)
+She complained to the waiter about the quality of the food.
+What she complained about to the waiter was the quality of the food.
+What she did was complain to the waiter about the quality of the food.
+Cleft structures can include expressions like the reason why, the thing that, the place where, and the person who. These structures are typically used with the verb be.
+I'm wearing sunglasses to protect my eyes.
+The reason why I'm wearing sunglasses is to protect my eyes.
+I do all my shopping at the mall.
+The place where I do all my shopping is (at) the mall.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Dame 4 oraciones sencillas una por una, en ingles con sustantivos diferentes, para yo pasarlas a oraciones con what, The reason why, The place where u otras que tu consideres.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-5">
+        <div class="card-header" onclick="toggle(5)">
+          <span class="card-num">05.</span>
+          <span class="card-title">Indefinite and definite articles</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(5)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-5">Quiero aprender inglés C1. El tema de hoy es "Indefinite and definite articles".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Indefinite and definite articles
+Review these rules for the indefinite articles a and an and the definite article the.
+Use an indefinite article (a or an) when you mention a singular countable noun for the first time, or no article for plural countable and uncountable nouns. When you refer to the same item again, use the.
+With just one cell from a live or dead animal, an exact copy of the animal can be created.
+If you use a plural noun to make a general statement, do not use an article. However, if you make the same statement using a singular noun, use the or a / an.
+Technology can already identify thoughts from scans of activity patterns in human brains.
+Technology can already identify thoughts from scans of activity patterns in the / a human brain.
+When making a general statement, do not use an article with uncountable nouns (technology, education, shopping, love, etc.).
+DNA offers the longest duration for digital storage.
+Use the with superlatives and with sequence markers such as first, last, next, etc., but don't use the with time expressions such as last night or next month.
+The first attempts identified simple thoughts.
+
+BONUS
+Indefinite and definite articles
+In completely general statements with uncountable nouns, do not use an article before the noun. However, the is required when the noun is made more specific by a modifying phrase following it. 
+Ethics is becoming an important part of the field of genetics.
+The ethics of cloning should be addressed by experts in the field.
+Image is an important part of success.
+The image she projected did not serve her well in court.
+With certain exceptions, do not use the before:
+countries (exceptions: the Philippines, the United Arab Emirates, the United Kingdom, the United States) streets and cities (exception: the Hague)
+individual lakes, bays, islands, continents, mountain peaks (exception: the Matterhorn)
+Do use the before:
+rivers, oceans, seas, gulfs, mountain ranges, peninsulas, deserts, forests
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-6">
+        <div class="card-header" onclick="toggle(6)">
+          <span class="card-num">06.</span>
+          <span class="card-title">-ing clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(6)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-6">Quiero aprender inglés C1. El tema de hoy es "-ing clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+-ing clauses
+To express two actions performed by the same person or thing in a single sentence, we can include an -ing clause. An -ing clause contains an -ing participle.
+The two actions happen at the same time or one action happens during another action.
+The next day in class, my laptop crashed opening the file.
+(My laptop crashed while / when it was opening the file.)
+Trying to stay calm, I gave the presentation as best I could from memory.
+(I was trying to stay calm while I gave the presentation.)
+She is at her desk typing a paper.
+(She is at her desk, and she is typing a paper.)
+When one action happens before another action, use having + past participle. 
+Having gotten several calls from me, my parents became really worried.
+(My parents got several calls from me, and then they became really worried.)
+Reasons and explanations for actions can also be expressed with -ing clauses.
+Being too embarrassed to call him at home, I had to go to work after all to access the network. 
+(Because I was too embarrassed to call him at home, I had to go to work.)
+
+BONUS
+-ing clauses
+When -ing clauses begin a sentence, the agent of the -ing clause must be the subject of the main clause that follows.
+Incorrect: Trying hard to fix my computer, the dog kept staring at me.
+(The agent of the -ing clause seems to be the dog.)
+Correct: Trying hard to fix my computer, I noticed the dog staring at me.
+(The agent of the -ing clause and the subject of the main clause are the same.)
+Incorrect: Doing yard work, his clothes got very dirty. (The agent of the -ing clause seems to be his clothes.)
+Correct: Doing yard work, he got dirt all over his clothes. (The agent of the -ing clause and the subject of the main clause are the same.)
+In addition to starting a sentence, -ing clauses can also follow these expressions:
+have a good time
+have an easy time
+have fun
+spend time
+have a hard time
+have difficulty
+have problems
+waste time
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-7">
+        <div class="card-header" onclick="toggle(7)">
+          <span class="card-num">07.</span>
+          <span class="card-title">Reporting clauses</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(7)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-7">Quiero aprender inglés C1. El tema de hoy es "Reporting clauses".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Reporting clauses
+To report what someone says, thinks, believes, etc., you can use a sentence that includes a reporting clause. The use of the word that is optional.
+In Turkey, many people agree (that) when someone goes on a journey, you should pour water on the ground behind him or her to bring the person back safely.
+In Venezuela, some people say (that) if someone passes a broom over your feet, you will never get married.
+The following verbs are often used in reporting clauses.
+More formal: argue, assert, claim, report
+More conversational: admit, agree, assume, believe, doubt, explain, feel, say
+
+BONUS
+Reporting clauses
+In reporting clauses, verbs such as admit, agree, announce, comment, complain, confess, disclose, explain, inform, and reveal are frequently followed by an indirect object. In this case, that should be retained for clarity.
+Several people agreed with me that logic, not superstition, is the best way to make decisions.
+Max explained to the teacher that a black cat never means bad luck in his country.
+The following nouns are also often used in reporting clauses. Here, too, that is helpful in making the meaning clear and should be retained.
+accusation
+argument
+assertion 
+claim
+comment 
+decision
+explanation 
+remark
+response 
+suggestion
+Bill made the assertion that he'd have no luck at all if it weren't for bad luck. 
+Liliana repeated her argument that only foolish people believe in magic. 
+The class rejected Niran's suggestion that we cancel class on Friday the 13th.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-8">
+        <div class="card-header" onclick="toggle(8)">
+          <span class="card-num">08.</span>
+          <span class="card-title">Reporting clauses in the passive</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(8)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-8">Quiero aprender inglés C1. El tema de hoy es "Reporting clauses in the passive".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Reporting clauses in the passive
+To report a general claim or opinion, you can use a passive form of a reporting verb and it. Notice that the agent is often omitted and understood to be "some people” or “many people." 
+It was explained (that) the device emits a sound that irritates young people.
+It is said (that) the video ran for over nine months.
+
+BONUS
+Reporting clauses in the passive
+The following verbs can be used in reporting clauses in the passive.
+announce
+confirm
+deny 
+estimate
+maintain 
+observe
+reveal
+rumor
+suggest 
+understand
+Reporting clauses in the passive are commonly used with a variety of structures. 
+Simple present: It is suggested that passengers report anything suspicious to the driver. 
+Simple past: It was flatly denied that a nuclear submarine had been lost in the Arctic Ocean.
+Present perfect: It has been estimated that the construction of Stonehenge took over 20 million hours. 
+Past perfect: It had been rumored that a monster was living in the lake.
+With modals: It couldn't be denied that many mysteries elude scientific understanding.
+With past modals: It should have been confirmed that the flight would be delayed.
+Reporting clauses in the passive are used in written and formal English and are not common in conversation.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-9">
+        <div class="card-header" onclick="toggle(9)">
+          <span class="card-num">09.</span>
+          <span class="card-title">Sentence adverbs</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(9)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-9">Quiero aprender inglés C1. El tema de hoy es "Sentence adverbs".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Sentence adverbs
+Sentence adverbs modify a whole sentence, not just part of it. Many adverbs can be used in this way. Sentence adverbs express the speaker's attitude, opinion, or reason for speaking.
+Certainty: clearly, definitely, obviously, unquestionably
+Unquestionably, studios are interested in producing a lot more movies about superheroes.
+Less certainty: apparently, seemingly, supposedly
+Seemingly, there have been more women cast in leading roles in successful movies.
+Possibility and probability: possibly, potentially, probably
+Box office profits will possibly continue to fall in the United States.
+Talking honestly and directly: frankly, honestly, seriously
+Honestly, I hope that having more courageous heroines will be a trend that lasts and not just a passing fad.
+Summarizing: basically, essentially, fundamentally, mainly, overall
+Overall, the animated movies I take my children to see these days are visually spectacular.
+Other attitudes: amazingly, surprisingly, not surprisingly, predictably, fortunately, unfortunately 
+Not surprisingly, the other adults I see at the theater also enjoy these movies as much as the kids do.
+
+BONUS
+Sentence adverbs
+To express the speaker's attitude about the entire sentence, sentence adverbs are most often located at the beginning of the sentence and set off by a comma.
+Predictably, the hero of the movie won the heart of the girl.
+Sentence adverbs can be used in place of longer clauses that modify a sentence.
+People were amazed that the movie sold 26 million tickets on its opening weekend. 
+Amazingly, the movie sold 26 million tickets on its opening weekend.
+Nobody was surprised that the sequel was also extremely popular. 
+Not surprisingly, the sequel was also extremely popular.
+The following conjunctive adverbs link a sentence with a preceding idea. 
+accordingly 
+consequently 
+hence 
+indeed 
+meanwhile 
+otherwise
+thus
+The coming attractions ended and the movie began; accordingly, the audience fell silent.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-10">
+        <div class="card-header" onclick="toggle(10)">
+          <span class="card-num">10.</span>
+          <span class="card-title">Such . . . that and so . . . that</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(10)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-10">Quiero aprender inglés C1. El tema de hoy es "Such . . . that and so . . . that".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Such . . . that and so . . . that
+So and such, such... that, so... that, so much/little... that, and so many / few... that are commonly used to express extremes in exclamatory sentences.
+a. Such is followed by a noun (usually modified by an adjective).
+It's such a great show that I bought all eight seasons.
+b. So is followed by an adjective or adverb.
+Dr. House is so foul-tempered that I hated him when I first started watching the show.
+c. So many and so few are followed by countable nouns.
+The dialogue is packed with so many jokes that it's nonstop laughs from beginning to end.
+d. So much and so little are followed by uncountable nouns.
+My busy schedule leaves me so little TV time that I don't want to waste it watching mediocre sitcoms.
+
+BONUS
+Such . . . that and so . . . that
+In written English, so and such are most often followed by a that clause. However, in conversation, so and such are frequently used alone to express emphatic stress.
+The host on that game show is so funny!
+That actress plays her role so convincingly!
+The writers of that new sitcom show such originality!
+That was such a great documentary!
+So much, so little, so many, and so few can also be used without a that clause and for emphatic stress.
+There are so many reality TV shows these days!
+That game show gives away so much money!
+In conversation, much and little can be used as adverbs following so.
+Why do you watch TV so much? (much = "frequently")
+That actor is featured so little that I sometimes forget he's on the show. (little = "infrequently")
+Much, little, many, and few can also serve as pronouns for nouns.
+TV can be bad for your health. I sometimes watch so much (TV) my eyes hurt.
+He needs more free time. He has so little (free time) he can't keep up with the latest TV shows.
+I don't watch soap operas anymore. I've seen so many (soap operas) that I'm tired of them. 
+TV news requires reporters, but there are so few (reporters) that many stories aren't covered.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-11">
+        <div class="card-header" onclick="toggle(11)">
+          <span class="card-num">11.</span>
+          <span class="card-title">Double comparatives</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(11)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-11">Quiero aprender inglés C1. El tema de hoy es "Double comparatives".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Double comparatives
+You can use two comparatives, each preceded by the, in order to show how one quality or amount is linked to another. The first comparative expresses a condition for the second comparative.
+The more you like to dance, the more you appreciate music with a Latin beat.
+The more I hear a pop song on the radio, the less I feel like buying it.
+The more exciting the soundtrack, the better the movie seems.
+The louder the music gets, the sooner I feel like leaving.
+The less 80s pop music I hear, the better.
+
+BONUS
+Double comparatives
+These structures are commonly used in double comparatives.
+The+more/ less + clause
+The more I listen to classical music, the more I appreciate it.
+The + comparative form of adjective + clause
+The more romantic a song is, the less my brother wants to listen to it.
+The + comparative form of adverb + clause
+The louder Mario plays his stereo, the more his neighbors complain.
+The + more / less / fewer + noun / gerund + clause
+The more dancing you do, the more natural you'll feel on the dance floor.
+Short double comparatives without verbs are common in conversation. Many of them end in the better.
+The more, the merrier! 
+The bigger, the better!
+The sooner, the better!
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-12">
+        <div class="card-header" onclick="toggle(12)">
+          <span class="card-num">12.</span>
+          <span class="card-title">Will and would for habits and general truths</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(12)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-12">Quiero aprender inglés C1. El tema de hoy es "Will and would for habits and general truths".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Will and would for habits and general truths
+You can use would to express habitual actions in the past. Would is more formal than used to and is frequently used in past narratives. Would needs to be clearly associated with a time in the past. 
+From a very young age, Adele would perform for her mother.
+You can use will to express personal habits or characteristic behavior in the present.
+Today, superstar Rihanna will often reinvent her look with startling new hairstyles and clothes.
+Will is also used to express facts that are generally true.
+True talent will always be noticed.
+
+BONUS
+Will and would for habits and general truths
+Used to and would are both used to express habits in the past. 
+Before he became a big star, Mark used to play music on the street for money. 
+Before he became a big star, Mark would play music on the street for money.
+However, would cannot be used with stative verbs such as be, have, like, live, love, mean, and own.
+Correct: When I was young, I used to have a clarinet.
+Incorrect: When I was young, I would have a clarinet.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-13">
+        <div class="card-header" onclick="toggle(13)">
+          <span class="card-num">13.</span>
+          <span class="card-title">Optional and required relative pronouns</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(13)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-13">Quiero aprender inglés C1. El tema de hoy es "Optional and required relative pronouns".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Optional and required relative pronouns
+In defining relative clauses, when the relative pronoun is the subject of the clause or it shows possession, the relative pronoun is required. When it is the object, it is usually optional.
+Subject of clause (relative pronouns that, which, or who required)
+People who / that are concerned with the effects of pesticides on the environment are buying organic produce.
+Social exercise programs that / which offer fun group workouts are on the rise.
+Showing possession (relative pronoun whose required)
+More professionals whose managers allow it are opting to telecommute, or work from home.
+Object of clause (relative pronouns that, which, who, or whom optional)
+Hybrid cars are an option (that / which) more people are choosing.
+Some elementary schools now offer classes for children (who / whom / that) they once considered too young.
+
+BONUS
+Optional and required relative pronouns
+When the relative pronoun is the complement (or object) of a preposition, whom is required (not who).
+No one can live on that land now except indigenous people to whom special permits have been given.
+Similarly, which is required (not that) when the preposition precedes the relative pronoun. 
+My parents' generation stood for certain principles against which my generation has rebelled.
+The relative pronoun whose is not only used for people. It can also represent animals or things. This relative pronoun is required.
+There are some new fitness classes whose purpose is to provide safe exercise for the elderly.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-14">
+        <div class="card-header" onclick="toggle(14)">
+          <span class="card-num">14.</span>
+          <span class="card-title">As if, as thought, as, the way, and like</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(14)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-14">Quiero aprender inglés C1. El tema de hoy es "As if, as thought, as, the way, and like".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+As if, as thought, as, the way, and like
+As if and as though often introduce clauses that describe impressions about feelings or behavior after verbs such as act, behave, feel, look, seem, and talk.
+Still, I feel as if / as though something is missing.
+As and the way introduce clauses that express a comparison.
+I'm thinking of joining a volunteer program to help build houses for the needy as / the way a few of my friends have.
+In informal English, the word like can be used instead of as if I as though and as/ the way. 
+It seems as though the job was made for me!
+It seems like the job was made for me!
+
+BONUS
+As if, as thought, as, the way, and like
+When as introduces a clause expressing a comparison, subject-verb inversion can occur in affirmative sentences.
+With do: Marissa has a lot of trouble accepting change, as does Trina.
+With auxiliary verbs: Mitt has coped well with changes at work, as have his co-workers.
+With modals: Grandma would tell us stories of the old days, as would Grandpa.
+With be: Marcel is wary of technology, as is his whole family.
+When both clauses have the same subject, as if and as though clauses with adjectives or past participles are frequently shortened by removing the subject and be.
+Bill is talking about quitting his job, as though (he were) single and carefree.
+Marvin sat motionless in front of his new media center, as if (he were) glued to the chair.
+Notice that we use a past form of a verb after as if and as though when these phrases are followed by a hypothetical or unreal situation.
+Bill is talking about quitting his job as though he were carefree. (He has responsibilities.) 
+Some young people replace their gadgets every year as if they had all the money in the world.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-15">
+        <div class="card-header" onclick="toggle(15)">
+          <span class="card-num">15.</span>
+          <span class="card-title">Placement of direct and indirect objects</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(15)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-15">Quiero aprender inglés C1. El tema de hoy es "Placement of direct and indirect objects".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Placement of direct and indirect objects
+For most verbs in English, including get, give, lend, offer, sell, send, show, teach, and tell, direct and indirect objects follow these patterns:
+Pattern A
+direct object + to / for + indirect object
+You can send information to other shoppers.
+Pattern B
+indirect object + direct object
+You can send other shoppers information. 
+Pattern A
+direct object + to / for + indirect object
+You can send information to them.
+Pattern B
+indirect object + direct object
+You can send them information.
+Pattern A
+direct object + to / for + indirect object
+You can send it to other shoppers.
+You can send it to them.
+With verbs such as announce, describe, explain, mention, provide, recommend, return, and say, the indirect object cannot precede the direct object. Sentences follow Pattern A above.
+It provides information about in-store sales to bargain hunters free of charge.
+It provides it to them free of charge.
+With verbs such as allow, ask, cause, and cost, the indirect object precedes the direct object and takes no preposition. Sentences follow Pattern B above.
+It only cost Rick two dollars!
+It only cost him two dollars!
+
+BONUS
+Placement of direct and indirect objects
+The following verbs are commonly used with both a direct and indirect object. 
+Bring
+give
+hand
+make
+order 
+owe
+pay
+promise
+serve
+throw
+When the direct object is a pronoun, it goes before the indirect object. When the indirect object is a pronoun, it can go before or after the direct object.
+The boss owes it to Sid. (it = direct object)
+The boss owes him a month's salary. (him = indirect object) 
+The boss owes a month's salary to him. (him = indirect object)
+When both objects are pronouns, only one pattern is possible: 
+direct object + to / for + indirect object.
+The boss owes it to him.
+The boss ordered it for him.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), solicita algun patron, para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-16">
+        <div class="card-header" onclick="toggle(16)">
+          <span class="card-num">16.</span>
+          <span class="card-title">Verbs in the subjunctive</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(16)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-16">Quiero aprender inglés C1. El tema de hoy es "Verbs in the subjunctive".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Verbs in the subjunctive
+Certain expressions and verbs such as demand, insist, propose, recommend, request, and suggest are followed by the subjunctive. The subjunctive uses the base form of the verb. It is generally
+used in formal language to express a wish or necessity.
+I think consumers need to insist (that) advertisements be truthful in every respect.
+Some ads seem to demand (that) the customer buy the product.
+These expressions are frequently followed by the subjunctive:
+it is crucial
+it is essential
+it is imperative
+it is vital
+it is important
+it is critical
+I believe it is essential that an ad be clever and witty in order to be effective.
+
+BONUS
+Verbs in the subjunctive
+The following verbs can be followed by a that clause with a subjunctive verb. 
+advise
+ask
+beg 
+prefer
+require
+specify 
+stipulate
+vote
+He advised that his students be on time.
+Our store policy clearly stipulates that all sales associates report to work by 8:30 A.M.
+The negative subjunctive is formed with not and the base form of the verb. 
+The advertising executive's contract required that he not receive a bonus that year.
+The passive form of the subjunctive is formed by be + past participle.
+The sponsors asked that their product be featured prominently in the movie.
+The manufacturers preferred that their shaving cream not be endorsed by misbehaving stars.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-17">
+        <div class="card-header" onclick="toggle(17)">
+          <span class="card-num">17.</span>
+          <span class="card-title">Whenever and wherever contrasted with when and where</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(17)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-17">Quiero aprender inglés C1. El tema de hoy es "Whenever and wherever contrasted with when and where".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Whenever and wherever contrasted with when and where
+Whenever and wherever mean "at any time" and "in any place." They are used to introduce adverbial clauses. Notice their position in the sentences.
+Whenever experts talk about language use by animals, Alex's name is usually mentioned. 
+Alex's name is usually mentioned whenever experts talk about language use by animals. 
+Wherever there are elephants painting, people are fascinated.
+People are fascinated wherever there are elephants painting.
+When and where can replace whenever and wherever when they have the sense of "at any time" or "in any place."
+Whenever / When actors worked with Bart the Bear, they were always impressed.
+Wherever / Where there are elephants painting, people are fascinated.
+Whenever and wherever cannot be used if the sentence refers to a specific time or location. In these cases, when and where are used.
+Whenever actors worked with him, they were always impressed. (any time)
+When Brad Pitt worked with Bart in Legends of the Fall, he was very impressed. (specific time)
+Wherever there are elephants painting, people are fascinated. (any place)
+There were a lot of people where the elephants were painting today. (specific place)
+
+BONUS
+Whenever and wherever contrasted with when and where
+If whenever, wherever, when, and where are followed by subject + be + adjective / past participle, the subject and be are often deleted. This occurs mainly in formal speech and writing.
+Pet owners must take their pets to the vet whenever / when taking them is advisable.
+Laws concerning the welfare of helper animals should be enforced wherever / where applicable.
+Whenever and wherever can have the meaning "no matter when / where."
+A: My dog doesn't like it when I give her a bath at night.
+B: Mine doesn't like it whenever I give him a bath!
+Whenever and wherever can also have the meaning "although I don't know when / where." 
+We'll have to get together on his birthday, whenever that is!
+Their dog was found in a park outside of Hicksville, wherever that is!
+Whenever and wherever are rarely used following the focus adverbs even, just, right, and only. When and where are often used instead.
+My cats show me affection even when I'm in a bad mood.
+Elephants will survive in the wild only where they are protected from illegal hunting.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-18">
+        <div class="card-header" onclick="toggle(18)">
+          <span class="card-num">18.</span>
+          <span class="card-title">Noun clauses with whoever and whatever</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(18)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-18">Quiero aprender inglés C1. El tema de hoy es "Noun clauses with whoever and whatever".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Noun clauses with whoever and whatever
+Whoever and whatever can begin noun clauses and function as either the subject or object of the clause.
+Whoever = the person who / anyone who / everyone who
+Whoever applies should have at least five years of experience. 
+Extra consideration will be given to whoever can start immediately.
+Whatever = anything that / everything that
+Be ready to do whatever is required to return injured animals to the wild. 
+You'll find whatever you need to start a career in nature right here!
+
+BONUS
+Noun clauses with whoever and whatever
+In formal speech and writing, whoever is used for the subject and whomever is used for the object of a clause. Whomever is rare in conversation.
+Whoever wants a unique experience should try scuba diving in a coral reef.
+I'll take whomever the instructor chooses for my rock-climbing partner.
+When referring to a known and limited group of items, whichever can be used to mean "whatever one" or "whatever ones."
+For your birthday, I'll pay for kayaking or skydiving lessons. You can choose whichever you want. 
+I've packed three kinds of sandwiches for the picnic. Your friends can have whichever they want.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-19">
+        <div class="card-header" onclick="toggle(19)">
+          <span class="card-num">19.</span>
+          <span class="card-title">Overview of passives</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(19)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-19">Quiero aprender inglés C1. El tema de hoy es "Overview of passives".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Overview of passives
+Passive sentences focus on the receiver of the action by making it the subject of the sentence. The agent that performs the action can be omitted or follow by after the verb.
+Passive = subject + form of be + past participle (+ by + agent)
+Simple present: Steve Jobs is remembered for his contributions to communications technologies. 
+Present continuous: Many of his design innovations are still being imitated (by competitors).
+Present perfect: Business presentations have been forever transformed by his simple but engaging style.
+Simple past: Nelson Mandela was awarded the Nobel Peace Prize in 1993.
+Past continuous: Mandela's fight was being kept alive (by activists) around the world.
+Future with going to: Mandela is always going to be remembered for his great speeches. 
+Modals: Jobs will also be remembered as an inspiring public speaker.
+Past modals: No one should have been surprised.
+
+BONUS
+Overview of passives
+The passive voice with a modal can be used in short answers. 
+A: Why wasn't that author awarded the Nobel Prize for literature?
+B: I don't know, but he should have been. (He should have been awarded the Nobel Prize for literature.)
+The verb get can also serve as an auxiliary to form the passive voice. It is less formal and primarily used in spoken English. Get always indicates a change (with a meaning close to become), while be can indicate an unchanging state or a dynamic one.
+Larry and Natalie got married in 2006. (Their wedding occurred in 2006.)
+Larry and Natalie were married in 2006 when they went to Greece. (Their wedding may have occurred before 2006.)
+The verb get is also commonly used in expressions such as get acquainted, get arrested, get dressed, get excited, get married, and get scared.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-20">
+        <div class="card-header" onclick="toggle(20)">
+          <span class="card-num">20.</span>
+          <span class="card-title">Subject-verb agreement with quantifiers</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(20)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-20">Quiero aprender inglés C1. El tema de hoy es "Subject-verb agreement with quantifiers".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Subject-verb agreement with quantifiers
+All (of), a lot of, lots of, plenty of, some (of), most (of), and fractions take a singular verb if the noun they modify is uncountable or singular. They take a plural verb if the noun they modify is plural. 
+A lot of advanced grammar is complicated.
+Most people don't need to write well.
+Three-quarters of email messages contain grammar errors.
+Each of, every one of, none of, and collective nouns, such as majority (of) and minority (of), typically take a singular verb, but often take a plural verb after a plural noun in informal speech.
+None of us has / have the right to correct other people's grammar.
+The majority of teenagers use / uses too much slang.
+A minority of my friends care / cares about speaking correctly.
+Everyone, someone, anyone, no one, each + noun, and every + noun are followed by a singular verb. 
+Every variety is correct.
+No one expects email to be correct.
+
+BONUS
+Subject-verb agreement with quantifiers
+A (large/small/great) number of always modifies a plural noun. The resulting expression takes a plural verb.
+A (large) number of students in my English class were absent on Friday.
+When certain collective nouns, such as majority or minority, act as a whole unit or a single group, they take a singular verb.
+All students can express their opinions, but the majority rules.
+In the United States, Spanish speakers constitute a linguistic minority that is growing rapidly.
+Majority and minority are followed by the plural form of be when the complement is a plural noun.
+If you ask my father about young people today, he'll tell you that the majority are slackers.
+Of people who are concerned with using language correctly, only a small minority are linguists.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-21">
+        <div class="card-header" onclick="toggle(21)">
+          <span class="card-num">21.</span>
+          <span class="card-title">Compound adjectives</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(21)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-21">Quiero aprender inglés C1. El tema de hoy es "Compound adjectives".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Compound adjectives
+Compound adjectives are modifying phrases made up of two or more words. They can be joined by a hyphen, appear as a single word, or appear as two separate words. Always check a dictionary before using compound adjectives in writing.
+Three common patterns for compound adjectives in English are:
+a. adjective + noun + -ed (absent-minded, high-spirited, long-winded, soft-hearted) When preceding a noun, these compounds are usually written with a hyphen unless they are one word.
+b. adverb + past participle (much-loved, well-dressed, highly acclaimed, widely respected) Compounds with adverbs ending in -ly are never hyphenated.
+Other adverbs are usually hyphenated before but not after the noun.
+c. adjective, adverb, or noun + present participle (easygoing, forward-thinking, thought-provoking) When preceding a noun, these compounds are usually written with a hyphen unless they are one word.
+
+BONUS
+Compound adjectives
+The following compound adjectives follow the pattern: noun + past participle.
+awestruck
+bloodstained
+frostbitten 
+handmade
+handwritten 
+heartbroken
+homemade
+moth-eaten
+store-bought 
+sunburned
+waterlogged 
+windswept
+The following compound adjectives are found written as one word in many dictionaries. 
+airborne 
+airsick 
+barefooted 
+daylong
+downhearted 
+hardheaded
+lightweight 
+newfound
+painstaking
+seaworthy
+In the comparative form of compound adjectives, more and less are not followed by hyphens. 
+a more forward-looking plan 
+a less easygoing person 
+a more highly trained applicant
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-22">
+        <div class="card-header" onclick="toggle(22)">
+          <span class="card-num">22.</span>
+          <span class="card-title">Superlative compound adjectives</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(22)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-22">Quiero aprender inglés C1. El tema de hoy es "Superlative compound adjectives".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Superlative compound adjectives
+Superlative compound adjectives generally follow the same hyphenation rules as compound adjectives.
+The superlative form of compound adjectives is most often formed by adding the most and the least. There is never a hyphen after most or least.
+I'm not the most easily impressed person.
+Tonya is the most easygoing person in our family.
+He's the least narrow-minded man I know.
+When the first word of a compound adjective is an adjective or adverb of one or sometimes two syllables, the superlative can also be formed by adding the and using the superlative form of the first word.
+He is the hardest-working man I know.
+They may not be the smartest or the best-looking people in the world.
+Compound adjectives in their superlative form can also occur after the verb be without a noun. 
+Of all the men I know, he's the hardest working.
+
+BONUS
+Superlative compound adjectives
+The following adjectives and adverbs have irregular comparative and superlative forms. They are frequently used in comparative and superlative compound adjectives.
+Adjective
+good
+bad
+far
+Comparative 
+better
+worse
+farther / further 
+Superlative
+best
+worst
+farthest / furthest
+Adverb 
+well
+badly
+little
+much
+far
+Comparative
+better
+worse
+less (lesser)
+more
+farther / further
+Superlative
+best
+worst
+least
+most
+farthest / furthest
+As with other superlative adjectives, the article the is not used when the noun is preceded by a possessive.
+Venezuela's best-known poet will be reading one of his works at the public library this week.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-23">
+        <div class="card-header" onclick="toggle(23)">
+          <span class="card-num">23.</span>
+          <span class="card-title">Subject-verb inversion in conditional sentences</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(23)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-23">Quiero aprender inglés C1. El tema de hoy es "Subject-verb inversion in conditional sentences".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Subject-verb inversion in conditional sentences 
+In past unreal conditional sentences, people sometimes replace if by inverting the subject and the auxiliary had. This occurs mainly in more formal speech and writing.
+If they had been unable to work together, the search engine might never have been created. 
+Had they been unable to work together, the search engine might never have been created.
+The same construction is possible for negative sentences. Notice that negative forms are not contracted and not is separated from had in these sentences.
+If this company hadn't created Hello Kitty, it wouldn't have become nearly so successful. 
+Had this company not created Hello Kitty, it wouldn't have become nearly so successful.
+In present and future real conditionals, people often replace if by putting should at the beginning of the sentence. Note that this use of should does not express obligation. 
+If you want to buy natural skin care products, this company offers over 1,200 choices. 
+Should you want to buy natural skin care products, this company offers over 1,200 choices.
+
+BONUS
+Subject-verb inversion in conditional sentences
+When present or future real conditionals are expressed with should at the beginning of the sentence, the base form of the verb is used.
+If you're looking for a competent employee, Ted is your man.
+Should you be looking for a competent employee, Ted is your man.
+Subject-verb inversion in conditional sentences occurs rarely with could and might, usually in literary or archaic contexts, and often with adverbs such as but or just.
+Could he but win her love, the world would be his.
+Might I just see my country once more, my heart would find peace.
+In formal situations, people sometimes replace if by putting the past subjunctive were at the beginning of unreal conditional sentences.
+If she found enough investors, she could form a startup company. 
+Were she to find enough investors, she could form a startup company.
+If she had been wealthy, she might not have gone into business. 
+Were she to have been wealthy, she might not have gone into business.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Dame 4 ejemplos normales, una por una, en ingles con sustantivos y oraciones diferente, para yo pasarlas a la forma con inversion.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-24">
+        <div class="card-header" onclick="toggle(24)">
+          <span class="card-num">24.</span>
+          <span class="card-title">Adverb clauses of condition</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(24)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-24">Quiero aprender inglés C1. El tema de hoy es "Adverb clauses of condition".
+
+Primero explícame este contenido en español, de forma clara, con ejemplos propios si es necesario:
+
+GRAMMAR 
+Adverb clauses of condition
+Conditional sentences do not necessarily use if. The following expressions are also used. The tense agreement in the clauses is the same as in conditional sentences with if.
+Provided (that) and on the condition (that) introduce a condition on which another situation depends.
+I would take almost any job provided that there were opportunities to learn.
+I would only take a job on the condition that it offered long-term security.
+Whether or not introduces a condition that does not influence another situation. 
+I would quit a job that required me to be dishonest, whether or not it were high paying. 
+Assuming (that) introduces an assumption upon which another condition depends. 
+I wouldn't mind working in an office, assuming that I had the freedom to be creative. 
+Supposing (that) introduces a possible condition that could influence another situation. 
+Supposing I had the choice, I would prefer to work with a group rather than by myself.
+
+BONUS
+Adverb clauses of condition
+In the event (that) and (just) in case also introduce a condition on which another situation depends. In the event (that) is more formal.
+In the event that a replacement cannot be found, you'll have to take on extra responsibilities.
+Here's a number to call just in case the copy machine breaks down.
+Whether or not is used instead of if to introduce a condition on which another situation depends. Or not is placed directly after whether or at the end of the clause.
+Whether or not it involves travel, I'm going to have to take this job.
+Whether it involves travel or not, I'm going to have to take this job.
+Even if introduces a condition which, if it is true, doesn't affect the outcome of a situation. It is frequently used with still.
+I'm (still) going to call in sick tomorrow even if I'm not actually sick.
+If only introduces a condition that the speaker strongly wishes to be true.
+If only I had known about that job opening, I would have applied for it immediately.
+
+Después de explicarlo, practica conmigo así:
+Las retroalimentaciones y los comentarios en español por favor. 
+Haz 4 preguntas una por una, en ingles con sustantivos diferentes preguntas de información (wh-questions o how), para yo responder.
+Después de cada una, por favor corrige y dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no. También recomiéndame verbos frasales, por los verbos que he usado.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Inglés C1 Cambridge</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">✦ Prompt copiado &mdash; pégalo en tu IA</div>
+
+  <script>
+    function toggle(n) {
+      const card = document.getElementById('card-' + n);
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.flashcard.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
+    function copyPrompt(n) {
+      const ta = document.getElementById('prompt-' + n);
+      navigator.clipboard.writeText(ta.value).then(() => markCopied(n)).catch(() => {
+        ta.style.display = 'block'; ta.select(); document.execCommand('copy');
+        ta.style.display = 'none'; markCopied(n);
+      });
+    }
+    function markCopied(n) {
+      const btn = document.querySelector('#card-' + n + ' .copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span class="copy-icon">✦</span> Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="copy-icon">⧉</span> Copiar prompt';
+      }, 2200);
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
+
+</body>
+</html>

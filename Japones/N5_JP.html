@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Japonés N5 — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #06080c;
+      --bg2:      #0b0e14;
+      --card:     #0f1219;
+      --card2:    #141820;
+      --silver:   #8ca0b8;
+      --silver-dim:rgba(140,160,184,0.10);
+      --border:   rgba(140,160,184,0.15);
+      --border2:  rgba(255,255,255,0.05);
+      --accent:   #4a6fa5;
+      --accent-dim:rgba(74,111,165,0.12);
+      --text:     #c8d6e8;
+      --muted:    #3d5068;
+      --mono:     'Syne Mono', monospace;
+      --sans:     'Syne', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-weight: 400;
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(74,111,165,0.06) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(6,8,12,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--silver); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--silver); border: 1px solid rgba(140,160,184,0.35);
+      background: var(--silver-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+    /* ── HEADER ── */
+    header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--silver); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--silver); opacity: 0.4; }
+    h1 {
+      font-family: var(--sans); font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.8rem;
+    }
+    h1 span { color: var(--silver); }
+    .kanji-deco {
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: rgba(140,160,184,0.08);
+      font-family: serif;
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+    .header-inner { position: relative; }
+    .header-desc { color: var(--muted); font-size: 0.9rem; max-width: 520px; line-height: 1.7; }
+    .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '▪'; color: var(--silver); font-size: 0.5rem; }
+
+    /* ── INSTRUCTIONS ── */
+    .instructions {
+      background: var(--silver-dim); border: 1px solid rgba(140,160,184,0.18); border-radius: 6px;
+      padding: 1.2rem 1.4rem; margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
+    }
+    .instructions-icon { font-size: 1.2rem; line-height: 1; margin-top: 0.1rem; }
+    .instructions p { font-size: 0.85rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
+    .instructions strong { color: var(--silver); font-weight: 600; }
+
+    /* ── CARDS ── */
+    .cards-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .flashcard {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .flashcard:hover { border-color: rgba(140,160,184,0.2); }
+    .flashcard.open { border-color: rgba(140,160,184,0.4); }
+    .flashcard.special { border-left: 2px solid var(--accent); }
+
+    .card-header {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 1rem; padding: 1.1rem 1.4rem;
+      cursor: pointer; user-select: none; transition: background 0.15s;
+    }
+    .card-header:hover { background: var(--card2); }
+    .card-num { font-family: var(--mono); font-size: 0.72rem; color: var(--silver); letter-spacing: 0.06em; min-width: 2.4rem; opacity: 0.7; }
+    .card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .card-right { display: flex; align-items: center; gap: 0.7rem; }
+    .card-tag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border2); padding: 0.2rem 0.5rem; border-radius: 2px;
+    }
+    .card-tag-special {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em;
+      color: var(--accent); border: 1px solid rgba(74,111,165,0.4);
+      background: var(--accent-dim); padding: 0.2rem 0.5rem; border-radius: 2px;
+    }
+    .card-chevron { color: var(--muted); font-size: 0.65rem; transition: transform 0.25s, color 0.2s; }
+    .flashcard.open .card-chevron { transform: rotate(180deg); color: var(--silver); }
+
+    .card-body {
+      display: none; border-top: 1px solid var(--border2); padding: 1.4rem; background: var(--bg2);
+    }
+    .flashcard.open .card-body { display: block; }
+    .grammar-label {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--silver); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; opacity: 0.7;
+    }
+    .grammar-label::after { content: ''; flex: 1; height: 1px; background: rgba(140,160,184,0.15); }
+
+    .copy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.85rem 1.2rem;
+      background: var(--silver-dim); border: 1px solid rgba(140,160,184,0.28); border-radius: 4px;
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s; text-transform: uppercase;
+    }
+    .copy-btn:hover { background: rgba(140,160,184,0.16); border-color: rgba(140,160,184,0.5); transform: translateY(-1px); }
+    .copy-btn:active { transform: translateY(0); }
+    .copy-btn.copied { background: rgba(34,120,34,0.15); border-color: rgba(34,180,34,0.4); color: #6de06d; }
+    .copy-icon { font-size: 0.9rem; }
+    .copy-hint { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--muted); text-align: center; margin-top: 0.7rem; }
+    .prompt-text { display: none; }
+
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111318; border: 1px solid rgba(140,160,184,0.35);
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.4rem; border-radius: 4px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--silver); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .card-tag, .card-tag-special { display: none; }
+      .card-header { padding: 1rem; gap: 0.6rem; }
+      .card-body { padding: 1rem; }
+      .kanji-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">&larr; Logicards</a>
+      <span class="nav-title">Japonés N5 · Nivel inicial</span>
+    </div>
+    <span class="nav-badge">35 temas</span>
+  </nav>
+
+  <div class="wrapper">
+    <header>
+      <div class="header-inner">
+        <p class="level-tag">JLPT &middot; Nivel N5</p>
+        <h1>Japonés <span>N5</span></h1>
+        <div class="kanji-deco">日本語</div>
+      </div>
+      <p class="header-desc">
+        35 temas del nivel N5 — el punto de partida del japonés. Copia el prompt, pégalo en tu IA y aprende con un profesor que te explica con claridad, ejemplos del día a día y práctica uno a uno.
+      </p>
+      <div class="header-meta">
+        <span class="meta-item">35 temas</span>
+        <span class="meta-item">Hiragana · Katakana · Kanji</span>
+        <span class="meta-item">Español + Romaji</span>
+        <span class="meta-item">100% gratuito</span>
+      </div>
+    </header>
+
+    <div class="instructions">
+      <div class="instructions-icon">&#128161;</div>
+      <p>
+        Haz clic en cualquier tarjeta, presiona <strong>Copiar prompt</strong> y pégalo en ChatGPT, Claude o Gemini. La IA te explicará el tema con ejemplos claros y luego practicará contigo, oración por oración.
+      </p>
+    </div>
+
+    <div class="cards-list">
+      <div class="flashcard special" id="card-0">
+        <div class="card-header" onclick="toggle(0)">
+          <span class="card-num">00.</span>
+          <span class="card-title">Cómo escribir japonés en Windows</span>
+          <div class="card-right">
+            <span class="card-tag card-tag-special">⌨ Windows</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(0)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-0">Eres un profesor experto en japonés. Explícame paso a paso cómo configurar y usar el teclado japonés en Windows para escribir en hiragana, katakana y kanji.
+
+Por favor cubre lo siguiente con detalle:
+
+1. CONFIGURACIÓN: Cómo agregar el idioma japonés en Windows (Configuración → Hora e idioma → Idioma → Agregar idioma → 日本語). Pasos exactos para Windows 10 y Windows 11.
+
+2. IME (Microsoft IME): Qué es el IME japonés, cómo activarlo y desactivarlo con el teclado, y qué significa cada modo (Hiragana, Katakana, Romaji, etc.).
+
+3. CÓMO ESCRIBIR:
+   - Cómo escribir hiragana: escribe en romaji y el IME lo convierte automáticamente (ejemplo: escribe "ka" → か).
+   - Cómo escribir katakana: la tecla F7 convierte lo escrito a katakana.
+   - Cómo convertir a kanji: la barra espaciadora muestra opciones de kanji, Enter para confirmar.
+   - Cómo escribir caracteres especiales japoneses: 。、「」etc.
+
+4. TABLA DE REFERENCIA: Una tabla con las combinaciones de teclas más importantes del IME japonés.
+
+5. PRÁCTICA: Dame 5 palabras en español, una por una, para que yo las escriba en japonés usando el teclado. Espera mi respuesta antes de continuar.
+
+6. Después de cada intento: corrígeme, explícame si algo salió mal y cómo mejorarlo.
+
+Todas las explicaciones en español por favor. ¡Empecemos!</textarea>
+      </div>
+      <div class="flashcard" id="card-1">
+        <div class="card-header" onclick="toggle(1)">
+          <span class="card-num">01.</span>
+          <span class="card-title">Introducción al japonés</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(1)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-1">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Breve introducción al idioma japonés: saludos y despedidas, el sistema de escritura (hiragana, katakana y kanji básicos) y el orden de las oraciones en japonés (SOV)
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-2">
+        <div class="card-header" onclick="toggle(2)">
+          <span class="card-num">02.</span>
+          <span class="card-title">Partículas (助詞)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(2)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-2">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Partículas japonesas は (wa), が (ga), を (wo), に (ni), へ (e), で (de), の (no), と (to), も (mo), から (kara) y まで (made). Explica cada una con su función y cuándo usarla
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-3">
+        <div class="card-header" onclick="toggle(3)">
+          <span class="card-num">03.</span>
+          <span class="card-title">Verbos grupos 1, 2 y 3</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(3)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-3">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Verbos del grupo 1 (godan), grupo 2 (ichidan) y grupo 3 (irregulares: する y くる) del japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-4">
+        <div class="card-header" onclick="toggle(4)">
+          <span class="card-num">04.</span>
+          <span class="card-title">Forma ます (masu)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(4)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-4">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma ます (masu): forma educada del presente y futuro afirmativo en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-5">
+        <div class="card-header" onclick="toggle(5)">
+          <span class="card-num">05.</span>
+          <span class="card-title">Forma ない (nai)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(5)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-5">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma ない (nai): forma negativa del presente en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-6">
+        <div class="card-header" onclick="toggle(6)">
+          <span class="card-num">06.</span>
+          <span class="card-title">Forma た (ta)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(6)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-6">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma た (ta): forma del pasado afirmativo en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-7">
+        <div class="card-header" onclick="toggle(7)">
+          <span class="card-num">07.</span>
+          <span class="card-title">Forma て (te)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(7)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-7">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma て (te) para acciones en secuencia en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-8">
+        <div class="card-header" onclick="toggle(8)">
+          <span class="card-num">08.</span>
+          <span class="card-title">Forma たい (tai)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(8)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-8">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma たい (tai): expresar deseo de hacer algo en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-9">
+        <div class="card-header" onclick="toggle(9)">
+          <span class="card-num">09.</span>
+          <span class="card-title">Forma diccionario</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(9)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-9">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma diccionario (辞書形 - jishokei) y su forma negativa en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-10">
+        <div class="card-header" onclick="toggle(10)">
+          <span class="card-num">10.</span>
+          <span class="card-title">Forma potencial</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(10)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-10">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Forma potencial del japonés: expresar que puedes o eres capaz de hacer algo, y su forma negativa
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-11">
+        <div class="card-header" onclick="toggle(11)">
+          <span class="card-num">11.</span>
+          <span class="card-title">Verbos irregulares する y くる</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(11)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-11">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Verbos irregulares する (suru) y くる (kuru): todas sus conjugaciones principales
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-12">
+        <div class="card-header" onclick="toggle(12)">
+          <span class="card-num">12.</span>
+          <span class="card-title">Adjetivos い (i-keiyoushi)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(12)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-12">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Adjetivos い (い形容詞): formas afirmativa y negativa en presente y pasado
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-13">
+        <div class="card-header" onclick="toggle(13)">
+          <span class="card-num">13.</span>
+          <span class="card-title">Adjetivos な (na-keiyoushi)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(13)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-13">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Adjetivos な (な形容詞): formas afirmativa y negativa en presente y pasado
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-14">
+        <div class="card-header" onclick="toggle(14)">
+          <span class="card-num">14.</span>
+          <span class="card-title">～です / ～だ</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(14)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-14">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～です / ～だ: el verbo copulativo en japonés y sus conjugaciones en presente afirmativo, negativo y pasado
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-15">
+        <div class="card-header" onclick="toggle(15)">
+          <span class="card-num">15.</span>
+          <span class="card-title">～ですか？ (Preguntas)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(15)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-15">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～ですか？: cómo hacer preguntas de sí/no en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-16">
+        <div class="card-header" onclick="toggle(16)">
+          <span class="card-num">16.</span>
+          <span class="card-title">～が好き / ～が嫌い</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(16)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-16">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～が好きです / ～が嫌いです: expresar gustos y disgustos en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-17">
+        <div class="card-header" onclick="toggle(17)">
+          <span class="card-num">17.</span>
+          <span class="card-title">～があります / ～がいます</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(17)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-17">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～があります / ～がいます: expresar existencia de cosas y personas en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-18">
+        <div class="card-header" onclick="toggle(18)">
+          <span class="card-num">18.</span>
+          <span class="card-title">～ませんか？ (Invitación)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(18)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-18">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～ませんか？: hacer invitaciones de forma educada en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-19">
+        <div class="card-header" onclick="toggle(19)">
+          <span class="card-num">19.</span>
+          <span class="card-title">～ましょう / ～ましょうか？</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(19)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-19">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～ましょう / ～ましょうか？: proponer hacer algo juntos en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-20">
+        <div class="card-header" onclick="toggle(20)">
+          <span class="card-num">20.</span>
+          <span class="card-title">～てください (Petición)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(20)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-20">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～てください: hacer pedidos y solicitudes educadas en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-21">
+        <div class="card-header" onclick="toggle(21)">
+          <span class="card-num">21.</span>
+          <span class="card-title">～てもいいですか？ (Permiso)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(21)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-21">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～てもいいですか？: pedir permiso en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-22">
+        <div class="card-header" onclick="toggle(22)">
+          <span class="card-num">22.</span>
+          <span class="card-title">～てはいけません (Prohibición)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(22)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-22">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～てはいけません: expresar prohibiciones en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-23">
+        <div class="card-header" onclick="toggle(23)">
+          <span class="card-num">23.</span>
+          <span class="card-title">～ています (Progreso/estado)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(23)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-23">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～ています: expresar acciones en progreso o estados resultantes en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-24">
+        <div class="card-header" onclick="toggle(24)">
+          <span class="card-num">24.</span>
+          <span class="card-title">～に行きます (Propósito)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(24)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-24">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～に行きます: expresar el propósito de ir a algún lugar en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-25">
+        <div class="card-header" onclick="toggle(25)">
+          <span class="card-num">25.</span>
+          <span class="card-title">～くなる / ～になる (Cambio)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(25)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-25">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～くなる / ～になる: expresar cambio de estado en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-26">
+        <div class="card-header" onclick="toggle(26)">
+          <span class="card-num">26.</span>
+          <span class="card-title">～と思います / ～と言います</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(26)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-26">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～と思います / ～と言います: expresar opiniones y citar lo que alguien dijo en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-27">
+        <div class="card-header" onclick="toggle(27)">
+          <span class="card-num">27.</span>
+          <span class="card-title">～たいです (Deseo)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(27)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-27">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～たいです: expresar lo que uno quiere hacer en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-28">
+        <div class="card-header" onclick="toggle(28)">
+          <span class="card-num">28.</span>
+          <span class="card-title">～つもりです (Intención)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(28)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-28">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～つもりです: expresar intención o plan futuro en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-29">
+        <div class="card-header" onclick="toggle(29)">
+          <span class="card-num">29.</span>
+          <span class="card-title">～たことがあります (Experiencia)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(29)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-29">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～たことがあります: hablar de experiencias pasadas en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-30">
+        <div class="card-header" onclick="toggle(30)">
+          <span class="card-num">30.</span>
+          <span class="card-title">～や ～など (Enumeración)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(30)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-30">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～や ～など: hacer enumeraciones parciales en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-31">
+        <div class="card-header" onclick="toggle(31)">
+          <span class="card-num">31.</span>
+          <span class="card-title">～より / ～のほうが (Comparación)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(31)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-31">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～より / ～のほうが: hacer comparaciones en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-32">
+        <div class="card-header" onclick="toggle(32)">
+          <span class="card-num">32.</span>
+          <span class="card-title">～まだ / もう (Aún / Ya)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(32)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-32">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～まだ / もう: expresar 'todavía' y 'ya' en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-33">
+        <div class="card-header" onclick="toggle(33)">
+          <span class="card-num">33.</span>
+          <span class="card-title">～だけ / ～しか (Solo)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(33)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-33">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: ～だけ / ～しか: expresar 'solo' o 'nada más que' en japonés
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+      <div class="flashcard" id="card-34">
+        <div class="card-header" onclick="toggle(34)">
+          <span class="card-num">34.</span>
+          <span class="card-title">Signos de separación (区切り記号)</span>
+          <div class="card-right">
+            <span class="card-tag">文法</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(34)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-34">Eres un profesor experto en japonés. Explícame el siguiente tema del nivel N5 con claridad y profundidad.
+
+Tema: Signos de puntuación y separación en japonés: 。（句点）、（読点）「」（comillas）・（punto medio）～（tilde）y espacios
+
+Por favor sigue esta estructura:
+
+1. EXPLICACIÓN: Explica el tema de forma extensa y clara, con ejemplos de la vida cotidiana (conversaciones, situaciones del día a día, viajes, familia, trabajo, comida, etc.). No uses ejemplos de mecánica ni industria. Incluye la estructura gramatical, cuándo se usa, y errores comunes que deben evitarse.
+
+2. EJEMPLOS: Dame entre 4 y 6 oraciones de ejemplo completas. Para cada una incluye:
+   - Español: (la oración en español)
+   - Japonés: (la oración en japonés con kanji)
+   - Hiragana: (la oración en hiragana)
+   - Romaji: (la pronunciación)
+
+3. Luego pregúntame si tengo alguna duda antes de pasar a la práctica y espera mi respuesta (sí o no).
+
+4. PRÁCTICA: Dame 4 oraciones en español, una por una, para que yo las traduzca al japonés usando lo que acabas de enseñar. Espera mi respuesta antes de continuar con la siguiente.
+
+5. Después de cada respuesta mía: corrígeme con detalle, señala mis errores, explica por qué están mal y cómo mejorar. Pregúntame si tengo dudas y espera mi respuesta.
+
+6. Al finalizar, dime si estoy listo para avanzar al siguiente tema o si necesito practicar más.
+
+Todas las retroalimentaciones y comentarios en español por favor.</textarea>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Japonés N5</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">&#10003; Prompt copiado &mdash; pégalo en tu IA</div>
+
+  <script>
+    function toggle(n) {
+      const card = document.getElementById('card-' + n);
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.flashcard.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
+    function copyPrompt(n) {
+      const ta = document.getElementById('prompt-' + n);
+      navigator.clipboard.writeText(ta.value).then(() => markCopied(n)).catch(() => {
+        ta.style.display = 'block'; ta.select(); document.execCommand('copy');
+        ta.style.display = 'none'; markCopied(n);
+      });
+    }
+    function markCopied(n) {
+      const btn = document.querySelector('#card-' + n + ' .copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span class="copy-icon">&#10003;</span> Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="copy-icon">&#10087;</span> Copiar prompt';
+      }, 2200);
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
+
+</body>
+</html>

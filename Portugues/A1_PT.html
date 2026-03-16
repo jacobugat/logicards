@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portugués A1 — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #080808;
+      --bg2:         #0f0f0f;
+      --card:        #111111;
+      --card2:       #181818;
+      --orange:      #ff6b2b;
+      --orange-dim:  rgba(255,107,43,0.11);
+      --orange-glow: rgba(255,107,43,0.06);
+      --border:      rgba(255,107,43,0.18);
+      --border2:     rgba(255,255,255,0.05);
+      --text:        #fff2ec;
+      --muted:       #6b4030;
+      --mono:        'Syne Mono', monospace;
+      --sans:        'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-weight: 400;
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; bottom: -180px; right: -180px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,107,43,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.93); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .back-link {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--orange); }
+    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-badge {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--orange); border: 1px solid rgba(255,107,43,0.4);
+      background: var(--orange-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+
+    .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+    /* HEADER */
+    header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+    .level-tag {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .level-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--orange); opacity: 0.5; }
+    h1 { font-family: var(--sans); font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
+    h1 span { color: var(--orange); }
+    .header-desc { color: var(--muted); font-size: 0.9rem; max-width: 520px; line-height: 1.7; }
+    .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .meta-item {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .meta-item::before { content: '▪'; color: var(--orange); font-size: 0.5rem; }
+
+    /* INSTRUCTIONS */
+    .instructions {
+      background: var(--orange-dim); border: 1px solid rgba(255,107,43,0.25); border-radius: 6px;
+      padding: 1.2rem 1.4rem; margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
+    }
+    .instructions-icon { font-size: 1.2rem; line-height: 1; margin-top: 0.1rem; }
+    .instructions p { font-size: 0.85rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
+    .instructions strong { color: var(--orange); font-weight: 600; }
+
+    /* CARDS */
+    .cards-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .flashcard {
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 6px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .flashcard:hover { border-color: var(--border); }
+    .flashcard.open { border-color: rgba(255,107,43,0.4); }
+
+    .card-header {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 1rem; padding: 1.1rem 1.4rem;
+      cursor: pointer; user-select: none; transition: background 0.15s;
+    }
+    .card-header:hover { background: var(--card2); }
+    .card-num { font-family: var(--mono); font-size: 0.72rem; color: var(--orange); letter-spacing: 0.06em; min-width: 2.4rem; }
+    .card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .card-right { display: flex; align-items: center; gap: 0.8rem; }
+    .card-tag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border2); padding: 0.2rem 0.5rem; border-radius: 2px;
+    }
+    .card-chevron { color: var(--muted); font-size: 0.65rem; transition: transform 0.25s, color 0.2s; }
+    .flashcard.open .card-chevron { transform: rotate(180deg); color: var(--orange); }
+
+    .card-body {
+      display: none; border-top: 1px solid var(--border2);
+      padding: 1.4rem; background: var(--bg2);
+    }
+    .flashcard.open .card-body { display: block; }
+
+    .grammar-label {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .grammar-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,107,43,0.2); }
+
+    .copy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.85rem 1.2rem;
+      background: var(--orange-dim); border: 1px solid rgba(255,107,43,0.35); border-radius: 4px;
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s; text-transform: uppercase;
+    }
+    .copy-btn:hover { background: rgba(255,107,43,0.2); border-color: rgba(255,107,43,0.7); transform: translateY(-1px); }
+    .copy-btn:active { transform: translateY(0); }
+    .copy-btn.copied { background: rgba(34,120,34,0.15); border-color: rgba(34,180,34,0.4); color: #6de06d; }
+    .copy-icon { font-size: 0.9rem; }
+    .copy-hint { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--muted); text-align: center; margin-top: 0.7rem; }
+
+    .prompt-text { display: none; }
+
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111111; border: 1px solid rgba(255,107,43,0.4);
+      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.7rem 1.4rem; border-radius: 4px;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    footer {
+      margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo span { color: var(--orange); }
+    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 500px) {
+      .card-tag { display: none; }
+      .card-header { padding: 1rem; gap: 0.6rem; }
+      .card-body { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">&larr; Logicards</a>
+      <span class="nav-title">Portugués A1</span>
+    </div>
+    <span class="nav-badge">25 temas</span>
+  </nav>
+
+  <div class="wrapper">
+
+    <header>
+      <p class="level-tag">Portugués &middot; Nivel A1</p>
+      <h1>Portugués <span>A1</span></h1>
+      <p class="header-desc">
+        25 temas esenciales del nivel A1. Abre cualquier tarjeta, copia el prompt y pégalo en tu IA favorita. Ella te explicará el tema y luego practicará contigo en español.
+      </p>
+      <div class="header-meta">
+        <span class="meta-item">25 temas</span>
+        <span class="meta-item">Feedback en español</span>
+        <span class="meta-item">Portugués brasileño</span>
+        <span class="meta-item">100% gratuito</span>
+      </div>
+    </header>
+
+    <div class="instructions">
+      <div class="instructions-icon">&#128161;</div>
+      <p>
+        Haz clic en una tarjeta para abrirla. Presiona <strong>Copiar prompt</strong>, abre tu IA (ChatGPT, Claude, Gemini&hellip;) y pégalo. La IA te explicará el tema y después practicará contigo.
+      </p>
+    </div>
+
+    <div class="cards-list">
+      <div class="flashcard" id="card-1">
+        <div class="card-header" onclick="toggle(1)">
+          <span class="card-num">01.</span>
+          <span class="card-title">Alfabeto</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(1)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-1">Las retroalimentaciones y los comentarios en español por favor.
+Explica "el alfabeto portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas una por una, sobre lo que has enseñado.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-2">
+        <div class="card-header" onclick="toggle(2)">
+          <span class="card-num">02.</span>
+          <span class="card-title">Saludos y presentaciones</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(2)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-2">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Saludos y presentaciones del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-3">
+        <div class="card-header" onclick="toggle(3)">
+          <span class="card-num">03.</span>
+          <span class="card-title">Artículos definidos e indefinidos</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(3)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-3">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Artículos definidos e indefinidos del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-4">
+        <div class="card-header" onclick="toggle(4)">
+          <span class="card-num">04.</span>
+          <span class="card-title">Pronombres personales y posesivos</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(4)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-4">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Pronombres personales y posesivos del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-5">
+        <div class="card-header" onclick="toggle(5)">
+          <span class="card-num">05.</span>
+          <span class="card-title">Verbos en presente del indicativo (regulares e irregulares básicos)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(5)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-5">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Verbos en presente del indicativo (regulares e irregulares básicos) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-6">
+        <div class="card-header" onclick="toggle(6)">
+          <span class="card-num">06.</span>
+          <span class="card-title">Números cardinales y ordinales</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(6)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-6">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Números cardinales y ordinales del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-7">
+        <div class="card-header" onclick="toggle(7)">
+          <span class="card-num">07.</span>
+          <span class="card-title">Expresiones de tiempo (días, meses, horas)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(7)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-7">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Expresiones de tiempo (días, meses, horas) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-8">
+        <div class="card-header" onclick="toggle(8)">
+          <span class="card-num">08.</span>
+          <span class="card-title">Adjetivos y concordancia de género y número</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(8)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-8">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Adjetivos y concordancia de género y número del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-9">
+        <div class="card-header" onclick="toggle(9)">
+          <span class="card-num">09.</span>
+          <span class="card-title">Estructuras de negación</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(9)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-9">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Estructuras de negación del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-10">
+        <div class="card-header" onclick="toggle(10)">
+          <span class="card-num">10.</span>
+          <span class="card-title">Preguntas básicas (uso de "O que", "Quem", "Onde", etc.)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(10)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-10">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Preguntas básicas (uso de "O que", "Quem", "Onde", etc.) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Dejame construir 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para que tu respondas responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-11">
+        <div class="card-header" onclick="toggle(11)">
+          <span class="card-num">11.</span>
+          <span class="card-title">Preposiciones básicas (de lugar y de tiempo)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(11)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-11">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Preposiciones básicas (de lugar y de tiempo) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-12">
+        <div class="card-header" onclick="toggle(12)">
+          <span class="card-num">12.</span>
+          <span class="card-title">Expresión de gustos y preferencias</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(12)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-12">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Expresión de gustos y preferencias del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-13">
+        <div class="card-header" onclick="toggle(13)">
+          <span class="card-num">13.</span>
+          <span class="card-title">Frases básicas para situaciones cotidianas (compras, restaurante, direcciones)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(13)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-13">Las retroalimentaciondddddes y los comentarios en español por favor.
+Explica "Frases básicas para situaciones cotidianas (compras, restaurante, direcciones) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-14">
+        <div class="card-header" onclick="toggle(14)">
+          <span class="card-num">14.</span>
+          <span class="card-title">Verbos "ser" y "estar" (diferencias y usos)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(14)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-14">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Verbos "ser" y "estar" (diferencias y usos) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-15">
+        <div class="card-header" onclick="toggle(15)">
+          <span class="card-num">15.</span>
+          <span class="card-title">Verbos "ter", "haver" y "existir" (para expresar posesión y existencia)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(15)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-15">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Verbos "ter", "haver" y "existir" (para expresar posesión y existencia) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-16">
+        <div class="card-header" onclick="toggle(16)">
+          <span class="card-num">16.</span>
+          <span class="card-title">Conjugación de verbos reflexivos (levantar-se, chamar-se)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(16)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-16">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Conjugación de verbos reflexivos (levantar-se, chamar-se) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-17">
+        <div class="card-header" onclick="toggle(17)">
+          <span class="card-num">17.</span>
+          <span class="card-title">Uso del infinitivo y del gerundio en frases simples</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(17)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-17">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Uso del infinitivo y del gerundio en frases simples del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-18">
+        <div class="card-header" onclick="toggle(18)">
+          <span class="card-num">18.</span>
+          <span class="card-title">Conectores básicos (e, mas, ou, porque, então)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(18)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-18">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Conectores básicos (e, mas, ou, porque, então) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-19">
+        <div class="card-header" onclick="toggle(19)">
+          <span class="card-num">19.</span>
+          <span class="card-title">Expresiones de frecuencia (sempre, nunca, às vezes)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(19)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-19">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Expresiones de frecuencia (sempre, nunca, às vezes) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-20">
+        <div class="card-header" onclick="toggle(20)">
+          <span class="card-num">20.</span>
+          <span class="card-title">Verbos "ir" y "vir" (movimiento y direcciones)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(20)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-20">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Verbos "ir" y "vir" (movimiento y direcciones) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-21">
+        <div class="card-header" onclick="toggle(21)">
+          <span class="card-num">21.</span>
+          <span class="card-title">Uso de "gostar de" + infinitivo o sustantivo</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(21)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-21">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Uso de "gostar de" + infinitivo o sustantivo del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-22">
+        <div class="card-header" onclick="toggle(22)">
+          <span class="card-num">22.</span>
+          <span class="card-title">Diferencia entre "bom" y "bem", "mau" y "mal"</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(22)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-22">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Diferencia entre "bom" y "bem", "mau" y "mal" del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-23">
+        <div class="card-header" onclick="toggle(23)">
+          <span class="card-num">23.</span>
+          <span class="card-title">Diferencias entre "muito" y "muitos"</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(23)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-23">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Diferencias entre "muito" y "muitos" del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-24">
+        <div class="card-header" onclick="toggle(24)">
+          <span class="card-num">24.</span>
+          <span class="card-title">Uso de "com" y "sem" para expresar compañía o ausencia</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(24)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-24">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Uso de "com" y "sem" para expresar compañía o ausencia del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+      <div class="flashcard" id="card-25">
+        <div class="card-header" onclick="toggle(25)">
+          <span class="card-num">25.</span>
+          <span class="card-title">Imperativo informal en frases básicas (fale, coma, abra)</span>
+          <div class="card-right">
+            <span class="card-tag">Gramática</span>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grammar-label">Prompt · copiar y pegar</div>
+          <button class="copy-btn" onclick="copyPrompt(25)">
+            <span class="copy-icon">⧉</span> Copiar prompt
+          </button>
+          <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        </div>
+        <textarea class="prompt-text" id="prompt-25">Las retroalimentaciones y los comentarios en español por favor.
+Explica "Imperativo informal en frases básicas (fale, coma, abra) del portugués"
+Luego pregúntame si tengo alguna duda antes de pasar a la practica.
+Realízame 4 preguntas en portugués para practicar ese tipo de oraciones, una por una, para yo responder.
+Después de cada respuesta, corrige mis errores, dame sugerencias para mejorar, también pregúntame si tengo dudas y espera a que yo responda si o no.
+Al finalizar, dime si ya estoy preparado para avanzar al siguiente tema o si debo estudiar y practicar mas este tema.</textarea>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Portugués A1</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">&#10003; Prompt copiado &mdash; pégalo en tu IA</div>
+
+  <script>
+    function toggle(n) {
+      const card = document.getElementById('card-' + n);
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.flashcard.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
+    function copyPrompt(n) {
+      const ta = document.getElementById('prompt-' + n);
+      navigator.clipboard.writeText(ta.value).then(() => markCopied(n)).catch(() => {
+        ta.style.display = 'block'; ta.select(); document.execCommand('copy');
+        ta.style.display = 'none'; markCopied(n);
+      });
+    }
+    function markCopied(n) {
+      const btn = document.querySelector('#card-' + n + ' .copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span class="copy-icon">&#10003;</span> Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="copy-icon">&#10087;</span> Copiar prompt';
+      }, 2200);
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
+
+</body>
+</html>
