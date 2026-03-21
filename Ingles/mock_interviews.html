@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mock Interviews · Fluidez en Inglés — Logicards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07050a;--bg2:#0e0a14;--card:#110d18;--card2:#16111f;
+  --pink:#db2777;--pink-lt:#f472b6;--pink-dim:rgba(219,39,119,.12);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.10);
+  --border:rgba(219,39,119,.20);--border2:rgba(255,255,255,.05);
+  --text:#fce7f3;--muted:#6b2147;
+  --mono:'Syne Mono',monospace;--sans:'Syne',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(219,39,119,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+.shimmer{position:fixed;top:0;left:0;right:0;height:1px;z-index:300;background:linear-gradient(90deg,transparent,rgba(219,39,119,0) 20%,rgba(244,114,182,.9) 50%,rgba(219,39,119,0) 80%,transparent);background-size:200% 100%;animation:sh 7s ease-in-out infinite}
+@keyframes sh{0%{background-position:-100% 0}100%{background-position:200% 0}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(7,5,10,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav-left{display:flex;align-items:center;gap:1rem}
+.back-link{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--pink-lt)}
+.nav-title{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text)}
+.nav-badges{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.nbadge{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .55rem;border-radius:2px}
+.nb-pink{color:var(--pink-lt);border:1px solid rgba(244,114,182,.4);background:var(--pink-dim)}
+.nb-gold{color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim)}
+.nb-muted{color:var(--muted);border:1px solid var(--border2)}
+
+/* WRAPPER */
+.wrapper{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 1.4rem 4rem}
+
+/* HEADER */
+header{padding:3.2rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.header-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem}
+.level-badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink-lt);border:1px solid rgba(244,114,182,.35);background:var(--pink-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem;margin-left:.5rem}
+h1{font-family:var(--sans);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.35rem}
+h1 .mock{color:var(--pink-lt)}
+h1 .int{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.7rem}
+.header-desc{color:var(--muted);font-size:.86rem;max-width:640px;line-height:1.75}
+.header-meta{display:flex;align-items:center;gap:1.4rem;margin-top:1.1rem;flex-wrap:wrap}
+.meta-item{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.meta-item::before{content:'◆';color:var(--pink-lt);font-size:.38rem}
+
+/* HOW TO USE */
+.how-to{background:var(--pink-dim);border:1px solid rgba(219,39,119,.22);border-radius:5px;padding:1rem 1.3rem;margin-bottom:1.8rem;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}
+.how-to-icon{font-size:1.1rem;margin-top:1px}
+.how-to p{font-size:.82rem;color:var(--text);opacity:.85;line-height:1.65}
+.how-to strong{color:var(--pink-lt)}
+
+/* PROGRESS */
+.progress-bar-wrap{margin-bottom:1.8rem}
+.progress-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;justify-content:space-between}
+.progress-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-lt));border-radius:1px;transition:width .4s}
+
+/* CONTROLS */
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.5rem}
+.search-input{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.48rem .85rem;color:var(--text);font-family:var(--mono);font-size:.68rem;outline:none;transition:border-color .2s;min-width:200px}
+.search-input:focus{border-color:var(--pink-lt)}
+.search-input::placeholder{color:var(--muted)}
+.cat-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:.25rem .65rem;color:var(--muted);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap;text-transform:uppercase}
+.cat-btn:hover{border-color:var(--pink-lt);color:var(--pink-lt)}
+.cat-btn.active{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:600}
+.stats-count{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+
+/* LESSON CARDS */
+.lessons-list{display:flex;flex-direction:column;gap:.55rem}
+.lesson-card{background:var(--card);border:1px solid var(--border2);border-radius:5px;overflow:hidden;transition:border-color .2s}
+.lesson-card:hover{border-color:rgba(219,39,119,.22)}
+.lesson-card.open{border-color:rgba(244,114,182,.4)}
+.lesson-card.done{background:rgba(219,39,119,.04);border-color:rgba(219,39,119,.2)}
+.lesson-card.hidden{display:none}
+.lesson-card.technique{border-color:rgba(245,158,11,.15)}
+.lesson-card.technique:hover{border-color:rgba(245,158,11,.35)}
+.lesson-card.technique.open{border-color:rgba(245,158,11,.5)}
+
+.card-header{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s}
+.card-header:hover{background:var(--card2)}
+.lesson-num{font-family:var(--mono);font-size:.65rem;color:var(--pink-lt);min-width:2rem;opacity:.65}
+.lesson-num.tech{color:var(--gold);opacity:.8}
+.card-title-wrap{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
+.lesson-title{font-size:.9rem;font-weight:600;color:var(--text)}
+.lesson-sub{font-family:var(--mono);font-size:.52rem;color:var(--muted);letter-spacing:.04em}
+.cat-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:.07em;color:var(--muted);border:1px solid var(--border2);padding:.08rem .38rem;border-radius:2px;white-space:nowrap}
+.cat-badge.tech{color:rgba(245,158,11,.7);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.07)}
+.card-chevron{color:var(--muted);font-size:.6rem;transition:transform .25s,color .2s;flex-shrink:0}
+.lesson-card.open .card-chevron{transform:rotate(180deg);color:var(--pink-lt)}
+.lesson-card.technique.open .card-chevron{color:var(--gold)}
+
+/* CARD BODY */
+.card-body{display:none;border-top:1px solid var(--border2);background:var(--bg2)}
+.lesson-card.open .card-body{display:block}
+
+/* QUESTIONS SECTION */
+.questions-section{padding:1rem 1.15rem;border-bottom:1px solid var(--border2)}
+.q-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink-lt);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.q-label::after{content:'';flex:1;height:1px;background:rgba(244,114,182,.12)}
+.q-list{display:flex;flex-direction:column;gap:.4rem}
+.q-item{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem .5rem;background:rgba(219,39,119,.05);border:1px solid rgba(219,39,119,.1);border-radius:3px}
+.q-num{font-family:var(--mono);font-size:.5rem;color:var(--pink-lt);opacity:.6;min-width:1.2rem;margin-top:.15rem;flex-shrink:0}
+.q-text{font-size:.8rem;color:var(--text);opacity:.85;line-height:1.55}
+
+/* TECHNIQUE NOTE */
+.tech-note{padding:1rem 1.15rem;border-bottom:1px solid var(--border2)}
+.tech-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;opacity:.8}
+.tech-desc{font-size:.8rem;color:var(--muted);line-height:1.65}
+
+/* PROMPT SECTION */
+.prompt-section{padding:.9rem 1.15rem}
+.prompt-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink-lt);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.prompt-label::after{content:'';flex:1;height:1px;background:rgba(244,114,182,.12)}
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem 1.1rem;background:var(--pink-dim);border:1px solid rgba(219,39,119,.32);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;font-weight:500}
+.copy-btn:hover{background:rgba(219,39,119,.22);border-color:var(--pink-lt);transform:translateY(-1px)}
+.copy-btn.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.copy-hint{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;margin-top:.6rem}
+.prompt-text{display:none}
+
+/* DONE ROW */
+.done-row{display:flex;align-items:center;gap:.4rem;margin-top:.65rem}
+.done-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:.56rem;padding:.2rem .55rem;cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
+.done-btn:hover{border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.lesson-card.done .done-btn{border-color:rgba(34,197,94,.4);color:#6ee7b7;background:rgba(34,197,94,.07)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(244,114,182,.4);color:var(--pink-lt);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.6rem 1.3rem;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-logo{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.footer-logo span{color:var(--pink-lt)}
+.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+@media(max-width:580px){.cat-badge{display:none}.card-header{padding:.8rem 1rem;gap:.55rem}.card-body{padding-left:.9rem}}
+</style>
+</head>
+<body>
+<div class="shimmer"></div>
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">Mock Interviews · Fluidez en Inglés</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nbadge nb-gold">🎙 Entrevistas en Inglés</span>
+    <span class="nbadge nb-pink" id="doneCount">0 / 25 lecciones</span>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <header>
+    <div class="header-badge">🎙 Inglés Aplicado · Job Interviews</div>
+    <span class="level-badge">◆ B2–C1 · Fluency Training</span>
+    <h1><span class="mock">Mock</span> <span class="int">Interviews</span></h1>
+    <p class="header-sub">25 Lecciones · Fluidez en inglés para entrevistas de trabajo</p>
+    <p class="header-desc">Curso diseñado para que puedas responder cualquier pregunta de entrevista en inglés con naturalidad, estructura y confianza. Cada lección combina teoría lingüística con práctica real: preguntas auténticas que debes ensayar con un amigo, con una IA o grabándote a ti mismo.</p>
+    <div class="header-meta">
+      <span class="meta-item">25 lecciones</span>
+      <span class="meta-item">15 sesiones con preguntas</span>
+      <span class="meta-item">10 técnicas de comunicación</span>
+      <span class="meta-item">Método STAR incluido</span>
+    </div>
+  </header>
+
+  <div class="how-to">
+    <div class="how-to-icon">💡</div>
+    <p>Abre cualquier lección para ver las preguntas al instante. Copia el prompt y pégalo en <strong>ChatGPT, Claude o Gemini</strong> para recibir una clase magistral completa. Luego <strong>practica las preguntas de 3 formas</strong>: con una IA que simule al entrevistador, con un amigo en roleplay, o grabándote en video y analizando tu fluidez y lenguaje corporal.</p>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 25 lecciones completadas</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar lección o pregunta…" oninput="applyFilters()"/>
+    <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+    <button class="cat-btn" data-cat="interview" onclick="selectCat(this)">🎙 Preguntas</button>
+    <button class="cat-btn" data-cat="technique" onclick="selectCat(this)">⚡ Técnicas</button>
+    <span class="stats-count" id="counter">25 lecciones</span>
+  </div>
+
+  <div class="lessons-list" id="lessonsList"></div>
+
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · Mock Interviews · Fluidez en Inglés</span>
+  </footer>
+</div>
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+
+<script>
+const LESSONS = [
+  {
+    n:1, cat:"interview",
+    title:"The Hook",
+    sub:"Tell me about yourself — sin parecer un robot",
+    qs:[
+      "How would you describe your professional journey in three words?",
+      "What is the most important thing I should know about you that isn't on your resume?",
+      "How do your colleagues usually describe your working style?",
+      "What motivated you to transition into your current field?",
+      "If you had to pitch yourself in 30 seconds, what would be your 'headline'?"
+    ]
+  },
+  {
+    n:2, cat:"interview",
+    title:"Hobbies con Propósito",
+    sub:"Vincula tus gustos a habilidades reales",
+    qs:[
+      "What is a hobby that has taught you the most about discipline?",
+      "Do you prefer individual or team-based activities outside of work? Why?",
+      "How do you recharge your energy after a high-pressure week?",
+      "Is there a skill from your personal interests that you apply to your daily job?",
+      "Tell me about a time a personal project failed and how you handled it."
+    ]
+  },
+  {
+    n:3, cat:"interview",
+    title:"Family & Origins",
+    sub:"Estructuras fluidas para hablar de tu entorno",
+    qs:[
+      "How has growing up in your city influenced your perspective on hard work?",
+      "What is a common misconception people have about your home city?",
+      "If a colleague visited your hometown, what is the first place you'd take them?",
+      "How do you balance your professional goals with your family commitments?",
+      "How has your background shaped the way you approach challenges today?"
+    ]
+  },
+  {
+    n:4, cat:"interview",
+    title:"The Why",
+    sub:"Short-term vs Long-term goals · will vs going to",
+    qs:[
+      "Where do you see yourself contributing the most value in the next two years?",
+      "What specific skills are you planning to master by the end of this year?",
+      "If you get this job, what is the first thing you are going to focus on?",
+      "How does this role align with your long-term career aspirations?",
+      "What will be the biggest challenge for you in this new position?"
+    ]
+  },
+  {
+    n:5, cat:"interview",
+    title:"Current Role",
+    sub:"Vocabulario técnico de tu trabajo actual",
+    qs:[
+      "Can you walk me through your typical daily workflow?",
+      "What are the most critical KPIs or metrics in your current department?",
+      "How do you handle complex issues or technical problems under a tight deadline?",
+      "What tools or software are essential for your current performance?",
+      "How do you ensure quality and accuracy when dealing with high volumes of work?"
+    ]
+  },
+  {
+    n:6, cat:"interview",
+    title:"The STAR Method",
+    sub:"Situation · Task · Action · Result",
+    qs:[
+      "Tell me about a time you had to deal with a very difficult client or situation.",
+      "Describe a moment when you had to complete a task with very little information.",
+      "Give me an example of a project where you exceeded expectations.",
+      "Tell me about a time you had to prioritize multiple urgent tasks.",
+      "Describe a situation where you had to persuade someone to see things your way."
+    ]
+  },
+  {
+    n:7, cat:"interview",
+    title:"Overcoming Challenges",
+    sub:"Cuéntame de un problema difícil que resolviste",
+    qs:[
+      "What is the most complex technical problem you've encountered recently?",
+      "How do you react when a plan changes unexpectedly at the last minute?",
+      "Tell me about a time you disagreed with a supervisor's decision. What did you do?",
+      "How do you approach a task that you have never done before?",
+      "What's your strategy for staying calm during a workplace crisis?"
+    ]
+  },
+  {
+    n:8, cat:"interview",
+    title:"Past Mistakes",
+    sub:"Habla de errores con el Past Perfect",
+    qs:[
+      "Tell me about a time you missed a deadline. What had happened before that?",
+      "Looking back, what is one thing you would have done differently in your last project?",
+      "Describe a mistake that taught you a fundamental lesson about your career.",
+      "Have you ever misunderstood an instruction? How did you fix the outcome?",
+      "What was a situation where you realized your initial approach hadn't worked?"
+    ]
+  },
+  {
+    n:9, cat:"interview",
+    title:"Career Milestones",
+    sub:"Tus mayores éxitos con verbos de acción",
+    qs:[
+      "What is the achievement you are most proud of in your professional life?",
+      "Tell me about a time you led a project from start to finish.",
+      "How have you contributed to increasing efficiency in your previous roles?",
+      "What was the most significant recognition you received at work?",
+      "Describe a time you implemented a new idea that improved a process."
+    ]
+  },
+  {
+    n:10, cat:"interview",
+    title:"Technical Background",
+    sub:"Explica procesos técnicos paso a paso",
+    qs:[
+      "How would you explain a complex technical process to a non-technical person?",
+      "What are the safety protocols or standards you follow in your technical tasks?",
+      "If a system or process fails, what is your step-by-step diagnostic approach?",
+      "How do you stay updated with the latest trends or changes in your industry?",
+      "Can you describe a philosophy like 'Kaizen' in terms of your own work habits?"
+    ]
+  },
+  {
+    n:11, cat:"interview",
+    title:"Purpose on the Position",
+    sub:"Por qué quieres exactamente este puesto",
+    qs:[
+      "What caught your attention the most about this specific job description?",
+      "How do your previous experiences prepare you for this exact role?",
+      "What do you think is the most important quality for someone in this position?",
+      "How do you think you can help our team reach its goals faster?",
+      "Why should we hire you instead of someone with more years of experience?"
+    ]
+  },
+  {
+    n:12, cat:"interview",
+    title:"Company Knowledge",
+    sub:"Cómo investigar a la empresa y hablar de ello",
+    qs:[
+      "What do you know about our company's mission and recent projects?",
+      "How do our values align with your own professional ethics?",
+      "Who do you consider to be our main competitors, and how do we differ?",
+      "What do you think is the biggest challenge our industry is facing right now?",
+      "How would you describe our brand reputation based on your research?"
+    ]
+  },
+  {
+    n:13, cat:"interview",
+    title:"Strengths vs. Weaknesses",
+    sub:"El arte de hablar de debilidades positivamente",
+    qs:[
+      "What is a professional weakness that you are actively working to improve?",
+      "If I asked your previous boss, what would they say is your greatest strength?",
+      "How do you handle constructive criticism from your peers?",
+      "Tell me about a time your greatest strength helped you solve a problem.",
+      "What is a skill you find difficult to learn, and how do you tackle it?"
+    ]
+  },
+  {
+    n:14, cat:"interview",
+    title:"Leadership & Initiative",
+    sub:"Preguntas sobre decisiones y liderazgo",
+    qs:[
+      "Tell me about a time you took the lead without being asked.",
+      "How do you motivate others when team morale is low?",
+      "Describe a time you had to make a decision without all the necessary data.",
+      "What is your approach to delegating tasks effectively?",
+      "How do you handle a team member who isn't performing as expected?"
+    ]
+  },
+  {
+    n:15, cat:"interview",
+    title:"Salary Expectations",
+    sub:"Cómo negociar y hablar de dinero con naturalidad",
+    qs:[
+      "What are your salary expectations based on your experience and the market?",
+      "How do you value additional benefits (health, remote work) versus base salary?",
+      "Are you open to a performance-based bonus structure?",
+      "What is the minimum compensation you would consider for this role?"
+    ]
+  },
+  {
+    n:16, cat:"technique",
+    title:"The Art of Stall",
+    sub:"Frases para pensar sin silencios incómodos",
+    tech:"Aprende a ganar tiempo de forma natural y profesional cuando no sabes qué responder al instante. Frases como 'That's an insightful question...', 'Let me think about that for a moment...' o 'What a great point — I'd say...' te permiten procesar la pregunta sin sonar inseguro. Esta habilidad separa a los candidatos fluidos de los que se bloquean."
+  },
+  {
+    n:17, cat:"technique",
+    title:"Clarification Strategies",
+    sub:"Cómo pedir que repitan la pregunta con elegancia",
+    tech:"Dominar 3 formas distintas de pedir aclaración es esencial en entrevistas en inglés. 'Could you clarify what you mean by...?', 'If I understand correctly, you're asking about...' o 'I want to make sure I answer the right question — are you referring to...?' muestran que eres un comunicador activo, no que no entendiste."
+  },
+  {
+    n:18, cat:"technique",
+    title:"Circumlocution",
+    sub:"Cómo explicar una palabra técnica que olvidaste",
+    tech:"La circunlocución es la habilidad de describir un concepto con otras palabras cuando no recuerdas el término exacto. En lugar de quedarte en silencio, dices: 'It's the process where you...', 'It's like a tool that allows you to...', 'I'm referring to the method used when...'. Esta técnica es una señal de fluidez real, no de ignorancia."
+  },
+  {
+    n:19, cat:"technique",
+    title:"Signaling Phrases",
+    sub:"Palabras que conectan ideas con sofisticación",
+    tech:"Los conectores avanzados son lo que distingue el inglés fluido del básico: 'Moreover', 'Furthermore', 'On the other hand', 'Consequently', 'In contrast', 'Having said that', 'What's more', 'As a result'. Aprende cuándo usar cada uno y practica incorporarlos naturalmente en tus respuestas para sonar articulado y seguro."
+  },
+  {
+    n:20, cat:"technique",
+    title:"Active Listening in Interviews",
+    sub:"Demuestra que entiendes al entrevistador",
+    tech:"La escucha activa se demuestra con microrespuestas ('I see', 'That makes sense', 'Absolutely'), con parafraseo ('So what you're saying is...') y con preguntas de seguimiento inteligentes. Un candidato que solo habla de sí mismo pierde puntos. Un candidato que demuestra que escucha y conecta sus respuestas con lo que el entrevistador dijo, gana la entrevista."
+  },
+  {
+    n:21, cat:"technique",
+    title:"The Mirror & Record Method",
+    sub:"Analiza tu lenguaje corporal y muletillas",
+    tech:"Grábate respondiendo las preguntas del curso frente a un espejo o en video. Analiza: ¿cuántas veces dices 'um', 'like', 'you know'? ¿Haces contacto visual? ¿Tu postura es abierta o cerrada? ¿Tu voz suena segura o apagada? Esta técnica es usada por coaches de comunicación ejecutiva y es una de las más poderosas para detectar y corregir hábitos inconscientes."
+  },
+  {
+    n:22, cat:"technique",
+    title:"Google Interview Warmup Bootcamp",
+    sub:"Sesión intensiva con herramientas de IA",
+    tech:"Usa Google Interview Warmup (interview.google.com) para sesiones de práctica con retroalimentación automática. La herramienta graba tu respuesta y analiza el vocabulario, la estructura y las frases de transición. Complementa con Claude o ChatGPT configurado como entrevistador estricto que evalúa no solo lo que dices sino cómo lo dices."
+  },
+  {
+    n:23, cat:"technique",
+    title:"The Peer Review",
+    sub:"Cómo dar y recibir feedback productivo",
+    tech:"Practica con un amigo o colega usando un protocolo claro: uno es el entrevistador, el otro el candidato. Al terminar, el entrevistador da feedback en tres categorías: (1) qué respondiste bien, (2) qué sonó poco natural o confuso, (3) qué faltó decir. Luego intercambian roles. El peer review acelera el aprendizaje más que cualquier práctica individual."
+  },
+  {
+    n:24, cat:"technique",
+    title:"AI Roleplay",
+    sub:"Simula un entrevistador agresivo con IA",
+    tech:"Configura una IA con este prompt: 'Act as a strict, skeptical hiring manager for a senior position. Ask me interview questions one by one. Be critical of vague answers. Challenge me when I'm not specific enough. Don't be friendly.' Este tipo de práctica con un entrevistador hostil te prepara para cualquier escenario real y elimina el miedo al silencio o la presión."
+  },
+  {
+    n:25, cat:"technique",
+    title:"The Real Test",
+    sub:"Entrevistas reales solo por la práctica",
+    tech:"Aplica a posiciones reales en empresas donde no tienes intención inmediata de trabajar, solo para practicar el proceso completo: entrevista HRs, técnicas y finales. La presión real es irremplazable. Anota después de cada entrevista: qué preguntaron, qué respondiste, qué mejorarías. En 3-4 entrevistas de entrenamiento, tu confianza habrá cambiado por completo."
+  }
+];
+
+function buildPrompt(lesson) {
+  const hasTech = !!lesson.tech;
+  const qs = lesson.qs || [];
+  const qsText = qs.map((q,i) => `${i+1}. ${q}`).join('\n');
+
+  if (hasTech) {
+    return `Eres un profesor universitario de comunicación en inglés y coach de entrevistas de trabajo, con especialización en fluidez oral para hablantes no nativos de nivel B2-C1. Tu misión hoy es enseñarme la técnica "${lesson.title}" — ${lesson.sub}.
+
+Desarrolla la clase completa con esta estructura:
+
+1. ¿POR QUÉ ESTA TÉCNICA ES DECISIVA EN UNA ENTREVISTA? Explica en español (3-4 oraciones) qué hace que esta habilidad comunicativa marque la diferencia entre un candidato que suena competente y uno que suena verdaderamente fluido y profesional en inglés.
+
+2. EXPLICACIÓN TÉCNICA PROFUNDA: Desarrolla la técnica con precisión. Incluye: en qué situaciones exactas de una entrevista se aplica, cuándo es crítico usarla, qué errores cometen los hispanohablantes al no dominarla, y cómo la usan los candidatos nativos de forma natural.
+
+3. FRASES Y EXPRESIONES AUTÉNTICAS: Da un repertorio de 6-8 frases en inglés que se usan para aplicar esta técnica. Para cada una: cuándo usarla, el tono apropiado (formal/neutro/conversacional) y una nota de pronunciación o énfasis si aplica.
+
+4. EJEMPLOS EN CONTEXTO DE ENTREVISTA REAL: Muestra 3-4 mini-escenarios de entrevista donde esta técnica se aplica. Formato: [Pregunta del entrevistador] → [Candidato SIN la técnica ❌] → [Candidato CON la técnica ✅]. Incluye traducción y análisis de por qué la versión con técnica suena más profesional.
+
+5. ERRORES TÍPICOS DE HISPANOHABLANTES: Los 2-3 errores más comunes que cometemos al intentar aplicar esta técnica. ❌ Error con diagnóstico → ✅ Corrección natural.
+
+6. CÓMO PRACTICARLA: Instrucciones específicas para practicar esta técnica de 3 formas:
+   → Con una IA (prompt exacto para simular el escenario)
+   → Con un amigo (instrucciones para el roleplay)
+   → Solo grabándote (qué observar en el video)
+
+7. EJERCICIO PRÁCTICO: Dame un escenario de entrevista donde yo deba aplicar esta técnica. Espera mi respuesta, evalúa si la usé correctamente y dame feedback detallado en español.
+
+Todas las explicaciones y correcciones en español. Las frases, ejemplos y ejercicios en inglés.`;
+  }
+
+  return `Eres un profesor universitario de inglés aplicado y coach de entrevistas de trabajo, con especialización en comunicación oral para hablantes no nativos de nivel B2-C1. Tu misión hoy es prepararte para responder con fluidez y estructura las preguntas de la lección "${lesson.title}" — ${lesson.sub}.
+
+Desarrolla la clase magistral completa con esta estructura:
+
+1. ¿POR QUÉ ESTAS PREGUNTAS SON CRÍTICAS? Explica en español (3-4 oraciones) por qué este tipo de preguntas aparece en casi todas las entrevistas en inglés, qué evalúa el entrevistador detrás de ellas, y qué diferencia a una respuesta promedio de una respuesta memorable.
+
+2. ANÁLISIS LINGÜÍSTICO DEL TEMA: Explica los puntos gramaticales, estructuras y vocabulario específico necesarios para responder este tipo de preguntas con fluidez. Incluye: tiempos verbales clave, conectores recomendados, vocabulario profesional de alto impacto, y qué estructuras usar para sonar natural (no como traducción del español).
+
+3. ESTRATEGIA DE RESPUESTA: Explica cómo estructurar respuestas a estas preguntas. ¿Qué fórmula seguir? ¿Cuánto tiempo debe durar una buena respuesta (30 seg / 1 min / 2 min)? ¿Qué incluir y qué evitar? ¿Cómo abrir y cerrar la respuesta de forma memorable?
+
+4. ERRORES TÍPICOS DE HISPANOHABLANTES: Los 3 errores más comunes que cometemos al responder este tipo de preguntas en inglés. ❌ Error con explicación → ✅ Versión correcta y natural, con nota de por qué suena mejor.
+
+5. VOCABULARIO Y FRASES DE ALTO IMPACTO: Da 6-8 expresiones, phrasal verbs o collocations específicos que un candidato fluido usaría al responder estas preguntas. Para cada uno: significado, ejemplo en contexto de entrevista y nota de registro (formal/neutro).
+
+6. EJEMPLO DE RESPUESTA MODELO: Muestra una respuesta completa y natural en inglés para la primera pregunta de la lista. Que suene como la respondería un profesional nativo con 5-7 años de experiencia. Incluye traducción al español.
+
+7. PREGUNTAS PARA PRACTICAR:
+A continuación están las preguntas de esta lección que debes practicar. Respóndelas de 3 formas:
+   → Con una IA configurada como entrevistador estricto (pídele que te haga las preguntas una por una y te evalúe cada respuesta)
+   → Con un amigo en roleplay de 10-15 minutos
+   → Grabándote en video respondiendo cada una — analiza tu fluidez, tu postura y tus muletillas
+
+${qsText}
+
+8. EJERCICIO EN VIVO: Hazme la primera pregunta de la lista como si fueras el entrevistador. Espera mi respuesta. Luego evalúa en detalle: ¿respondí de forma estructurada?, ¿el vocabulario es apropiado para el nivel B2-C1?, ¿soné natural o como una traducción del español?, ¿hay algo que añadir o reformular? Hazme las preguntas restantes una por una del mismo modo.
+
+9. EVALUACIÓN FINAL: Dime qué hice bien, en qué debo mejorar antes de una entrevista real, y una frase de apertura lista para usar que pueda memorizar para esta categoría de preguntas.
+
+Todas las explicaciones y correcciones en español. Los ejemplos, respuestas modelo y ejercicios en inglés.`;
+}
+
+// STATE
+let done = JSON.parse(localStorage.getItem('mock_done') || '{}');
+let activeCat = 'all';
+
+window.addEventListener('DOMContentLoaded', () => {
+  buildLessons();
+  Object.keys(done).forEach(n => {
+    const card = document.getElementById('card-' + n);
+    const btn  = document.getElementById('done-' + n);
+    if (card) card.classList.add('done');
+    if (btn)  btn.textContent = '✓ Completada';
+  });
+  updateProgress();
+});
+
+function buildLessons() {
+  const list = document.getElementById('lessonsList');
+  list.innerHTML = '';
+  LESSONS.forEach(l => {
+    const isTech = l.cat === 'technique';
+    const card = document.createElement('div');
+    card.className = 'lesson-card' + (isTech ? ' technique' : '');
+    card.id = 'card-' + l.n;
+    card.dataset.cat = l.cat;
+    // Build search string from title, sub and questions
+    const qsSearch = (l.qs || []).join(' ').toLowerCase();
+    card.dataset.search = (l.title + ' ' + (l.sub||'') + ' ' + qsSearch + ' ' + (l.tech||'')).toLowerCase();
+
+    const numClass  = isTech ? 'lesson-num tech' : 'lesson-num';
+    const badgeText = isTech ? '⚡ Técnica' : '🎙 Preguntas';
+    const badgeClass= isTech ? 'cat-badge tech' : 'cat-badge';
+
+    // Build questions HTML
+    let bodyHTML = '';
+    if (l.qs && l.qs.length) {
+      const qItems = l.qs.map((q,i) =>
+        `<div class="q-item"><span class="q-num">${i+1}.</span><span class="q-text">${q}</span></div>`
+      ).join('');
+      bodyHTML += `
+        <div class="questions-section">
+          <div class="q-label">💬 Preguntas de esta lección</div>
+          <div class="q-list">${qItems}</div>
+        </div>`;
+    }
+    if (l.tech) {
+      bodyHTML += `
+        <div class="tech-note">
+          <div class="tech-label">⚡ Sobre esta técnica</div>
+          <div class="tech-desc">${l.tech}</div>
+        </div>`;
+    }
+
+    const prompt = buildPrompt(l);
+    const promptEsc = prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    bodyHTML += `
+      <div class="prompt-section">
+        <div class="prompt-label">📋 Prompt · clase magistral completa</div>
+        <button class="copy-btn" id="cb-${l.n}" onclick="copyPrompt(${l.n})">
+          <span>⧉</span> Copiar prompt completo
+        </button>
+        <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        <div class="done-row">
+          <button class="done-btn" id="done-${l.n}" onclick="toggleDone(${l.n})">○ Marcar completada</button>
+        </div>
+      </div>
+      <textarea class="prompt-text" id="pt-${l.n}">${promptEsc}</textarea>`;
+
+    card.innerHTML = `
+      <div class="card-header" onclick="toggle(${l.n})">
+        <span class="${numClass}">${String(l.n).padStart(2,'0')}.</span>
+        <div class="card-title-wrap">
+          <div>
+            <div class="lesson-title">${l.title}</div>
+            <div class="lesson-sub">${l.sub}</div>
+          </div>
+          <span class="${badgeClass}">${badgeText}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">${bodyHTML}</div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggle(n) {
+  const card   = document.getElementById('card-' + n);
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.lesson-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+function copyPrompt(n) {
+  const ta  = document.getElementById('pt-' + n);
+  const btn = document.getElementById('cb-' + n);
+  navigator.clipboard.writeText(ta.value).then(() => {
+    btn.innerHTML = '<span>✓</span> Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = '<span>⧉</span> Copiar prompt completo'; btn.classList.remove('copied'); }, 2000);
+    const t = document.getElementById('toast');
+    t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
+  });
+}
+
+function toggleDone(n) {
+  if (done[n]) delete done[n]; else done[n] = true;
+  localStorage.setItem('mock_done', JSON.stringify(done));
+  const card = document.getElementById('card-' + n);
+  const btn  = document.getElementById('done-' + n);
+  if (done[n]) { card.classList.add('done');    if(btn) btn.textContent = '✓ Completada'; }
+  else          { card.classList.remove('done'); if(btn) btn.textContent = '○ Marcar completada'; }
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = 25, count = Object.keys(done).length;
+  const pct   = (count/total*100).toFixed(0);
+  document.getElementById('progressFill').style.width   = pct + '%';
+  document.getElementById('progressText').textContent   = `${count} de ${total} lecciones completadas`;
+  document.getElementById('doneCount').textContent      = `${count} / ${total} lecciones`;
+}
+
+function selectCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); activeCat = btn.dataset.cat; applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll('.lesson-card').forEach(c => {
+    const show = c.dataset.search.includes(q) && (activeCat === 'all' || c.dataset.cat === activeCat);
+    c.classList.toggle('hidden', !show); if (show) visible++;
+  });
+  document.getElementById('counter').textContent = `${visible} lecciones`;
+}
+</script>
+</body>
+</html>
