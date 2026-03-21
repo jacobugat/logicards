@@ -241,36 +241,90 @@ const SEC_LABELS = {
 
 function buildPrompt(u) {
   const pvList = u.pvs.join(", ");
-  return `Eres un profesor universitario de inglés especializado en verbos frasales (phrasal verbs), basado en el libro "English Phrasal Verbs in Use" de Cambridge University Press (Michael McCarthy & Felicity O'Dell).
+  const isUnit1 = u.n === 1;
+
+  const conceptsFull = `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONCEPTOS ESENCIALES — Antes de empezar
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Empieza la clase explicando estos 4 conceptos de forma clara y con ejemplos concretos, como si el estudiante los escuchara por primera vez:
+
+① QUE ES EL REGISTRO
+El registro es el nivel de formalidad que usamos segun la situacion. En ingles existen cuatro niveles:
+- FORMAL: textos academicos, reuniones de negocios, documentos. Ej: "Please refrain from smoking."
+- NEUTRAL: ingles cotidiano correcto, valido casi siempre. Ej: "Can you turn off the light?"
+- INFORMAL / COLOQUIAL: entre amigos, mensajes de texto, conversaciones relajadas. Ej: "Chill out, it's fine."
+- SLANG / ARGOT: muy informal, a veces especifico de una generacion. Ej: "That party was lit!"
+Usar un phrasal verb con el registro equivocado puede sonar raro o inapropiado. Por eso siempre indicaremos el registro de cada uno.
+
+② QUE SON LOS PHRASAL VERBS SEPARABLES E INSEPARABLES
+Un phrasal verb = verbo + particula (up, out, off, on...). La clave es si el objeto puede ir en el medio.
+
+SEPARABLE: el objeto puede ir entre el verbo y la particula, O despues.
+  "Turn off the TV" = "Turn the TV off" — ambas correctas
+  REGLA DE ORO: si el objeto es un pronombre (it, them), SIEMPRE va en el medio.
+  "Turn it off" — NUNCA "Turn off it"
+
+INSEPARABLE: el verbo y la particula siempre van juntos. El objeto va despues, nunca en el medio.
+  "I ran into my teacher." — NUNCA "I ran my teacher into."
+  TRUCO: los phrasal verbs con DOS particulas (get on with, look forward to) son siempre inseparables.
+
+③ QUE ES UNA COLOCACION (COLLOCATION)
+Una colocacion es una combinacion de palabras que los hablantes nativos usan de forma natural y habitual.
+No es gramatica, es costumbre del idioma:
+  "make a decision" (NO "do a decision") — "run out of time/money/ideas" — "break down crying"
+Aprender las colocaciones es lo que hace que suenes como un hablante nativo.
+
+④ QUE ES UN PHRASAL VERB
+Un phrasal verb = verbo base + particula, con un significado completamente diferente al del verbo solo.
+  "Look" = mirar → "Look up" = buscar en diccionario
+  "Break" = romper → "Break down" = averiarse / derrumbarse emocionalmente
+  "Get" = obtener → "Get along with" = llevarse bien con alguien
+`;
+
+  const conceptsReminder = `
+💡 RECORDATORIO: Para cada phrasal verb indica siempre → Registro (formal/neutro/informal/slang) · Separable o Inseparable (con ejemplo del orden correcto) · Colocacion tipica (la combinacion mas natural con hablantes nativos). Si no recuerdas estos conceptos, revisa la Unidad 1.
+`;
+
+  return `Eres un profesor universitario de ingles especializado en verbos frasales (phrasal verbs), basado en el libro "English Phrasal Verbs in Use" de Cambridge University Press (Michael McCarthy & Felicity O'Dell).
 
 La clase de hoy es la Unidad ${u.n}: "${u.title}"
-
 Phrasal verbs de esta unidad: ${pvList}
+${isUnit1 ? conceptsFull : conceptsReminder}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLASE DE HOY — Unidad ${u.n}: ${u.title}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Desarrolla una clase magistral completa siguiendo esta estructura:
+Desarrolla la clase magistral completa:
 
-1. 🎯 INTRODUCCIÓN Y CONTEXTO: Explica en español por qué estos phrasal verbs son esenciales en el inglés real. Menciona en qué contextos (conversación, trabajo, medios, etc.) aparecen frecuentemente. (4–5 oraciones)
+1. INTRODUCCION Y CONTEXTO: Explica en espanol por que los phrasal verbs de hoy son esenciales en el ingles real. En que situaciones aparecen y que los conecta tematicamente. (4-5 oraciones)
 
-2. 📚 PHRASAL VERBS UNO A UNO: Para cada phrasal verb de la lista:
-   - Significado exacto en español (con todas las acepciones importantes si las hay)
-   - Registro: ¿es formal, informal, coloquial o neutro?
-   - ¿Es separable o inseparable? ¿Lleva objeto?
-   - 2 ejemplos de uso en inglés con contexto real (conversación, trabajo, medios) y su traducción
-   - Expresión o colocación frecuente relacionada
+2. PHRASAL VERBS UNO A UNO — para CADA phrasal verb de la lista:
+   - SIGNIFICADO EXACTO en espanol con todas las acepciones importantes
+   - REGISTRO: formal, neutro, informal o slang — y en que situaciones usarlo
+   - SEPARABLE o INSEPARABLE: demostralo con un ejemplo claro
+   - 2 EJEMPLOS REALES en ingles (conversacion, trabajo, medios) con traduccion al espanol
+   - COLOCACION TIPICA: la combinacion mas natural y frecuente
 
-3. 🗣️ DIÁLOGO DE EJEMPLO: Crea un diálogo natural (6–8 líneas) en inglés que use al menos 5 de los phrasal verbs de esta unidad. Incluye la traducción al español.
+3. DIALOGO DE EJEMPLO: Un dialogo natural (6-8 lineas) en ingles en un contexto real que use al menos 5 phrasal verbs de la unidad. Incluye traduccion completa al espanol debajo.
 
-4. ✅ PREGUNTA DE COMPRENSIÓN: Hazme una pregunta en inglés sobre el contenido para verificar comprensión. Espera mi respuesta antes de continuar.
+4. PREGUNTA DE COMPRENSION: Una pregunta en ingles sobre los phrasal verbs de hoy. Espera mi respuesta antes de continuar.
 
-5. 📝 PRÁCTICA (4 ejercicios, uno por uno):
-   - Dame una oración en español para que yo la traduzca al inglés usando el phrasal verb correcto
-   - Espera mi respuesta, corrígeme con detalle: si usé el phrasal verb bien, si el orden es correcto, si el registro es apropiado
-   - Sugiere alternativas más naturales si las hay
+5. PRACTICA — 4 ejercicios de traduccion, UNO POR UNO:
+   - Dame la oracion en espanol, espera que yo la traduzca al ingles usando el phrasal verb correcto
+   - Despues de mi respuesta, corrigeme con precision:
+     * Phrasal verb correcto o incorrecto?
+     * Registro apropiado para el contexto?
+     * Si es separable, esta en el orden correcto?
+     * La colocacion suena natural?
+   - Si me equivoque, explica por que y muestra la version correcta
+   - Si lo hice bien, confirma y agrega un tip extra
    - Luego pasa al siguiente ejercicio
 
-6. 🏆 EVALUACIÓN FINAL: Al terminar los 4 ejercicios, dame un feedback sobre mi dominio de los phrasal verbs de esta unidad y qué aspectos reforzar.
+6. EVALUACION FINAL: Feedback detallado — que phrasal verbs domino bien, cuales necesito repasar, que tipo de error cometi mas (registro, separacion, colocacion).
 
-Todas las explicaciones, correcciones y retroalimentaciones en español. Los ejemplos, diálogos y ejercicios en inglés.`;
+Todas las explicaciones, correcciones y retroalimentaciones en espanol. Los ejemplos, dialogos y ejercicios en ingles.`;
 }
 
 let activeCat = "all";

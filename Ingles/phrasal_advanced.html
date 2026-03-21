@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>English Phrasal Verbs in Use Advanced — Logicards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050709;--bg2:#0a0d12;--card:#0d1117;--card2:#131922;
+  --sky:#0284c7;--sky-lt:#38bdf8;--sky-dim:rgba(2,132,199,.11);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.10);
+  --border:rgba(2,132,199,.18);--border2:rgba(255,255,255,.05);
+  --text:#cce8f8;--muted:#0c3a56;
+  --mono:'Syne Mono',monospace;--sans:'Syne',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:-180px;right:-180px;width:600px;height:600px;background:radial-gradient(circle,rgba(2,132,199,.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+.shimmer{position:fixed;top:0;left:0;right:0;height:1px;z-index:300;background:linear-gradient(90deg,transparent,rgba(2,132,199,0) 20%,rgba(56,189,248,.9) 50%,rgba(2,132,199,0) 80%,transparent);background-size:200% 100%;animation:sh 7s ease-in-out infinite}
+@keyframes sh{0%{background-position:-100% 0}100%{background-position:200% 0}}
+nav{position:sticky;top:0;z-index:100;background:rgba(5,7,9,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav-left{display:flex;align-items:center;gap:1rem}
+.back-link{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--sky-lt)}
+.nav-title{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text)}
+.nav-badges{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.nbadge{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .55rem;border-radius:2px}
+.nb-sky{color:var(--sky-lt);border:1px solid rgba(56,189,248,.4);background:var(--sky-dim)}
+.nb-gold{color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim)}
+.wrapper{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 1.4rem 4rem}
+header{padding:3.2rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.cambridge-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem}
+.level-badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sky-lt);border:1px solid rgba(56,189,248,.35);background:var(--sky-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem;margin-left:.5rem}
+h1{font-family:var(--sans);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.35rem}
+h1 .pv{color:var(--sky-lt)}
+h1 .adv{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.7rem}
+.header-desc{color:var(--muted);font-size:.86rem;max-width:610px;line-height:1.75}
+.header-meta{display:flex;align-items:center;gap:1.4rem;margin-top:1.1rem;flex-wrap:wrap}
+.meta-item{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.meta-item::before{content:'◆';color:var(--sky-lt);font-size:.38rem}
+.instructions{background:var(--sky-dim);border:1px solid rgba(2,132,199,.22);border-radius:5px;padding:1rem 1.3rem;margin-bottom:1.8rem;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}
+.instructions-icon{font-size:1.1rem;margin-top:1px}
+.instructions p{font-size:.82rem;color:var(--text);opacity:.85;line-height:1.65}
+.instructions strong{color:var(--sky-lt)}
+.progress-bar-wrap{margin-bottom:1.8rem}
+.progress-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;justify-content:space-between}
+.progress-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--sky-lt));border-radius:1px;transition:width .4s}
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.5rem}
+.search-input{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.48rem .85rem;color:var(--text);font-family:var(--mono);font-size:.68rem;outline:none;transition:border-color .2s;min-width:200px}
+.search-input:focus{border-color:var(--sky-lt)}
+.search-input::placeholder{color:var(--muted)}
+.cat-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:.25rem .65rem;color:var(--muted);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap;text-transform:uppercase}
+.cat-btn:hover{border-color:var(--sky-lt);color:var(--sky-lt)}
+.cat-btn.active{background:var(--sky);border-color:var(--sky);color:#fff;font-weight:600}
+.stats-count{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+.units-list{display:flex;flex-direction:column;gap:.5rem}
+.unit-card{background:var(--card);border:1px solid var(--border2);border-radius:5px;overflow:hidden;transition:border-color .2s}
+.unit-card:hover{border-color:rgba(2,132,199,.22)}
+.unit-card.open{border-color:rgba(56,189,248,.4)}
+.unit-card.done{background:rgba(2,132,199,.04);border-color:rgba(2,132,199,.2)}
+.unit-card.hidden{display:none}
+.card-header{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s}
+.card-header:hover{background:var(--card2)}
+.unit-num{font-family:var(--mono);font-size:.65rem;color:var(--sky-lt);min-width:2rem;opacity:.65}
+.card-title-wrap{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
+.unit-title{font-size:.9rem;font-weight:600;color:var(--text)}
+.sec-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:.07em;color:var(--muted);border:1px solid var(--border2);padding:.08rem .38rem;border-radius:2px;white-space:nowrap}
+.card-chevron{color:var(--muted);font-size:.6rem;transition:transform .25s,color .2s;flex-shrink:0}
+.unit-card.open .card-chevron{transform:rotate(180deg);color:var(--sky-lt)}
+.card-body{display:none;border-top:1px solid var(--border2);padding:1.1rem 1.15rem;background:var(--bg2)}
+.unit-card.open .card-body{display:block}
+.prompt-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-lt);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.prompt-label::after{content:'';flex:1;height:1px;background:rgba(56,189,248,.12)}
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem 1.1rem;background:var(--sky-dim);border:1px solid rgba(2,132,199,.32);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;font-weight:500}
+.copy-btn:hover{background:rgba(2,132,199,.2);border-color:var(--sky-lt);transform:translateY(-1px)}
+.copy-btn.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.copy-hint{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;margin-top:.6rem}
+.prompt-text{display:none}
+.done-row{display:flex;align-items:center;gap:.4rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border2)}
+.done-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:.56rem;padding:.2rem .55rem;cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
+.done-btn:hover{border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.unit-card.done .done-btn{border-color:rgba(34,197,94,.4);color:#6ee7b7;background:rgba(34,197,94,.07)}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(56,189,248,.4);color:var(--sky-lt);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.6rem 1.3rem;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-logo{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.footer-logo span{color:var(--sky-lt)}
+.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+@media(max-width:580px){.sec-badge{display:none}.card-header{padding:.8rem 1rem;gap:.55rem}.card-body{padding:.9rem 1rem}}
+</style>
+</head>
+<body>
+<div class="shimmer"></div>
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">English Phrasal Verbs in Use · Advanced</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nbadge nb-gold">📚 Cambridge · McCarthy & O'Dell</span>
+    <span class="nbadge nb-sky" id="doneCount">0 / 60 units</span>
+  </div>
+</nav>
+<div class="wrapper">
+  <header>
+    <div class="cambridge-badge">📚 Cambridge University Press · McCarthy & O'Dell</div>
+    <span class="level-badge">◆ Advanced · C1–C2</span>
+    <h1>English <span class="pv">Phrasal Verbs</span> <span class="adv">Advanced</span></h1>
+    <p class="header-sub">60 Units · C1–C2 · Self-study and classroom use</p>
+    <p class="header-desc">El nivel más alto de la serie Cambridge. ~1,000 phrasal verbs seleccionados del corpus CANCODE de la Universidad de Nottingham. Incluye secciones exclusivas de nivel avanzado: colocación profunda, metáfora, idioms, memory, conflict, sound, how people speak and move. Prompts diseñados para alcanzar fluidez real C1–C2.</p>
+    <div class="header-meta">
+      <span class="meta-item">60 unidades</span>
+      <span class="meta-item">9 secciones</span>
+      <span class="meta-item">~1,000 phrasal verbs</span>
+      <span class="meta-item">Nivel C1–C2</span>
+      <span class="meta-item">Corpus CANCODE</span>
+    </div>
+  </header>
+  <div class="instructions">
+    <div class="instructions-icon">💡</div>
+    <p>Copia el prompt de cualquier unidad y pégalo en <strong>ChatGPT, Claude o Gemini</strong>. La IA actuará como catedrático universitario de lingüística aplicada: analiza cada phrasal verb con precisión C1–C2 — matices entre sinónimos avanzados, diferencias de énfasis, uso en textos académicos y literarios, colocaciones de corpus, modismos relacionados. <strong>La Unidad 1 incluye los conceptos esenciales completos</strong>. Las demás llevan solo el recordatorio.</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 60 unidades completadas</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar unidad o phrasal verb…" oninput="applyFilters()"/>
+    <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+    <button class="cat-btn" data-cat="learning" onclick="selectCat(this)">📖 Learning</button>
+    <button class="cat-btn" data-cat="aspects" onclick="selectCat(this)">🔬 Aspects</button>
+    <button class="cat-btn" data-cat="particles" onclick="selectCat(this)">⚡ Particles</button>
+    <button class="cat-btn" data-cat="concepts" onclick="selectCat(this)">🧠 Concepts</button>
+    <button class="cat-btn" data-cat="functions" onclick="selectCat(this)">💬 Functions</button>
+    <button class="cat-btn" data-cat="work" onclick="selectCat(this)">💼 Work & Finance</button>
+    <button class="cat-btn" data-cat="personal" onclick="selectCat(this)">❤️ Personal Life</button>
+    <button class="cat-btn" data-cat="world" onclick="selectCat(this)">🌍 World</button>
+    <button class="cat-btn" data-cat="keyverbs" onclick="selectCat(this)">🔑 Key Verbs</button>
+    <span class="stats-count" id="counter">60 unidades</span>
+  </div>
+  <div class="units-list" id="unitsList"></div>
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · English Phrasal Verbs in Use Advanced · Cambridge</span>
+  </footer>
+</div>
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+<script>
+const UNITS = [
+  // LEARNING ABOUT PHRASAL VERBS
+  {n:1,  cat:"learning",  title:"Phrasal verbs: what are they and how are they used?",
+   pvs:["put off","look up","break down","take off","carry out","set up","give up","turn on","come across","fall through","pick up","go on","run out of","get on with","find out","bring about","take in","make out","fall for","stand for"]},
+  {n:2,  cat:"learning",  title:"Grammar of phrasal verbs",
+   pvs:["turn on/turn it on","look up/look it up","run into someone","come across something","put up with","get on with","look forward to","give up smoking","take to doing","end up doing","go on to do","set about doing","go about doing","begin by doing","start off by doing"]},
+  {n:3,  cat:"learning",  title:"Phrasal nouns",
+   pvs:["a breakdown","a takeover","a setback","a turnover","a drawback","an outburst","an outset","an onset","a downfall","a fallout","an upsurge","an upturn","an outbreak","a downside","a breakthrough","a rundown","a handout","a fallback","a standout","an offshoot"]},
+  {n:4,  cat:"learning",  title:"Phrasal adjectives",
+   pvs:["outgoing","ongoing","upcoming","outstanding","downbeat","upbeat","inbuilt","outspoken","worn-out","burned-out","built-in","far-fetched","down-to-earth","off-putting","long-drawn-out","well-thought-out","made-up","worn-down","run-down","built-up"]},
+  // INTERESTING ASPECTS
+  {n:5,  cat:"aspects",   title:"Collocation and phrasal verbs",
+   pvs:["make a decision","pay attention","take a risk","run a risk","run a business","take an opportunity","seize an opportunity","make progress","lose track of","keep track of","take charge of","hold back","draw attention to","bring to light","shed light on"]},
+  {n:6,  cat:"aspects",   title:"Register",
+   pvs:["pass away / die","throw up / vomit","get hitched / marry","kick the bucket / die","come a cropper / fail badly","scarper / run away","nab / arrest","sack / dismiss","cop it / be punished","chat up / flirt with","flog / sell","put up / accommodate","tick off / reprimand","fess up / confess","grass on / inform on"]},
+  {n:7,  cat:"aspects",   title:"Meaning and metaphor",
+   pvs:["dig up information","bury a problem","iron out differences","paper over cracks","pin down a meaning","nail down details","hammer out an agreement","whittle down a list","flesh out an idea","water down a proposal","beef up a presentation","prop up a failing system","carve out a niche","map out a strategy","sketch out a plan"]},
+  {n:8,  cat:"aspects",   title:"Idioms using phrasal verbs",
+   pvs:["bite off more than you can chew","let the cat out of the bag","put your foot in it","bite the bullet","burn your bridges","spill the beans","brush something under the carpet","kick yourself","throw in the towel","put your foot down","get your act together","pull someone's leg","give someone the cold shoulder","bend over backwards","come out of your shell"]},
+  {n:9,  cat:"aspects",   title:"New phrasal verbs",
+   pvs:["tweet out","blog about","post up","go viral","opt in","opt out","scroll through","swipe right","swipe left","check in","sign off","burn out","reach out","ghost someone","unfollow","unfriend","tag in","share out","stream live","power through"]},
+  // KEY PARTICLES
+  {n:10, cat:"particles", title:"Around and about",
+   pvs:["hang around","mess about","boss around","turn around","come about","bring about","go about","get around","laze about","horse around","nose around","push around","toss around","batter about","potter about","order about","fuss about","cast about for","blunder about","feel around for"]},
+  {n:11, cat:"particles", title:"Down",
+   pvs:["break down","calm down","cut down","get down to","knock down","let down","put down","run down","slow down","turn down","write down","bear down on","boil down to","buckle down","clamp down on","come down to","dress down","face down","filter down","grind down","hunt down","nail down","pin down","play down","run-down","settle down","shut down","stand down","strip down","talk down to","track down","water down","wear down","weigh down","whittle down"]},
+  {n:12, cat:"particles", title:"In",
+   pvs:["bring in","build in","buy in","call in","cash in","come in","cut in","dig in","draw in","fall in","fill in","fit in","get in","give in","go in for","hand in","hem in","horn in","kick in","let in","lock in","log in","opt in","phase in","plug in","pull in","rope in","rub in","set in","sign in","sink in","sleep in","stay in","step in","take in","tie in","trade in","tune in","usher in","zoom in"]},
+  {n:13, cat:"particles", title:"Off",
+   pvs:["break off","brush off","call off","close off","come off","cool off","cut off","drop off","fall off","fight off","finish off","get off","give off","go off","head off","kick off","lay off","level off","live off","mark off","pay off","put off","rattle off","rub off","set off","show off","spin off","switch off","tail off","take off","tell off","tip off","trade off","turn off","ward off","write off"]},
+  {n:14, cat:"particles", title:"On",
+   pvs:["bank on","bear on","bring on","call on","carry on","come on","count on","dawn on","drag on","draw on","egg on","fall back on","get on","happen on","hit on","hold on","keep on","latch on","lead on","live on","look on","move on","pass on","pick up on","press on","put on","rely on","seize on","sit on","spring on","stand on","take on","trade on","urge on","verge on"]},
+  {n:15, cat:"particles", title:"Out",
+   pvs:["act out","bail out","bear out","black out","blot out","branch out","call out","cancel out","carry out","come out","cry out","die out","draw out","ease out","factor out","fade out","fall out","filter out","find out","flag out","flesh out","freak out","give out","grind out","hand out","hang out","hold out","iron out","knock out","lash out","lay out","leave out","map out","miss out","pan out","phase out","point out","pull out","reach out","ride out","root out","rule out","run out","scale out","sift out","sit out","sort out","spell out","spread out","stand out","stick out","stretch out","think out","try out","turn out","wear out","wipe out","work out","write out"]},
+  {n:16, cat:"particles", title:"Up",
+   pvs:["back up","beef up","blow up","botch up","brew up","build up","catch up","chalk up","clean up","clutter up","come up","conjure up","cover up","crop up","draw up","drum up","ease up","end up","face up to","fess up","fix up","flare up","follow up","free up","gear up","get up","give up","gobble up","grow up","hold up","keep up","level up","lighten up","lock up","loom up","make up","mount up","muster up","open up","own up","pile up","play up","pull up","pump up","rack up","ring up","rustle up","save up","scale up","set up","show up","size up","slip up","speak up","stand up","step up","stir up","sum up","take up","tighten up","touch up","turn up","wind up","wrap up"]},
+  // CONCEPTS
+  {n:17, cat:"concepts",  title:"Time",
+   pvs:["drag on","fly by","come round","pass by","wear on","speed up","slow down","go back to","date from","stem from","while away","stretch back","trace back to","harken back to","hark back","carry over","linger on","hang over from","draw near","close in"]},
+  {n:18, cat:"concepts",  title:"Cause and effect",
+   pvs:["bring about","lead to","give rise to","trigger off","spark off","result in","stem from","follow from","arise from","account for","build up to","add up to","amount to","culminate in","touch off","stir up","fuel","compound","exacerbate","mitigate"]},
+  {n:19, cat:"concepts",  title:"Change",
+   pvs:["turn into","develop into","evolve into","morph into","phase out","phase in","switch over","give way to","pass into","grow out of","wean off","shift to","transition into","transform","adapt to","branch out","diversify into","convert to","upgrade to","roll out"]},
+  {n:20, cat:"concepts",  title:"Memory",
+   pvs:["call to mind","bring back","look back on","hark back to","cast your mind back","put out of your mind","blot out","push to the back of your mind","conjure up","trigger","flash back","come flooding back","stir up memories","reminisce about","dwell on","gloss over","let go of","hold on to","keep alive","preserve"]},
+  {n:21, cat:"concepts",  title:"Making progress",
+   pvs:["move forward","press ahead","push on","get ahead","forge ahead","plough through","work through","get somewhere","advance","gain ground","make headway","come on","come along","shape up","pull ahead","edge forward","inch forward","creep forward","motor along","storm ahead"]},
+  {n:22, cat:"concepts",  title:"Conflict and violence",
+   pvs:["flare up","blow up","lash out","fight back","stand up to","crack down on","clamp down on","come down on","stamp out","round up","put down","squash","suppress","break out","erupt","boil over","escalate","inflame","stoke up","fan the flames of"]},
+  {n:23, cat:"concepts",  title:"Sound",
+   pvs:["ring out","ring off","die down","fade away","drown out","blare out","blast out","carry","echo","reverberate","trail off","tail off","peter out","cut out","kick in","start up","pipe up","break off","buzz with","hum with"]},
+  // FUNCTIONS
+  {n:24, cat:"functions", title:"Supporting and opposing people or views",
+   pvs:["stand up for","back up","side with","rally round","vouch for","stick up for","root for","throw your weight behind","argue against","shoot down","take issue with","push back on","come out against","speak out against","stand firm against","fight back against"]},
+  {n:25, cat:"functions", title:"Understanding and having ideas",
+   pvs:["come up with","hit on","light on","stumble on","dream up","think up","work out","figure out","put two and two together","see through","make sense of","get to grips with","get your head round","dawn on","click","cotton on","latch on to","twig","clue in","fill in"]},
+  {n:26, cat:"functions", title:"Arranging things",
+   pvs:["set up","fix up","sort out","lay on","put on","line up","tie up","fit in","slot in","pencil in","set aside","block out","map out","draw up","plan out","coordinate","schedule in","factor in","book in","build in"]},
+  {n:27, cat:"functions", title:"Talking about size and number",
+   pvs:["mount up","build up","add up","tot up","rack up","chalk up","pile up","accumulate","thin out","die down","tail off","dwindle","peter out","shrink","scale down","pare down","cut back","trim down","whittle down","prune back"]},
+  {n:28, cat:"functions", title:"Talking about success and failure",
+   pvs:["pull off","bring off","carry off","come off","pay off","come good","take off","get off the ground","work out","pan out","fall through","fall flat","come to nothing","misfire","come unstuck","go under","go to pieces","cave in","give up the ghost","bite the dust"]},
+  {n:29, cat:"functions", title:"Discussing problems",
+   pvs:["crop up","come up","throw up","arise","throw a spanner in the works","snowball","spiral","compound","aggravate","exacerbate","tackle","address","grapple with","wrestle with","get to grips with","come to terms with","sort out","iron out","work through","deal with"]},
+  {n:30, cat:"functions", title:"Deciding and influencing",
+   pvs:["come round","win over","bring round","talk into","talk out of","put off","sway","bend","lobby for","press for","push for","argue for","bat for","campaign for","advocate","drum up support for","rally round","back","champion","endorse"]},
+  {n:31, cat:"functions", title:"Exclamations and warnings",
+   pvs:["watch out","look out","heads up","hold on","hang fire","back off","ease up","cool it","slow down","calm down","cut it out","knock it off","give over","pack it in","lay off","watch it","mind out","step back","wind your neck in","take it easy"]},
+  // WORK STUDY FINANCE
+  {n:32, cat:"work",      title:"Work",
+   pvs:["take on","knuckle down","buckle down","get down to","press on","push through","plough through","battle through","stay on top of","keep on top of","fall behind on","catch up on","make up for lost time","call it a day","sign off","clock off","clock on","put in","chip away at","work flat out"]},
+  {n:33, cat:"work",      title:"Study",
+   pvs:["brush up on","bone up on","swot up on","mug up on","read up on","go over","look over","work through","plough through","skim through","flick through","pick up on","dwell on","gloss over","take on board","grapple with","get to grips with","wrestle with","absorb","synthesise"]},
+  {n:34, cat:"work",      title:"Writing essays",
+   pvs:["draw on","build on","expand on","elaborate on","account for","refer to","point to","argue for","back up","sum up","round off","set out","break down","follow from","stem from","go on to","add to","contribute to","distinguish between","follow up on"]},
+  {n:35, cat:"work",      title:"Business",
+   pvs:["set up","start up","branch out","diversify into","merge with","take over","phase out","shut down","scale back","go under","bounce back","turn around","build up","expand into","break even","win over","close down","roll out","bring in","float on"]},
+  {n:36, cat:"work",      title:"Money",
+   pvs:["fork out","shell out","splash out","cough up","stump up","club together","chip in","scrimp on","cut back on","rein in","tighten up on","fritter away","blow","squander","run up","rack up debt","wipe out savings","bail out","write off","recoup"]},
+  // PERSONAL LIFE
+  {n:37, cat:"personal",  title:"At home",
+   pvs:["do up","fix up","tidy up","clear out","sort out","throw out","declutter","spruce up","smarten up","brighten up","liven up","move in","move out","settle in","furnish with","rattle around in","hole up in","bunker down","cosy up","nest in"]},
+  {n:38, cat:"personal",  title:"Clothing and appearance",
+   pvs:["dress up","dress down","doll up","tart up","smarten up","scrub up well","kit out","tog up","deck out","wear out","throw on","slip on","pull on","put on weight","fill out","slim down","let out","take in","cover up","show off"]},
+  {n:39, cat:"personal",  title:"Relationships",
+   pvs:["fall for","go out with","hit it off","get on with","warm to","take to","look up to","look down on","stand up for","fall out with","drift apart","grow apart","cut off","lose touch with","reach out to","patch up","make it up","come round","bring round","win over"]},
+  {n:40, cat:"personal",  title:"Character and personal qualities",
+   pvs:["open up","clam up","close up","bottle up","let go","lighten up","come out of your shell","stand up for yourself","speak out","stand your ground","back down","give in","cave in","stand firm","hold your own","come into your own","grow into","grow up","settle down","find yourself"]},
+  {n:41, cat:"personal",  title:"Feelings",
+   pvs:["bottle up","let out","get out","open up","break down","hold back tears","choke up","well up","well over","perk up","cheer up","brighten up","lift","bear up","carry on","pull through","get over","come to terms with","live with","move on from"]},
+  {n:42, cat:"personal",  title:"Social life",
+   pvs:["meet up","get together","catch up with","hang out","show up","turn up","drop in on","call in on","pop in on","fit in","blend in","stand out","liven up","liven the atmosphere","kick off","wrap up","wind down","drag on","carry on till","break up"]},
+  {n:43, cat:"personal",  title:"Health and symptoms",
+   pvs:["come down with","go down with","throw up","pass out","black out","come round","build up immunity","fight off","shake off","bounce back","pick up","run down","wear down","burn out","come off medication","ease up","get over","recover from","pull through","soldier on"]},
+  {n:44, cat:"personal",  title:"The body",
+   pvs:["stiffen up","lock up","seize up","break out in","come out in","well up","swell up","flare up","act up","give out","hold up","wear out","break down","pack up","conk out","perk up","pick up","straighten up","loosen up","warm up"]},
+  {n:45, cat:"personal",  title:"How people speak",
+   pvs:["blurt out","let out","pipe up","speak out","open up","clam up","hold back","hold forth","go on","ramble on","drone on","rattle on","talk over","cut short","butt in","talk around","talk through","gloss over","skim over","come out with"]},
+  {n:46, cat:"personal",  title:"How people move",
+   pvs:["barge in","barge past","barrel into","barge through","sidle up to","edge forward","inch forward","creep up on","dart off","dash off","storm off","stomp out","march off","lumber along","saunter along","stroll along","amble along","trundle along","lurch forward","stagger out"]},
+  // THE WORLD AROUND US
+  {n:47, cat:"world",     title:"Nature",
+   pvs:["spread out","stretch out","reach out to","blanket","carpet","shroud","shrink back","die back","die off","thin out","fade away","die out","come into bloom","burst into life","teem with","swarm with","be overrun with","dry out","flood out","wash away"]},
+  {n:48, cat:"world",     title:"Weather",
+   pvs:["blow up","blow over","clear up","cloud over","set in","die down","ease up","heat up","build up","close in","freeze over","thaw out","burn off","ice over","dry out","pour down","lash down","whip up","drag on","lift"]},
+  {n:49, cat:"world",     title:"Places",
+   pvs:["spring up","mushroom up","branch out","spread out","open up","close down","shut up","move in","move out","gentrify","take over","be taken over by","swarm with","be overrun with","run down","spill over into","border on","overlap with","blend into","merge into"]},
+  {n:50, cat:"world",     title:"Transport",
+   pvs:["set off","head off","pull out","pull over","pull in","cut in","hold up","flag down","break down","run out of fuel","fill up","grind to a halt","pull up","speed up","slow down","skid off","run over","knock down","pile up","come off"]},
+  {n:51, cat:"world",     title:"The news",
+   pvs:["break out","come to light","leak out","cover up","play down","blow up","build up","follow up","look into","dig up","stir up","whip up","blow over","die down","fizzle out","run with","stand up","hold up","check out","pan out"]},
+  {n:52, cat:"world",     title:"Secrets and lies",
+   pvs:["cover up","hush up","sweep under the carpet","gloss over","paper over","white-wash","let on","give away","spill the beans","let slip","come out","come clean","own up","fess up","blow the lid off","dig up","unearth","root out","ferret out","smoke out"]},
+  {n:53, cat:"world",     title:"Rules and laws",
+   pvs:["crack down on","clamp down on","come down on","stamp out","crack down","put down","break up","round up","lock up","put away","let off","take in","stand trial for","answer for","get away with","cover for","tip off","shop","turn in","dob in"]},
+  {n:54, cat:"world",     title:"Technology",
+   pvs:["log on","log off","boot up","power up","crash","back up","sync up","link up","hook up","opt in","opt out","phase in","phase out","roll out","upgrade to","move over to","switch to","connect to","plug into","integrate with"]},
+  {n:55, cat:"world",     title:"Food and drink",
+   pvs:["rustle up","whip up","throw together","knock up","serve up","dish out","dig in","tuck into","polish off","gobble up","wolf down","pick at","wash down","wash up","clear away","top up","run out of","stock up on","load up on","splurge on"]},
+  // KEY VERBS
+  {n:56, cat:"keyverbs",  title:"Come",
+   pvs:["come about","come across","come along","come apart","come back","come clean","come down to","come down with","come forward","come in for","come into","come into your own","come off","come on","come out","come out with","come over","come round","come through","come to","come to light","come to terms with","come up","come up against","come up with","come within"]},
+  {n:57, cat:"keyverbs",  title:"Get",
+   pvs:["get across","get ahead","get along with","get around","get around to","get at","get away","get away with","get back","get back at","get by","get carried away","get down","get down to","get in","get in on","get into","get off","get on","get on with","get out","get out of","get over","get round","get round to","get through","get to","get together","get up","get wind of"]},
+  {n:58, cat:"keyverbs",  title:"Go",
+   pvs:["go about","go ahead","go along with","go away","go back on","go by","go down","go down with","go for","go in for","go into","go off","go off on","go on","go on to","go out","go over","go through","go through with","go to pieces","go under","go with","go without","go all out","go one better","go too far"]},
+  {n:59, cat:"keyverbs",  title:"Keep",
+   pvs:["keep at","keep away from","keep back","keep down","keep from","keep in","keep in with","keep off","keep on","keep on at","keep out of","keep to","keep up","keep up with","keep your head down","keep your options open","keep up appearances","keep a low profile","keep something up","keep someone posted"]},
+  {n:60, cat:"keyverbs",  title:"Take",
+   pvs:["take aback","take after","take apart","take away","take back","take down","take in","take it out on","take off","take on","take out","take out on","take over","take to","take up","take up on","take issue with","take a stand","take stock of","take your time"]},
+];
+
+const SEC_LABELS = {
+  learning:"📖 Learning",aspects:"🔬 Aspects",particles:"⚡ Particles",
+  concepts:"🧠 Concepts",functions:"💬 Functions",work:"💼 Work & Finance",
+  personal:"❤️ Personal Life",world:"🌍 World",keyverbs:"🔑 Key Verbs"
+};
+
+function buildPrompt(u) {
+  const pvList = u.pvs.join(", ");
+  const isUnit1 = u.n === 1;
+
+  const conceptsFull = `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONCEPTOS ESENCIALES — Antes de empezar
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Empieza la clase explicando estos 4 conceptos de forma clara y con ejemplos concretos, como si el estudiante los escuchara por primera vez:
+
+① QUE ES EL REGISTRO
+El registro es el nivel de formalidad que usamos segun la situacion. En ingles existen cuatro niveles:
+- FORMAL: textos academicos, juridicos, periodismo serio. Ej: "The suspect was apprehended." / "Please refrain from smoking."
+- NEUTRAL: ingles cotidiano correcto, valido en la mayoria de situaciones. Ej: "Can you turn off the light?"
+- INFORMAL / COLOQUIAL: entre amigos, mensajes, conversaciones relajadas. Ej: "Chill out, it's fine." / "I messed up."
+- SLANG / ARGOT: muy informal, frecuentemente generacional o subcultural. Ej: "That party was lit!" / "He got ghosted."
+A nivel C1-C2 el registro se vuelve critico: una eleccion equivocada puede resultar inapropiada en contexto profesional o academico.
+
+② QUE SON LOS PHRASAL VERBS SEPARABLES E INSEPARABLES
+SEPARABLE: el objeto puede ir entre el verbo y la particula, O despues de ella.
+  "Turn off the TV" = "Turn the TV off" — ambas correctas.
+  REGLA ABSOLUTA: si el objeto es pronombre (it, them, him...), SIEMPRE va en el medio.
+  "Turn it off" — NUNCA "Turn off it".
+INSEPARABLE: verbo y particula siempre juntos. El objeto va despues, nunca en el medio.
+  "I ran into my professor." — NUNCA "I ran my professor into."
+  TRUCO C1-C2: los phrasal verbs con dos particulas (look forward to, put up with, come up with) son siempre inseparables.
+
+③ QUE ES UNA COLOCACION (COLLOCATION)
+Combinacion de palabras que los hablantes nativos usan de forma natural — como si "fueran pareja inseparable".
+No es gramatica, es convencion del corpus del idioma:
+  "make a decision" (no "do a decision") · "run out of time/money/patience" · "break down crying"
+  A nivel avanzado: "set the agenda" · "draw a conclusion" · "take issue with" · "shed light on"
+Las colocaciones del corpus CANCODE son las que distinguen a un hablante C1-C2 de uno B2.
+
+④ QUE ES UN PHRASAL VERB
+Verbo base + particula (preposicion o adverbio), con un significado que difiere totalmente del verbo solo:
+  "Look" = mirar → "Look up" = buscar / mejorar → "Look up to" = admirar
+  "Break" = romper → "Break down" = averiarse / derrumbarse → "Break out" = estallar / escaparse
+A nivel C1-C2 muchos phrasal verbs tienen 3, 4 o mas acepciones, y la particula puede alterar sutilmente el enfasis, la direccion o la intensidad de la accion. Ese es el nucleo del nivel avanzado.
+`;
+
+  const conceptsReminder = `
+💡 RECORDATORIO C1-C2: Para cada phrasal verb indica siempre → Registro preciso (incluyendo si tiene variante formal equivalente) · Separable o Inseparable con ejemplo de pronombre si aplica · Colocaciones tipicas de corpus · Acepciones multiples si las hay. Si no recuerdas estos conceptos, revisa la Unidad 1.
+`;
+
+  return `Eres un catedratico universitario de linguistica aplicada e ingles avanzado, especializado en verbos frasales a nivel C1-C2, basado en el libro "English Phrasal Verbs in Use Advanced" de Cambridge University Press (Michael McCarthy & Felicity O'Dell). Los phrasal verbs de este libro fueron seleccionados del corpus CANCODE de la Universidad de Nottingham y el Cambridge International Corpus — el estandar de oro del ingles hablado y escrito.
+
+La clase de hoy es la Unidad ${u.n}: "${u.title}"
+Phrasal verbs de esta unidad: ${pvList}
+${isUnit1 ? conceptsFull : conceptsReminder}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLASE MAGISTRAL C1-C2 — Unidad ${u.n}: ${u.title}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Desarrolla la clase magistral completa con profundidad C1-C2:
+
+1. INTRODUCCION AVANZADA: Explica en espanol que hace a los phrasal verbs de esta unidad especialmente sofisticados a nivel avanzado. Menciona matices que un hablante B2 podria pasar por alto, la frecuencia de uso en corpus real, y el contexto en que los usan hablantes nativos educados. (5-6 oraciones)
+
+2. PHRASAL VERBS UNO A UNO — para CADA phrasal verb de la lista:
+   - TODAS LAS ACEPCIONES: a nivel C1-C2 muchos tienen 3 o mas significados distintos — explicalos todos con claridad
+   - REGISTRO PRECISO: no solo formal/informal, sino: academico, periodistico, literario, coloquial, argot, legal, empresarial — e indica si tiene un equivalente mas formal o mas coloquial
+   - SEPARABLE/INSEPARABLE: con ejemplo de construccion correcta incluyendo caso de pronombre
+   - 2-3 EJEMPLOS DEL CORPUS: ejemplos que un hablante nativo C1-C2 realmente usaria, en contextos variados (articulo de prensa, conversacion culta, texto academico, dialogo informal)
+   - COLOCACIONES DE CORPUS: las 2-3 combinaciones mas frecuentes documentadas en el uso nativo real
+   - DIFERENCIA CON SINONIMOS: si hay un sinonimo de mismo significado, explica el matiz que diferencia uno del otro
+   - TIP C1-C2: el error tipico de hablantes avanzados con este phrasal verb (no de principiantes, sino de estudiantes B2-C1 que ya conocen el verbo pero lo usan con un matiz incorrecto)
+
+3. DIALOGO AUTENTICO C1-C2: Un dialogo (10-12 lineas) en ingles entre dos hablantes nativos cultos (profesionales, academicos, periodistas) que use al menos 7 phrasal verbs de la unidad de forma completamente natural. El dialogo debe sonar genuinamente nativo, no como ejercicio de clase. Incluye traduccion completa al espanol.
+
+4. PREGUNTA ANALITICA: Una pregunta en ingles de nivel C1-C2 que requiera analizar el uso contextual, matices o diferencias entre phrasal verbs de esta unidad. No es de definicion — es de razonamiento linguistico. Espera mi respuesta antes de continuar.
+
+5. PRACTICA INTENSIVA C1-C2 — 4 ejercicios, UNO POR UNO:
+   - Dame una oracion en espanol de nivel C1-C2 (con contexto rico: profesional, academico o periodistico)
+   - Espera mi traduccion al ingles
+   - Corrigeme en estos 5 puntos con precision de nivel avanzado:
+     * Phrasal verb correcto — o hay uno mas preciso/natural para este contexto?
+     * Registro: es apropiado para el contexto dado? Habria una opcion mas sofisticada?
+     * Separacion correcta, especialmente con pronombres?
+     * Colocacion suena nativa o suena a traduccion directa?
+     * Algun matiz de acepcion multiple que deberia haberse activado aqui?
+   - Si me equivoque, muestra la version nativa correcta y explica el razonamiento
+   - Si lo hice bien, ofrece una variante mas avanzada o literaria del mismo pensamiento
+   - Pasa al siguiente ejercicio sin esperar
+
+6. EVALUACION C1-C2: Feedback de nivel academico — que phrasal verbs uso con fluidez nativa, en cuales cometo errores tipicos de aprendiz avanzado, que aspectos del nivel C1-C2 necesito profundizar (registro, corpus collocations, acepciones multiples, uso metaforico), y una hoja de ruta especifica para alcanzar C2.
+
+Todas las explicaciones, correcciones y retroalimentaciones en espanol. Los ejemplos, dialogos y ejercicios en ingles.`;
+}
+
+let activeCat="all";
+let done=JSON.parse(localStorage.getItem("epva_done")||"{}");
+
+window.addEventListener("DOMContentLoaded",()=>{
+  buildUnits();
+  Object.keys(done).forEach(n=>{
+    const card=document.getElementById("card-"+n);
+    const btn=document.getElementById("done-"+n);
+    if(card) card.classList.add("done");
+    if(btn)  btn.textContent="✓ Completada";
+  });
+  updateProgress();
+});
+
+function buildUnits(){
+  const list=document.getElementById("unitsList");
+  list.innerHTML="";
+  UNITS.forEach(u=>{
+    const card=document.createElement("div");
+    card.className="unit-card";
+    card.id="card-"+u.n;
+    card.dataset.cat=u.cat;
+    card.dataset.search=(u.title+" "+u.pvs.join(" ")+" "+(SEC_LABELS[u.cat]||"")).toLowerCase();
+    const prompt=buildPrompt(u);
+    const esc=prompt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    card.innerHTML=`
+      <div class="card-header" onclick="toggle(${u.n})">
+        <span class="unit-num">${String(u.n).padStart(2,"0")}.</span>
+        <div class="card-title-wrap">
+          <span class="unit-title">${u.title}</span>
+          <span class="sec-badge">${SEC_LABELS[u.cat]||u.cat}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-label">📋 Prompt · clase magistral C1–C2</div>
+        <button class="copy-btn" id="cb-${u.n}" onclick="copyPrompt(${u.n})">
+          <span>⧉</span> Copiar prompt completo
+        </button>
+        <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+        <div class="done-row">
+          <button class="done-btn" id="done-${u.n}" onclick="toggleDone(${u.n})">○ Marcar completada</button>
+        </div>
+      </div>
+      <textarea class="prompt-text" id="pt-${u.n}">${esc}</textarea>`;
+    list.appendChild(card);
+  });
+}
+
+function toggle(n){
+  const card=document.getElementById("card-"+n);
+  const isOpen=card.classList.contains("open");
+  document.querySelectorAll(".unit-card.open").forEach(c=>c.classList.remove("open"));
+  if(!isOpen) card.classList.add("open");
+}
+
+function copyPrompt(n){
+  const ta=document.getElementById("pt-"+n);
+  const btn=document.getElementById("cb-"+n);
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    btn.innerHTML="<span>✓</span> Copiado";
+    btn.classList.add("copied");
+    setTimeout(()=>{btn.innerHTML="<span>⧉</span> Copiar prompt completo";btn.classList.remove("copied");},2000);
+    const t=document.getElementById("toast");
+    t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2500);
+  });
+}
+
+function toggleDone(n){
+  if(done[n]) delete done[n]; else done[n]=true;
+  localStorage.setItem("epva_done",JSON.stringify(done));
+  const card=document.getElementById("card-"+n);
+  const btn=document.getElementById("done-"+n);
+  if(done[n]){card.classList.add("done");if(btn)btn.textContent="✓ Completada";}
+  else{card.classList.remove("done");if(btn)btn.textContent="○ Marcar completada";}
+  updateProgress();
+}
+
+function updateProgress(){
+  const total=60,count=Object.keys(done).length;
+  const pct=(count/total*100).toFixed(0);
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("progressText").textContent=`${count} de ${total} unidades completadas`;
+  document.getElementById("doneCount").textContent=`${count} / ${total} units`;
+}
+
+function selectCat(btn){
+  document.querySelectorAll(".cat-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active"); activeCat=btn.dataset.cat; applyFilters();
+}
+
+function applyFilters(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  let visible=0;
+  document.querySelectorAll(".unit-card").forEach(c=>{
+    const show=c.dataset.search.includes(q)&&(activeCat==="all"||c.dataset.cat===activeCat);
+    c.classList.toggle("hidden",!show); if(show) visible++;
+  });
+  document.getElementById("counter").textContent=`${visible} unidades`;
+}
+</script>
+</body>
+</html>
