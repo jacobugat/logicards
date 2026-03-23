@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Excel Avanzado — Logicards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090407;--bg2:#120609;--card:#17080b;--card2:#1f0c10;
+  --cr:#9f1239;--cr-lt:#fb7185;--cr-dim:rgba(159,18,57,.13);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.10);
+  --border:rgba(159,18,57,.22);--border2:rgba(255,255,255,.05);
+  --text:#fff1f2;--muted:#6b1a2a;
+  --mono:'Syne Mono',monospace;--sans:'Syne',sans-serif;
+  --code-bg:#120407;--code-border:rgba(251,113,133,.2);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(159,18,57,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+.shimmer{position:fixed;top:0;left:0;right:0;height:1px;z-index:300;background:linear-gradient(90deg,transparent,rgba(159,18,57,0) 20%,rgba(251,113,133,.9) 50%,rgba(159,18,57,0) 80%,transparent);background-size:200% 100%;animation:sh 7s ease-in-out infinite}
+@keyframes sh{0%{background-position:-100% 0}100%{background-position:200% 0}}
+nav{position:sticky;top:0;z-index:100;background:rgba(9,4,7,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav-left{display:flex;align-items:center;gap:1rem}
+.back-link{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--cr-lt)}
+.nav-title{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text)}
+.nav-badges{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.nbadge{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .55rem;border-radius:2px}
+.nb-cr{color:var(--cr-lt);border:1px solid rgba(251,113,133,.4);background:var(--cr-dim)}
+.nb-gold{color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim)}
+.wrapper{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.4rem 4rem}
+header{padding:3.2rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.header-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem}
+.level-badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cr-lt);border:1px solid rgba(251,113,133,.35);background:var(--cr-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem;margin-left:.5rem}
+h1{font-family:var(--sans);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.35rem}
+h1 .exc{color:var(--cr-lt)}
+h1 .adv{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.7rem}
+.header-desc{color:var(--muted);font-size:.86rem;max-width:640px;line-height:1.75}
+.header-meta{display:flex;align-items:center;gap:1.4rem;margin-top:1.1rem;flex-wrap:wrap}
+.meta-item{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.meta-item::before{content:'◆';color:var(--cr-lt);font-size:.38rem}
+.how-to{background:var(--cr-dim);border:1px solid rgba(159,18,57,.22);border-radius:5px;padding:1rem 1.3rem;margin-bottom:1.8rem;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}
+.how-to-icon{font-size:1.1rem;margin-top:1px}
+.how-to p{font-size:.82rem;color:var(--text);opacity:.85;line-height:1.65}
+.how-to strong{color:var(--cr-lt)}
+.progress-bar-wrap{margin-bottom:1.8rem}
+.progress-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;justify-content:space-between}
+.progress-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--cr),var(--cr-lt));border-radius:1px;transition:width .4s}
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.5rem}
+.search-input{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.48rem .85rem;color:var(--text);font-family:var(--mono);font-size:.68rem;outline:none;transition:border-color .2s;min-width:200px}
+.search-input:focus{border-color:var(--cr-lt)}
+.search-input::placeholder{color:var(--muted)}
+.cat-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:.25rem .65rem;color:var(--muted);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap;text-transform:uppercase}
+.cat-btn:hover{border-color:var(--cr-lt);color:var(--cr-lt)}
+.cat-btn.active{background:var(--cr);border-color:var(--cr);color:#fff;font-weight:600}
+.stats-count{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+.lessons-list{display:flex;flex-direction:column;gap:.55rem}
+.lesson-card{background:var(--card);border:1px solid var(--border2);border-radius:5px;overflow:hidden;transition:border-color .2s}
+.lesson-card:hover{border-color:rgba(159,18,57,.22)}
+.lesson-card.open{border-color:rgba(251,113,133,.4)}
+.lesson-card.done{background:rgba(159,18,57,.04);border-color:rgba(159,18,57,.2)}
+.lesson-card.hidden{display:none}
+.card-header{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s}
+.card-header:hover{background:var(--card2)}
+.lesson-num{font-family:var(--mono);font-size:.65rem;color:var(--cr-lt);min-width:2rem;opacity:.65}
+.card-title-wrap{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
+.lesson-title{font-size:.9rem;font-weight:600;color:var(--text)}
+.lesson-sub{font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.08rem;letter-spacing:.04em}
+.cat-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:.07em;color:var(--muted);border:1px solid var(--border2);padding:.08rem .38rem;border-radius:2px;white-space:nowrap}
+.card-chevron{color:var(--muted);font-size:.6rem;transition:transform .25s,color .2s;flex-shrink:0}
+.lesson-card.open .card-chevron{transform:rotate(180deg);color:var(--cr-lt)}
+.card-body{display:none;border-top:1px solid var(--border2);background:var(--bg2)}
+.lesson-card.open .card-body{display:block}
+.ref-block{padding:1rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ref-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cr-lt);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.ref-label::after{content:'';flex:1;height:1px;background:rgba(251,113,133,.12)}
+.syntax-box{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:.7rem 1rem;margin-bottom:.8rem;font-family:var(--mono);font-size:.75rem;color:var(--cr-lt);letter-spacing:.03em;line-height:1.75;white-space:pre-wrap}
+.args-table{width:100%;border-collapse:collapse;margin-bottom:.8rem;font-size:.75rem}
+.args-table th{font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.35rem .6rem;border-bottom:1px solid var(--border2);text-align:left;font-weight:400}
+.args-table td{padding:.36rem .6rem;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top;line-height:1.5}
+.args-table td:first-child{font-family:var(--mono);font-size:.64rem;color:var(--cr-lt);white-space:nowrap}
+.args-table td:last-child{color:rgba(255,241,242,.55);font-size:.74rem}
+.quick-ex{background:rgba(159,18,57,.07);border:1px solid rgba(159,18,57,.18);border-radius:3px;padding:.55rem .8rem;font-size:.75rem;line-height:1.7;color:rgba(255,241,242,.78);margin-bottom:.8rem;white-space:pre-wrap;font-family:var(--mono)}
+.quick-ex .result{color:#fbbf24}
+.shortcuts{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.8rem}
+.shortcut{display:inline-flex;align-items:center;gap:.3rem;background:rgba(251,113,133,.07);border:1px solid rgba(251,113,133,.18);border-radius:3px;padding:.2rem .5rem;font-family:var(--mono);font-size:.6rem;color:var(--cr-lt)}
+.shortcut .key{background:rgba(251,113,133,.15);border-radius:2px;padding:.05rem .3rem;font-size:.56rem}
+.dataset-block{padding:.9rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ds-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;opacity:.8}
+.ds-label::after{content:'';flex:1;height:1px;background:rgba(245,158,11,.12)}
+.ds-table-wrap{overflow-x:auto;border-radius:3px;border:1px solid rgba(251,113,133,.15)}
+.ds-table{border-collapse:collapse;font-size:.72rem;min-width:100%}
+.ds-table th{background:rgba(159,18,57,.15);font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cr-lt);padding:.4rem .7rem;border:1px solid rgba(251,113,133,.12);text-align:center}
+.ds-table td{padding:.32rem .7rem;border:1px solid rgba(251,113,133,.08);color:rgba(255,241,242,.72);text-align:center;font-family:var(--mono);font-size:.68rem}
+.ds-table td.label{text-align:left;color:rgba(255,241,242,.45);font-size:.64rem}
+.ds-table tr:nth-child(even) td{background:rgba(159,18,57,.04)}
+.ds-hint{font-family:var(--mono);font-size:.54rem;color:var(--muted);margin-top:.5rem;letter-spacing:.04em}
+.ex-block{padding:.9rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ex-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(251,113,133,.65);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
+.ex-label::after{content:'';flex:1;height:1px;background:rgba(251,113,133,.1)}
+.ex-list{display:flex;flex-direction:column;gap:.35rem}
+.ex-item{display:flex;align-items:flex-start;gap:.55rem;padding:.4rem .55rem;background:rgba(159,18,57,.05);border:1px solid rgba(159,18,57,.12);border-radius:3px}
+.ex-num{font-family:var(--mono);font-size:.5rem;color:rgba(251,113,133,.6);min-width:1.2rem;margin-top:.15rem;flex-shrink:0}
+.ex-text{font-size:.79rem;color:rgba(255,241,242,.82);line-height:1.55}
+.vba-block{padding:.9rem 1.15rem;border-bottom:1px solid var(--border2)}
+.vba-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:#86efac;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;opacity:.8}
+.vba-label::after{content:'';flex:1;height:1px;background:rgba(134,239,172,.12)}
+.vba-code{background:#070d09;border:1px solid rgba(134,239,172,.2);border-radius:4px;padding:.8rem 1rem;font-family:var(--mono);font-size:.72rem;color:#86efac;line-height:1.8;white-space:pre;overflow-x:auto}
+.vba-code .kw{color:#fbbf24}
+.vba-code .cm{color:rgba(134,239,172,.45)}
+.vba-code .st{color:#f9a8d4}
+.prompt-section{padding:.9rem 1.15rem}
+.prompt-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cr-lt);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.prompt-label::after{content:'';flex:1;height:1px;background:rgba(251,113,133,.12)}
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem 1.1rem;background:var(--cr-dim);border:1px solid rgba(159,18,57,.32);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;font-weight:500}
+.copy-btn:hover{background:rgba(159,18,57,.22);border-color:var(--cr-lt);transform:translateY(-1px)}
+.copy-btn.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.copy-hint{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;margin-top:.6rem}
+.prompt-text{display:none}
+.done-row{display:flex;align-items:center;gap:.4rem;margin-top:.65rem}
+.done-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:.56rem;padding:.2rem .55rem;cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
+.done-btn:hover{border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.lesson-card.done .done-btn{border-color:rgba(34,197,94,.4);color:#6ee7b7;background:rgba(34,197,94,.07)}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(251,113,133,.4);color:var(--cr-lt);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.6rem 1.3rem;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-logo{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.footer-logo span{color:var(--cr-lt)}
+.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+@media(max-width:600px){.cat-badge{display:none}.card-header{padding:.8rem 1rem}.ds-table{font-size:.62rem}}
+</style>
+</head>
+<body>
+<div class="shimmer"></div>
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">Excel Avanzado</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nbadge nb-gold">📊 Microsoft Excel · Nivel Avanzado</span>
+    <span class="nbadge nb-cr" id="doneCount">0 / 20 lecciones</span>
+  </div>
+</nav>
+<div class="wrapper">
+  <header>
+    <div class="header-badge">📊 Microsoft Excel · Nivel Avanzado</div>
+    <span class="level-badge">◆ Requiere Excel Intermedio completado</span>
+    <h1><span class="exc">Excel</span> <span class="adv">Avanzado</span></h1>
+    <p class="header-sub">20 Lecciones · VBA · Power Pivot · DAX · Automatización · Dashboards</p>
+    <p class="header-desc">El nivel que convierte a un analista en un desarrollador de soluciones en Excel. Aquí dominas VBA y macros, Power Pivot con DAX, funciones modernas como LAMBDA y LET, dashboards profesionales, Solver, y conexión a datos externos. Todo con código visible, datasets y evaluación por IA.</p>
+    <div class="header-meta">
+      <span class="meta-item">20 lecciones</span>
+      <span class="meta-item">VBA con código visible</span>
+      <span class="meta-item">Power Pivot y DAX</span>
+      <span class="meta-item">Dashboards profesionales</span>
+    </div>
+  </header>
+  <div class="how-to">
+    <div class="how-to-icon">💡</div>
+    <p>Las lecciones de <strong>VBA incluyen el código fuente visible</strong> en la tarjeta para copiarlo directamente en el editor. Las demás lecciones tienen la sintaxis de referencia y el dataset. Copia el prompt para la clase magistral completa — al final la IA evalúa tu código o captura de pantalla con nivel de analista senior.</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 20 lecciones completadas</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar fórmula, tema o código…" oninput="applyFilters()"/>
+    <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+    <button class="cat-btn" data-cat="funciones" onclick="selectCat(this)">🔬 Funciones</button>
+    <button class="cat-btn" data-cat="vba" onclick="selectCat(this)">💻 VBA</button>
+    <button class="cat-btn" data-cat="powerbi" onclick="selectCat(this)">📊 Power Pivot</button>
+    <button class="cat-btn" data-cat="dashboard" onclick="selectCat(this)">🖥 Dashboard</button>
+    <button class="cat-btn" data-cat="datos" onclick="selectCat(this)">🔗 Datos</button>
+    <button class="cat-btn" data-cat="analisis" onclick="selectCat(this)">📐 Análisis</button>
+    <span class="stats-count" id="counter">20 lecciones</span>
+  </div>
+  <div class="lessons-list" id="lessonsList"></div>
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · Excel Avanzado · Logicards</span>
+  </footer>
+</div>
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+<script>
+const LESSONS = [
+{
+  n:1, cat:"funciones", title:"LET · Nombrar variables dentro de una fórmula",
+  sub:"Escribe fórmulas complejas legibles asignando nombres a cálculos intermedios",
+  badge:"🔬 Función",
+  syntax:`=LET(nombre1, valor1, [nombre2, valor2], ..., cálculo_final)
+
+Ejemplo básico:
+=LET(precio, B2, iva, 0.19, precio * (1 + iva))
+
+Ejemplo avanzado (fórmula legible):
+=LET(
+  ventas,    C2:C100,
+  meta,      D2:D100,
+  diff,      ventas - meta,
+  cumplidos, SUMAR.SI.CONJUNTO(ventas, diff, ">="&0),
+  cumplidos
+)`,
+  args:[
+    {name:"nombre1, valor1", desc:"Par nombre-valor. El nombre puede ser cualquier texto sin espacios. El valor puede ser un número, rango, fórmula o resultado de otro cálculo."},
+    {name:"cálculo_final", desc:"La expresión final que usa los nombres definidos. Es lo que la función devuelve."},
+    {name:"Ventaja principal", desc:"Sin LET repites el mismo cálculo costoso varias veces. Con LET lo calculas una vez, le das nombre, y lo reutilizas. Fórmulas más rápidas Y más legibles."},
+  ],
+  shortcuts:[
+    {keys:["Alt","Enter"],"desc":"Salto de línea en la barra de fórmulas para escribir LET en múltiples líneas"},
+    {keys:["Ctrl","Shift","U"],"desc":"Expandir la barra de fórmulas para ver fórmulas largas"},
+    {keys:["F9"],"desc":"Selecciona una parte del LET y evalúa su valor intermedio"},
+  ],
+  quickEx:`Sin LET (repetitivo y lento):
+=SI(PROMEDIO(B2:B100)>PROMEDIO(C2:C100),
+   MAX(B2:B100)-PROMEDIO(B2:B100),
+   MAX(C2:C100)-PROMEDIO(C2:C100))
+
+Con LET (una sola vez cada cálculo):
+=LET(
+  prom_b, PROMEDIO(B2:B100),
+  prom_c, PROMEDIO(C2:C100),
+  SI(prom_b > prom_c,
+     MAX(B2:B100) - prom_b,
+     MAX(C2:C100) - prom_c))`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Vendedor","Ventas Q1","Meta Q1"],
+      ["2","Carlos","4500000","5000000"],
+      ["3","Laura","6200000","5000000"],
+      ["4","Andrés","3800000","5000000"],
+      ["5","María","7100000","5000000"],
+      ["6","Pedro","5500000","5000000"],
+    ]
+  },
+  exercises:[
+    "En D2 escribe con LET: nombra 'ventas' a B2, 'meta' a C2, 'diferencia' a ventas-meta, y devuelve SI(diferencia>=0,\"Cumplió\",\"No cumplió\"). Copia hasta D6.",
+    "En E1 usa LET para calcular en un solo paso: promedio de ventas, promedio de metas, diferencia entre promedios, y devuelve un texto descriptivo.",
+    "Reescribe esta fórmula usando LET para que sea legible: =SI(B2-C2>=0,B2-C2,0)+SI(B3-C3>=0,B3-C3,0)",
+    "En F2 usa LET con SUMAPRODUCTO para calcular el total de ventas que superaron la meta: =LET(v,B2:B6, m,C2:C6, SUMAPRODUCTO((v>m)*v)).",
+  ]
+},
+{
+  n:2, cat:"funciones", title:"LAMBDA · Crear tus propias funciones",
+  sub:"Define funciones personalizadas reutilizables sin VBA",
+  badge:"🔬 Función",
+  syntax:`=LAMBDA([parámetro1], [parámetro2], ..., cálculo)
+
+Usar en la misma celda (para probar):
+=LAMBDA(x, x^2)(5)   → devuelve 25
+
+Crear función permanente (vía Administrador de nombres):
+1. Ctrl+F3 → Nuevo
+2. Nombre: CALCULAR_IVA
+3. Se refiere a: =LAMBDA(precio, tasa, precio*(1+tasa))
+4. Usar en cualquier celda: =CALCULAR_IVA(B2, 0.19)
+
+LAMBDA recursiva:
+=LAMBDA(n, SI(n<=1, 1, n * SELF(n-1)))
+→ SELF permite que LAMBDA se llame a sí misma`,
+  args:[
+    {name:"parámetros", desc:"Los nombres de las variables que recibirá tu función. Como los argumentos de SUMA() pero con los nombres que tú elijas. Opcionales con []  pero casi siempre los necesitas."},
+    {name:"cálculo", desc:"La fórmula que usa los parámetros para producir el resultado. Puede ser cualquier fórmula de Excel, incluyendo otras LAMBDA anidadas."},
+    {name:"Administrador de nombres", desc:"Para que LAMBDA sea una función permanente y reutilizable, guárdala como nombre. Así aparece como si fuera una función nativa de Excel al escribirla."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","F3"],"desc":"Administrador de nombres — donde registras tu LAMBDA como función"},
+    {keys:["F3"],"desc":"Insertar nombre definido en la fórmula actual"},
+    {keys:["Ctrl","Shift","A"],"desc":"Ver los argumentos de la función activa"},
+  ],
+  quickEx:`Función para calcular precio con IVA y descuento:
+  Nombre: PRECIO_FINAL
+  =LAMBDA(base, desc, iva,
+     base * (1 - desc) * (1 + iva))
+
+  Uso: =PRECIO_FINAL(B2, 0.1, 0.19)
+  → precio con 10% descuento y 19% IVA
+
+  Función para calificar nota:
+  Nombre: CALIFICAR
+  =LAMBDA(nota, SI(nota>=90,"A",SI(nota>=70,"B",SI(nota>=60,"C","F"))))
+  Uso: =CALIFICAR(B2)`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Producto","Precio base","Descuento","IVA"],
+      ["2","Laptop","2500000","0.1","0.19"],
+      ["3","Mouse","85000","0","0.19"],
+      ["4","Monitor","980000","0.15","0.19"],
+      ["5","Teclado","150000","0.05","0.19"],
+    ]
+  },
+  exercises:[
+    "En la celda F2 prueba LAMBDA directamente: =LAMBDA(base,desc,iva, base*(1-desc)*(1+iva))(B2,C2,D2).",
+    "Crea una función permanente 'PRECIO_FINAL' en el Administrador de nombres con la misma fórmula pero sin los valores al final.",
+    "En E2 usa tu función: =PRECIO_FINAL(B2,C2,D2). Copia hasta E5.",
+    "Crea una segunda función 'CATEGORIA_PRECIO' que devuelva 'Premium' si el precio final > 2,000,000, 'Estándar' si > 500,000, o 'Económico' en otro caso.",
+  ]
+},
+{
+  n:3, cat:"funciones", title:"SECUENCIA · MATRIZALEAT · BYROW · BYCOL",
+  sub:"Generar matrices dinámicas y aplicar funciones a filas/columnas completas",
+  badge:"🔬 Función",
+  syntax:`=SECUENCIA(filas, [columnas], [inicio], [paso])
+  → Genera una secuencia numérica como array
+
+  =MATRIZALEAT(filas, [columnas], [min], [max], [entero])
+  → Array de números aleatorios
+
+  =BYCOL(array, lambda)
+  → Aplica una función LAMBDA a cada COLUMNA del array
+
+  =BYROW(array, lambda)
+  → Aplica una función LAMBDA a cada FILA del array
+
+  =MAP(array1, [array2], lambda)
+  → Aplica LAMBDA a cada celda (como un bucle FOR en Excel)`,
+  args:[
+    {name:"SECUENCIA(f,c,i,p)", desc:"f=filas, c=columnas (opcional), i=inicio (default 1), p=paso (default 1). =SECUENCIA(12,1,1,1) genera 1 a 12 (meses del año)."},
+    {name:"BYROW(array, LAMBDA(fila,...))", desc:"La LAMBDA recibe cada fila como array. Devuelve un resultado por fila. Útil para aplicar operaciones que no admiten rangos directamente."},
+    {name:"BYCOL(array, LAMBDA(col,...))", desc:"La LAMBDA recibe cada columna como array. Devuelve un resultado por columna. Ideal para calcular estadísticas por columna sin escribir la fórmula para cada una."},
+    {name:"MAP(array, LAMBDA(x,...))", desc:"Transforma cada elemento individualmente. Como aplicar una fórmula a cada celda de un rango devolviendo un nuevo array del mismo tamaño."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Shift","Enter"],"desc":"Fórmulas matriciales legacy (no necesario con estas funciones en Excel 365)"},
+    {keys:["F9"],"desc":"Ver el array resultado de SECUENCIA o BYROW seleccionando la fórmula"},
+    {keys:["Ctrl","T"],"desc":"Convertir a tabla para trabajar con arrays dinámicos"},
+  ],
+  quickEx:`Generar tabla de multiplicar 5x5:
+=SECUENCIA(5)*TRANSPONER(SECUENCIA(5))
+→ Crea una matriz 5x5 con el producto de cada par
+
+Calcular el máximo de cada fila:
+=BYROW(B2:E6, LAMBDA(fila, MAX(fila)))
+→ Devuelve 5 resultados (uno por fila)
+
+Categorizar cada venta:
+=MAP(B2:B10, LAMBDA(v, SI(v>5000000,"Alto","Normal")))
+→ Array con "Alto"/"Normal" para cada celda`,
+  dataset:{
+    headers:["","A","B","C","D","E"],
+    rows:[
+      ["1","Vendedor","Q1","Q2","Q3","Q4"],
+      ["2","Carlos","4.5","5.2","4.8","6.1"],
+      ["3","Laura","6.2","7.1","6.8","7.5"],
+      ["4","Andrés","3.8","4.1","5.5","4.9"],
+      ["5","María","7.1","6.8","7.5","8.2"],
+      ["6","Pedro","5.5","5.8","4.2","6.0"],
+    ]
+  },
+  exercises:[
+    "En G1 escribe =SECUENCIA(4,1,1,1) para generar los números de trimestre 1 a 4.",
+    "En G2 usa BYROW para calcular el máximo trimestre de cada vendedor: =BYROW(B2:E6,LAMBDA(f,MAX(f))). ¿Qué devuelve?",
+    "En H2 usa BYCOL para calcular el promedio de cada trimestre: =BYCOL(B2:E6,LAMBDA(c,PROMEDIO(c))).",
+    "En I2 usa MAP para categorizar cada venta: =MAP(B2:E6,LAMBDA(v,SI(v>=6,\"Alto\",SI(v>=5,\"Medio\",\"Bajo\")))).",
+  ]
+},
+{
+  n:4, cat:"vba", title:"Macros con VBA · Grabar y editar",
+  sub:"Automatizar tareas repetitivas con el grabador de macros y el editor VBE",
+  badge:"💻 VBA",
+  syntax:`Acceso al editor VBA:
+  Alt+F11 → Abre el editor VBE (Visual Basic Editor)
+
+  Grabar macro:
+  Desarrollador → Grabar macro → hacer pasos → Detener grabación
+  O: Vista → Macros → Grabar macro
+
+  Ejecutar macro:
+  Alt+F8 → Seleccionar macro → Ejecutar
+  O: asignar a botón o atajo de teclado
+
+  Activar la pestaña Desarrollador:
+  Archivo → Opciones → Personalizar cinta → Desarrollador ✓`,
+  args:[
+    {name:"Módulo VBA", desc:"Donde vive el código. En el Editor VBA: Insertar → Módulo. Cada libro puede tener múltiples módulos."},
+    {name:"Sub vs Function", desc:"Sub: ejecuta acciones (no devuelve valor). Function: calcula y devuelve un valor (como una fórmula). Para automatización usas Sub, para funciones personalizadas usas Function."},
+    {name:"Guardar como .xlsm", desc:"Los archivos con macros deben guardarse como Libro de Excel habilitado para macros (.xlsm). El formato .xlsx no guarda código VBA."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F11"],"desc":"Abrir/cerrar el editor VBA"},
+    {keys:["Alt","F8"],"desc":"Abrir el administrador de macros"},
+    {keys:["F5"],"desc":"Ejecutar la macro/Sub actual en el editor VBA"},
+    {keys:["F8"],"desc":"Ejecutar línea por línea (Step Into) para depurar"},
+    {keys:["Ctrl","Space"],"desc":"Autocompletar en el editor VBA"},
+  ],
+  vbaCode:`' Macro básica: formatear y limpiar un rango
+Sub FormatearReporte()
+    ' Seleccionar el rango de datos
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    
+    ' Aplicar formato a encabezados (fila 1)
+    With ws.Rows(1)
+        .Font.Bold = True
+        .Interior.Color = RGB(159, 18, 57)  ' Rojo vino
+        .Font.Color = RGB(255, 255, 255)     ' Blanco
+        .Font.Size = 11
+    End With
+    
+    ' Autoajustar ancho de columnas
+    ws.Columns("A:F").AutoFit
+    
+    ' Mensaje de confirmación
+    MsgBox "¡Reporte formateado correctamente!", vbInformation
+End Sub`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Vendedor","Ventas","Estado"],
+      ["2","Carlos","4500000","Activo"],
+      ["3","Laura","6200000","Activo"],
+      ["4","Andrés","3800000","Inactivo"],
+      ["5","María","7100000","Activo"],
+    ]
+  },
+  exercises:[
+    "Activa la pestaña Desarrollador (Archivo → Opciones → Personalizar cinta). Luego graba una macro que aplique negrita a la fila 1 y autoajuste columnas.",
+    "Abre el editor VBA con Alt+F11 y observa el código que grabó Excel. ¿Qué líneas se generaron?",
+    "Copia el código VBA de la tarjeta en un módulo nuevo (Insertar → Módulo) y ejecútalo con F5.",
+    "Modifica el color de fondo de los encabezados cambiando los valores RGB a (0, 102, 204) (azul). Ejecuta de nuevo.",
+  ]
+},
+{
+  n:5, cat:"vba", title:"VBA · Variables, bucles y condiciones",
+  sub:"Fundamentos de programación: For, If/Then, Do While y tipos de datos",
+  badge:"💻 VBA",
+  syntax:`Tipos de variables:
+  Dim nombre As String    ' Texto
+  Dim cantidad As Integer ' Entero (-32768 a 32767)
+  Dim monto As Double     ' Decimal con alta precisión
+  Dim fecha As Date       ' Fecha
+  Dim activo As Boolean   ' Verdadero/Falso
+
+  Bucle For (número fijo de iteraciones):
+  For i = 1 To 10
+      ' código
+  Next i
+
+  Bucle For Each (recorrer celdas o colección):
+  For Each celda In Range("A2:A100")
+      ' código con celda
+  Next celda
+
+  Condición If/ElseIf/Else:
+  If condicion Then
+      ' código
+  ElseIf otra_condicion Then
+      ' código
+  Else
+      ' código
+  End If`,
+  args:[
+    {name:"Dim variable As Tipo", desc:"Declara una variable antes de usarla. Siempre declara tipos explícitos para evitar errores. VBA tiene un modo estricto: Option Explicit al inicio del módulo obliga a declarar todo."},
+    {name:"For i = 1 To n", desc:"El bucle más común para recorrer filas. i va de 1 a n. Usa Step -1 para ir hacia atrás. For Each es más limpio para recorrer rangos."},
+    {name:"Do While / Do Until", desc:"Bucle que continúa mientras una condición sea verdadera (While) o hasta que se cumpla (Until). Siempre asegúrate de que la condición eventualmente cambie para evitar bucles infinitos."},
+  ],
+  shortcuts:[
+    {keys:["F8"],"desc":"Step Into — ejecuta línea por línea para depurar bucles"},
+    {keys:["Shift","F8"],"desc":"Step Over — ejecuta un Sub llamado sin entrar en él"},
+    {keys:["Ctrl","Break"],"desc":"Detener una macro que está en bucle infinito"},
+    {keys:["F9"],"desc":"Agregar/quitar punto de interrupción (breakpoint)"},
+  ],
+  vbaCode:`' Macro: colorear filas según estado
+Sub ColorearPorEstado()
+    Dim ws As Worksheet
+    Dim ultima_fila As Long
+    Dim i As Long
+    Dim estado As String
+    
+    Set ws = ActiveSheet
+    ultima_fila = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' Recorrer desde fila 2 hasta la última con datos
+    For i = 2 To ultima_fila
+        estado = ws.Cells(i, 3).Value  ' Columna C = Estado
+        
+        Select Case estado
+            Case "Activo"
+                ws.Rows(i).Interior.Color = RGB(209, 250, 229)  ' Verde claro
+            Case "Inactivo"
+                ws.Rows(i).Interior.Color = RGB(254, 226, 226)  ' Rojo claro
+            Case Else
+                ws.Rows(i).Interior.ColorIndex = xlNone         ' Sin color
+        End Select
+    Next i
+    
+    MsgBox "Filas coloreadas: " & (ultima_fila - 1), vbInformation
+End Sub`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Vendedor","Ventas","Estado"],
+      ["2","Carlos","4500000","Activo"],
+      ["3","Laura","6200000","Activo"],
+      ["4","Andrés","3800000","Inactivo"],
+      ["5","María","7100000","Activo"],
+      ["6","Pedro","5500000","Inactivo"],
+    ]
+  },
+  exercises:[
+    "Copia la macro de la tarjeta en un módulo VBA. Ejecútala. ¿Qué color tiene cada fila según el estado?",
+    "Modifica la macro para que también coloree de amarillo claro (RGB 255,255,204) las filas donde Ventas < 5,000,000.",
+    "Agrega una variable 'contador_activos' que cuente cuántos vendedores tienen estado 'Activo' y muestre el resultado en el MsgBox.",
+    "Cambia el For por un For Each que recorra la columna C directamente: For Each celda In ws.Range(\"C2:C\"&ultima_fila).",
+  ]
+},
+{
+  n:6, cat:"vba", title:"VBA · Funciones personalizadas (UDF)",
+  sub:"Crear tus propias funciones de Excel con VBA que aparecen como fórmulas nativas",
+  badge:"💻 VBA",
+  syntax:`Function NombreFuncion(parametro1 As Tipo, ...) As TipoRetorno
+      ' código
+      NombreFuncion = resultado
+End Function
+
+Reglas de las UDF (User Defined Functions):
+- Se usan igual que =SUMA() → =MI_FUNCION(B2, C2)
+- NO pueden modificar celdas (solo calcular y retornar)
+- Se guardan en el módulo del libro (.xlsm)
+- Para disponibles en todo Excel: guardar en Personal.xlsb
+
+Tipos de retorno comunes:
+As String   → texto
+As Double   → número decimal
+As Boolean  → Verdadero/Falso
+As Variant  → cualquier tipo (más flexible)`,
+  args:[
+    {name:"Function vs Sub", desc:"Function devuelve un valor y se usa como fórmula en celdas. Sub ejecuta acciones pero no puede usarse en celdas. Para crear funciones personalizadas siempre usa Function."},
+    {name:"Application.Volatile", desc:"Agrega esta línea al inicio de la función para que se recalcule automáticamente cuando cualquier celda del libro cambie. Úsala con moderación — puede ralentizar el libro."},
+    {name:"Personal.xlsb", desc:"Libro de macros personal que se abre automáticamente con Excel. Guarda ahí tus UDFs para tenerlas disponibles en todos tus archivos sin necesidad de copiar código."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F11"],"desc":"Editor VBA para escribir la función"},
+    {keys:["Shift","F3"],"desc":"Insertar función — tus UDFs aparecen en la categoría 'Definidas por el usuario'"},
+    {keys:["Ctrl","Space"],"desc":"Autocompletar en el editor — también sugiere tus propias funciones"},
+  ],
+  vbaCode:`' UDF 1: Calcular categoría de cliente según compras anuales
+Function CATEGORIA_CLIENTE(compras As Double) As String
+    Select Case compras
+        Case Is >= 10000000
+            CATEGORIA_CLIENTE = "Platino"
+        Case Is >= 5000000
+            CATEGORIA_CLIENTE = "Oro"
+        Case Is >= 1000000
+            CATEGORIA_CLIENTE = "Plata"
+        Case Else
+            CATEGORIA_CLIENTE = "Bronce"
+    End Select
+End Function
+
+' UDF 2: Contar palabras en una celda
+Function CONTAR_PALABRAS(texto As String) As Integer
+    If Len(Trim(texto)) = 0 Then
+        CONTAR_PALABRAS = 0
+    Else
+        CONTAR_PALABRAS = UBound(Split(Trim(texto), " ")) + 1
+    End If
+End Function
+
+' UDF 3: Extraer solo los números de un texto
+Function SOLO_NUMEROS(texto As String) As String
+    Dim resultado As String
+    Dim i As Integer
+    resultado = ""
+    For i = 1 To Len(texto)
+        If Mid(texto, i, 1) >= "0" And Mid(texto, i, 1) <= "9" Then
+            resultado = resultado & Mid(texto, i, 1)
+        End If
+    Next i
+    SOLO_NUMEROS = resultado
+End Function`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Cliente","Compras anuales","Categoría"],
+      ["2","Empresa A","12500000","=CATEGORIA_CLIENTE(B2)"],
+      ["3","Empresa B","4800000",""],
+      ["4","Empresa C","850000",""],
+      ["5","Empresa D","6200000",""],
+      ["6","Texto con números","'Tel: 314-567-89-01'",""],
+    ]
+  },
+  exercises:[
+    "Copia las 3 UDFs en un módulo VBA. En C2:C5 usa =CATEGORIA_CLIENTE(B2). ¿Qué categoría obtiene cada empresa?",
+    "En D6 usa =CONTAR_PALABRAS(A6). ¿Cuántas palabras tiene 'Texto con números'?",
+    "En E6 usa =SOLO_NUMEROS(B6) para extraer solo los dígitos del número de teléfono.",
+    "Crea una cuarta UDF llamada 'DIAS_HABILES_RESTANTES' que reciba una fecha límite y devuelva los días hábiles hasta esa fecha (usando la función DIAS.LAB equivalente o un bucle).",
+  ]
+},
+{
+  n:7, cat:"vba", title:"VBA · Automatización de reportes",
+  sub:"Generar reportes automáticos: limpiar, procesar y exportar datos con un clic",
+  badge:"💻 VBA",
+  syntax:`Operaciones más usadas en automatización:
+  ' Copiar hoja
+  Sheets("Datos").Copy After:=Sheets(Sheets.Count)
+
+  ' Eliminar filas que cumplan condición (de abajo hacia arriba)
+  For i = ultima_fila To 2 Step -1
+      If Cells(i, 3) = "Inactivo" Then Rows(i).Delete
+  Next i
+
+  ' Exportar como PDF
+  ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, _
+      Filename:="C:\Reporte_" & Format(Date,"YYYYMMDD") & ".pdf"
+
+  ' Guardar copia con fecha en el nombre
+  ThisWorkbook.SaveCopyAs "Backup_" & Format(Now,"YYYYMMDD_HHMM") & ".xlsx"`,
+  args:[
+    {name:"Step -1 en bucle de eliminación", desc:"Cuando eliminas filas en un bucle, SIEMPRE ve de abajo hacia arriba (Step -1). Si vas de arriba hacia abajo, al eliminar una fila, el índice de las siguientes se desplaza y te saltas filas."},
+    {name:"With...End With", desc:"Evita repetir el objeto en múltiples operaciones. With ws.Range('A1') ... .Font.Bold=True ... .Interior.Color=RGB(...) ... End With."},
+    {name:"On Error Resume Next", desc:"Ignora errores y continúa. Úsalo con cuidado solo en partes donde esperas errores controlados (ej: archivo no existe). Siempre vuelve a activar el manejo de errores después."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F11"],"desc":"Editor VBA"},
+    {keys:["Ctrl","G"],"desc":"Ventana Inmediato en el editor — para probar líneas de código rápidamente"},
+    {keys:["F5"],"desc":"Ejecutar Sub actual"},
+    {keys:["Ctrl","Break"],"desc":"Interrumpir macro en ejecución"},
+  ],
+  vbaCode:`' Macro completa: generar reporte mensual automático
+Sub GenerarReporteMensual()
+    Dim ws_datos As Worksheet
+    Dim ws_reporte As Worksheet
+    Dim ultima_fila As Long
+    Dim i As Long
+    
+    Application.ScreenUpdating = False  ' Desactivar parpadeo
+    Application.Calculation = xlCalculationManual  ' Cálculo manual (más rápido)
+    
+    ' --- Preparar hoja de datos ---
+    Set ws_datos = ThisWorkbook.Sheets("Datos")
+    ultima_fila = ws_datos.Cells(ws_datos.Rows.Count, 1).End(xlUp).Row
+    
+    ' --- Crear/limpiar hoja de reporte ---
+    On Error Resume Next
+    Application.DisplayAlerts = False
+    ThisWorkbook.Sheets("Reporte").Delete
+    Application.DisplayAlerts = True
+    On Error GoTo 0
+    
+    Set ws_reporte = ThisWorkbook.Sheets.Add
+    ws_reporte.Name = "Reporte"
+    
+    ' --- Copiar y procesar datos ---
+    ws_datos.Range("A1:D" & ultima_fila).Copy _
+        Destination:=ws_reporte.Range("A1")
+    
+    ' --- Formato profesional ---
+    With ws_reporte.Rows(1)
+        .Font.Bold = True
+        .Interior.Color = RGB(159, 18, 57)
+        .Font.Color = RGB(255, 255, 255)
+    End With
+    ws_reporte.Columns("A:D").AutoFit
+    
+    ' --- Agregar fecha de generación ---
+    ws_reporte.Range("F1").Value = "Generado: " & Format(Now, "DD/MM/YYYY HH:MM")
+    
+    ' --- Restaurar configuración ---
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    
+    MsgBox "Reporte generado: " & (ultima_fila - 1) & " registros procesados.", vbInformation
+End Sub`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Vendedor","Región","Ventas","Estado"],
+      ["2","Carlos","Norte","4500000","Activo"],
+      ["3","Laura","Sur","6200000","Activo"],
+      ["4","Andrés","Norte","3800000","Inactivo"],
+      ["5","María","Centro","7100000","Activo"],
+    ]
+  },
+  exercises:[
+    "Crea una hoja llamada 'Datos' con el dataset. Copia la macro al editor VBA y ejecútala. ¿Qué hace con la hoja 'Reporte'?",
+    "Modifica la macro para que elimine automáticamente las filas con estado 'Inactivo' en la hoja Reporte (sin tocar Datos).",
+    "Agrega al final de la macro una línea que exporte la hoja Reporte como PDF con el nombre 'Reporte_YYYYMMDD.pdf'.",
+    "Agrega Application.ScreenUpdating=False al inicio y True al final. ¿Notas diferencia en la velocidad de ejecución?",
+  ]
+},
+{
+  n:8, cat:"powerbi", title:"Power Pivot · El modelo de datos de Excel",
+  sub:"Cargar múltiples tablas y crear relaciones entre ellas sin fórmulas BUSCARV",
+  badge:"📊 Power Pivot",
+  syntax:`Activar Power Pivot:
+  Archivo → Opciones → Complementos → Complementos COM
+  → Marcar Microsoft Power Pivot → Aceptar
+  → Aparece la pestaña Power Pivot en la cinta
+
+  Cargar datos al modelo:
+  1. Convierte tu tabla a Tabla (Ctrl+T)
+  2. Power Pivot → Agregar a modelo de datos
+  O: Datos → Obtener datos → cargar "Al modelo de datos"
+
+  Crear relación entre tablas:
+  Power Pivot → Administrar → Vista de diagrama
+  → Arrastra el campo clave de una tabla al campo equivalente de otra
+
+  Regla de relaciones:
+  Tabla de hechos (ventas, transacciones) → muchos registros
+  Tabla de dimensión (productos, clientes) → valores únicos (clave)
+  Relación: muchos a uno (ventas.ProductoID → productos.ID)`,
+  args:[
+    {name:"Modelo de datos", desc:"Una base de datos relacional dentro de Excel. Permite tener millones de filas sin el límite de 1,048,576 filas de Excel. Las relaciones reemplazan BUSCARV entre tablas."},
+    {name:"Tabla de hechos", desc:"Contiene los eventos o transacciones (cada venta, cada pedido). Tiene muchos registros y referencias a claves foráneas de las tablas de dimensión."},
+    {name:"Tabla de dimensión", desc:"Contiene la información descriptiva (datos del producto, del cliente, del tiempo). Tiene valores únicos en la columna clave. Siempre en el lado 'uno' de la relación."},
+    {name:"Vista de diagrama", desc:"La vista visual de Power Pivot donde se ven las tablas y se crean las relaciones arrastrando campos. Similar al diseñador de bases de datos relacionales."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","T"],"desc":"Convertir rango a tabla antes de cargar al modelo"},
+    {keys:["Ctrl","Alt","F5"],"desc":"Actualizar todas las conexiones y el modelo de datos"},
+    {keys:["Alt","F11"],"desc":"Editor VBA (distinto al editor de Power Pivot)"},
+  ],
+  quickEx:`Sin Power Pivot (tabla desnormalizada):
+  1 tabla con 10 columnas, datos repetidos, BUSCARV por todos lados
+  → Pesada, lenta, difícil de mantener
+
+  Con Power Pivot (modelo estrella):
+  Tabla Ventas: FechaID, ProductoID, ClienteID, Monto
+  Tabla Productos: ProductoID, Nombre, Categoría, Precio
+  Tabla Clientes: ClienteID, Nombre, Región, Segmento
+  → Relacionadas, sin redundancia, millones de filas posibles`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["","Tabla 'Ventas':","",""],
+      ["1","VentaID","ProductoID","Monto"],
+      ["2","1","P001","2500000"],
+      ["3","2","P002","85000"],
+      ["4","3","P001","2500000"],
+      ["","Tabla 'Productos':","",""],
+      ["1","ProductoID","Nombre","Categoría"],
+      ["2","P001","Laptop","Electrónico"],
+      ["3","P002","Mouse","Accesorio"],
+    ]
+  },
+  exercises:[
+    "Crea las dos tablas en hojas separadas. Conviértelas a Tablas con Ctrl+T y nómbralas 'Ventas' y 'Productos'.",
+    "Carga ambas tablas al modelo de datos: Power Pivot → Agregar a modelo de datos.",
+    "En Power Pivot, cambia a Vista de diagrama y crea la relación: arrastra ProductoID de Ventas al ProductoID de Productos.",
+    "Crea una tabla dinámica desde el modelo (Insertar → Tabla dinámica → Usar modelo de datos). Pon Categoría en filas y Suma de Monto en valores. ¿Funciona sin BUSCARV?",
+  ]
+},
+{
+  n:9, cat:"powerbi", title:"DAX básico · Medidas calculadas",
+  sub:"CALCULATE, SUM, RELATED, DIVIDE y medidas de tiempo en Power Pivot",
+  badge:"📊 Power Pivot",
+  syntax:`Crear medida en Power Pivot:
+  Power Pivot → Administrar → Área de medidas
+  → Clic en celda vacía → escribir: Nombre_Medida:=DAX_formula
+
+  Funciones DAX básicas:
+  Total Ventas:=SUM(Ventas[Monto])
+  Promedio:=AVERAGE(Ventas[Monto])
+  Conteo:=COUNTROWS(Ventas)
+
+  CALCULATE (la función más poderosa de DAX):
+  Ventas Norte:=CALCULATE(SUM(Ventas[Monto]),
+                           Clientes[Región]="Norte")
+  → Suma de Monto donde Región="Norte"
+
+  DIVIDE (división segura, no da error):
+  % Total:=DIVIDE(SUM(Ventas[Monto]),
+                  CALCULATE(SUM(Ventas[Monto]),ALL(Ventas)))`,
+  args:[
+    {name:"Medida vs Columna calculada", desc:"Medida: se calcula en contexto de filtro (lo que seleccionas en la tabla dinámica). Columna: se calcula fila por fila. Para KPIs usa medidas. Para datos que enriquecen la tabla usa columnas calculadas."},
+    {name:"CALCULATE(expr, filtro)", desc:"La función más poderosa de DAX. Evalúa una expresión modificando el contexto de filtro. Permite calcular por subconjuntos (región, período, categoría) sin crear nuevas tablas."},
+    {name:"RELATED(tabla[columna])", desc:"Como BUSCARV pero para columnas calculadas en el modelo. Trae el valor de una columna de una tabla relacionada. Solo funciona desde el lado 'muchos' de la relación."},
+    {name:"ALL(tabla)", desc:"Elimina todos los filtros de una tabla. Combinado con CALCULATE permite calcular porcentajes del total."},
+  ],
+  shortcuts:[
+    {keys:["Alt","Enter"],"desc":"Salto de línea en el editor de fórmulas DAX"},
+    {keys:["Ctrl","Space"],"desc":"Autocompletar en el editor DAX"},
+    {keys:["Tab"],"desc":"Completar el nombre de función o columna sugerido"},
+  ],
+  quickEx:`Total de ventas:
+  Total Ventas:=SUM(Ventas[Monto])
+
+  Ventas solo de la región Norte:
+  Ventas Norte:=CALCULATE([Total Ventas], Clientes[Región]="Norte")
+
+  % sobre el total (ignorando filtros):
+  % del Total:=DIVIDE([Total Ventas],
+               CALCULATE([Total Ventas], ALL(Ventas)), 0)
+
+  → En la tabla dinámica filtrada por Norte, % muestra
+    cuánto representa Norte del TOTAL de ventas del libro`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["","Tabla 'Ventas':","",""],
+      ["1","VentaID","ClienteID","Monto"],
+      ["2","1","C001","4500000"],
+      ["3","2","C002","6200000"],
+      ["4","3","C001","3800000"],
+      ["","Tabla 'Clientes':","",""],
+      ["1","ClienteID","Nombre","Región"],
+      ["2","C001","Carlos","Norte"],
+      ["3","C002","Laura","Sur"],
+    ]
+  },
+  exercises:[
+    "Carga las tablas al modelo de datos y crea la relación entre Ventas.ClienteID y Clientes.ClienteID.",
+    "En el área de medidas de Power Pivot crea: Total Ventas:=SUM(Ventas[Monto]).",
+    "Crea la medida: Ventas Norte:=CALCULATE([Total Ventas], Clientes[Región]=\"Norte\").",
+    "Crea la medida % del Total:=DIVIDE([Total Ventas],CALCULATE([Total Ventas],ALL(Ventas)),0). Úsala en una tabla dinámica y observa cómo cambia según el filtro.",
+  ]
+},
+{
+  n:10, cat:"dashboard", title:"Dashboard profesional en Excel",
+  sub:"Diseñar un panel de control ejecutivo con slicers, gráficos y KPIs interactivos",
+  badge:"🖥 Dashboard",
+  syntax:`Principios de diseño de dashboard:
+  1. Una hoja dedicada solo al dashboard (protegida)
+  2. Datos en hojas separadas (nunca mezclar)
+  3. Paleta de 2-3 colores máximo
+  4. Cada KPI con su número grande + contexto pequeño
+  5. Slicers conectados a múltiples tablas dinámicas
+
+  Ocultar cuadrículas:
+  Vista → Líneas de cuadrícula (desmarcar)
+
+  Ocultar encabezados de fila/columna:
+  Vista → Encabezados (desmarcar)
+
+  Celdas KPI grandes:
+  Formato de celda → Fuente → tamaño 36-48pt para el número
+  Fuente 11pt normal para la etiqueta debajo`,
+  args:[
+    {name:"Hoja de dashboard limpia", desc:"Oculta las líneas de cuadrícula y los encabezados. Usa celdas fusionadas para áreas de KPI. El resultado parece un diseño de PowerPoint pero con datos reales que se actualizan."},
+    {name:"KPI cards", desc:"Cada tarjeta de KPI tiene: número grande (36-48pt, negrita), flecha de tendencia (↑↓), y comparación vs período anterior. Todo en 3-4 celdas fusionadas."},
+    {name:"Slicers conectados", desc:"Un slicer puede controlar múltiples tablas dinámicas y sus gráficos. Clic derecho → Conexiones de informe → seleccionar todas las tablas que controla."},
+    {name:"Cámara de Excel", desc:"Herramienta avanzada: hace una 'foto' de un rango que se actualiza en tiempo real. Úsala para mostrar tablas en el dashboard sin que el usuario pueda editarlas directamente."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Shift","F"],"desc":"Formato de celdas (para configurar fuentes grandes en KPIs)"},
+    {keys:["Alt","F1"],"desc":"Insertar gráfico rápido para el dashboard"},
+    {keys:["Alt","N","SF"],"desc":"Insertar segmentador de datos"},
+    {keys:["Ctrl","1"],"desc":"Formato del elemento seleccionado"},
+  ],
+  quickEx:`Estructura de un dashboard de ventas:
+  Hoja 'Datos'      → tabla de ventas cruda
+  Hoja 'Cálculos'   → tablas dinámicas y medidas
+  Hoja 'Dashboard'  → solo visualización
+
+  KPIs en la primera fila:
+  [Total Ventas]  [vs Mes Anterior ↑12%]  [Meta ✓]
+  [Clientes Act.] [Ticket Promedio]        [SL%]
+
+  Abajo: gráfico de línea mensual + tabla top 5 vendedores
+  Derecha: slicer de Región y slicer de Mes`,
+  dataset:{
+    headers:["","A","B","C","D","E"],
+    rows:[
+      ["1","Mes","Región","Vendedor","Ventas","Meta"],
+      ["2","Enero","Norte","Carlos","4500000","5000000"],
+      ["3","Enero","Sur","Laura","6200000","5000000"],
+      ["4","Febrero","Norte","Andrés","3800000","5000000"],
+      ["5","Febrero","Centro","María","7100000","5000000"],
+      ["6","Marzo","Sur","Pedro","5500000","5000000"],
+      ["7","Marzo","Norte","Carlos","4800000","5000000"],
+    ]
+  },
+  exercises:[
+    "Crea 3 hojas: 'Datos' (con el dataset), 'Cálculos' (tablas dinámicas), 'Dashboard' (vacía y limpia sin cuadrículas).",
+    "En 'Cálculos' crea 3 tablas dinámicas: (1) Total por Región, (2) Total por Mes, (3) Top vendedores. Crea un gráfico de líneas para la #2.",
+    "En 'Dashboard' crea celdas KPI grandes: Total Ventas (referencia a celda de cálculos), % vs Meta. Aplica fuente 36pt.",
+    "Agrega slicers de Región y Mes. Conéctalos a las 3 tablas dinámicas. Verifica que al filtrar por Norte se actualicen todos los gráficos y KPIs.",
+  ]
+},
+{
+  n:11, cat:"datos", title:"Importar datos desde la web y PDF con Power Query",
+  sub:"Conectar Excel directamente a páginas web, tablas HTML y documentos PDF",
+  badge:"🔗 Datos",
+  syntax:`Desde tabla web:
+  Datos → Obtener datos → Desde otras fuentes → Desde la web
+  → Pegar la URL → Seleccionar tabla → Cargar
+
+  Desde PDF:
+  Datos → Obtener datos → Desde archivo → Desde PDF
+  → Seleccionar el archivo → Seleccionar tabla o página
+
+  Desde API (JSON):
+  Datos → Obtener datos → Desde la web
+  → URL de la API → Power Query interpreta el JSON automáticamente
+
+  Actualizar automáticamente:
+  Datos → Consultas y conexiones → clic derecho → Propiedades
+  → Actualizar cada X minutos
+  → Actualizar al abrir el archivo`,
+  args:[
+    {name:"Importar desde web", desc:"Power Query detecta automáticamente las tablas HTML de una página. Útil para importar datos de precios, tipos de cambio, tablas de rankings, estadísticas públicas."},
+    {name:"Importar desde PDF", desc:"Power Query puede extraer tablas de PDFs. No siempre es perfecto — funciona mejor con PDFs con tablas bien definidas. Los PDFs escaneados (imágenes) no funcionan."},
+    {name:"Actualización automática", desc:"Una vez configurada la conexión, Ctrl+Alt+F5 actualiza todos los datos. También puedes configurar actualización periódica automática en las propiedades de la consulta."},
+    {name:"Privacidad de datos", desc:"Power Query puede pedir configurar el nivel de privacidad al combinar fuentes (público, organizacional, privado). Para datos internos elige 'Organizacional'."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Alt","F5"],"desc":"Actualizar todos los datos y consultas"},
+    {keys:["Alt","F5"],"desc":"Actualizar solo la consulta/tabla seleccionada"},
+    {keys:["Ctrl","T"],"desc":"Convertir resultado importado a tabla para usarlo en tablas dinámicas"},
+  ],
+  quickEx:`Caso real: importar el tipo de cambio USD/COP desde una web:
+  1. Datos → Obtener datos → Desde la web
+  2. URL: https://www.datos.gov.co/... (fuente pública)
+  3. Power Query detecta la tabla → seleccionar → cargar
+  4. En Excel tienes el dato actualizado
+  5. Configurar actualización automática al abrir el archivo
+  → Tus reportes siempre tienen la TRM más reciente`,
+  dataset:{
+    headers:["","A","B"],
+    rows:[
+      ["","Fuentes públicas de datos para practicar:",""],
+      ["1","Fuente","URL de ejemplo"],
+      ["2","Wikipedia - tablas","Cualquier artículo de Wikipedia con tabla"],
+      ["3","Banco de la República","datos.banrep.gov.co"],
+      ["4","DANE estadísticas","www.dane.gov.co/index.php/estadisticas"],
+      ["5","Tipo de cambio","xe.com o banrep.gov.co/tasas-de-cambio"],
+    ]
+  },
+  exercises:[
+    "Ve a una página de Wikipedia con una tabla (ej: 'List of countries by GDP'). Importa la tabla con Datos → Obtener datos → Desde la web.",
+    "En el Editor de Power Query, elimina las columnas innecesarias y asegúrate de que los números sean tipo Número (no texto).",
+    "Cierra y carga los datos. Luego actualiza con Ctrl+Alt+F5. ¿Se actualizan con los últimos datos de Wikipedia?",
+    "Configura la conexión para que se actualice automáticamente al abrir el archivo: Consultas y conexiones → clic derecho → Propiedades → Actualizar al abrir.",
+  ]
+},
+{
+  n:12, cat:"datos", title:"Conexión a bases de datos SQL",
+  sub:"Conectar Excel directamente a SQL Server, MySQL o PostgreSQL",
+  badge:"🔗 Datos",
+  syntax:`Conexión a SQL Server:
+  Datos → Obtener datos → Desde base de datos → Desde SQL Server
+  → Servidor: nombre_servidor
+  → Base de datos: nombre_bd (opcional)
+  → Autenticación: Windows o SQL Server (usuario/contraseña)
+
+  Conexión a MySQL/PostgreSQL:
+  Datos → Obtener datos → Desde otras fuentes → Desde ODBC
+  → Requiere driver ODBC instalado previamente
+
+  Consulta SQL personalizada:
+  En Power Query → Consulta avanzada → Sql.Database()
+  = Sql.Database("servidor","bd",[Query="SELECT..."])
+
+  Ejemplo de consulta:
+  SELECT vendedor, SUM(monto) as total
+  FROM ventas
+  WHERE fecha >= '2026-01-01'
+  GROUP BY vendedor
+  ORDER BY total DESC`,
+  args:[
+    {name:"Conexión directa vs ODBC", desc:"SQL Server tiene conector nativo en Excel. MySQL y PostgreSQL requieren instalar el driver ODBC correspondiente primero. Una vez configurado, el proceso es igual."},
+    {name:"Query personalizada", desc:"En lugar de importar toda la tabla, escribe una consulta SQL para traer solo los datos que necesitas. Más eficiente que importar millones de filas y filtrar en Excel."},
+    {name:"Credenciales", desc:"Las credenciales se guardan cifradas en el archivo. Para archivos compartidos usa autenticación de Windows o configura credenciales que el equipo comparta."},
+    {name:"DirectQuery vs Importar", desc:"Importar: copia los datos a Excel (más rápido para análisis). DirectQuery (en Power Pivot): consulta la BD en tiempo real sin copiar datos (más actualizado pero más lento)."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Alt","F5"],"desc":"Actualizar todas las conexiones"},
+    {keys:["Alt","F5"],"desc":"Actualizar solo la conexión activa"},
+    {keys:["Ctrl","H"],"desc":"Buscar y reemplazar en consultas M de Power Query"},
+  ],
+  quickEx:`Consulta SQL que se ejecuta cada vez que actualizas:
+  SELECT
+      v.fecha,
+      c.nombre as cliente,
+      p.categoria,
+      SUM(v.monto) as total_ventas
+  FROM ventas v
+  JOIN clientes c ON v.cliente_id = c.id
+  JOIN productos p ON v.producto_id = p.id
+  WHERE v.fecha >= DATEADD(month,-3,GETDATE())
+  GROUP BY v.fecha, c.nombre, p.categoria
+  ORDER BY v.fecha DESC
+
+  → Excel siempre muestra los últimos 3 meses sin copiar datos`,
+  dataset:{
+    headers:["","A","B"],
+    rows:[
+      ["","Flujo de trabajo con SQL:",""],
+      ["1","Paso","Descripción"],
+      ["2","1","Identificar la tabla o consulta que necesitas"],
+      ["3","2","Obtener credenciales del DBA de tu empresa"],
+      ["4","3","Conectar con Datos → Obtener datos → SQL Server"],
+      ["5","4","Escribir la consulta SQL o seleccionar tabla"],
+      ["6","5","Cargar al modelo de datos de Power Pivot"],
+      ["7","6","Crear tabla dinámica o medidas DAX"],
+    ]
+  },
+  exercises:[
+    "Si tienes acceso a un SQL Server de prueba, conéctate con Datos → Obtener datos → SQL Server. Si no, usa la opción 'Desde ODBC' con una base de datos SQLite local.",
+    "Escribe una consulta SQL simple: SELECT * FROM tabla LIMIT 100 y cárgala en Power Query.",
+    "En Power Query, agrega un paso de filtro visual (sin escribir SQL) para mostrar solo los registros del último mes.",
+    "Configura la actualización automática cada 30 minutos. ¿Qué precauciones debes tomar si el archivo se comparte en red?",
+  ]
+},
+{
+  n:13, cat:"analisis", title:"Solver · Optimización matemática",
+  sub:"Encontrar la combinación óptima de variables para maximizar, minimizar o alcanzar un objetivo",
+  badge:"📐 Análisis",
+  syntax:`Activar Solver:
+  Archivo → Opciones → Complementos → Ir...
+  → Marcar Solver Add-in → Aceptar
+  → Aparece en Datos → Solver
+
+  Configurar Solver:
+  Objetivo: la celda que quieres optimizar (maximizar, minimizar o valor exacto)
+  Variables: las celdas que Solver puede cambiar
+  Restricciones: los límites que no se pueden violar (>=, <=, =, entero, binario)
+
+  Métodos de resolución:
+  GRG No lineal → para funciones curvas (la más común)
+  Simplex LP   → para funciones lineales (más rápido)
+  Evolutivo    → para problemas complejos o discontinuos`,
+  args:[
+    {name:"Celda objetivo", desc:"La celda que contiene la fórmula del resultado que quieres optimizar. Debe depender (directa o indirectamente) de las celdas variables."},
+    {name:"Celdas variables", desc:"Las celdas que Solver puede modificar para encontrar la solución óptima. Son los 'controles' del modelo. Deben ser números, no fórmulas."},
+    {name:"Restricciones", desc:"Los límites del problema real: presupuesto máximo, capacidad mínima, stock disponible, número entero de unidades, etc. Sin restricciones Solver puede dar soluciones imposibles."},
+    {name:"Informes de Solver", desc:"Después de encontrar la solución, Solver puede generar informes de sensibilidad que muestran cuánto puede cambiar cada variable antes de que cambie la solución óptima."},
+  ],
+  shortcuts:[
+    {keys:["Alt","A","Y","2"],"desc":"Abrir Solver desde el teclado (Datos → Solver)"},
+    {keys:["Ctrl","Z"],"desc":"Deshacer los cambios de Solver si el resultado no es el deseado"},
+    {keys:["F9"],"desc":"Recalcular el modelo antes de ejecutar Solver"},
+  ],
+  quickEx:`Problema de mezcla de productos:
+  Tienes 3 productos. Cada uno requiere tiempo de producción y materiales.
+  ¿Cuántas unidades de cada uno producir para MAXIMIZAR la ganancia
+  sin exceder 160 horas de producción y $5,000,000 de materiales?
+
+  Variables: B2, B3, B4 (unidades de cada producto)
+  Objetivo: MAX(suma de ganancias por unidad * unidades)
+  Restricciones:
+    Horas totales <= 160
+    Materiales totales <= 5000000
+    B2, B3, B4 >= 0 (no negativas)
+    B2, B3, B4 = entero (unidades completas)`,
+  dataset:{
+    headers:["","A","B","C","D","E"],
+    rows:[
+      ["1","Producto","Unidades","Ganancia/u","Horas/u","Mat/u (COP)"],
+      ["2","Producto A","0","150000","2","50000"],
+      ["3","Producto B","0","200000","3","80000"],
+      ["4","Producto C","0","180000","2.5","60000"],
+      ["6","TOTAL","","=SUMAPRODUCTO(B2:B4,C2:C4)","=SUMAPRODUCTO(B2:B4,D2:D4)","=SUMAPRODUCTO(B2:B4,E2:E4)"],
+      ["7","LÍMITE","","(maximizar)","160","5000000"],
+    ]
+  },
+  exercises:[
+    "Construye el modelo en Excel. Objetivo: maximizar C6. Variables: B2:B4. Restricciones: D6<=160, E6<=5000000, B2:B4>=0, B2:B4=entero.",
+    "Ejecuta Solver con el método GRG No lineal. ¿Cuántas unidades de cada producto recomienda? ¿Cuál es la ganancia máxima?",
+    "Modifica la restricción de materiales a 3,000,000. ¿Cómo cambia la solución óptima?",
+    "Genera el Informe de respuestas (Answer Report) de Solver. ¿Qué información muestra sobre las restricciones activas?",
+  ]
+},
+{
+  n:14, cat:"analisis", title:"Análisis de regresión y tendencias",
+  sub:"Líneas de tendencia, correlación, regresión lineal y predicciones estadísticas",
+  badge:"📐 Análisis",
+  syntax:`=ESTIMACION.LINEAL(y_conocidos, x_conocidos, [constante], [estadísticas])
+  → Devuelve los coeficientes de la regresión lineal (array)
+
+  =PRONOSTICO.LINEAL(x, y_conocidos, x_conocidos)
+  → Predice el valor Y para un X dado (regresión lineal)
+
+  =PRONOSTICO.ETS(fecha_objetivo, valores, fechas)
+  → Predicción con suavizamiento exponencial (para series de tiempo)
+
+  =COEF.DE.CORREL(array1, array2)
+  → Correlación de Pearson (-1 a 1)
+
+  =TENDENCIA(y_conocidos, [x_conocidos], [nuevas_x])
+  → Devuelve valores sobre la línea de tendencia ajustada
+
+  En gráficos: clic derecho en serie → Agregar línea de tendencia
+  → Lineal, exponencial, polinómica, potencia, media móvil`,
+  args:[
+    {name:"PRONOSTICO.LINEAL", desc:"Calcula la predicción usando regresión lineal simple. Asume que la relación entre X e Y es lineal. Devuelve un solo valor (no un array)."},
+    {name:"PRONOSTICO.ETS", desc:"Más avanzado — usa algoritmo de suavizamiento exponencial triple (ETS). Captura tendencia y estacionalidad automáticamente. Ideal para ventas mensuales con patrones estacionales."},
+    {name:"Coeficiente R²", desc:"El R² (R cuadrado) mide qué tan bien la línea de tendencia explica los datos (0 a 1). R²=0.95 significa que el modelo explica el 95% de la variabilidad. Aparece en el gráfico al mostrar la ecuación."},
+    {name:"ESTIMACION.LINEAL", desc:"Devuelve los coeficientes de regresión múltiple (puede manejar múltiples variables X). Al marcar estadísticas=VERDADERO devuelve también el R², error estándar y estadísticos F."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F1"],"desc":"Insertar gráfico rápido para visualizar la regresión"},
+    {keys:["Ctrl","1"],"desc":"Formato de la línea de tendencia seleccionada"},
+    {keys:["Ctrl","Shift","Enter"],"desc":"Para ESTIMACION.LINEAL en versiones sin matrices dinámicas"},
+  ],
+  quickEx:`Predecir ventas del mes 7:
+  =PRONOSTICO.LINEAL(7, B2:B6, A2:A6)
+  → Si la tendencia es lineal, estima las ventas del mes 7
+
+  Verificar si existe correlación entre llamadas y ventas:
+  =COEF.DE.CORREL(B2:B8, C2:C8)
+  → Cerca de 1: más llamadas = más ventas (fuerte correlación positiva)
+  → Cerca de 0: no hay relación clara`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Mes","Ventas (M)","Llamadas"],
+      ["2","1","4.5","120"],
+      ["3","2","5.2","145"],
+      ["4","3","4.8","130"],
+      ["5","4","6.1","175"],
+      ["6","5","5.7","160"],
+      ["7","6","6.8","190"],
+    ]
+  },
+  exercises:[
+    "En D2 usa =PRONOSTICO.LINEAL(A2,$B$2:$B$7,$A$2:$A$7) para calcular el valor estimado por la regresión. Copia hasta D7.",
+    "En D8 predice las ventas del mes 7 (valor real desconocido) con =PRONOSTICO.LINEAL(7,$B$2:$B$7,$A$2:$A$7).",
+    "Calcula la correlación entre llamadas y ventas: =COEF.DE.CORREL(B2:B7,C2:C7). ¿Cuánto es? ¿Hay relación?",
+    "Crea un gráfico de dispersión con Mes en X y Ventas en Y. Agrega una línea de tendencia lineal y marca 'Mostrar ecuación' y 'R²'. ¿Qué tan bien se ajusta?",
+  ]
+},
+{
+  n:15, cat:"analisis", title:"FRECUENCIA · BINOM.DIST · NORM.DIST",
+  sub:"Distribuciones estadísticas, histogramas y análisis de probabilidad",
+  badge:"📐 Análisis",
+  syntax:`=FRECUENCIA(datos_array, clases_array)
+  → Fórmula matricial que cuenta cuántos datos caen en cada intervalo
+  → Devuelve un array con una fila más que las clases
+
+  =DISTR.BINOM(número_éxitos, intentos, probabilidad, acumulado)
+  → Probabilidad de exactamente X éxitos en N intentos
+
+  =DISTR.NORM(x, media, desv_estándar, acumulado)
+  → Probabilidad de que una variable normal sea <= x
+
+  =INV.NORM(probabilidad, media, desv_estándar)
+  → Dado un percentil, devuelve el valor de X
+
+  Herramienta de Análisis de datos:
+  Datos → Análisis de datos → Histograma
+  (requiere activar Analysis ToolPak en Complementos)`,
+  args:[
+    {name:"FRECUENCIA(datos, clases)", desc:"Clases son los límites superiores de cada intervalo. Si clases=[100,200,300], cuenta cuántos datos son <=100, 101-200, 201-300, >300. Es matricial: Ctrl+Shift+Enter en versiones antiguas."},
+    {name:"DISTR.BINOM con acumulado=VERDADERO", desc:"VERDADERO = probabilidad de obtener X O MENOS éxitos. FALSO = probabilidad de exactamente X éxitos. Para P(X>=k) usa 1-DISTR.BINOM(k-1,...,VERDADERO)."},
+    {name:"DISTR.NORM", desc:"La distribución más usada en estadística. acumulado=VERDADERO devuelve P(X<=x). Útil para calcular la probabilidad de que las ventas superen cierto umbral, dado el comportamiento histórico."},
+    {name:"Analysis ToolPak", desc:"Complemento gratuito incluido en Excel. Actívalo en Archivo→Opciones→Complementos. Agrega herramientas de: histograma, regresión, ANOVA, estadísticas descriptivas, y más."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Shift","Enter"],"desc":"Para FRECUENCIA en versiones sin matrices dinámicas"},
+    {keys:["Alt","A","Y","1"],"desc":"Abrir Análisis de datos (Analysis ToolPak)"},
+    {keys:["F9"],"desc":"Recalcular para ver nuevos resultados con datos cambiados"},
+  ],
+  quickEx:`=FRECUENCIA(B2:B50, {1000000;3000000;5000000;7000000})
+  → Devuelve cuántas ventas caen en cada rango:
+    <=1M | 1M-3M | 3M-5M | 5M-7M | >7M
+
+  Probabilidad de que las ventas superen 6M dado que
+  la media histórica es 5M y desv. estándar es 1.5M:
+  =1-DISTR.NORM(6, 5, 1.5, VERDADERO)
+  →  <span class="result">25.2%</span> de probabilidad`,
+  dataset:{
+    headers:["","A","B"],
+    rows:[
+      ["1","Vendedor","Ventas (M)"],
+      ["2","V1","3.2"],["3","V2","5.8"],["4","V3","4.1"],
+      ["5","V4","6.9"],["6","V5","2.8"],["7","V6","7.2"],
+      ["8","V7","5.1"],["9","V8","4.8"],["10","V9","3.9"],
+      ["11","V10","6.1"],
+      ["","Intervalos:",""],
+      ["13","Límite","Frecuencia"],
+      ["14","3",""],["15","5",""],["16","7",""],["17","(mayor)",""],
+    ]
+  },
+  exercises:[
+    "En C14:C17 calcula la frecuencia de ventas en los intervalos con: =FRECUENCIA(B2:B11,A14:A16).",
+    "Crea un gráfico de barras con los intervalos y sus frecuencias para visualizar la distribución.",
+    "Calcula la media y desviación estándar de ventas. Luego usa DISTR.NORM para estimar la probabilidad de que un vendedor supere 6M.",
+    "Activa Analysis ToolPak y genera un Histograma automático de los datos. ¿Coincide con tu cálculo manual?",
+  ]
+},
+{
+  n:16, cat:"funciones", title:"TRANSPONER · MMULT · Álgebra matricial",
+  sub:"Operaciones con matrices para modelos financieros y análisis de datos multidimensionales",
+  badge:"🔬 Función",
+  syntax:`=TRANSPONER(array)
+  → Convierte filas en columnas y viceversa (array dinámico)
+
+  =MMULT(array1, array2)
+  → Multiplicación matricial. Condición: columnas(A) = filas(B)
+
+  =DETERMINANTE(array)    → Determinante de una matriz cuadrada
+  =MINVERSA(array)        → Matriz inversa (para resolver sistemas de ecuaciones)
+
+  Reglas de dimensiones en MMULT:
+  A(m×n) × B(n×p) = C(m×p)
+  Ejemplo: A(3×4) × B(4×2) = C(3×2)
+
+  Aplicaciones prácticas:
+  → Cartera de inversiones: retorno = MMULT(pesos, retornos)
+  → Costos: total = MMULT(unidades, costos_unitarios)
+  → Proyecciones: MMULT con matrices de transición`,
+  args:[
+    {name:"TRANSPONER(array)", desc:"En Excel 365 es dinámica — se derrama automáticamente. En versiones antiguas necesita Ctrl+Shift+Enter seleccionando el rango destino primero."},
+    {name:"MMULT(A, B)", desc:"El número de columnas de A debe ser igual al número de filas de B. Si A tiene 3 columnas, B debe tener 3 filas. El resultado tiene tantas filas como A y tantas columnas como B."},
+    {name:"MINVERSA", desc:"Solo para matrices cuadradas con determinante ≠ 0. Útil para resolver sistemas de ecuaciones lineales: x = MMULT(MINVERSA(A), b)."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Shift","Enter"],"desc":"Para MMULT y TRANSPONER en versiones antiguas"},
+    {keys:["F9"],"desc":"Ver el resultado del array calculado seleccionando la fórmula"},
+    {keys:["Ctrl","Shift","U"],"desc":"Expandir barra de fórmulas para matrices grandes"},
+  ],
+  quickEx:`Cálculo de costos totales por producto-región:
+  Unidades (3 productos × 4 regiones):
+  A = [[10,20,15,8],[5,12,9,14],[20,8,11,6]]
+
+  Costo unitario (por producto):
+  b = [[50000],[85000],[30000]]
+
+  Total por región = TRANSPONER(MMULT(b,A))
+  → Devuelve el costo total por región automáticamente`,
+  dataset:{
+    headers:["","A","B","C","D","E"],
+    rows:[
+      ["1","","Norte","Sur","Centro","Oriente"],
+      ["2","Producto A","10","20","15","8"],
+      ["3","Producto B","5","12","9","14"],
+      ["4","Producto C","20","8","11","6"],
+      ["","","","","",""],
+      ["6","Costo/unidad","","","",""],
+      ["7","Prod A","50000","","",""],
+      ["8","Prod B","85000","","",""],
+      ["9","Prod C","30000","","",""],
+    ]
+  },
+  exercises:[
+    "En G2:J2 calcula el costo total por región usando MMULT: =MMULT(TRANSPONER(B7:B9),B2:E4).",
+    "Verifica el resultado de Norte manualmente: 10*50000 + 5*85000 + 20*30000. ¿Coincide con MMULT?",
+    "En G5 usa TRANSPONER para rotar la tabla de unidades (B2:E4) de forma que los productos sean columnas.",
+    "Resuelve el sistema: 2x+3y=12, x-y=1 usando MMULT(MINVERSA(A),b) donde A=[[2,3],[1,-1]] y b=[[12],[1]].",
+  ]
+},
+{
+  n:17, cat:"dashboard", title:"Gráficos avanzados · Cascada, embudo y mapa",
+  sub:"Waterfall Chart, Funnel Chart, Treemap, Sunburst y mapas geográficos",
+  badge:"🖥 Dashboard",
+  syntax:`Insertar gráficos especiales:
+  Insertar → Gráficos → buscar el tipo específico
+
+  Tipos avanzados disponibles:
+  Cascada (Waterfall)  → Aumentos y disminuciones acumulados
+  Embudo (Funnel)      → Conversión en etapas (ventas, marketing)
+  Mapa de rectángulos  → Jerarquía de valores como cuadrados anidados
+  Proyección solar     → Jerarquía circular (Sunburst)
+  Mapa coroplético     → Mapa geográfico con datos por región/país
+
+  Para mapa geográfico:
+  Los datos deben tener nombres de país/región reconocidos por Bing Maps
+  Insertar → Gráficos → Mapas → Mapa coroplético`,
+  args:[
+    {name:"Cascada (Waterfall)", desc:"Ideal para estados financieros: empieza con ingresos totales, resta cada categoría de costo, muestra el resultado final. Las barras 'flotantes' muestran el efecto acumulado."},
+    {name:"Embudo (Funnel)", desc:"Para visualizar conversión en procesos: visitantes → leads → prospectos → clientes. Cada etapa es más pequeña que la anterior."},
+    {name:"Mapa coroplético", desc:"Colorea regiones geográficas según el valor de los datos. Requiere nombres reconocibles (Colombia, Norte de Santander, Bogotá). Los datos ambiguos o mal escritos no se mapean."},
+    {name:"Treemap", desc:"Rectángulos anidados donde el tamaño representa el valor. Excelente para mostrar la composición de ventas por categoría → subcategoría."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F1"],"desc":"Gráfico de columnas rápido en la misma hoja"},
+    {keys:["F11"],"desc":"Gráfico en hoja nueva"},
+    {keys:["Ctrl","1"],"desc":"Formato del elemento del gráfico seleccionado"},
+    {keys:["Ctrl","Shift","F"],"desc":"Cambiar fuente del título del gráfico"},
+  ],
+  quickEx:`Cascada para estado de resultados:
+  Ingresos brutos    +100M  (base)
+  Costo de ventas    -45M   (resta)
+  Margen bruto        55M   (subtotal)
+  Gastos operativos  -20M   (resta)
+  EBITDA              35M   (subtotal)
+  Depreciación        -5M   (resta)
+  EBIT                30M   (total)
+
+  Excel colorea automáticamente: verde=positivo, rojo=negativo`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Concepto","Valor","Tipo"],
+      ["2","Ingresos brutos","100000000","Total"],
+      ["3","Costo de ventas","-45000000",""],
+      ["4","Gastos operativos","-20000000",""],
+      ["5","Otros ingresos","5000000",""],
+      ["6","Gastos financieros","-8000000",""],
+      ["7","Utilidad neta","","Total"],
+      ["","","",""],
+      ["9","País","Ventas",""],
+      ["10","Colombia","85000000",""],
+      ["11","México","62000000",""],
+      ["12","Chile","45000000",""],
+      ["13","Argentina","38000000",""],
+    ]
+  },
+  exercises:[
+    "Selecciona A1:B7 e inserta un gráfico de Cascada. Marca las filas 2 y 7 como 'Total' haciendo clic derecho → Establecer como total.",
+    "Crea un gráfico de Embudo con 5 etapas del proceso de ventas: Leads(1000), Contactados(600), Interesados(300), Propuestas(150), Clientes(50).",
+    "Con los datos de países (A9:B13) inserta un Mapa coroplético. ¿Se colorean correctamente los países?",
+    "Crea un Treemap con datos de ventas por categoría y subcategoría (agrega una columna de categoría). ¿Qué categoría domina visualmente?",
+  ]
+},
+{
+  n:18, cat:"vba", title:"VBA · Formularios UserForm",
+  sub:"Crear formularios de entrada de datos personalizados con botones, campos y validación",
+  badge:"💻 VBA",
+  syntax:`Crear UserForm:
+  Alt+F11 → Insertar → UserForm
+
+  Controles disponibles (Cuadro de herramientas):
+  TextBox    → Campo de texto
+  Label      → Etiqueta descriptiva
+  CommandButton → Botón
+  ComboBox   → Lista desplegable
+  CheckBox   → Casilla de verificación
+  ListBox    → Lista de selección
+  OptionButton → Botón de opción (radio)
+  Frame      → Agrupador visual
+
+  Mostrar formulario desde código:
+  UserForm1.Show
+  
+  Código del botón Guardar:
+  Private Sub btnGuardar_Click()
+      ' código aquí
+  End Sub`,
+  args:[
+    {name:"Propiedades del control", desc:"En el panel de propiedades (F4 en el editor): Name (nombre del control para el código), Caption (texto visible), Value (valor actual). Nombra tus controles con prefijo: txt para TextBox, btn para CommandButton, etc."},
+    {name:"Eventos", desc:"Los controles responden a eventos: Click (botón), Change (cuando cambia el valor), Initialize (cuando se abre el formulario). Doble clic en el control en el diseñador para crear el procedimiento del evento."},
+    {name:"Modal vs No modal", desc:"UserForm1.Show → modal (bloquea Excel hasta cerrar). UserForm1.Show vbModeless → no modal (Excel sigue activo). Para entrada de datos usa modal."},
+  ],
+  shortcuts:[
+    {keys:["Alt","F11"],"desc":"Editor VBA donde se diseña el UserForm"},
+    {keys:["F4"],"desc":"Abrir/cerrar panel de propiedades del control seleccionado"},
+    {keys:["F5"],"desc":"Ejecutar el UserForm actual para probarlo"},
+    {keys:["Tab"],"desc":"Moverse entre controles en el formulario (orden de tabulación)"},
+  ],
+  vbaCode:`' Código del formulario de registro de ventas
+' (Diseña el form con: txtVendedor, txtMonto,
+'  cboRegion, btnGuardar, btnCancelar)
+
+Private Sub btnGuardar_Click()
+    ' Validar que los campos estén llenos
+    If txtVendedor.Value = "" Then
+        MsgBox "Ingresa el nombre del vendedor.", vbExclamation
+        txtVendedor.SetFocus
+        Exit Sub
+    End If
+    
+    If Not IsNumeric(txtMonto.Value) Then
+        MsgBox "El monto debe ser un número.", vbExclamation
+        txtMonto.SetFocus
+        Exit Sub
+    End If
+    
+    ' Escribir en la siguiente fila disponible
+    Dim ws As Worksheet
+    Dim nueva_fila As Long
+    Set ws = ThisWorkbook.Sheets("Datos")
+    nueva_fila = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+    
+    ws.Cells(nueva_fila, 1).Value = txtVendedor.Value
+    ws.Cells(nueva_fila, 2).Value = CDbl(txtMonto.Value)
+    ws.Cells(nueva_fila, 3).Value = cboRegion.Value
+    ws.Cells(nueva_fila, 4).Value = Now()
+    
+    ' Limpiar y confirmar
+    MsgBox "Registro guardado correctamente.", vbInformation
+    txtVendedor.Value = ""
+    txtMonto.Value = ""
+    cboRegion.ListIndex = -1
+    txtVendedor.SetFocus
+End Sub
+
+Private Sub btnCancelar_Click()
+    Unload Me
+End Sub
+
+Private Sub UserForm_Initialize()
+    ' Llenar el ComboBox con las regiones
+    cboRegion.AddItem "Norte"
+    cboRegion.AddItem "Sur"
+    cboRegion.AddItem "Centro"
+    cboRegion.AddItem "Oriente"
+End Sub`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Vendedor","Monto","Región","Fecha"],
+      ["2","(los datos se llenarán desde el formulario)","","",""],
+    ]
+  },
+  exercises:[
+    "En el editor VBA (Alt+F11) inserta un UserForm. Agrega: un Label 'Vendedor:', un TextBox (txtVendedor), un Label 'Monto:', un TextBox (txtMonto), un Label 'Región:', un ComboBox (cboRegion), y dos botones: btnGuardar y btnCancelar.",
+    "Copia el código de la tarjeta en el módulo del UserForm (doble clic en el fondo del formulario).",
+    "Crea un botón en la hoja Excel que abra el formulario: en la hoja, Insertar → Formas → Botón → asignar macro que contenga: UserForm1.Show.",
+    "Prueba el formulario: ingresa datos, guarda, verifica que aparezcan en la hoja. Intenta guardar con el monto en texto — ¿aparece la validación?",
+  ]
+},
+{
+  n:19, cat:"datos", title:"Power Query avanzado · Lenguaje M y columnas personalizadas",
+  sub:"Escribir transformaciones complejas con código M, parámetros y funciones reutilizables",
+  badge:"🔗 Datos",
+  syntax:`Acceder al editor M:
+  En Power Query → Vista → Editor avanzado
+
+  Estructura de una consulta M:
+  let
+      Origen = Excel.CurrentWorkbook(){[Name="Tabla1"]}[Content],
+      TiposCambiados = Table.TransformColumnTypes(Origen,
+          {{"Ventas", type number}, {"Fecha", type date}}),
+      FilasFiltradas = Table.SelectRows(TiposCambiados,
+          each [Ventas] > 1000000),
+      ColumnaAgregada = Table.AddColumn(FilasFiltradas,
+          "Categoría", each if [Ventas] > 5000000 then "Alto" else "Normal")
+  in
+      ColumnaAgregada
+
+  Funciones M más usadas:
+  Table.SelectRows(tabla, each [col] = "valor")
+  Table.AddColumn(tabla, "nombre", each [col1] + [col2])
+  Table.Group(tabla, {"col_grupo"}, {{"total", each List.Sum([ventas]),...}})`,
+  args:[
+    {name:"each", desc:"Palabra clave de M que representa 'para cada fila'. each [Ventas] > 1000000 es como 'en cada fila, evalúa si la columna Ventas es mayor a 1,000,000'."},
+    {name:"Table.AddColumn", desc:"Agrega una columna calculada. El tercer argumento es la función: each [col1] * 1.19 agrega una columna con el valor de col1 más IVA."},
+    {name:"Table.Group", desc:"Agrupa y resume datos. Similar a una tabla dinámica pero en el proceso de transformación. El resultado se puede combinar con otras transformaciones."},
+    {name:"Parámetros de consulta", desc:"Crea parámetros (Administrar parámetros en Power Query) para hacer las consultas configurables sin editar el código. Útil para cambiar fechas de inicio, umbrales o nombres de servidor."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Alt","F5"],"desc":"Actualizar todas las consultas"},
+    {keys:["Ctrl","Enter"],"desc":"Cerrar el editor avanzado y aplicar cambios"},
+    {keys:["Ctrl","Z"],"desc":"Deshacer último paso en Power Query"},
+  ],
+  quickEx:`Columna condicional con código M:
+  ColumnaAgregada = Table.AddColumn(tabla, "Semáforo",
+    each if [SL] >= 80 then "🟢 OK"
+         else if [SL] >= 60 then "🟡 Atención"
+         else "🔴 Crítico")
+
+  Agrupar ventas por región:
+  Agrupado = Table.Group(Filtrado, {"Región"},
+    {{"Total", each List.Sum([Ventas]), type number},
+     {"Cantidad", each Table.RowCount(_), type number}})`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Vendedor","Región","Ventas","SL%"],
+      ["2","Carlos","Norte","4500000","82"],
+      ["3","Laura","Sur","6200000","75"],
+      ["4","Andrés","Norte","3800000","55"],
+      ["5","María","Centro","7100000","90"],
+      ["6","Pedro","Sur","5500000","68"],
+    ]
+  },
+  exercises:[
+    "Carga la tabla a Power Query. Abre el Editor avanzado (Vista → Editor avanzado). Lee el código M generado automáticamente.",
+    "Agrega manualmente un paso en M: una columna 'Semáforo' que ponga 🟢 si SL>=80, 🟡 si >=60, 🔴 si <60.",
+    "Agrega un paso de agrupación para calcular el total de ventas y el promedio de SL por región usando Table.Group.",
+    "Crea un parámetro 'Umbral_Ventas' con valor 5000000. Úsalo en un paso de filtro para mostrar solo filas donde Ventas > Umbral_Ventas.",
+  ]
+},
+{
+  n:20, cat:"dashboard", title:"Proyecto integrador · Modelo de datos completo",
+  sub:"Construir un modelo end-to-end: datos → Power Query → Power Pivot → DAX → Dashboard",
+  badge:"🖥 Dashboard",
+  syntax:`Arquitectura del modelo completo:
+
+  CAPA 1: Datos crudos (fuentes)
+  ├─ CSV de ventas transaccionales
+  ├─ Excel de catálogo de productos
+  └─ Base de datos de clientes
+
+  CAPA 2: Power Query (transformación)
+  ├─ Limpiar y normalizar cada fuente
+  ├─ Cargar al modelo de datos (no a hojas)
+  └─ Actualización automática configurada
+
+  CAPA 3: Power Pivot (modelo relacional)
+  ├─ Tabla de hechos: Ventas
+  ├─ Dimensiones: Productos, Clientes, Tiempo
+  └─ Relaciones entre tablas
+
+  CAPA 4: DAX (KPIs y medidas)
+  ├─ Total Ventas, Promedio, % Meta
+  ├─ Variación vs período anterior
+  └─ Ranking de vendedores
+
+  CAPA 5: Dashboard (presentación)
+  ├─ KPI cards con semáforos
+  ├─ Gráficos conectados a slicers
+  └─ Protegido y sin cuadrículas`,
+  args:[
+    {name:"Separación en capas", desc:"El principio más importante de un modelo profesional: nunca mezcles los datos crudos, las transformaciones y la presentación en el mismo lugar. Cada capa tiene su responsabilidad."},
+    {name:"Cargar al modelo, no a hojas", desc:"En Power Query → Cerrar y cargar en → Solo crear conexión + Agregar al modelo de datos. Los datos van al motor de Power Pivot pero no crean una hoja visible. Más limpio y sin límite de filas."},
+    {name:"Tabla de tiempo", desc:"En modelos analíticos siempre necesitas una tabla de tiempo con columnas: Fecha, Año, Mes, Trimestre, Semana, DiaSemana, EsFinDeSemana. Power Pivot la usa para inteligencia de tiempo en DAX."},
+    {name:"Documentación", desc:"En la última hoja del libro agrega una hoja 'Léeme' con: descripción del modelo, fuentes de datos, frecuencia de actualización, responsable, y qué hacer si falla la actualización."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","Alt","F5"],"desc":"Actualizar todo el modelo (Power Query + Power Pivot)"},
+    {keys:["Alt","F11"],"desc":"Editor VBA para agregar botón de actualización"},
+    {keys:["Ctrl","T"],"desc":"Crear tabla para nuevas fuentes de datos"},
+  ],
+  quickEx:`Medidas DAX para el dashboard final:
+
+  // Variación vs mes anterior
+  Var vs Anterior:=
+  VAR ventas_actual = [Total Ventas]
+  VAR ventas_anterior = CALCULATE([Total Ventas],
+      DATEADD(Tiempo[Fecha],-1,MONTH))
+  RETURN
+  DIVIDE(ventas_actual - ventas_anterior,
+         ventas_anterior, 0)
+
+  // Top N vendedores
+  Es Top 5:=
+  RANKX(ALL(Vendedores[Nombre]),
+        [Total Ventas],,DESC) <= 5`,
+  dataset:{
+    headers:["","A","B","C","D","E"],
+    rows:[
+      ["","Tabla 'Ventas':","","","",""],
+      ["1","VentaID","Fecha","ProductoID","ClienteID","Monto"],
+      ["2","1","05/01/2026","P001","C001","2500000"],
+      ["3","2","12/01/2026","P002","C002","85000"],
+      ["4","3","15/01/2026","P001","C003","2500000"],
+      ["5","4","08/02/2026","P003","C001","980000"],
+    ]
+  },
+  exercises:[
+    "Construye el modelo completo en 5 pasos: crea las tablas Ventas, Productos y Clientes → carga al modelo con Power Query → crea relaciones en Power Pivot → crea 3 medidas DAX → construye el dashboard.",
+    "En DAX crea la medida de variación vs mes anterior usando VAR y DATEADD. Úsala en el dashboard con formato porcentual.",
+    "Crea una tabla de tiempo con SECUENCIA: =SECUENCIA(365,1,DATE(2026,1,1),1) y agrega columnas para Año, Mes, Trimestre. Cárgala al modelo y úsala en inteligencia de tiempo.",
+    "Protege el dashboard: oculta las hojas de datos, protege las hojas de cálculo, elimina cuadrículas. Agrega un botón 'Actualizar' con una macro VBA que ejecute Ctrl+Alt+F5 automáticamente.",
+  ]
+}
+];
+
+function buildPrompt(l) {
+  const exList = l.exercises.map((e,i) => `   Ejercicio ${i+1}: ${e}`).join('\n');
+  const syntaxClean = (l.syntax || '').replace(/<[^>]+>/g,'');
+  const hasVBA = !!l.vbaCode;
+  const vbaClean = hasVBA ? (l.vbaCode || '').replace(/<[^>]+>/g,'') : '';
+
+  return `Eres un experto en Excel avanzado con más de 10 años de experiencia como analista de datos senior, desarrollador de soluciones en Excel y formador universitario. Tu misión hoy es enseñarme el tema "${l.title}" (${l.sub}) con profundidad técnica, casos de uso empresariales reales y metodología de clase magistral de nivel avanzado. Explicas en español, las fórmulas y el código en el idioma correspondiente (VBA en inglés por ser el lenguaje nativo, fórmulas de Excel en español).
+
+REFERENCIA TÉCNICA DEL TEMA:
+${syntaxClean}
+${hasVBA ? `\nCÓDIGO VBA DE REFERENCIA:\n${vbaClean}` : ''}
+
+Desarrolla la clase completa con esta estructura:
+
+1. NIVEL EXPERTO — ¿QUÉ LO HACE AVANZADO? Explica en 3-4 oraciones qué distingue el dominio avanzado de este tema respecto al nivel intermedio. ¿Qué problemas empresariales resuelve que serían imposibles sin él? ¿En qué tipo de organizaciones o roles es indispensable?
+
+2. ANÁLISIS TÉCNICO PROFUNDO: Desarrolla el tema con precisión de nivel senior. Incluye: la arquitectura interna, las limitaciones conocidas, las mejores prácticas de la industria, y las decisiones de diseño que distinguen una solución amateur de una profesional.
+
+3. ${hasVBA ? 'ANÁLISIS DEL CÓDIGO: Explica el código VBA de la tarjeta línea por línea. Para cada bloque importante: qué hace, por qué se escribió así, qué pasaría si se omite, y cómo podría mejorarse o adaptarse.' : 'ARGUMENTOS Y PARÁMETROS AVANZADOS: Para cada parámetro o configuración: comportamiento por defecto, casos límite, combinaciones avanzadas con otras fórmulas o herramientas, y errores sutiles que cometen incluso usuarios expertos.'}
+
+4. ERRORES DE NIVEL AVANZADO: Los 3 errores que cometen incluso usuarios con 2-3 años de experiencia con esta herramienta — no errores básicos sino fallos de arquitectura, rendimiento o mantenibilidad:
+   ❌ Error con diagnóstico técnico preciso → ✅ Implementación correcta de nivel profesional
+
+5. CASO DE USO EMPRESARIAL REAL: Describe un caso completo de una empresa real (manufactura, finanzas, retail, etc.) donde esta herramienta resuelve un problema crítico. Incluye: el problema antes de implementarlo, la solución con esta herramienta, y el impacto medible.
+
+6. OPTIMIZACIÓN Y RENDIMIENTO: ¿Cómo optimizar el rendimiento de esta herramienta en archivos grandes? ¿Qué prácticas la hacen más rápida, más mantenible o más escalable?
+
+7. ¿TIENES DUDAS? Pregúntame si algo no quedó claro antes de los ejercicios. Espera mi respuesta (sí/no) antes de continuar.
+
+8. PRÁCTICA DE NIVEL AVANZADO:
+${exList}
+
+   Para cada ejercicio: explica primero el concepto clave que se practica, luego guíame en la construcción. Cuando me cuentes el resultado o compartas una captura, evalúa con criterio de analista senior:
+   - ¿Es la solución técnicamente correcta?
+   - ¿Es la solución óptima o hay una forma más eficiente/robusta?
+   - ¿Es mantenible? ¿Qué pasaría si los datos cambian de estructura?
+   - ¿Cómo documentarías o entregarías esto en un entorno profesional?
+
+9. EVALUACIÓN DE NIVEL AVANZADO:
+   - ¿Mi implementación tiene calidad de analista junior, mid o senior?
+   - Los 2-3 aspectos técnicos específicos donde debo profundizar para llegar al nivel experto
+   - El siguiente tema que debo dominar para completar un perfil de analista de datos avanzado en Excel
+   - Un consejo profesional de alguien con experiencia senior en Excel que raramente se enseña en cursos
+
+Explica en español. Fórmulas de Excel en español (SUMA, SI, BUSCARX...). Código VBA en inglés (es el lenguaje nativo de VBA y no tiene versión en español).`;
+}
+
+let done = JSON.parse(localStorage.getItem('excel_adv_done')||'{}');
+let activeCat = 'all';
+
+window.addEventListener('DOMContentLoaded',()=>{
+  buildLessons();
+  Object.keys(done).forEach(n=>{
+    const card=document.getElementById('card-'+n);
+    const btn=document.getElementById('done-'+n);
+    if(card) card.classList.add('done');
+    if(btn)  btn.textContent='✓ Completada';
+  });
+  updateProgress();
+});
+
+function buildLessons(){
+  const list=document.getElementById('lessonsList');
+  list.innerHTML='';
+  LESSONS.forEach(l=>{
+    const card=document.createElement('div');
+    card.className='lesson-card';
+    card.id='card-'+l.n;
+    card.dataset.cat=l.cat;
+    card.dataset.search=(l.title+' '+l.sub+' '+(l.syntax||'')+' '+l.exercises.join(' ')).toLowerCase();
+
+    // Reference block
+    let refHTML='';
+    if(l.syntax||l.shortcuts){
+      refHTML+='<div class="ref-block"><div class="ref-label">📋 Referencia rápida</div>';
+      if(l.syntax) refHTML+=`<div class="syntax-box">${l.syntax}</div>`;
+      if(l.args&&l.args.length){
+        refHTML+='<table class="args-table"><thead><tr><th>Concepto</th><th>Descripción</th></tr></thead><tbody>';
+        l.args.forEach(a=>{refHTML+=`<tr><td>${a.name}</td><td>${a.desc}</td></tr>`;});
+        refHTML+='</tbody></table>';
+      }
+      if(l.quickEx) refHTML+=`<div class="quick-ex">${l.quickEx}</div>`;
+      if(l.shortcuts){
+        refHTML+='<div class="shortcuts">';
+        l.shortcuts.forEach(s=>{
+          const keys=s.keys.map(k=>`<span class="key">${k}</span>`).join('+');
+          refHTML+=`<div class="shortcut">${keys} → ${s.desc}</div>`;
+        });
+        refHTML+='</div>';
+      }
+      refHTML+='</div>';
+    }
+
+    // VBA code block
+    let vbaHTML='';
+    if(l.vbaCode){
+      vbaHTML=`<div class="vba-block">
+        <div class="vba-label">💻 Código VBA · copiar en el editor (Alt+F11)</div>
+        <div class="vba-code">${l.vbaCode}</div>
+      </div>`;
+    }
+
+    // Dataset
+    let dsHTML='';
+    if(l.dataset){
+      const hdrs=l.dataset.headers.map(h=>`<th>${h}</th>`).join('');
+      const rows=l.dataset.rows.map(r=>{
+        const cells=r.map((cell,i)=>`<td class="${i===0?'label':''}">${cell}</td>`).join('');
+        return `<tr>${cells}</tr>`;
+      }).join('');
+      dsHTML=`<div class="dataset-block">
+        <div class="ds-label">📊 Dataset · copia esto en tu Excel</div>
+        <div class="ds-table-wrap"><table class="ds-table"><thead><tr>${hdrs}</tr></thead><tbody>${rows}</tbody></table></div>
+        <div class="ds-hint">Copia cada celda en la posición indicada de tu hoja Excel</div>
+      </div>`;
+    }
+
+    // Exercises
+    const exItems=l.exercises.map((e,i)=>
+      `<div class="ex-item"><span class="ex-num">${i+1}.</span><span class="ex-text">${e}</span></div>`
+    ).join('');
+    const exHTML=`<div class="ex-block">
+      <div class="ex-label">🎯 Ejercicios de práctica</div>
+      <div class="ex-list">${exItems}</div>
+    </div>`;
+
+    const prompt=buildPrompt(l);
+    const esc=prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const promptHTML=`<div class="prompt-section">
+      <div class="prompt-label">📋 Prompt · clase magistral nivel avanzado</div>
+      <button class="copy-btn" id="cb-${l.n}" onclick="copyPrompt(${l.n})">
+        <span>⧉</span> Copiar prompt completo
+      </button>
+      <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini · Evaluación con criterio de analista senior</p>
+      <div class="done-row">
+        <button class="done-btn" id="done-${l.n}" onclick="toggleDone(${l.n})">○ Marcar completada</button>
+      </div>
+    </div>
+    <textarea class="prompt-text" id="pt-${l.n}">${esc}</textarea>`;
+
+    card.innerHTML=`
+      <div class="card-header" onclick="toggle(${l.n})">
+        <span class="lesson-num">${String(l.n).padStart(2,'0')}.</span>
+        <div class="card-title-wrap">
+          <div>
+            <div class="lesson-title">${l.title}</div>
+            <div class="lesson-sub">${l.sub}</div>
+          </div>
+          <span class="cat-badge">${l.badge}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">${refHTML}${vbaHTML}${dsHTML}${exHTML}${promptHTML}</div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggle(n){
+  const card=document.getElementById('card-'+n);
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.lesson-card.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+function copyPrompt(n){
+  const ta=document.getElementById('pt-'+n);
+  const btn=document.getElementById('cb-'+n);
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    btn.innerHTML='<span>✓</span> Copiado';btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML='<span>⧉</span> Copiar prompt completo';btn.classList.remove('copied');},2000);
+    const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+  });
+}
+function toggleDone(n){
+  if(done[n]) delete done[n]; else done[n]=true;
+  localStorage.setItem('excel_adv_done',JSON.stringify(done));
+  const card=document.getElementById('card-'+n);
+  const btn=document.getElementById('done-'+n);
+  if(done[n]){card.classList.add('done');if(btn)btn.textContent='✓ Completada';}
+  else{card.classList.remove('done');if(btn)btn.textContent='○ Marcar completada';}
+  updateProgress();
+}
+function updateProgress(){
+  const total=20,count=Object.keys(done).length;
+  const pct=(count/total*100).toFixed(0);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`${count} de ${total} lecciones completadas`;
+  document.getElementById('doneCount').textContent=`${count} / ${total} lecciones`;
+}
+function selectCat(btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');activeCat=btn.dataset.cat;applyFilters();
+}
+function applyFilters(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  let v=0;
+  document.querySelectorAll('.lesson-card').forEach(c=>{
+    const show=c.dataset.search.includes(q)&&(activeCat==='all'||c.dataset.cat===activeCat);
+    c.classList.toggle('hidden',!show);if(show)v++;
+  });
+  document.getElementById('counter').textContent=`${v} lecciones`;
+}
+</script>
+</body>
+</html>

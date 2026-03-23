@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Excel Básico — Logicards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050a07;--bg2:#0a110c;--card:#0d1510;--card2:#131d16;
+  --em:#059669;--em-lt:#34d399;--em-dim:rgba(5,150,105,.12);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.10);
+  --border:rgba(5,150,105,.20);--border2:rgba(255,255,255,.05);
+  --text:#d1fae5;--muted:#1a4731;
+  --mono:'Syne Mono',monospace;--sans:'Syne',sans-serif;
+  --code-bg:#0a1a10;--code-border:rgba(52,211,153,.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(5,150,105,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+.shimmer{position:fixed;top:0;left:0;right:0;height:1px;z-index:300;background:linear-gradient(90deg,transparent,rgba(5,150,105,0) 20%,rgba(52,211,153,.9) 50%,rgba(5,150,105,0) 80%,transparent);background-size:200% 100%;animation:sh 7s ease-in-out infinite}
+@keyframes sh{0%{background-position:-100% 0}100%{background-position:200% 0}}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(5,10,7,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav-left{display:flex;align-items:center;gap:1rem}
+.back-link{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--em-lt)}
+.nav-title{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text)}
+.nav-badges{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.nbadge{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .55rem;border-radius:2px}
+.nb-em{color:var(--em-lt);border:1px solid rgba(52,211,153,.4);background:var(--em-dim)}
+.nb-gold{color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim)}
+
+.wrapper{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.4rem 4rem}
+
+header{padding:3.2rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.header-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem}
+.level-badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--em-lt);border:1px solid rgba(52,211,153,.35);background:var(--em-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem;margin-left:.5rem}
+h1{font-family:var(--sans);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.35rem}
+h1 .exc{color:var(--em-lt)}
+h1 .bas{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.7rem}
+.header-desc{color:var(--muted);font-size:.86rem;max-width:640px;line-height:1.75}
+.header-meta{display:flex;align-items:center;gap:1.4rem;margin-top:1.1rem;flex-wrap:wrap}
+.meta-item{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
+.meta-item::before{content:'◆';color:var(--em-lt);font-size:.38rem}
+
+.how-to{background:var(--em-dim);border:1px solid rgba(5,150,105,.22);border-radius:5px;padding:1rem 1.3rem;margin-bottom:1.8rem;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}
+.how-to-icon{font-size:1.1rem;margin-top:1px}
+.how-to p{font-size:.82rem;color:var(--text);opacity:.85;line-height:1.65}
+.how-to strong{color:var(--em-lt)}
+
+.progress-bar-wrap{margin-bottom:1.8rem}
+.progress-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;justify-content:space-between}
+.progress-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--em),var(--em-lt));border-radius:1px;transition:width .4s}
+
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.5rem}
+.search-input{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.48rem .85rem;color:var(--text);font-family:var(--mono);font-size:.68rem;outline:none;transition:border-color .2s;min-width:200px}
+.search-input:focus{border-color:var(--em-lt)}
+.search-input::placeholder{color:var(--muted)}
+.cat-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:.25rem .65rem;color:var(--muted);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap;text-transform:uppercase}
+.cat-btn:hover{border-color:var(--em-lt);color:var(--em-lt)}
+.cat-btn.active{background:var(--em);border-color:var(--em);color:#fff;font-weight:600}
+.stats-count{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+
+/* LESSON CARDS */
+.lessons-list{display:flex;flex-direction:column;gap:.55rem}
+.lesson-card{background:var(--card);border:1px solid var(--border2);border-radius:5px;overflow:hidden;transition:border-color .2s}
+.lesson-card:hover{border-color:rgba(5,150,105,.22)}
+.lesson-card.open{border-color:rgba(52,211,153,.4)}
+.lesson-card.done{background:rgba(5,150,105,.04);border-color:rgba(5,150,105,.2)}
+.lesson-card.hidden{display:none}
+.card-header{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s}
+.card-header:hover{background:var(--card2)}
+.lesson-num{font-family:var(--mono);font-size:.65rem;color:var(--em-lt);min-width:2rem;opacity:.65}
+.card-title-wrap{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
+.lesson-title{font-size:.9rem;font-weight:600;color:var(--text)}
+.lesson-sub{font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.08rem;letter-spacing:.04em}
+.cat-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:.07em;color:var(--muted);border:1px solid var(--border2);padding:.08rem .38rem;border-radius:2px;white-space:nowrap}
+.card-chevron{color:var(--muted);font-size:.6rem;transition:transform .25s,color .2s;flex-shrink:0}
+.lesson-card.open .card-chevron{transform:rotate(180deg);color:var(--em-lt)}
+
+/* CARD BODY */
+.card-body{display:none;border-top:1px solid var(--border2);background:var(--bg2)}
+.lesson-card.open .card-body{display:block}
+
+/* ── REFERENCE BLOCK ── */
+.ref-block{padding:1rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ref-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--em-lt);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.ref-label::after{content:'';flex:1;height:1px;background:rgba(52,211,153,.12)}
+
+/* Syntax box */
+.syntax-box{background:var(--code-bg);border:1px solid var(--code-border);border-radius:4px;padding:.7rem 1rem;margin-bottom:.8rem;font-family:var(--mono);font-size:.78rem;color:var(--em-lt);letter-spacing:.03em;line-height:1.6}
+.syntax-box .fn{color:#fbbf24;font-weight:600}
+.syntax-box .arg{color:#6ee7b7}
+.syntax-box .sep{color:rgba(52,211,153,.4)}
+.syntax-box .opt{color:rgba(52,211,153,.5)}
+
+/* Args table */
+.args-table{width:100%;border-collapse:collapse;margin-bottom:.8rem;font-size:.75rem}
+.args-table th{font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.35rem .6rem;border-bottom:1px solid var(--border2);text-align:left;font-weight:400}
+.args-table td{padding:.35rem .6rem;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top;line-height:1.5}
+.args-table td:first-child{font-family:var(--mono);font-size:.65rem;color:var(--em-lt);white-space:nowrap}
+.args-table td:last-child{color:rgba(209,250,229,.6);font-size:.74rem}
+
+/* Quick example */
+.quick-ex{background:rgba(5,150,105,.07);border:1px solid rgba(5,150,105,.15);border-radius:3px;padding:.55rem .8rem;font-size:.75rem;line-height:1.65;color:rgba(209,250,229,.75);margin-bottom:.8rem}
+.quick-ex .formula{font-family:var(--mono);color:var(--em-lt);font-size:.72rem}
+.quick-ex .result{font-family:var(--mono);color:#fbbf24;font-size:.72rem}
+
+/* Shortcut chips */
+.shortcuts{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.8rem}
+.shortcut{display:inline-flex;align-items:center;gap:.3rem;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);border-radius:3px;padding:.2rem .5rem;font-family:var(--mono);font-size:.6rem;color:var(--em-lt)}
+.shortcut .key{background:rgba(52,211,153,.15);border-radius:2px;padding:.05rem .3rem;font-size:.56rem}
+
+/* ── DATASET BLOCK ── */
+.dataset-block{padding:.9rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ds-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;opacity:.8}
+.ds-label::after{content:'';flex:1;height:1px;background:rgba(245,158,11,.12)}
+.ds-table-wrap{overflow-x:auto;border-radius:3px;border:1px solid rgba(52,211,153,.15)}
+.ds-table{border-collapse:collapse;font-size:.72rem;min-width:100%}
+.ds-table th{background:rgba(5,150,105,.15);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--em-lt);padding:.4rem .7rem;border:1px solid rgba(52,211,153,.12);text-align:center}
+.ds-table td{padding:.32rem .7rem;border:1px solid rgba(52,211,153,.08);color:rgba(209,250,229,.72);text-align:center;font-family:var(--mono);font-size:.68rem}
+.ds-table td.label{text-align:left;color:rgba(209,250,229,.5);font-size:.64rem}
+.ds-table tr:nth-child(even) td{background:rgba(5,150,105,.04)}
+.ds-hint{font-family:var(--mono);font-size:.54rem;color:var(--muted);margin-top:.5rem;letter-spacing:.04em}
+
+/* ── EXERCISES BLOCK ── */
+.ex-block{padding:.9rem 1.15rem;border-bottom:1px solid var(--border2)}
+.ex-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,114,182,.7);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
+.ex-label::after{content:'';flex:1;height:1px;background:rgba(244,114,182,.1)}
+.ex-list{display:flex;flex-direction:column;gap:.35rem}
+.ex-item{display:flex;align-items:flex-start;gap:.55rem;padding:.38rem .5rem;background:rgba(244,114,182,.04);border:1px solid rgba(244,114,182,.1);border-radius:3px}
+.ex-num{font-family:var(--mono);font-size:.5rem;color:rgba(244,114,182,.6);min-width:1.2rem;margin-top:.15rem;flex-shrink:0}
+.ex-text{font-size:.78rem;color:rgba(209,250,229,.8);line-height:1.55}
+.ex-text .formula{font-family:var(--mono);color:var(--em-lt);font-size:.72rem}
+
+/* ── PROMPT SECTION ── */
+.prompt-section{padding:.9rem 1.15rem}
+.prompt-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--em-lt);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
+.prompt-label::after{content:'';flex:1;height:1px;background:rgba(52,211,153,.12)}
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem 1.1rem;background:var(--em-dim);border:1px solid rgba(5,150,105,.32);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;font-weight:500}
+.copy-btn:hover{background:rgba(5,150,105,.22);border-color:var(--em-lt);transform:translateY(-1px)}
+.copy-btn.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.copy-hint{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;margin-top:.6rem}
+.prompt-text{display:none}
+.done-row{display:flex;align-items:center;gap:.4rem;margin-top:.65rem}
+.done-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:.56rem;padding:.2rem .55rem;cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
+.done-btn:hover{border-color:rgba(34,197,94,.4);color:#6ee7b7}
+.lesson-card.done .done-btn{border-color:rgba(34,197,94,.4);color:#6ee7b7;background:rgba(34,197,94,.07)}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(52,211,153,.4);color:var(--em-lt);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.6rem 1.3rem;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.footer-logo{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.footer-logo span{color:var(--em-lt)}
+.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+@media(max-width:600px){.cat-badge{display:none}.card-header{padding:.8rem 1rem}.ds-table{font-size:.62rem}}
+</style>
+</head>
+<body>
+<div class="shimmer"></div>
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="back-link">← Logicards</a>
+    <span class="nav-title">Excel Básico</span>
+  </div>
+  <div class="nav-badges">
+    <span class="nbadge nb-gold">📊 Microsoft Excel</span>
+    <span class="nbadge nb-em" id="doneCount">0 / 20 lecciones</span>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <header>
+    <div class="header-badge">📊 Microsoft Excel · Nivel Básico</div>
+    <span class="level-badge">◆ Fundamentos · Fórmulas · Visualización</span>
+    <h1><span class="exc">Excel</span> <span class="bas">Básico</span></h1>
+    <p class="header-sub">20 Lecciones · Fórmulas · Tablas · Gráficos</p>
+    <p class="header-desc">Aprende Excel desde cero con teoría visible en cada lección y práctica guiada por IA. Cada tarjeta tiene la sintaxis exacta de la fórmula, sus argumentos y un dataset listo para copiar. El prompt te da la clase magistral completa y al final la IA evalúa tu trabajo — ya sea con una captura de pantalla o describiéndole el resultado.</p>
+    <div class="header-meta">
+      <span class="meta-item">20 lecciones</span>
+      <span class="meta-item">Sintaxis visible sin IA</span>
+      <span class="meta-item">Dataset incluido por lección</span>
+      <span class="meta-item">Evaluación por captura</span>
+    </div>
+  </header>
+
+  <div class="how-to">
+    <div class="how-to-icon">💡</div>
+    <p>Cada lección tiene la <strong>fórmula y sus argumentos visibles</strong> para consultarlos sin abrir la IA. Copia el dataset en tu Excel, haz los ejercicios, y luego copia el prompt para la clase magistral completa. Al finalizar, <strong>toma una captura de tu Excel</strong> y compártela con la IA para que evalúe tu trabajo, o descríbele el resultado que obtuviste.</p>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 20 lecciones completadas</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="controls">
+    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar fórmula o tema…" oninput="applyFilters()"/>
+    <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+    <button class="cat-btn" data-cat="fundamentos" onclick="selectCat(this)">🧩 Fundamentos</button>
+    <button class="cat-btn" data-cat="formulas" onclick="selectCat(this)">🔢 Fórmulas</button>
+    <button class="cat-btn" data-cat="busqueda" onclick="selectCat(this)">🔍 Búsqueda</button>
+    <button class="cat-btn" data-cat="visual" onclick="selectCat(this)">📈 Visualización</button>
+    <span class="stats-count" id="counter">20 lecciones</span>
+  </div>
+
+  <div class="lessons-list" id="lessonsList"></div>
+
+  <footer>
+    <span class="footer-logo">Logi<span>cards</span></span>
+    <span class="footer-copy">© 2026 · Jhon Sandoval · Excel Básico · Logicards</span>
+  </footer>
+</div>
+<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+
+<script>
+const LESSONS = [
+{
+  n:1, cat:"fundamentos", title:"Interfaz y Navegación",
+  sub:"Celdas, filas, columnas, hojas y la cinta",
+  badge:"🧩 Fundamentos",
+  syntax: null,
+  args: null,
+  shortcuts:[
+    {keys:["Ctrl","Home"],"desc":"Ir a A1"},
+    {keys:["Ctrl","End"],"desc":"Última celda usada"},
+    {keys:["Ctrl","→"],"desc":"Saltar al borde del bloque"},
+    {keys:["F2"],"desc":"Editar celda activa"},
+    {keys:["Ctrl","Z"],"desc":"Deshacer"},
+    {keys:["Ctrl","S"],"desc":"Guardar"},
+  ],
+  quickEx: null,
+  dataset:{
+    headers:["Celda","Coordenada","Tipo de dato"],
+    rows:[
+      ["Nombre empresa","A1","Texto"],
+      ["100000","B1","Número"],
+      ["15/03/2026","C1","Fecha"],
+      ["=B1*2","D1","Fórmula"],
+      ["VERDADERO","E1","Lógico"],
+    ]
+  },
+  exercises:[
+    "Crea una hoja nueva y nómbrala 'Práctica 1'. Escribe tu nombre en A1, tu edad en B1 y la fecha de hoy en C1.",
+    "Usa Ctrl+End para ver cuál es la última celda con datos en la hoja.",
+    "Cambia el ancho de la columna A haciendo doble clic en el borde del encabezado.",
+    "Congela la primera fila: Vista → Inmovilizar → Inmovilizar fila superior.",
+  ]
+},
+{
+  n:2, cat:"fundamentos", title:"Tipos de Datos y Referencias",
+  sub:"Texto, números, fechas · Referencias A1, $A$1, $A1",
+  badge:"🧩 Fundamentos",
+  syntax:`Referencias de celda:
+  A1          → Relativa (se mueve al copiar)
+  $A$1        → Absoluta (no se mueve)
+  $A1         → Fila libre, columna fija
+  A$1         → Columna libre, fila fija`,
+  args:[
+    {name:"Relativa A1", desc:"Se ajusta al copiar la fórmula a otra celda. Ej: copiar =A1+B1 una fila abajo → =A2+B2"},
+    {name:"Absoluta $A$1", desc:"No cambia nunca al copiar. Se usa para referenciar una tasa, un total fijo, un parámetro."},
+    {name:"Mixta $A1", desc:"La columna no cambia pero la fila sí. Útil en tablas con encabezados de columna."},
+  ],
+  quickEx:`=A2*$B$1   → Multiplica el valor de A2 por el valor fijo en B1
+            Al copiar hacia abajo: A2 cambia a A3, A4... pero $B$1 siempre queda igual`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Producto","Precio","Impuesto (fijo)"],
+      ["2","Manzanas","1500","0.19"],
+      ["3","Peras","2000",""],
+      ["4","Uvas","3500",""],
+      ["5","Fórmula en C2:","=B2*$C$2","(copia hacia abajo)"],
+    ]
+  },
+  exercises:[
+    "En B2 escribe 1500, en B3 escribe 2000, en B4 escribe 3500. En C2 escribe 0.19 (el IVA).",
+    "En D2 escribe =B2*$C$2 y copia la fórmula hacia D3 y D4. ¿Qué pasa con la referencia a C2?",
+    "Ahora escribe en D2 =B2*C2 (sin $) y copia hacia abajo. ¿Qué error aparece en D3?",
+    "Usa F4 después de seleccionar C2 en una fórmula para alternar entre los tipos de referencia.",
+  ]
+},
+{
+  n:3, cat:"formulas", title:"SUM · SUMA",
+  sub:"Sumar rangos, celdas sueltas y condiciones simples",
+  badge:"🔢 Fórmula",
+  syntax:`=SUMA(number1, [number2], ...)
+  =SUMA(A1:A10)          → Suma el rango A1 hasta A10
+  =SUMA(A1:A5, C1:C5)   → Suma dos rangos separados
+  =SUMA(A1, 100, B3)    → Suma celdas y valores directos`,
+  args:[
+    {name:"number1", desc:"Primer número, celda o rango a sumar. Obligatorio."},
+    {name:"number2...", desc:"Otros números, celdas o rangos adicionales. Opcional. Hasta 255 argumentos."},
+  ],
+  quickEx:`=SUMA(B2:B6)   → Si B2:B6 contiene 100, 200, 150, 300, 250 → Resultado: <span class="result">1000</span>
+  =SUMA(B2:B6, D2)  → Suma el rango más una celda suelta`,
+  dataset:{
+    headers:["","A","B"],
+    rows:[
+      ["1","Vendedor","Ventas (COP)"],
+      ["2","Carlos","850000"],
+      ["3","Laura","1200000"],
+      ["4","Andrés","670000"],
+      ["5","María","950000"],
+      ["6","Pedro","1100000"],
+      ["7","TOTAL","=SUMA(B2:B6)"],
+    ]
+  },
+  exercises:[
+    "Copia los datos del dataset en tu Excel. En B7 escribe =SUMA(B2:B6) y verifica el resultado.",
+    "En B8 calcula el total usando =B2+B3+B4+B5+B6. ¿Obtienes el mismo resultado? ¿Cuál prefieres y por qué?",
+    "Agrega un vendedor nuevo en B9 con valor 780000. ¿La fórmula =SUMA(B2:B6) lo incluye automáticamente?",
+    "Practica el atajo: selecciona B2:B7 y presiona Alt+= para insertar SUM automáticamente.",
+  ]
+},
+{
+  n:4, cat:"formulas", title:"AVERAGE · PROMEDIO",
+  sub:"Calcular el promedio de un rango de valores",
+  badge:"🔢 Fórmula",
+  syntax:`=PROMEDIO(number1, [number2], ...)
+  =PROMEDIO(B2:B10)       → Promedio del rango
+  =PROMEDIO(B2:B10, D5)   → Incluye una celda adicional`,
+  args:[
+    {name:"number1", desc:"Primer número, celda o rango. Las celdas vacías y texto se ignoran."},
+    {name:"number2...", desc:"Argumentos adicionales opcionales. Hasta 255."},
+  ],
+  quickEx:`=PROMEDIO(B2:B6)
+  Datos: 85, 92, 78, 96, 88  →  Resultado: <span class="result">87.8</span>
+  ⚠ Las celdas vacías NO se cuentan. Las celdas con 0 SÍ se cuentan.`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Estudiante","Nota Parcial","Nota Final"],
+      ["2","Ana","85","90"],
+      ["3","Luis","72","78"],
+      ["4","Sara","96","94"],
+      ["5","Tomás","60","65"],
+      ["6","Valeria","88","92"],
+      ["7","Promedio","=PROMEDIO(B2:B6)","=PROMEDIO(C2:C6)"],
+    ]
+  },
+  exercises:[
+    "Copia los datos y en B7 calcula el promedio de notas parciales. ¿Cuánto da?",
+    "En D2 calcula el promedio de cada estudiante entre parcial y final: =PROMEDIO(B2,C2). Copia hacia D3:D6.",
+    "Elimina la nota de Sara (deja B4 vacía). ¿Cambia el promedio de B7? ¿Por qué?",
+    "Pon 0 en B4 en vez de vacío. ¿Ahora cambia el promedio? Explícale a la IA la diferencia que observaste.",
+  ]
+},
+{
+  n:5, cat:"formulas", title:"COUNT · COUNTA · COUNTBLANK",
+  sub:"Contar celdas con números, con cualquier dato o vacías",
+  badge:"🔢 Fórmula",
+  syntax:`=CONTAR(value1, ...)      → Solo cuenta celdas con NÚMEROS
+  =CONTARA(value1, ...)    → Cuenta celdas NO VACÍAS (texto, números, fechas)
+  =CONTAR.BLANCO(range)      → Cuenta celdas VACÍAS en un rango`,
+  args:[
+    {name:"COUNT", desc:"Ignora texto, fechas y celdas vacías. Perfecto para contar registros numéricos."},
+    {name:"COUNTA", desc:"Cuenta todo excepto celdas vacías. Útil para contar registros completos."},
+    {name:"COUNTBLANK", desc:"Solo cuenta celdas vacías. Ideal para detectar datos faltantes."},
+  ],
+  quickEx:`Rango A1:A5 contiene: 10, "", "Texto", 25, ""
+  =CONTAR(A1:A5)       →  <span class="result">2</span>  (solo 10 y 25)
+  =CONTARA(A1:A5)      →  <span class="result">3</span>  (10, "Texto" y 25)
+  =CONTAR.BLANCO(A1:A5)  →  <span class="result">2</span>  (las dos celdas vacías)`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Empleado","Salario","Departamento"],
+      ["2","Carlos","2500000","Ventas"],
+      ["3","Laura","","Marketing"],
+      ["4","Andrés","3100000",""],
+      ["5","María","2800000","RRHH"],
+      ["6","Pedro","","TI"],
+      ["7","Conteos","",""],
+    ]
+  },
+  exercises:[
+    "En B8 cuenta cuántos empleados tienen salario registrado con =CONTAR(B2:B6).",
+    "En B9 cuenta cuántos empleados hay en total (con o sin salario) con =CONTARA(A2:A6).",
+    "En B10 detecta cuántos salarios faltan con =CONTAR.BLANCO(B2:B6). ¿Coincide con lo que ves?",
+    "En C8 cuenta cuántos departamentos están registrados. ¿Cuántos faltan?",
+  ]
+},
+{
+  n:6, cat:"formulas", title:"MAX · MIN",
+  sub:"Encontrar el valor máximo y mínimo de un rango",
+  badge:"🔢 Fórmula",
+  syntax:`=MAX(number1, [number2], ...)  → Valor más alto del rango
+  =MIN(number1, [number2], ...)  → Valor más bajo del rango
+  =K.ESIMO.MAYOR(range, k)               → k-ésimo valor más alto
+  =K.ESIMO.MENOR(range, k)               → k-ésimo valor más bajo`,
+  args:[
+    {name:"MAX/MIN", desc:"Ignoran texto y celdas vacías. Devuelven el valor extremo del rango."},
+    {name:"LARGE(range,1)", desc:"Equivale a MAX. LARGE(range,2) devuelve el segundo mayor."},
+    {name:"SMALL(range,1)", desc:"Equivale a MIN. SMALL(range,2) devuelve el segundo menor."},
+  ],
+  quickEx:`Ventas: 850, 1200, 670, 950, 1100
+  =MAX(B2:B6)        →  <span class="result">1200</span>
+  =MIN(B2:B6)        →  <span class="result">670</span>
+  =K.ESIMO.MAYOR(B2:B6, 2)   →  <span class="result">1100</span>  (segundo mayor)`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Mes","Temperatura Máx","Temperatura Mín"],
+      ["2","Enero","28","14"],
+      ["3","Febrero","30","16"],
+      ["4","Marzo","27","13"],
+      ["5","Abril","25","11"],
+      ["6","Mayo","22","9"],
+      ["7","Anual","",""],
+    ]
+  },
+  exercises:[
+    "En B7 calcula la temperatura máxima del año con =MAX(B2:B6).",
+    "En C7 calcula la temperatura mínima del año con =MIN(C2:C6).",
+    "En D2 calcula la amplitud térmica de cada mes: =B2-C2. Copia hacia D3:D6.",
+    "En D7 encuentra el mes con mayor amplitud térmica con =MAX(D2:D6). ¿Qué mes fue?",
+  ]
+},
+{
+  n:7, cat:"formulas", title:"IF · SI",
+  sub:"Tomar decisiones con condiciones simples y anidadas",
+  badge:"🔢 Fórmula",
+  syntax:`=SI(logical_test, value_if_true, value_if_false)
+  =SI(A2>70, "Aprobado", "Reprobado")
+  =SI(B2="", "Sin dato", B2)
+  =SI(A2>90, "A", IF(A2>70, "B", "C"))   → IF anidado`,
+  args:[
+    {name:"logical_test", desc:"La condición a evaluar. Usa operadores: >, <, >=, <=, =, <>"},
+    {name:"value_if_true", desc:"Lo que devuelve si la condición es VERDADERA. Puede ser texto, número u otra fórmula."},
+    {name:"value_if_false", desc:"Lo que devuelve si la condición es FALSA. Si se omite, devuelve FALSO."},
+  ],
+  quickEx:`=SI(B2>=60, "Aprobado", "Reprobado")
+  B2=75  →  <span class="result">"Aprobado"</span>
+  B2=45  →  <span class="result">"Reprobado"</span>
+  ⚠ El texto en IF siempre va entre comillas dobles ""`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Estudiante","Nota","Estado","Calificación"],
+      ["2","Ana","95","",""],
+      ["3","Luis","58","",""],
+      ["4","Sara","72","",""],
+      ["5","Tomás","45","",""],
+      ["6","Valeria","83","",""],
+    ]
+  },
+  exercises:[
+    "En C2 escribe =SI(B2>=60,\"Aprobado\",\"Reprobado\"). Copia hacia C3:C6.",
+    "En D2 crea un IF anidado con 3 niveles: >=90 → \"Excelente\", >=70 → \"Bueno\", otro → \"Necesita mejorar\".",
+    "En E2 calcula un bono: si la nota >=90 el bono es 500000, si no es 0. Copia hacia E3:E6.",
+    "En F2 usa IF para mostrar el nombre del estudiante si aprobó, o \"RECUPERACIÓN\" si reprobó.",
+  ]
+},
+{
+  n:8, cat:"formulas", title:"SUMIF · COUNTIF",
+  sub:"Sumar y contar con una condición",
+  badge:"🔢 Fórmula",
+  syntax:`=SUMAR.SI(range, criteria, [sum_range])
+  =SUMAR.SI(A:A, "Ventas", B:B)     → Suma B donde A="Ventas"
+  =SUMAR.SI(B:B, ">1000000", B:B)   → Suma valores >1000000
+
+  =CONTAR.SI(range, criteria)
+  =CONTAR.SI(C:C, "Activo")        → Cuenta celdas que dicen "Activo"
+  =CONTAR.SI(B:B, ">"&D1)         → Cuenta valores mayores al de D1`,
+  args:[
+    {name:"range (SUMIF)", desc:"El rango donde buscar la condición."},
+    {name:"criteria", desc:'La condición. Texto entre comillas: "Ventas". Número: >100. Referencia: D1.'},
+    {name:"sum_range", desc:"El rango a sumar (si es diferente al rango de búsqueda). Opcional."},
+  ],
+  quickEx:`=SUMAR.SI(A2:A6, "Norte", B2:B6)
+  Suma las ventas donde la región es exactamente "Norte"
+  Resultado si Norte aparece en filas 2,4,6 con ventas 100, 300, 200 →  <span class="result">600</span>`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Región","Ventas","Categoría"],
+      ["2","Norte","850000","A"],
+      ["3","Sur","1200000","B"],
+      ["4","Norte","670000","A"],
+      ["5","Centro","950000","A"],
+      ["6","Sur","1100000","B"],
+      ["7","","",""],
+      ["8","Total Norte","=SUMAR.SI(A2:A6,\"Norte\",B2:B6)",""],
+      ["9","Cantidad B","=CONTAR.SI(C2:C6,\"B\")",""],
+    ]
+  },
+  exercises:[
+    "Copia los datos. En B8 calcula el total de ventas de la región Norte con SUMIF.",
+    "En B9 cuenta cuántas ventas son de categoría B con COUNTIF.",
+    "En B10 calcula el total de ventas mayores a 1000000 con =SUMAR.SI(B2:B6,\">1000000\").",
+    "En B11 cuenta cuántas ventas superan el promedio: =CONTAR.SI(B2:B6,\">\"&AVERAGE(B2:B6)).",
+  ]
+},
+{
+  n:9, cat:"formulas", title:"IFERROR · ISERROR",
+  sub:"Controlar y ocultar errores en fórmulas",
+  badge:"🔢 Fórmula",
+  syntax:`=SI.ERROR(value, value_if_error)
+  =SI.ERROR(A1/B1, 0)            → Si hay error devuelve 0
+  =SI.ERROR(VLOOKUP(...), "N/A") → Si no encuentra devuelve texto
+
+  Errores comunes en Excel:
+  #DIV/0!  → División entre cero
+  #N/A     → Valor no encontrado (VLOOKUP)
+  #VALUE!  → Tipo de dato incorrecto
+  #REF!    → Referencia inválida (celda eliminada)`,
+  args:[
+    {name:"value", desc:"La fórmula o expresión que puede generar error."},
+    {name:"value_if_error", desc:"Lo que mostrar si hay error. Puede ser 0, texto vacío \"\", o cualquier valor."},
+  ],
+  quickEx:`=A1/B1        →  Si B1=0 muestra <span class="result">#DIV/0!</span>
+  =SI.ERROR(A1/B1, 0)  →  Si B1=0 muestra <span class="result">0</span>  (limpio y profesional)`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Ventas","Meses","Promedio mensual","Con IFERROR"],
+      ["2","1200000","6","=A2/B2","=SI.ERROR(A2/B2,0)"],
+      ["3","850000","0","=A3/B3","=SI.ERROR(A3/B3,0)"],
+      ["4","0","","=A4/B4","=SI.ERROR(A4/B4,\"Sin datos\")"],
+    ]
+  },
+  exercises:[
+    "Copia los datos. Observa qué error aparece en C3 y C4 sin IFERROR.",
+    "En D2:D4 aplica IFERROR para que en lugar del error muestre 0 o \"Sin datos\" según el caso.",
+    "Crea en E2 una fórmula que calcule el % de ventas sobre el total: =A2/SUM(A2:A4). Protégela con IFERROR.",
+    "En F2 prueba =SI.ERROR(1/0, \"Error controlado\"). ¿Qué aparece?",
+  ]
+},
+{
+  n:10, cat:"formulas", title:"TEXT · Formato de fechas y números",
+  sub:"Convertir valores a texto con formato personalizado",
+  badge:"🔢 Fórmula",
+  syntax:`=TEXTO(value, format_text)
+  =TEXTO(A1, "DD/MM/YYYY")     → Fecha como "15/03/2026"
+  =TEXTO(A1, "MMMM YYYY")      → "marzo 2026"
+  =TEXTO(A1, "$#,##0.00")      → "$1,200,000.00"
+  =TEXTO(A1, "0.0%")           → "75.5%"
+  =TEXTO(A1, "0000")           → "0042" (ceros a la izquierda)`,
+  args:[
+    {name:"value", desc:"El número, fecha o referencia a formatear."},
+    {name:'format_text', desc:'El código de formato entre comillas. D=día, M=mes, Y=año, #=dígito.'},
+  ],
+  quickEx:`=TEXTO(TODAY(), "DDDD, DD de MMMM de YYYY")
+  →  <span class="result">"domingo, 22 de marzo de 2026"</span>
+  =TEXTO(0.1875, "0.0%")  →  <span class="result">"18.8%"</span>`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Fecha","Formato corto","Formato largo"],
+      ["2","15/03/2026","=TEXTO(A2,\"DD/MM/YY\")","=TEXTO(A2,\"MMMM de YYYY\")"],
+      ["3","Número","Con miles","Como porcentaje"],
+      ["4","1234567","=TEXTO(A4,\"#,##0\")",""],
+      ["5","0.1875","","=TEXTO(A5,\"0.0%\")"],
+    ]
+  },
+  exercises:[
+    "En B2 formatea la fecha como 'Mar-26' con =TEXTO(A2,\"MMM-YY\").",
+    "En C2 formatea la fecha mostrando solo el día de la semana con =TEXTO(A2,\"DDDD\").",
+    "En B4 aplica formato de miles a 1234567 con separador y dos decimales.",
+    "En D2 concatena texto y fecha: =\"Informe de \"&TEXT(A2,\"MMMM YYYY\"). ¿Qué obtienes?",
+  ]
+},
+{
+  n:11, cat:"busqueda", title:"VLOOKUP · BUSCARV",
+  sub:"Buscar un valor en una tabla y traer el dato de otra columna",
+  badge:"🔍 Búsqueda",
+  syntax:`=BUSCARV(lookup_value, table_array, col_index_num, [range_lookup])
+  =BUSCARV(A2, $E$2:$G$10, 2, FALSE)
+  ↑ Busca A2 en la primera columna de E2:G10
+    y devuelve el valor de la columna 2 (F)
+    FALSE = coincidencia exacta (casi siempre usarás FALSE)`,
+  args:[
+    {name:"lookup_value", desc:"El valor a buscar. Puede ser una celda o texto directo."},
+    {name:"table_array", desc:"La tabla donde buscar. La primera columna debe contener el valor buscado. Usa $ para fijarlo."},
+    {name:"col_index_num", desc:"Número de columna de la tabla que quieres devolver. 1=primera columna, 2=segunda, etc."},
+    {name:"range_lookup", desc:"FALSE = exacto (recomendado). TRUE = aproximado (para tablas de rangos)."},
+  ],
+  quickEx:`Tabla de precios en E2:G5.  Buscar precio de "Laptop":
+  =BUSCARV("Laptop", $E$2:$G$5, 2, FALSE)  →  <span class="result">2500000</span>
+  ⚠ Si el valor no existe devuelve #N/A — usa IFERROR para controlarlo`,
+  dataset:{
+    headers:["","A","B","","E","F","G"],
+    rows:[
+      ["1","Producto buscado","Precio","","Producto","Precio","Stock"],
+      ["2","Laptop","=BUSCARV(A2,$E$2:$G$4,2,FALSE)","","Laptop","2500000","15"],
+      ["3","Mouse","","","Mouse","85000","42"],
+      ["4","Teclado","","","Teclado","150000","28"],
+    ]
+  },
+  exercises:[
+    "Crea la tabla de productos en E1:G4. En B2 escribe =BUSCARV(A2,$E$2:$G$4,2,FALSE) para buscar el precio de Laptop.",
+    "En B3 y B4 busca los precios de Mouse y Teclado copiando la fórmula o ajustando A3, A4.",
+    "En C2 trae el stock de Laptop cambiando el col_index_num a 3.",
+    "En A5 escribe un producto que no existe (ej: Monitor). ¿Qué error aparece? Corrígelo con IFERROR.",
+  ]
+},
+{
+  n:12, cat:"busqueda", title:"Formato Condicional",
+  sub:"Colorear celdas automáticamente según reglas",
+  badge:"🔍 Búsqueda",
+  syntax:`Ruta: Inicio → Formato condicional → Nueva regla
+
+  Tipos de regla más usados:
+  → Resaltar celdas: mayor que, menor que, igual a, entre
+  → Escala de colores: degradado automático min-max
+  → Conjunto de iconos: semáforos, flechas, estrellas
+  → Usar fórmula: la opción más poderosa
+
+  Fórmula ejemplo en formato condicional:
+  =B2<1000000  → Colorea la fila si ventas < 1 millón`,
+  args:[
+    {name:"Resaltar celdas", desc:"La opción más rápida. Configura el umbral y el color desde el menú."},
+    {name:"Escala de colores", desc:"Asigna colores automáticamente de menor a mayor valor. Perfecto para heatmaps."},
+    {name:"Usar fórmula", desc:"La más flexible. Escribe cualquier fórmula que devuelva VERDADERO/FALSO."},
+  ],
+  quickEx:`Para colorear toda la fila de un vendedor si sus ventas < 1,000,000:
+  1. Selecciona A2:C6 (toda la tabla de datos)
+  2. Formato condicional → Nueva regla → Usar fórmula
+  3. Escribe: =$B2<1000000
+  4. Elige color rojo → Aceptar`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Vendedor","Ventas","Meta cumplida"],
+      ["2","Carlos","850000","No"],
+      ["3","Laura","1200000","Sí"],
+      ["4","Andrés","670000","No"],
+      ["5","María","1050000","Sí"],
+      ["6","Pedro","980000","No"],
+    ]
+  },
+  exercises:[
+    "Selecciona B2:B6 y aplica Formato condicional → Escala de colores (rojo a verde).",
+    "Selecciona C2:C6 y aplica Resaltar celdas → Igual a → 'Sí' con fondo verde.",
+    "Selecciona A2:C6 y crea una regla con fórmula =$C2=\"No\" para pintar las filas de rojo claro.",
+    "Agrega barras de datos en B2:B6: Formato condicional → Barras de datos. ¿Qué visualización prefieres?",
+  ]
+},
+{
+  n:13, cat:"visual", title:"Ordenar y Filtrar Datos",
+  sub:"Organizar tablas y mostrar solo lo que necesitas",
+  badge:"📈 Visualización",
+  syntax:`Ordenar:
+  Inicio → Ordenar y filtrar → De A a Z / De Z a A
+  Datos → Ordenar (múltiples niveles)
+
+  Filtro automático:
+  Selecciona encabezados → Datos → Filtro (Ctrl+Shift+L)
+  Haz clic en ▼ para filtrar por valor, color o condición
+
+  Atajos útiles:
+  Ctrl+Shift+L  → Activar/desactivar filtros
+  Alt+↓         → Abrir menú de filtro en celda activa`,
+  shortcuts:[
+    {keys:["Ctrl","Shift","L"],"desc":"Activar filtros"},
+    {keys:["Alt","↓"],"desc":"Abrir filtro en celda"},
+    {keys:["Ctrl","Shift","End"],"desc":"Seleccionar hasta el final de los datos"},
+  ],
+  quickEx:`Para filtrar vendedores con ventas > 1,000,000:
+  1. Activa filtros con Ctrl+Shift+L
+  2. Clic en ▼ de columna "Ventas"
+  3. Filtros de número → Mayor que → 1000000
+  → Solo aparecen los vendedores que cumplen la condición`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Vendedor","Región","Ventas","Mes"],
+      ["2","Carlos","Norte","850000","Enero"],
+      ["3","Laura","Sur","1200000","Enero"],
+      ["4","Andrés","Norte","670000","Febrero"],
+      ["5","María","Centro","1050000","Febrero"],
+      ["6","Pedro","Sur","980000","Enero"],
+      ["7","Ana","Centro","1300000","Febrero"],
+    ]
+  },
+  exercises:[
+    "Activa filtros en la tabla. Filtra para ver solo los vendedores de la región 'Norte'.",
+    "Filtra para ver solo las ventas del mes 'Enero'. ¿Cuántos registros quedan?",
+    "Ordena la tabla por Ventas de mayor a menor manteniendo el filtro activo.",
+    "Aplica un filtro de número en Ventas para mostrar solo los que están por encima del promedio.",
+  ]
+},
+{
+  n:14, cat:"visual", title:"Tablas de Excel (Ctrl+T)",
+  sub:"Convertir rangos en tablas estructuradas inteligentes",
+  badge:"📈 Visualización",
+  syntax:`Crear tabla:
+  Selecciona datos → Ctrl+T → Aceptar
+  O: Insertar → Tabla
+
+  Referencias estructuradas (automáticas en tablas):
+  =SUMA(Tabla1[Ventas])        → Suma la columna "Ventas"
+  =PROMEDIO(Tabla1[Notas])     → Promedio de columna "Notas"
+
+  Ventajas de las tablas:
+  → Fórmulas se copian solas al agregar filas
+  → Filtros automáticos incluidos
+  → Fila de totales con un clic
+  → Nombres de columna en las fórmulas`,
+  args:[
+    {name:"Fila de totales", desc:"Clic derecho en tabla → Fila de totales. Aparece una fila con SUM, COUNT, AVERAGE, etc. seleccionables."},
+    {name:"Nombre de tabla", desc:"Excel asigna 'Tabla1' por defecto. Cámbialo en Diseño de tabla → Nombre de tabla."},
+    {name:"Segmentación", desc:"En tablas puedes agregar Slicers (segmentadores) para filtrar visualmente con botones."},
+  ],
+  quickEx:`=SUMA(Tabla1[Ventas])
+  Suma automáticamente todos los valores de la columna "Ventas"
+  Si agregas una fila nueva, la fórmula se actualiza sola → <span class="result">✓ Dinámico</span>`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Producto","Categoría","Precio","Unidades"],
+      ["2","Laptop","Electrónico","2500000","15"],
+      ["3","Mouse","Accesorio","85000","42"],
+      ["4","Monitor","Electrónico","980000","8"],
+      ["5","Teclado","Accesorio","150000","28"],
+      ["6","Webcam","Accesorio","220000","20"],
+    ]
+  },
+  exercises:[
+    "Selecciona A1:D6 y presiona Ctrl+T para crear una tabla. Nómbrala 'Inventario'.",
+    "Activa la Fila de totales desde Diseño de tabla. Pon SUM en Precio y SUM en Unidades.",
+    "Agrega una nueva fila al final: 'Audífonos, Accesorio, 180000, 35'. ¿Se actualiza el total automáticamente?",
+    "Filtra la tabla para ver solo la categoría 'Electrónico'. ¿Cuántos productos hay?",
+  ]
+},
+{
+  n:15, cat:"visual", title:"Gráficos Básicos",
+  sub:"Barras, líneas y tortas para visualizar tus datos",
+  badge:"📈 Visualización",
+  syntax:`Crear un gráfico:
+  1. Selecciona los datos (incluye encabezados)
+  2. Insertar → Gráficos → Elige el tipo
+  3. O presiona Alt+F1 para gráfico de columnas rápido
+
+  Tipos principales:
+  📊 Columnas/Barras  → Comparar categorías
+  📈 Líneas           → Mostrar tendencias en el tiempo
+  🥧 Circular (Torta) → Mostrar proporciones del todo
+  📉 Área             → Tendencia con volumen visual
+
+  Personalización rápida:
+  Clic en gráfico → Diseño de gráfico → Cambiar colores
+  Clic derecho en series → Formato de serie de datos`,
+  shortcuts:[
+    {keys:["Alt","F1"],"desc":"Insertar gráfico de columnas rápido"},
+    {keys:["F11"],"desc":"Gráfico en hoja nueva"},
+  ],
+  quickEx:`Datos: Meses (Ene-Jun) vs Ventas
+  → Selecciona ambas columnas → Alt+F1
+  → Obtienes un gráfico de columnas instantáneo
+  → Clic en Diseño → Agregar elemento → Etiquetas de datos`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Mes","Ventas 2025","Meta"],
+      ["2","Enero","4500000","5000000"],
+      ["3","Febrero","5200000","5000000"],
+      ["4","Marzo","4800000","5000000"],
+      ["5","Abril","6100000","5000000"],
+      ["6","Mayo","5700000","5000000"],
+      ["7","Junio","6800000","5000000"],
+    ]
+  },
+  exercises:[
+    "Selecciona A1:C7 y crea un gráfico de líneas (Insertar → Líneas). Observa cómo se ven ventas vs meta.",
+    "Cambia el tipo a gráfico de columnas agrupadas. ¿Cuál comunica mejor la comparación vs meta?",
+    "Agrega un título al gráfico: clic en el área de título → escribe 'Ventas vs Meta 2025'.",
+    "Selecciona solo A1:A7 y B1:B7, crea un gráfico circular (torta). ¿Qué mes representa el mayor porcentaje?",
+  ]
+}
+,{
+  n:16, cat:"formulas", title:"CONCAT · LEFT · RIGHT · MID · LEN",
+  sub:"Unir, extraer y medir texto en celdas",
+  badge:"🔢 Fórmula",
+  syntax:`=CONCAT(text1, [text2], ...)
+  =A1&" "&B1                    → Une con & (más rápido)
+  =IZQUIERDA(text, num_chars)        → Extrae desde la izquierda
+  =DERECHA(text, num_chars)       → Extrae desde la derecha
+  =EXTRAE(text, start, num_chars)  → Extrae desde el medio
+  =LARGO(text)                    → Cuenta caracteres totales`,
+  args:[
+    {name:"CONCAT / &", desc:"Une dos o más textos. El & es más rápido. Ejemplo: =A1&\" \"&B1 une nombre y apellido con espacio."},
+    {name:"LEFT(text,n)", desc:"Los primeros n caracteres. =IZQUIERDA(\"Excel2026\",5) → \"Excel\""},
+    {name:"RIGHT(text,n)", desc:"Los últimos n caracteres. =DERECHA(\"Excel2026\",4) → \"2026\""},
+    {name:"MID(text,start,n)", desc:"n caracteres desde posición start. =EXTRAE(\"COL-2026\",5,4) → \"2026\""},
+    {name:"LEN(text)", desc:"Cuenta todos los caracteres incluyendo espacios. Útil para validar longitud de códigos."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","H"],"desc":"Buscar y reemplazar texto en celdas"},
+    {keys:["Alt","Enter"],"desc":"Salto de línea dentro de una celda"},
+    {keys:["Ctrl","'"],"desc":"Copiar valor de celda superior"},
+  ],
+  quickEx:`=IZQUIERDA("COL-2026-ABC",3)   →  <span class="result">"COL"</span>
+  =DERECHA("COL-2026-ABC",3)  →  <span class="result">"ABC"</span>
+  =EXTRAE("COL-2026-ABC",5,4)  →  <span class="result">"2026"</span>
+  =LARGO("Hola mundo")        →  <span class="result">10</span>
+  =A1&" "&B1  (A1="Juan",B1="Pérez")  →  <span class="result">"Juan Pérez"</span>`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Nombre","Apellido","Código empleado"],
+      ["2","Juan","Pérez","COL-2026-JPA"],
+      ["3","María","López","COL-2026-MLA"],
+      ["4","Carlos","Rodríguez","COL-2026-CRD"],
+      ["5","Ana","Martínez","COL-2026-AMT"],
+    ]
+  },
+  exercises:[
+    "En D2 une nombre y apellido con espacio: =A2&\" \"&B2. Copia hasta D5.",
+    "En E2 extrae el año del código con =EXTRAE(C2,5,4). ¿Qué resultado obtienes?",
+    "En F2 extrae las iniciales del código (últimos 3 caracteres) con =DERECHA(C2,3).",
+    "En G2 verifica la longitud del código con =LARGO(C2). ¿Todos los códigos tienen el mismo largo?",
+  ]
+},
+{
+  n:17, cat:"formulas", title:"TRIM · UPPER · LOWER · PROPER",
+  sub:"Limpiar y normalizar texto copiado de otros sistemas",
+  badge:"🔢 Fórmula",
+  syntax:`=ESPACIOS(text)    → Elimina espacios extra (inicio, fin y dobles)
+  =MAYUSC(text)   → Convierte todo a MAYÚSCULAS
+  =MINUSC(text)   → Convierte todo a minúsculas
+  =NOMPROPIO(text)  → Primera Letra En Mayúscula Por Palabra
+
+  Combinación más usada para limpiar datos importados:
+  =NOMPROPIO(TRIM(A1))   → Limpia espacios Y normaliza capitalización`,
+  args:[
+    {name:"TRIM(text)", desc:"El más importante para datos de ERP o CRM. Elimina espacios invisibles que impiden que VLOOKUP encuentre resultados."},
+    {name:"UPPER(text)", desc:"Normaliza códigos o IDs que deben estar en mayúsculas. Ejemplo: =MAYUSC(\"excel\") → \"EXCEL\""},
+    {name:"LOWER(text)", desc:"Normaliza emails y usuarios. Ejemplo: =MINUSC(\"USUARIO@EMAIL.COM\") → \"usuario@email.com\""},
+    {name:"PROPER(text)", desc:"Capitaliza la primera letra de cada palabra. Perfecto para nombres propios importados en mayúsculas o minúsculas."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","H"],"desc":"Reemplazar espacios masivamente"},
+    {keys:["Ctrl","Alt","V"],"desc":"Pegado especial (para pegar valores limpios)"},
+    {keys:["F5"],"desc":"Ir a celdas especiales"},
+  ],
+  quickEx:`=ESPACIOS("  Juan   Pérez  ")  →  <span class="result">"Juan Pérez"</span>
+  =MAYUSC("excel basico")   →  <span class="result">"EXCEL BASICO"</span>
+  =MINUSC("EXCEL@EMAIL.COM") → <span class="result">"excel@email.com"</span>
+  =NOMPROPIO("JUAN pérez")    →  <span class="result">"Juan Pérez"</span>
+  =NOMPROPIO(TRIM("  JUAN  pérez  "))  →  <span class="result">"Juan Pérez"</span>`,
+  dataset:{
+    headers:["","A","B"],
+    rows:[
+      ["1","Datos originales (sucios)","Datos limpios"],
+      ["2","'  JUAN PÉREZ  '","=NOMPROPIO(TRIM(A2))"],
+      ["3","'maria  lopez'","=NOMPROPIO(TRIM(A3))"],
+      ["4","'  CARLOS RODRIGUEZ  '","=NOMPROPIO(TRIM(A4))"],
+      ["5","'ANA.MARTINEZ@EMAIL.COM'","=MINUSC(TRIM(A5))"],
+      ["6","'col-2026-abc'","=MAYUSC(TRIM(A6))"],
+    ]
+  },
+  exercises:[
+    "En A2 escribe '  JUAN PÉREZ  ' (con espacios extra). En B2 aplica =NOMPROPIO(TRIM(A2)).",
+    "En A5 escribe un email en mayúsculas con espacios. En B5 normalízalo con LOWER(TRIM()).",
+    "¿Por qué VLOOKUP fallaría si buscas 'Juan' en una celda que contiene '  Juan  '? Pruébalo en tu Excel.",
+    "En C2 combina TRIM + LEFT para limpiar A2 y extraer solo el primer nombre.",
+  ]
+},
+{
+  n:18, cat:"fundamentos", title:"Pegado Especial",
+  sub:"Pegar solo valores, transponer, formatos y más",
+  badge:"🧩 Fundamentos",
+  syntax:`Atajos de Pegado Especial:
+  Ctrl+Alt+V          → Abre el menú de Pegado especial
+  Ctrl+Alt+V → V → Enter  → Pegar solo valores
+  Ctrl+Alt+V → E → Enter  → Transponer (filas ↔ columnas)
+  Ctrl+Alt+V → T → Enter  → Solo formato visual
+
+  Opciones del menú Pegado especial:
+  V = Valores        T = Formato        F = Fórmulas
+  E = Transponer     D = Ancho columnas U = Sin bordes`,
+  args:[
+    {name:"Pegar Valores (V)", desc:"El más importante. Convierte fórmulas en números fijos. Úsalo antes de compartir el archivo para evitar referencias rotas."},
+    {name:"Transponer (E)", desc:"Convierte filas en columnas y viceversa. Ideal cuando los datos vienen en orientación incorrecta."},
+    {name:"Pegar Formato (T)", desc:"Copia solo el diseño visual (colores, bordes, fuente) sin tocar el contenido."},
+    {name:"Operaciones", desc:"Puedes pegar y al mismo tiempo multiplicar, sumar o dividir los valores existentes por el valor copiado."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","C"],"desc":"Copiar selección"},
+    {keys:["Ctrl","Alt","V"],"desc":"Abrir Pegado especial"},
+    {keys:["Ctrl","Alt","V","V","Enter"],"desc":"Pegar solo valores (secuencia rápida)"},
+    {keys:["Ctrl","Alt","V","E","Enter"],"desc":"Transponer filas y columnas"},
+    {keys:["Esc"],"desc":"Cancelar modo copia (borde parpadeante)"},
+  ],
+  quickEx:`Tienes =SUMA(A1:A10) y quieres enviar el archivo sin fórmulas:
+  Copia la celda → Ctrl+Alt+V → V → Enter
+  Resultado: mismo número pero sin fórmula → <span class="result">Valor puro ✓</span>
+
+  Tienes datos en filas y los necesitas en columnas:
+  Copia el rango → Ctrl+Alt+V → E → Enter → <span class="result">Transpuesto ✓</span>`,
+  dataset:{
+    headers:["","A","B","C"],
+    rows:[
+      ["1","Mes","Ventas","Comisión 5%"],
+      ["2","Enero","4500000","=B2*0.05"],
+      ["3","Febrero","5200000","=B3*0.05"],
+      ["4","Marzo","4800000","=B4*0.05"],
+      ["5","TOTAL","=SUMA(B2:B4)","=SUMA(C2:C4)"],
+    ]
+  },
+  exercises:[
+    "Selecciona C2:C5 (fórmulas de comisión), cópialas y pégalas con Ctrl+Alt+V → V en el mismo lugar. ¿Qué ves en la barra de fórmulas?",
+    "Selecciona A1:C5, cópiala. En E1 pégala transpuesta con Ctrl+Alt+V → E. ¿Cómo quedaron filas y columnas?",
+    "Escribe 1.1 en una celda vacía, cópiala, selecciona B2:B4 y usa Pegado especial → Multiplicar. ¿Qué le ocurrió a los valores?",
+    "¿Cuándo usarías 'Pegar solo formato' en tu trabajo? Crea un ejemplo y aplícalo en tu hoja.",
+  ]
+},
+{
+  n:19, cat:"fundamentos", title:"Validación de Datos",
+  sub:"Listas desplegables, restricciones y mensajes de error",
+  badge:"🧩 Fundamentos",
+  syntax:`Ruta: Datos → Validación de datos → Configuración
+
+  Crear lista desplegable:
+  Origen (texto): Sí,No,Pendiente
+  Origen (rango): =$F$2:$F$5
+
+  Tipos de validación:
+  Lista         → Menú desplegable de opciones
+  Número entero → Solo enteros (ej: entre 1 y 100)
+  Decimal       → Números con decimales en un rango
+  Fecha         → Solo fechas válidas o en un rango
+  Longitud      → Limita cantidad de caracteres`,
+  args:[
+    {name:"Lista (dropdown)", desc:"La más usada. El origen puede ser texto separado por comas o un rango de celdas. Si el origen es un rango, el dropdown se actualiza automáticamente al cambiar los valores del rango."},
+    {name:"Mensaje de entrada", desc:"Texto que aparece al seleccionar la celda. Úsalo para dar instrucciones al usuario."},
+    {name:"Mensaje de error", desc:"Texto al ingresar un valor inválido. Tipos: Detener (bloquea), Advertencia (permite con warning), Información (solo avisa)."},
+    {name:"Permitir vacío", desc:"Si está marcado la celda puede quedar vacía. Desmárcalo si el campo es obligatorio."},
+  ],
+  shortcuts:[
+    {keys:["Alt","↓"],"desc":"Abrir dropdown de validación en celda activa"},
+    {keys:["Ctrl","Shift","L"],"desc":"Activar/desactivar filtros"},
+    {keys:["Ctrl","G"],"desc":"Ir a celdas especiales (encontrar celdas con validación)"},
+  ],
+  quickEx:`Para crear un dropdown de estados de tarea en C2:C10:
+  1. Selecciona C2:C10
+  2. Datos → Validación → Lista
+  3. Origen: Pendiente,En progreso,Completado,Cancelado
+  4. Cada celda tiene un menú con esas opciones → <span class="result">✓ Formulario controlado</span>`,
+  dataset:{
+    headers:["","A","B","C","D","","F"],
+    rows:[
+      ["1","Tarea","Responsable","Estado","Prioridad","","Opciones estado"],
+      ["2","Diseño logo","Carlos","","","","Pendiente"],
+      ["3","Informe mensual","Laura","","","","En progreso"],
+      ["4","Revisión contrato","Andrés","","","","Completado"],
+      ["5","Llamada cliente","María","","","","Cancelado"],
+    ]
+  },
+  exercises:[
+    "En C2:C5 crea un dropdown con los valores del rango F2:F5 (estados). Cambia el origen a un rango para que sea dinámico.",
+    "En D2:D5 crea un dropdown de prioridad escribiendo directamente: Alta,Media,Baja.",
+    "Agrega un mensaje de entrada en C2 que diga: 'Selecciona el estado actual de la tarea'.",
+    "En E2:E5 agrega validación de número entero entre 0 y 100 (% de avance). Intenta escribir 150 y observa el error.",
+  ]
+},
+{
+  n:20, cat:"fundamentos", title:"Proteger Celdas y Hojas",
+  sub:"Bloquear fórmulas para que nadie las borre accidentalmente",
+  badge:"🧩 Fundamentos",
+  syntax:`Proteger solo celdas específicas (fórmulas):
+  1. Ctrl+A → Ctrl+1 → Protección → Desmarcar "Bloqueada"
+  2. Seleccionar celdas a proteger (ej: C2:D10)
+  3. Ctrl+1 → Protección → Marcar "Bloqueada"
+  4. Revisar → Proteger hoja → Aceptar
+
+  Proteger hoja completa:
+  Revisar → Proteger hoja → (contraseña opcional)
+
+  Ocultar fórmula de la barra de fórmulas:
+  Ctrl+1 → Protección → Marcar "Oculta" → Proteger hoja`,
+  args:[
+    {name:"Bloqueada (checkbox)", desc:"Por defecto TODAS las celdas tienen Bloqueada=Sí, pero el bloqueo solo actúa cuando proteges la hoja. Por eso el flujo es: desbloquear todo → bloquear solo lo que quieres proteger → proteger hoja."},
+    {name:"Proteger hoja", desc:"Revisar → Proteger hoja. Puedes elegir qué sí puede hacer el usuario: seleccionar celdas, ordenar, filtrar, etc."},
+    {name:"Contraseña", desc:"Opcional. Sin contraseña cualquiera puede desproteger. Con contraseña solo quien la conoce puede editar las fórmulas."},
+    {name:"Oculta", desc:"Impide ver la fórmula en la barra de fórmulas aunque la celda esté seleccionada. Útil para proteger lógica confidencial."},
+  ],
+  shortcuts:[
+    {keys:["Ctrl","A"],"desc":"Seleccionar todas las celdas"},
+    {keys:["Ctrl","1"],"desc":"Abrir Formato de celdas (pestaña Protección)"},
+    {keys:["Ctrl","Shift","F"],"desc":"Abrir Formato de celdas (alternativo)"},
+  ],
+  quickEx:`Escenario: reporte con fórmulas en C:D y datos de entrada en A:B.
+  Quieres que editen A:B pero no toquen las fórmulas.
+  1. Ctrl+A → Ctrl+1 → desmarcar Bloqueada → OK
+  2. Selecciona C2:D100 → Ctrl+1 → marcar Bloqueada → OK
+  3. Revisar → Proteger hoja → OK
+  Resultado: A:B editables, C:D <span class="result">bloqueadas ✓</span>`,
+  dataset:{
+    headers:["","A","B","C","D"],
+    rows:[
+      ["1","Unidades (editable)","Precio (editable)","Total (protegida)","IVA 19% (protegida)"],
+      ["2","10","15000","=A2*B2","=C2*0.19"],
+      ["3","25","8000","=A3*B3","=C3*0.19"],
+      ["4","5","45000","=A4*B4","=C4*0.19"],
+      ["5","TOTAL","","=SUMA(C2:C4)","=SUMA(D2:D4)"],
+    ]
+  },
+  exercises:[
+    "Copia los datos. Sigue el proceso de 3 pasos para dejar A:B editables y proteger C:D (fórmulas).",
+    "Intenta escribir algo en C2. ¿Qué mensaje aparece? Describe el texto exacto del error.",
+    "Desprotege la hoja, marca 'Oculta' en C2:D5 y vuelve a proteger. Selecciona C2 — ¿qué ves en la barra de fórmulas?",
+    "Protege la hoja pero permite que el usuario pueda ordenar y filtrar. ¿Qué opciones debes marcar en el diálogo de protección?",
+  ]
+}
+];
+
+// ── PROMPT BUILDER ─────────────────────────────────────────────────────
+function buildPrompt(l) {
+  const syntaxPart = l.syntax
+    ? `\nSINTAXIS DE REFERENCIA PARA HOY:\n${l.syntax}\n` : '';
+  const exList = l.exercises.map((e,i) => `${i+1}. ${e}`).join('\n');
+
+  return `Eres un profesor universitario de Excel con experiencia en enseñanza de hoja de cálculo para principiantes y usuarios intermedios. Tu misión hoy es enseñarme el tema "${l.title}" (${l.sub}) con profundidad, ejemplos reales y metodología de clase magistral. Explicas en español. Usa los nombres de fórmulas en ESPAÑOL (Excel en español): SUMA, SI, PROMEDIO, BUSCARV, etc.
+${syntaxPart}
+Desarrolla la clase completa con esta estructura:
+
+1. ¿POR QUÉ IMPORTA ESTE TEMA? Explica en 3-4 oraciones por qué este tema es fundamental en Excel. ¿Qué problemas resuelve en el día a día de un analista, contador o profesional de oficina? ¿Qué limitación tendría alguien que no lo domina?
+
+2. EXPLICACIÓN PROFUNDA: Desarrolla el tema con precisión técnica. Ve más allá de la definición básica — explica la lógica interna, los casos especiales, los errores comunes y los trucos que los usuarios expertos conocen pero los principiantes no.
+
+3. ARGUMENTOS Y PARÁMETROS: Explica cada argumento de la fórmula (o cada paso del proceso si no es una fórmula) como si fuera la primera vez que alguien los escucha. Usa analogías simples y claras.
+
+4. ERRORES COMUNES: Muestra los 3 errores más frecuentes que cometen los principiantes con este tema:
+   ❌ Error con explicación de por qué ocurre → ✅ Cómo corregirlo
+
+5. EJEMPLO AVANZADO: Además del dataset de práctica, muéstrame un caso de uso más avanzado o del mundo laboral real donde este tema resuelve un problema concreto (finanzas, ventas, inventario, RRHH).
+
+6. ¿TIENES DUDAS? Pregúntame si algo no quedó claro antes de pasar a los ejercicios. Espera mi respuesta (sí/no) antes de continuar.
+
+7. PRÁCTICA GUIADA: El estudiante ya tiene este dataset en su Excel:
+${l.exercises.map((e,i) => `   Ejercicio ${i+1}: ${e}`).join('\n')}
+
+   Guíame paso a paso por cada ejercicio. Después de explicar cada uno, espera a que yo te cuente el resultado que obtuve o te comparta una captura de pantalla. Evalúa mi resultado con precisión:
+   - ¿La fórmula está correctamente escrita?
+   - ¿El resultado es el esperado?
+   - ¿Hay una forma más eficiente o profesional de hacerlo?
+
+8. EVALUACIÓN FINAL: Al terminar todos los ejercicios dime:
+   - Qué hice bien
+   - Qué debo practicar más
+   - Un truco o función relacionada que me conviene aprender después de dominar este tema
+
+Explica todo en español. Fórmulas y nombres de función en ESPAÑOL (Excel en español: SUMA, SI, BUSCARX, etc.). Si mencionas el equivalente en inglés, ponlo entre paréntesis como referencia.`;
+}
+
+// ── RENDER ─────────────────────────────────────────────────────────────
+let done = JSON.parse(localStorage.getItem('excel_done') || '{}');
+let activeCat = 'all';
+
+window.addEventListener('DOMContentLoaded', () => {
+  buildLessons();
+  Object.keys(done).forEach(n => {
+    const card = document.getElementById('card-'+n);
+    const btn  = document.getElementById('done-'+n);
+    if(card) card.classList.add('done');
+    if(btn)  btn.textContent = '✓ Completada';
+  });
+  updateProgress();
+});
+
+function buildLessons() {
+  const list = document.getElementById('lessonsList');
+  list.innerHTML = '';
+  LESSONS.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'lesson-card';
+    card.id = 'card-'+l.n;
+    card.dataset.cat = l.cat;
+    card.dataset.search = (l.title+' '+l.sub+' '+(l.syntax||'')+' '+l.exercises.join(' ')).toLowerCase();
+
+    // Build reference block
+    let refHTML = '';
+    if(l.syntax || l.shortcuts) {
+      refHTML += '<div class="ref-block"><div class="ref-label">📋 Referencia rápida</div>';
+      if(l.syntax) {
+        refHTML += `<div class="syntax-box">${l.syntax.replace(/=(\w+)/g,'=<span class="fn">$1</span>')}</div>`;
+      }
+      if(l.args && l.args.length) {
+        refHTML += '<table class="args-table"><thead><tr><th>Argumento</th><th>Descripción</th></tr></thead><tbody>';
+        l.args.forEach(a => {
+          refHTML += `<tr><td>${a.name}</td><td>${a.desc}</td></tr>`;
+        });
+        refHTML += '</tbody></table>';
+      }
+      if(l.quickEx) {
+        refHTML += `<div class="quick-ex">${l.quickEx}</div>`;
+      }
+      if(l.shortcuts) {
+        refHTML += '<div class="shortcuts">';
+        l.shortcuts.forEach(s => {
+          const keys = s.keys.map(k=>`<span class="key">${k}</span>`).join('+');
+          refHTML += `<div class="shortcut">${keys} → ${s.desc}</div>`;
+        });
+        refHTML += '</div>';
+      }
+      refHTML += '</div>';
+    }
+
+    // Dataset block
+    let dsHTML = '';
+    if(l.dataset) {
+      const hdrs = l.dataset.headers.map(h=>`<th>${h}</th>`).join('');
+      const rows = l.dataset.rows.map(r=>{
+        const cells = r.map((cell,i)=>`<td class="${i===0?'label':''}">${cell}</td>`).join('');
+        return `<tr>${cells}</tr>`;
+      }).join('');
+      dsHTML = `<div class="dataset-block">
+        <div class="ds-label">📊 Dataset — copia esto en tu Excel</div>
+        <div class="ds-table-wrap">
+          <table class="ds-table"><thead><tr>${hdrs}</tr></thead><tbody>${rows}</tbody></table>
+        </div>
+        <div class="ds-hint">Copia cada celda en la columna y fila correspondiente de tu hoja de Excel</div>
+      </div>`;
+    }
+
+    // Exercises block
+    const exItems = l.exercises.map((e,i)=>
+      `<div class="ex-item"><span class="ex-num">${i+1}.</span><span class="ex-text">${e}</span></div>`
+    ).join('');
+    const exHTML = `<div class="ex-block">
+      <div class="ex-label">🎯 Ejercicios de práctica</div>
+      <div class="ex-list">${exItems}</div>
+    </div>`;
+
+    // Prompt section
+    const prompt = buildPrompt(l);
+    const esc = prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const promptHTML = `<div class="prompt-section">
+      <div class="prompt-label">📋 Prompt · clase magistral completa</div>
+      <button class="copy-btn" id="cb-${l.n}" onclick="copyPrompt(${l.n})">
+        <span>⧉</span> Copiar prompt completo
+      </button>
+      <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini · La IA evalúa tu resultado con captura o descripción</p>
+      <div class="done-row">
+        <button class="done-btn" id="done-${l.n}" onclick="toggleDone(${l.n})">○ Marcar completada</button>
+      </div>
+    </div>
+    <textarea class="prompt-text" id="pt-${l.n}">${esc}</textarea>`;
+
+    card.innerHTML = `
+      <div class="card-header" onclick="toggle(${l.n})">
+        <span class="lesson-num">${String(l.n).padStart(2,'0')}.</span>
+        <div class="card-title-wrap">
+          <div>
+            <div class="lesson-title">${l.title}</div>
+            <div class="lesson-sub">${l.sub}</div>
+          </div>
+          <span class="cat-badge">${l.badge}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">${refHTML}${dsHTML}${exHTML}${promptHTML}</div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggle(n) {
+  const card = document.getElementById('card-'+n);
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.lesson-card.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+
+function copyPrompt(n) {
+  const ta  = document.getElementById('pt-'+n);
+  const btn = document.getElementById('cb-'+n);
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    btn.innerHTML='<span>✓</span> Copiado';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML='<span>⧉</span> Copiar prompt completo';btn.classList.remove('copied');},2000);
+    const t=document.getElementById('toast');
+    t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+  });
+}
+
+function toggleDone(n) {
+  if(done[n]) delete done[n]; else done[n]=true;
+  localStorage.setItem('excel_done',JSON.stringify(done));
+  const card=document.getElementById('card-'+n);
+  const btn =document.getElementById('done-'+n);
+  if(done[n]){card.classList.add('done');if(btn)btn.textContent='✓ Completada';}
+  else{card.classList.remove('done');if(btn)btn.textContent='○ Marcar completada';}
+  updateProgress();
+}
+
+function updateProgress(){
+  const total=20,count=Object.keys(done).length;
+  const pct=(count/total*100).toFixed(0);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`${count} de ${total} lecciones completadas`;
+  document.getElementById('doneCount').textContent=`${count} / ${total} lecciones`;
+}
+
+function selectCat(btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');activeCat=btn.dataset.cat;applyFilters();
+}
+
+function applyFilters(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  let v=0;
+  document.querySelectorAll('.lesson-card').forEach(c=>{
+    const show=c.dataset.search.includes(q)&&(activeCat==='all'||c.dataset.cat===activeCat);
+    c.classList.toggle('hidden',!show);if(show)v++;
+  });
+  document.getElementById('counter').textContent=`${v} lecciones`;
+}
+</script>
+</body>
+</html>
