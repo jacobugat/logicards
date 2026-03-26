@@ -385,7 +385,7 @@
     .verb-prog-fill { height:100%; background:linear-gradient(90deg,#16a34a,#4ade80); border-radius:1px; transition:width .35s; }
     .verb-prog-text { font-family:var(--mono); font-size:0.7rem; color:var(--muted); white-space:nowrap; }
     .verb-prog-text span { color:#4ade80; }
-    .verb-table-wrap { border:1px solid var(--border2); border-radius:4px; overflow:hidden; }
+    .verb-table-wrap{ display:none !important;  border:1px solid var(--border2); border-radius:4px; overflow:hidden; }
     .verb-table { width:100%; border-collapse:collapse; font-size:0.92rem; }
     .verb-table thead tr { background:var(--card2); }
     .verb-table th { font-family:var(--mono); font-size:0.64rem; letter-spacing:.14em; text-transform:uppercase;
@@ -416,7 +416,7 @@
     .v-tr.v-learned .v-learn-btn { border-color:rgba(34,197,94,.5); color:#4ade80; background:rgba(34,197,94,.12); }
 
     /* ── Verb mobile cards ──────────────────────── */
-    .verb-cards-mobile { flex-direction:column; gap:.55rem; }
+    .verb-cards-mobile{flex-direction:column; gap:.55rem; display:flex; }
     .vmc { background:var(--card); border:1px solid var(--border2); border-radius:5px; padding:.9rem 1rem; transition:border-color .18s; }
     .vmc.v-learned { background:rgba(34,197,94,.05); border-color:rgba(34,197,94,.32); }
     .vmc.v-hidden  { display:none !important; }
@@ -463,12 +463,8 @@
       .vf-btn { font-size:0.76rem; padding:.3rem .65rem; }
       .verb-stats { font-size:0.78rem; margin-left:0; }
       .verb-prog-text { font-size:0.76rem; }
-      .verb-table-wrap   { display:none !important; }
-      .verb-cards-mobile { display:flex !important; }
     }
-    @media (min-width: 769px) {
-      .verb-cards-mobile { display:none !important; }
-    }
+    
     @media (max-width: 420px) {
       .card-title { font-size:1rem; }
       .tab-btn    { font-size:0.74rem; }
@@ -518,7 +514,7 @@
 
   <div class="tab-switcher">
     <button class="tab-btn active" data-tab="grammar" onclick="switchTab(this)">📚 Gramática · 32 temas</button>
-    <button class="tab-btn"        data-tab="verbs"   onclick="switchTab(this)">⚡ Verbos A2 · 129 verbos</button>
+    <button class="tab-btn"        data-tab="verbs"   onclick="switchTab(this)">⚡ Verbos A2 · 193 verbos</button>
   </div>
   <div id="panelGrammar" class="tab-panel active">
     <div class="cards-list">
@@ -2908,16 +2904,16 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
   <div id="panelVerbs" class="tab-panel">
     <div class="verb-panel-header">
       <input class="verb-search" id="verbSearch" type="text" placeholder="🔍  Buscar verbo o significado…" oninput="filterVerbs()"/>
-      <button class="vf-btn active" data-vf="all"     onclick="setVF(this)">Todos (129)</button>
+      <button class="vf-btn active" data-vf="all"     onclick="setVF(this)">Todos (193)</button>
       <button class="vf-btn"        data-vf="irreg"   onclick="setVF(this)">Irregulares</button>
       <button class="vf-btn"        data-vf="reg"     onclick="setVF(this)">Regulares</button>
       <button class="vf-btn"        data-vf="pending" onclick="setVF(this)">Pendientes</button>
       <button class="vf-btn"        data-vf="learned" onclick="setVF(this)">Aprendidos</button>
-      <span class="verb-stats"><span id="verbVisCount">129</span> verbos</span>
+      <span class="verb-stats"><span id="verbVisCount">193</span> verbos</span>
     </div>
     <div class="verb-progress-row">
       <div class="verb-prog-bar"><div class="verb-prog-fill" id="verbProgFill" style="width:0%"></div></div>
-      <span class="verb-prog-text" id="verbProgText"><span>0</span> / 129 aprendidos</span>
+      <span class="verb-prog-text" id="verbProgText"><span>0</span> / 193 aprendidos</span>
     </div>
     <div class="verb-table-wrap">
       <table class="verb-table">
@@ -3151,6 +3147,70 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
   ['update','updated','updated','reg','actualizar'],
   ['warn','warned','warned','reg','advertir'],
   ['wonder','wondered','wondered','reg','preguntarse / maravillarse'],
+  ['broadcast','broadcast','broadcast','irreg','transmitir / difundir'],
+  ['redo','redid','redone','irreg','rehacer'],
+  ['undo','undid','undone','irreg','deshacer'],
+  ['retell','retold','retold','irreg','volver a contar'],
+  ['kneel','knelt','knelt','irreg','arrodillarse'],
+  ['absorb','absorbed','absorbed','reg','absorber'],
+  ['achieve','achieved','achieved','reg','alcanzar / lograr'],
+  ['act','acted','acted','reg','actuar'],
+  ['apologize','apologized','apologized','reg','disculparse'],
+  ['bake','baked','baked','reg','hornear'],
+  ['belong','belonged','belonged','reg','pertenecer'],
+  ['calculate','calculated','calculated','reg','calcular'],
+  ['celebrate','celebrated','celebrated','reg','celebrar'],
+  ['chat','chatted','chatted','reg','chatear / platicar'],
+  ['combine','combined','combined','reg','combinar'],
+  ['connect','connected','connected','reg','conectar'],
+  ['contact','contacted','contacted','reg','contactar'],
+  ['continue','continued','continued','reg','continuar'],
+  ['develop','developed','developed','reg','desarrollar'],
+  ['discover','discovered','discovered','reg','descubrir'],
+  ['encourage','encouraged','encouraged','reg','animar / motivar'],
+  ['experience','experienced','experienced','reg','experimentar'],
+  ['express','expressed','expressed','reg','expresar'],
+  ['identify','identified','identified','reg','identificar'],
+  ['impact','impacted','impacted','reg','impactar'],
+  ['influence','influenced','influenced','reg','influir'],
+  ['inform','informed','informed','reg','informar'],
+  ['involve','involved','involved','reg','involucrar'],
+  ['motivate','motivated','motivated','reg','motivar'],
+  ['negotiate','negotiated','negotiated','reg','negociar'],
+  ['prevent','prevented','prevented','reg','prevenir'],
+  ['produce','produced','produced','reg','producir'],
+  ['promote','promoted','promoted','reg','promover'],
+  ['protect','protected','protected','reg','proteger'],
+  ['publish','published','published','reg','publicar'],
+  ['repair','repaired','repaired','reg','reparar'],
+  ['report','reported','reported','reg','reportar'],
+  ['require','required','required','reg','requerir'],
+  ['research','researched','researched','reg','investigar'],
+  ['respond','responded','responded','reg','responder'],
+  ['review','reviewed','reviewed','reg','revisar / reseñar'],
+  ['schedule','scheduled','scheduled','reg','programar / agendar'],
+  ['select','selected','selected','reg','seleccionar'],
+  ['waste','wasted','wasted','reg','desperdiciar'],
+  ['raise','raised','raised','reg','levantar / aumentar'],
+  ['press','pressed','pressed','reg','presionar / apretar'],
+  ['compliment','complimented','complimented','reg','halagar / felicitar'],
+  ['criticize','criticized','criticized','reg','criticar'],
+  ['confuse','confused','confused','reg','confundir'],
+  ['interrupt','interrupted','interrupted','reg','interrumpir'],
+  ['interview','interviewed','interviewed','reg','entrevistar'],
+  ['loan','loaned','loaned','reg','prestar (dinero)'],
+  ['grab','grabbed','grabbed','reg','agarrar'],
+  ['hug','hugged','hugged','reg','abrazar'],
+  ['nod','nodded','nodded','reg','asentir con la cabeza'],
+  ['wave','waved','waved','reg','saludar con la mano'],
+  ['stare','stared','stared','reg','mirar fijamente'],
+  ['whisper','whispered','whispered','reg','susurrar'],
+  ['shout','shouted','shouted','reg','gritar'],
+  ['sigh','sighed','sighed','reg','suspirar'],
+  ['bow','bowed','bowed','reg','inclinarse / hacer reverencia'],
+  ['clap','clapped','clapped','reg','aplaudir'],
+  ['nap','napped','napped','reg','dormir la siesta'],
+  ['crash','crashed','crashed','reg','chocar / fallar'],
 ];
 
     var VB_TOTAL = VERBS.length;

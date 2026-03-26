@@ -377,8 +377,6 @@
       .verb-prog-text { font-size: 0.76rem; }
       /* switch desktop table → mobile cards */
       /* verb: hide table, show cards */
-      .verb-table-wrap   { display: none !important; }
-      .verb-cards-mobile { display: flex !important; }
     }
     /* ── Small mobile ────────────── */
     @media (max-width: 420px) {
@@ -501,7 +499,7 @@
     .verb-prog-fill{height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:1px;transition:width .35s}
     .verb-prog-text{font-family:var(--mono);font-size: 0.75rem;color:var(--muted);white-space:nowrap}
     .verb-prog-text span{color:#4ade80}
-    .verb-table-wrap{border:1px solid var(--border2);border-radius:4px;overflow:hidden}
+    .verb-table-wrap{ display:none !important; border:1px solid var(--border2);border-radius:4px;overflow:hidden}
     .verb-table{width:100%;border-collapse:collapse;font-size: 1.04rem}
     .verb-table thead tr{background:var(--card2)}
     .verb-table th{font-family:var(--mono);font-size: 0.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.55rem .8rem;text-align:left;border-bottom:1px solid var(--border2);font-weight:400}
@@ -528,12 +526,9 @@
 
   
     /* ── VERB MOBILE CARDS ─────────────────────── */
-    .verb-cards-mobile { flex-direction: column; gap: .55rem; }
+    .verb-cards-mobile{flex-direction: column; gap: .55rem; display:flex; }
 
     /* hide mobile cards on desktop */
-    @media (min-width: 769px) {
-      .verb-cards-mobile { display: none !important; }
-    }
 
     .vmc {
       background: var(--card); border: 1px solid var(--border2);

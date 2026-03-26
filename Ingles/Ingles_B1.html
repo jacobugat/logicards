@@ -62,46 +62,46 @@
     }
     .nav-left { display: flex; align-items: center; gap: 1rem; }
     .back-link {
-      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      font-family: var(--mono); font-size: 0.84rem; letter-spacing: 0.1em;
       color: var(--muted); text-decoration: none;
       display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
     }
     .back-link:hover { color: var(--green); }
-    .nav-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text); }
+    .nav-title { font-family: var(--mono); font-size: 0.97rem; letter-spacing: 0.08em; color: var(--text); }
     .nav-badge {
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--green); border: 1px solid rgba(15,186,90,0.4);
       background: var(--green-dim); padding: 0.2rem 0.6rem; border-radius: 2px;
     }
 
     header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
     .level-tag {
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--green); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;
     }
     .level-tag::before {
       content: ''; display: block; width: 24px; height: 1px; background: var(--green); opacity: 0.5;
     }
     h1 {
-      font-family: var(--sans); font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-family: var(--sans); font-size: clamp(2.6rem, 6vw, 4.2rem);
       font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.8rem;
     }
     h1 span { color: var(--green); }
-    .header-desc { color: var(--muted); font-size: 0.9rem; max-width: 520px; line-height: 1.7; }
+    .header-desc { color: var(--muted); font-size: 1.17rem; max-width: 520px; line-height: 1.7; }
     .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .meta-item {
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.81rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
     }
-    .meta-item::before { content: '▪'; color: var(--green); font-size: 0.5rem; }
+    .meta-item::before { content: '▪'; color: var(--green); font-size: 0.65rem; }
 
     .instructions {
       background: var(--green-dim); border: 1px solid rgba(15,186,90,0.25); border-radius: 6px;
       padding: 1.2rem 1.4rem; margin-bottom: 2.5rem;
       display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
     }
-    .instructions-icon { font-size: 1.2rem; line-height: 1; margin-top: 0.1rem; }
-    .instructions p { font-size: 0.85rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
+    .instructions-icon { font-size: 1.56rem; line-height: 1; margin-top: 0.1rem; }
+    .instructions p { font-size: 1.1rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
     .instructions strong { color: var(--green); font-weight: 600; }
 
     .cards-list { display: flex; flex-direction: column; gap: 0.6rem; }
@@ -119,14 +119,14 @@
       cursor: pointer; user-select: none; transition: background 0.15s;
     }
     .card-header:hover { background: var(--card2); }
-    .card-num { font-family: var(--mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.06em; min-width: 2.4rem; }
-    .card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .card-num { font-family: var(--mono); font-size: 0.94rem; color: var(--green); letter-spacing: 0.06em; min-width: 2.4rem; }
+    .card-title { font-size: 1.24rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
     .card-right { display: flex; align-items: center; gap: 0.8rem; }
     .card-tag {
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.71rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--muted); border: 1px solid var(--border2); padding: 0.2rem 0.5rem; border-radius: 2px;
     }
-    .card-chevron { color: var(--muted); font-size: 0.65rem; transition: transform 0.25s, color 0.2s; }
+    .card-chevron { color: var(--muted); font-size: 0.84rem; transition: transform 0.25s, color 0.2s; }
     .flashcard.open .card-chevron { transform: rotate(180deg); color: var(--green); }
 
     .card-body {
@@ -136,7 +136,7 @@
     .flashcard.open .card-body { display: block; }
 
     .grammar-label {
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.71rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--green); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
     }
     .grammar-label::after { content: ''; flex: 1; height: 1px; background: rgba(15,186,90,0.2); }
@@ -145,7 +145,7 @@
       display: flex; align-items: center; justify-content: center; gap: 0.6rem;
       width: 100%; padding: 0.85rem 1.2rem;
       background: var(--green-dim); border: 1px solid rgba(15,186,90,0.35); border-radius: 4px;
-      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      color: var(--text); font-family: var(--mono); font-size: 0.91rem; letter-spacing: 0.1em;
       cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s;
       text-transform: uppercase;
     }
@@ -154,8 +154,8 @@
     }
     .copy-btn:active { transform: translateY(0); }
     .copy-btn.copied { background: rgba(34,120,34,0.2); border-color: rgba(34,200,34,0.5); color: #7defa0; }
-    .copy-icon { font-size: 0.9rem; }
-    .copy-hint { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--muted); text-align: center; margin-top: 0.7rem; }
+    .copy-icon { font-size: 1.17rem; }
+    .copy-hint { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted); text-align: center; margin-top: 0.7rem; }
 
     .prompt-text { display: none; }
 
@@ -163,7 +163,7 @@
       position: fixed; bottom: 2rem; left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: #111111; border: 1px solid rgba(15,186,90,0.4);
-      color: var(--text); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      color: var(--text); font-family: var(--mono); font-size: 0.91rem; letter-spacing: 0.08em;
       padding: 0.7rem 1.4rem; border-radius: 4px;
       opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999;
     }
@@ -173,14 +173,103 @@
       margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2);
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
     }
-    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo { font-family: var(--mono); font-size: 0.91rem; color: var(--muted); }
     .footer-logo span { color: var(--green); }
-    .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
+    .footer-copy { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--muted); }
 
-    @media (max-width: 500px) {
-      .card-tag { display: none; }
-      .card-header { padding: 1rem; gap: 0.6rem; }
-      .card-body { padding: 1rem; }
+    /* ── Done ─── */
+    .flashcard.done{border-color:rgba(34,197,94,.35)!important;background:rgba(34,197,94,.04)}
+    .flashcard.done .card-header{background:rgba(34,197,94,.05)}
+    .flashcard.done .card-title{opacity:.75}
+    .done-badge{font-family:var(--mono);font-size:0.67rem;letter-spacing:.14em;text-transform:uppercase;
+      color:#4ade80;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);
+      border-radius:2px;padding:.12rem .45rem;display:none;white-space:nowrap}
+    .flashcard.done .done-badge{display:inline-flex;align-items:center;gap:.25rem}
+    .done-btn{display:flex;align-items:center;justify-content:center;gap:.45rem;width:100%;
+      padding:.58rem 1rem;margin-top:.55rem;background:transparent;
+      border:1px solid rgba(255,255,255,.08);border-radius:4px;color:rgba(255,255,255,.4);
+      font-family:var(--mono);font-size:0.74rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+    .done-btn:hover{border-color:rgba(34,197,94,.45);color:#4ade80;background:rgba(34,197,94,.07)}
+    .flashcard.done .done-btn{border-color:rgba(34,197,94,.45);color:#4ade80;background:rgba(34,197,94,.1)}
+    /* ── Progress ─── */
+    .progress-wrap{position:sticky;top:58px;z-index:90;background:rgba(8,8,8,.95);backdrop-filter:blur(8px);
+      padding:.5rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:.8rem}
+    .progress-bar-outer{flex:1;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+    .progress-bar-inner{height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:2px;transition:width .4s}
+    .progress-text{font-family:var(--mono);font-size:0.7rem;letter-spacing:.08em;color:rgba(255,255,255,.3);white-space:nowrap}
+    .progress-text span{color:#4ade80}
+    /* ── Tabs ─── */
+    .tab-switcher{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.4rem}
+    .tab-btn{font-family:var(--mono);font-size:0.74rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.42rem 1rem;border-radius:3px;border:1px solid var(--border2);
+      background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+    .tab-btn:hover{border-color:var(--green);color:var(--green)}
+    .tab-btn.active{background:var(--green);border-color:var(--green);color:#fff}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    /* ── Verb panel ─── */
+    .verb-panel-header{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-bottom:.8rem}
+    .verb-search{flex:1;min-width:160px;background:var(--card);border:1px solid var(--border2);
+      border-radius:3px;padding:.5rem .9rem;color:var(--text);font-family:var(--mono);
+      font-size:0.8rem;outline:none;transition:border-color .2s}
+    .verb-search:focus{border-color:var(--green)}
+    .verb-search::placeholder{color:var(--muted)}
+    .vf-btn{font-family:var(--mono);font-size:0.66rem;letter-spacing:.08em;text-transform:uppercase;
+      padding:.25rem .65rem;border-radius:2px;border:1px solid var(--border2);
+      background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+    .vf-btn:hover{border-color:rgba(255,255,255,.25);color:var(--text)}
+    .vf-btn.active{background:var(--card2);border-color:rgba(255,255,255,.2);color:var(--text)}
+    .verb-stats{font-family:var(--mono);font-size:0.7rem;color:var(--muted);margin-left:auto}
+    .verb-stats span{color:#4ade80}
+    .verb-progress-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+    .verb-prog-bar{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden}
+    .verb-prog-fill{height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:1px;transition:width .35s}
+    .verb-prog-text{font-family:var(--mono);font-size:0.7rem;color:var(--muted);white-space:nowrap}
+    .verb-prog-text span{color:#4ade80}
+    /* ── Verb cards ─── */
+    .verb-cards-mobile{display:flex;flex-direction:column;gap:.55rem}
+    .vmc{background:var(--card);border:1px solid var(--border2);border-radius:5px;padding:.9rem 1rem;transition:border-color .18s}
+    .vmc:hover{border-color:rgba(15,186,90,.2)}
+    .vmc.v-learned{background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.32)}
+    .vmc.v-hidden{display:none!important}
+    .vmc-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;margin-bottom:.5rem}
+    .vmc-base{font-size:1.1rem;font-weight:700;color:var(--text)}
+    .vmc-meaning{font-size:.9rem;color:var(--muted)}
+    .vmc-type{font-family:var(--mono);font-size:0.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .42rem;border-radius:2px;white-space:nowrap}
+    .vmc-type.irreg{color:var(--green);border:1px solid rgba(15,186,90,.3);background:var(--green-dim)}
+    .vmc-type.reg{color:rgba(134,239,172,.85);border:1px solid rgba(134,239,172,.25);background:rgba(134,239,172,.08)}
+    .vmc-type.phrasal{color:#f59e0b;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08)}
+    .vmc-type.prep{color:#a78bfa;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.08)}
+    .vmc-type.adjprep{color:#fb923c;border:1px solid rgba(251,146,60,.3);background:rgba(251,146,60,.08)}
+    .vmc-row{display:flex;gap:.3rem;align-items:baseline;margin-bottom:.22rem}
+    .vmc-lbl{font-family:var(--mono);font-size:0.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);min-width:130px}
+    .vmc-val{font-family:var(--mono);font-size:0.84rem;color:rgba(228,242,232,.72)}
+    .vmc-note{font-size:0.8rem;color:var(--muted);margin-bottom:.3rem;font-style:italic}
+    .vmc-actions{display:flex;gap:.5rem;margin-top:.75rem}
+    .vmc-practice{flex:1;font-family:var(--mono);font-size:0.76rem;letter-spacing:.07em;text-transform:uppercase;
+      padding:.55rem .7rem;border-radius:3px;border:1px solid rgba(15,186,90,.35);
+      background:var(--green-dim);color:rgba(228,242,232,.85);cursor:pointer;transition:all .18s}
+    .vmc-practice:hover{border-color:var(--green);color:#fff}
+    .vmc-practice.copied{border-color:rgba(34,197,94,.45);color:#4ade80;background:rgba(34,197,94,.1)}
+    .vmc-learn{font-family:var(--mono);font-size:0.76rem;letter-spacing:.07em;text-transform:uppercase;
+      padding:.55rem .9rem;border-radius:3px;border:1px solid var(--border2);
+      background:transparent;color:var(--muted);cursor:pointer;transition:all .18s}
+    .vmc-learn:hover{border-color:rgba(34,197,94,.45);color:#4ade80}
+    .vmc.v-learned .vmc-learn{border-color:rgba(34,197,94,.5);color:#4ade80;background:rgba(34,197,94,.12)}
+    /* ── Responsive ─── */
+    @media(max-width:768px){
+      nav{padding:.65rem .9rem}
+      .nav-title{font-size:1rem}
+      .card-header{padding:.85rem .9rem;gap:.45rem}
+      .card-title{font-size:1.1rem}
+      .card-body{padding:.85rem .9rem}
+      .card-tag{display:none}
+      .copy-btn{font-size:0.88rem;padding:.88rem 1rem}
+      .done-btn{font-size:0.82rem}
+      .tab-btn{font-size:0.78rem;padding:.38rem .75rem}
+      .verb-search{font-size:0.88rem}
+      .vf-btn{font-size:0.74rem}
+      .vmc-base{font-size:1rem}
     }
   </style>
 </head>
@@ -193,6 +282,8 @@
     </div>
     <span class="nav-badge">32 temas</span>
   </nav>
+
+  <div class="progress-wrap" id="progressWrap"><div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div><span class="progress-text" id="progressText"><span>0</span> / 32 lecciones</span></div>
 
   <div class="wrapper">
     <header>
@@ -216,12 +307,18 @@
       </p>
     </div>
 
+  <div class="tab-switcher">
+    <button class="tab-btn active" data-tab="grammar" onclick="switchTab(this)">📚 Gramática · 32 temas</button>
+    <button class="tab-btn" data-tab="verbs" onclick="switchTab(this)">⚡ Verbos B1 · 147</button>
+  </div>
+  <div id="panelGrammar" class="tab-panel active">
     <div class="cards-list">
       <div class="flashcard" id="card-1">
         <div class="card-header" onclick="toggle(1)">
           <span class="card-num">01.</span>
           <span class="card-title">Relative pronouns</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -232,6 +329,7 @@
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-1">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Relative pronouns" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -294,6 +392,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">02.</span>
           <span class="card-title">It clauses + adverbial clauses with when</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -304,6 +403,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-2">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "It clauses + adverbial clauses with when" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -365,6 +465,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">03.</span>
           <span class="card-title">Gerund phrases as subjects and objects</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -375,6 +476,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-3">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Gerund phrases as subjects and objects" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -442,6 +544,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">04.</span>
           <span class="card-title">Comparisons</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -452,6 +555,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-4">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Comparisons" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -522,6 +626,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">05.</span>
           <span class="card-title">Requests with modals, if clauses, and gerunds</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -532,6 +637,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-5">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Requests with modals, if clauses, and gerunds" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -594,6 +700,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">06.</span>
           <span class="card-title">Indirect requests</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -604,6 +711,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-6">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Indirect requests" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -681,6 +789,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">07.</span>
           <span class="card-title">Past continuous vs. simple past</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -691,6 +800,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-7">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Past continuous vs. simple past" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -751,6 +861,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">08.</span>
           <span class="card-title">Past perfect</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -761,6 +872,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-8">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Past perfect" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -826,6 +938,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">09.</span>
           <span class="card-title">Noun phrases containing relative clauses</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -836,6 +949,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-9">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Noun phrases containing relative clauses" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -897,6 +1011,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">10.</span>
           <span class="card-title">Expectations</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -907,6 +1022,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-10">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Expectations" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -969,6 +1085,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">11.</span>
           <span class="card-title">Describing problems 1</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -979,6 +1096,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-11">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Describing problems 1" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1051,6 +1169,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">12.</span>
           <span class="card-title">Describing problems 2</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1061,6 +1180,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-12">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Describing problems 2" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1133,6 +1253,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">13.</span>
           <span class="card-title">Passive with prepositions</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1143,6 +1264,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-13">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Passive with prepositions" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1200,6 +1322,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">14.</span>
           <span class="card-title">Infinitive clauses and phrases</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1210,6 +1333,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-14">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Infinitive clauses and phrases" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1266,6 +1390,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">15.</span>
           <span class="card-title">Would rather and would prefer</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1276,6 +1401,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-15">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Would rather and would prefer" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1345,6 +1471,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">16.</span>
           <span class="card-title">By + gerund to describe how to do things</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1355,6 +1482,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-16">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "By + gerund to describe how to do things" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1412,6 +1540,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">17.</span>
           <span class="card-title">Get or have something done</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1422,6 +1551,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-17">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Get or have something done" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1498,6 +1628,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">18.</span>
           <span class="card-title">Making suggestions</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1508,6 +1639,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-18">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Making suggestions" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1583,6 +1715,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">19.</span>
           <span class="card-title">Predicting the future with Will</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1593,6 +1726,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-19">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Predicting the future with Will" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1655,6 +1789,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">20.</span>
           <span class="card-title">Referring to time in the past</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1665,6 +1800,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-20">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Referring to time in the past" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1731,6 +1867,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">21.</span>
           <span class="card-title">Time clauses</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1741,6 +1878,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-21">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Time clauses" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1801,6 +1939,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">22.</span>
           <span class="card-title">Expressing regret and describing hypothetical situations</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1811,6 +1950,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-22">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Expressing regret and describing hypothetical situations" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1872,6 +2012,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">23.</span>
           <span class="card-title">Describing purpose</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1882,6 +2023,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-23">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Describing purpose" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -1941,6 +2083,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">24.</span>
           <span class="card-title">Giving reasons</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -1951,6 +2094,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-24">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Giving reasons" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2012,6 +2156,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">25.</span>
           <span class="card-title">Past modals for degrees of certainty</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2022,6 +2167,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-25">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Past modals for degrees of certainty" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2083,6 +2229,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">26.</span>
           <span class="card-title">Past modals for judgments and suggestions</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2093,6 +2240,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-26">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Past modals for judgments and suggestions" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2151,6 +2299,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">27.</span>
           <span class="card-title">The passive to describe process</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2161,6 +2310,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-27">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "The passive to describe process" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2219,6 +2369,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">28.</span>
           <span class="card-title">Defining and non-defining relative clauses</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2229,6 +2380,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-28">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Defining and non-defining relative clauses" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2293,6 +2445,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">29.</span>
           <span class="card-title">Giving recommendations and opinions</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2303,6 +2456,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-29">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Giving recommendations and opinions" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2365,6 +2519,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">30.</span>
           <span class="card-title">Tag questions for opinions</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2375,6 +2530,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-30">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Tag questions for opinions" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2441,6 +2597,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">31.</span>
           <span class="card-title">Talking about past accomplishments</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2451,6 +2608,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-31">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Talking about past accomplishments" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2515,6 +2673,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
           <span class="card-num">32.</span>
           <span class="card-title">Describing goals and possible future accomplishments</span>
           <div class="card-right">
+            <span class="done-badge">✓ Completada</span>
             <span class="card-tag">Gramática</span>
             <span class="card-chevron">▼</span>
           </div>
@@ -2525,6 +2684,7 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
             <span class="copy-icon">⧉</span> Copiar prompt
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" onclick="toggleDone(this)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-32">Eres un profesor universitario de inglés con especialización en gramática y comunicación de nivel B1. Tu misión hoy es enseñarme el tema "Describing goals and possible future accomplishments" con rigor académico, ejemplos auténticos y metodología de clase magistral. Explicas y corriges en español, pero todos los ejemplos, ejercicios y diálogos son en inglés.
 
@@ -2589,6 +2749,32 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
     </footer>
   </div>
 
+  </div><!-- /panelGrammar -->
+
+
+  <!-- VERB PANEL B1 -->
+  <div id="panelVerbs" class="tab-panel">
+    <div class="verb-panel-header">
+      <input class="verb-search" id="verbSearch" type="text" placeholder="🔍  Buscar verbo, phrasal verb o expresión…" oninput="filterVerbs()"/>
+      <button class="vf-btn active" data-vf="all"     onclick="setVF(this)">Todos (147)</button>
+      <button class="vf-btn"        data-vf="irreg"   onclick="setVF(this)">Irregulares (1)</button>
+      <button class="vf-btn"        data-vf="reg"     onclick="setVF(this)">Regulares (56)</button>
+      <button class="vf-btn"        data-vf="phrasal" onclick="setVF(this)">Phrasal (41)</button>
+      <button class="vf-btn"        data-vf="prep"    onclick="setVF(this)">Prep. (23)</button>
+      <button class="vf-btn"        data-vf="adjprep" onclick="setVF(this)">Adj+Prep (26)</button>
+      <button class="vf-btn"        data-vf="pending" onclick="setVF(this)">Pendientes</button>
+      <button class="vf-btn"        data-vf="learned" onclick="setVF(this)">Aprendidos</button>
+      <span class="verb-stats"><span id="verbVisCount">147</span> entradas</span>
+    </div>
+    <div class="verb-progress-row">
+      <div class="verb-prog-bar"><div class="verb-prog-fill" id="verbProgFill" style="width:0%"></div></div>
+      <span class="verb-prog-text" id="verbProgText"><span>0</span> / 147 aprendidos</span>
+    </div>
+    <div class="verb-cards-mobile" id="verbCardsMobile"></div>
+  </div>
+
+</div><!-- /wrapper -->
+
   <div class="toast" id="toast">&#10003; Prompt copiado &mdash; pégalo en tu IA</div>
 
   <script>
@@ -2617,6 +2803,272 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 2500);
     }
+
+    function switchTab(btn){
+      document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      var tab=btn.dataset.tab;
+      document.getElementById('panelGrammar').classList.toggle('active',tab==='grammar');
+      document.getElementById('panelVerbs').classList.toggle('active',tab==='verbs');
+    }
+    var LS_DONE='logicards_b1_done',LS_VERBS='logicards_b1_vb_learned',TOTAL_CARDS=32;
+    function getDone(){try{return JSON.parse(localStorage.getItem(LS_DONE)||'[]');}catch(e){return [];}}
+    function saveDone(a){localStorage.setItem(LS_DONE,JSON.stringify(a));}
+    function getCardNum(btn){var el=btn;while(el&&!el.id.startsWith('card-'))el=el.parentElement;return el?parseInt(el.id.replace('card-','')):null;}
+    function toggleDone(btn){
+      var n=getCardNum(btn);if(!n)return;
+      var card=document.getElementById('card-'+n),done=getDone(),idx=done.indexOf(n);
+      if(idx===-1){done.push(n);card.classList.add('done');btn.textContent='✓ Completada';}
+      else{done.splice(idx,1);card.classList.remove('done');btn.textContent='○ Marcar como completada';}
+      saveDone(done);updateProgress();
+    }
+    function loadDone(){
+      getDone().forEach(function(n){
+        var card=document.getElementById('card-'+n),btn=card&&card.querySelector('.done-btn');
+        if(card)card.classList.add('done');if(btn)btn.textContent='✓ Completada';
+      });updateProgress();
+    }
+    function updateProgress(){
+      var count=getDone().length,pct=Math.round(count/TOTAL_CARDS*100);
+      document.getElementById('progressBar').style.width=pct+'%';
+      document.getElementById('progressText').innerHTML='<span>'+count+'</span> / '+TOTAL_CARDS+' lecciones';
+    }
+    const VERBS = [
+  ['bring up','brought up','sacar un tema / criar a alguien','phrasal','Ej: She brought up an interesting point.'],
+  ['break down','broke down','averiarse / descomponerse / desmoronarse','phrasal','Ej: The car broke down on the highway.'],
+  ['break out','broke out','estallar / escaparse de repente','phrasal','Ej: A fire broke out in the building.'],
+  ['carry out','carried out','llevar a cabo / realizar una tarea','phrasal','Ej: They carried out an experiment.'],
+  ['come across','came across','encontrarse con algo / dar cierta impresión','phrasal','Ej: I came across an old photo.'],
+  ['come up with','came up with','ocurrírsele algo / proponer una idea','phrasal','Ej: She came up with a great solution.'],
+  ['deal with','dealt with','tratar / ocuparse de / manejar una situación','phrasal','Ej: How do you deal with stress?'],
+  ['drop out','dropped out','abandonar estudios o una actividad','phrasal','Ej: He dropped out of university.'],
+  ['end up','ended up','terminar / acabar haciendo algo inesperado','phrasal','Ej: We ended up staying late.'],
+  ['fall out','fell out','pelearse / llevarse mal con alguien','phrasal','Ej: They fell out over money.'],
+  ['figure out','figured out','entender / descifrar / resolver algo','phrasal','Ej: I finally figured out the problem.'],
+  ['get along','got along','llevarse bien con alguien','phrasal','Ej: They get along really well.'],
+  ['get away with','got away with','salirse con la suya / escapar consecuencias','phrasal','Ej: He got away with cheating.'],
+  ['get over','got over','superar / recuperarse de algo difícil','phrasal','Ej: It took time to get over the loss.'],
+  ['grow up','grew up','crecer / hacerse adulto','phrasal','Ej: I grew up in a small town.'],
+  ['look into','looked into','investigar / examinar más a fondo','phrasal','Ej: The police looked into the case.'],
+  ['look up to','looked up to','admirar / respetar a alguien','phrasal','Ej: She looks up to her mentor.'],
+  ['make up','made up','inventar / reconciliarse / componer algo','phrasal','Ej: He made up a story. They made up after the fight.'],
+  ['pick up','picked up','recoger / mejorar / aprender informalmente','phrasal','Ej: I picked up Spanish quickly.'],
+  ['point out','pointed out','señalar / destacar un hecho importante','phrasal','Ej: She pointed out a mistake.'],
+  ['run into','ran into','encontrarse con alguien por casualidad','phrasal','Ej: I ran into my old teacher yesterday.'],
+  ['run out of','ran out of','quedarse sin algo / agotar existencias','phrasal','Ej: We ran out of milk.'],
+  ['set up','set up','establecer / montar / configurar algo','phrasal','Ej: They set up a new company.'],
+  ['stand out','stood out','destacarse / sobresalir entre los demás','phrasal','Ej: Her work always stands out.'],
+  ['take up','took up','empezar un hobby / ocupar espacio o tiempo','phrasal','Ej: She took up yoga last year.'],
+  ['turn down','turned down','rechazar una oferta / bajar el volumen','phrasal','Ej: He turned down the job offer.'],
+  ['turn out','turned out','resultar / salir de cierta manera','phrasal','Ej: The party turned out great.'],
+  ['work out','worked out','resolverse / hacer ejercicio / calcular','phrasal','Ej: Things will work out fine.'],
+  ['bring about','brought about','provocar / causar un cambio importante','phrasal','Ej: The policy brought about major changes.'],
+  ['call off','called off','cancelar algo que estaba planeado','phrasal','Ej: They called off the meeting.'],
+  ['catch up on','caught up on','ponerse al día con algo atrasado','phrasal','Ej: I need to catch up on my reading.'],
+  ['look back on','looked back on','mirar en retrospectiva / recordar','phrasal','Ej: I look back on those years fondly.'],
+  ['put across','put across','comunicar / transmitir una idea claramente','phrasal','Ej: She put her point across clearly.'],
+  ['take on','took on','asumir responsabilidades / contratar','phrasal','Ej: He took on too much work.'],
+  ['catch up with','caught up with','alcanzar a alguien / ponerse al día','phrasal','Ej: I finally caught up with my old friend.'],
+  ['come up against','came up against','enfrentarse a un obstáculo inesperado','phrasal','Ej: We came up against a lot of resistance.'],
+  ['get on with','got on with','llevarse bien / continuar con algo pendiente','phrasal','Ej: Get on with your work, please.'],
+  ['get out of','got out of','escapar / evitar una obligación','phrasal','Ej: She got out of doing the presentation.'],
+  ['go back on','went back on','no cumplir una promesa / retractarse','phrasal','Ej: He went back on his word.'],
+  ['look out for','looked out for','estar atento a / cuidar de alguien','phrasal','Ej: Look out for icy roads.'],
+  ['stand up for','stood up for','defender a alguien o una causa','phrasal','Ej: She stood up for her colleague.'],
+  ['account for','accounted for','explicar / justificar algo','prep','Ej: How do you account for the difference?'],
+  ['adjust to','adjusted to','adaptarse a una nueva situación','prep','Ej: It takes time to adjust to a new culture.'],
+  ['agree with','agreed with','estar de acuerdo con alguien o algo','prep','Ej: I agree with your point.'],
+  ['apologize for','apologized for','disculparse por algo hecho','prep','Ej: She apologized for being late.'],
+  ['apply for','applied for','solicitar un trabajo, beca o visa','prep','Ej: I applied for a scholarship.'],
+  ['approve of','approved of','aprobar / estar a favor de algo','prep','Ej: Do you approve of the new rules?'],
+  ['believe in','believed in','creer en algo / confiar firmemente','prep','Ej: I believe in hard work.'],
+  ['benefit from','benefited from','beneficiarse de algo','prep','Ej: Everyone benefits from exercise.'],
+  ['care about','cared about','importarle a uno algo / preocuparse','prep','Ej: She really cares about the environment.'],
+  ['consist of','consisted of','consistir en / estar compuesto de','prep','Ej: The team consists of five members.'],
+  ['cope with','coped with','lidiar con / enfrentar una situación difícil','prep','Ej: How do you cope with pressure?'],
+  ['depend on','depended on','depender de alguien o algo','prep','Ej: Success depends on effort.'],
+  ['dream of','dreamed of','soñar con algo / aspirar a algo','prep','Ej: She dreams of living abroad.'],
+  ['insist on','insisted on','insistir en hacer algo','prep','Ej: He insisted on paying the bill.'],
+  ['interfere with','interfered with','interferir con / interrumpir algo','prep','Ej: Noise interferes with concentration.'],
+  ['object to','objected to','oponerse a / estar en contra de algo','prep','Ej: She objected to the proposal.'],
+  ['participate in','participated in','participar en una actividad o evento','prep','Ej: Everyone participated in the discussion.'],
+  ['refer to','referred to','referirse a / hacer referencia a algo','prep','Ej: What are you referring to?'],
+  ['result in','resulted in','resultar en / llevar a una consecuencia','prep','Ej: Hard work results in success.'],
+  ['specialize in','specialized in','especializarse en un campo','prep','Ej: She specializes in tax law.'],
+  ['succeed in','succeeded in','tener éxito en hacer algo','prep','Ej: He succeeded in passing the exam.'],
+  ['suffer from','suffered from','sufrir de / padecer una condición','prep','Ej: She suffers from anxiety.'],
+  ['take part in','took part in','participar en / tomar parte','prep','Ej: Did you take part in the contest?'],
+  ['be aware of','—','ser consciente de algo','adjprep','Ej: Are you aware of the risks?'],
+  ['be capable of','—','ser capaz de hacer algo','adjprep','Ej: She is capable of great things.'],
+  ['be disappointed with','—','estar decepcionado con algo','adjprep','Ej: I was disappointed with the outcome.'],
+  ['be familiar with','—','estar familiarizado con algo','adjprep','Ej: Are you familiar with this software?'],
+  ['be responsible for','—','ser responsable de algo','adjprep','Ej: Who is responsible for this decision?'],
+  ['be satisfied with','—','estar satisfecho con algo','adjprep','Ej: Are you satisfied with the results?'],
+  ['be similar to','—','ser similar a algo','adjprep','Ej: This is similar to what we did before.'],
+  ['be surprised at','—','estar sorprendido por algo','adjprep','Ej: I was surprised at his reaction.'],
+  ['be angry about','—','estar enojado por algo','adjprep','Ej: She was angry about the decision.'],
+  ['be committed to','—','estar comprometido con algo','adjprep','Ej: He is committed to the project.'],
+  ['be concerned about','—','estar preocupado por algo','adjprep','Ej: I am concerned about the results.'],
+  ['be confident in','—','tener confianza en algo o alguien','adjprep','Ej: She is confident in her abilities.'],
+  ['be enthusiastic about','—','estar entusiasmado con algo','adjprep','Ej: She is enthusiastic about the idea.'],
+  ['be fond of','—','ser aficionado a / tener cariño a algo','adjprep','Ej: He is fond of classical music.'],
+  ['be good at','—','ser bueno en algo','adjprep','Ej: She is very good at public speaking.'],
+  ['be interested in','—','estar interesado en algo','adjprep','Ej: I am interested in learning more.'],
+  ['be involved in','—','estar involucrado en algo','adjprep','Ej: He is involved in several projects.'],
+  ['be keen on','—','tener mucho interes en algo','adjprep','Ej: She is keen on learning languages.'],
+  ['be nervous about','—','estar nervioso por algo proximo','adjprep','Ej: I am nervous about the interview.'],
+  ['be proud of','—','estar orgulloso de algo o alguien','adjprep','Ej: She is proud of her achievements.'],
+  ['be scared of','—','tener miedo de algo','adjprep','Ej: He is scared of flying.'],
+  ['be used to','—','estar acostumbrado a algo','adjprep','Ej: I am used to waking up early.'],
+  ['be worried about','—','estar preocupado por algo','adjprep','Ej: I am worried about the presentation.'],
+  ['be excited about','—','estar emocionado por algo','adjprep','Ej: I am so excited about the trip.'],
+  ['be tired of','—','estar cansado o harto de algo','adjprep','Ej: I am tired of waiting.'],
+  ['be afraid of','—','tener miedo de algo','adjprep','Ej: She is afraid of heights.'],
+  ['alter','altered / altered','alterar / modificar algo existente','reg',''],
+  ['anticipate','anticipated / anticipated','anticipar / prever con antelacion','reg',''],
+  ['assess','assessed / assessed','evaluar / valorar resultados','reg',''],
+  ['attribute','attributed / attributed','atribuir algo a una causa','reg',''],
+  ['benefit','benefited / benefited','beneficiarse de algo','reg',''],
+  ['clarify','clarified / clarified','aclarar / esclarecer un punto','reg',''],
+  ['classify','classified / classified','clasificar en categorias','reg',''],
+  ['collaborate','collaborated / collaborated','colaborar con otros','reg',''],
+  ['commit','committed / committed','comprometerse con algo','reg',''],
+  ['compensate','compensated / compensated','compensar / indemnizar','reg',''],
+  ['compete','competed / competed','competir contra otros','reg',''],
+  ['conclude','concluded / concluded','concluir / llegar a una conclusion','reg',''],
+  ['consent','consented / consented','consentir / dar permiso formal','reg',''],
+  ['construct','constructed / constructed','construir algo estructurado','reg',''],
+  ['contribute','contributed / contributed','contribuir / aportar a algo','reg',''],
+  ['convert','converted / converted','convertir / transformar algo','reg',''],
+  ['distinguish','distinguished / distinguished','distinguir / diferenciar','reg',''],
+  ['dominate','dominated / dominated','dominar / tener control','reg',''],
+  ['eliminate','eliminated / eliminated','eliminar / descartar','reg',''],
+  ['emphasize','emphasized / emphasized','enfatizar / destacar algo','reg',''],
+  ['ensure','ensured / ensured','asegurar / garantizar un resultado','reg',''],
+  ['establish','established / established','establecer / fundar algo','reg',''],
+  ['evaluate','evaluated / evaluated','evaluar / medir resultados','reg',''],
+  ['exceed','exceeded / exceeded','exceder / sobrepasar un limite','reg',''],
+  ['exclude','excluded / excluded','excluir / dejar fuera','reg',''],
+  ['expand','expanded / expanded','expandir / ampliar algo','reg',''],
+  ['exploit','exploited / exploited','explotar / aprovechar recursos','reg',''],
+  ['expose','exposed / exposed','exponer / revelar algo','reg',''],
+  ['extend','extended / extended','extender / ampliar en tiempo','reg',''],
+  ['extract','extracted / extracted','extraer / sacar algo','reg',''],
+  ['fund','funded / funded','financiar / fondear un proyecto','reg',''],
+  ['highlight','highlighted / highlighted','destacar / resaltar informacion','reg',''],
+  ['implement','implemented / implemented','implementar / poner en practica','reg',''],
+  ['impose','imposed / imposed','imponer una condicion','reg',''],
+  ['interpret','interpreted / interpreted','interpretar algo','reg',''],
+  ['justify','justified / justified','justificar una decision','reg',''],
+  ['launch','launched / launched','lanzar un producto o proyecto','reg',''],
+  ['limit','limited / limited','limitar / poner un tope','reg',''],
+  ['monitor','monitored / monitored','monitorear / supervisar','reg',''],
+  ['neglect','neglected / neglected','descuidar / ignorar algo','reg',''],
+  ['prioritize','prioritized / prioritized','priorizar / poner primero','reg',''],
+  ['process','processed / processed','procesar datos o informacion','reg',''],
+  ['propose','proposed / proposed','proponer una idea o plan','reg',''],
+  ['regulate','regulated / regulated','regular / controlar mediante normas','reg',''],
+  ['reinforce','reinforced / reinforced','reforzar / fortalecer algo','reg',''],
+  ['reject','rejected / rejected','rechazar una propuesta','reg',''],
+  ['release','released / released','liberar / lanzar al publico','reg',''],
+  ['represent','represented / represented','representar a alguien','reg',''],
+  ['restore','restored / restored','restaurar / recuperar algo','reg',''],
+  ['restrict','restricted / restricted','restringir / limitar el acceso','reg',''],
+  ['simulate','simulated / simulated','simular una situacion','reg',''],
+  ['submit','submitted / submitted','enviar / presentar un documento','reg',''],
+  ['summarize','summarized / summarized','resumir / sintetizar','reg',''],
+  ['unite','united / united','unir en un objetivo comun','reg',''],
+  ['vary','varied / varied','variar / cambiar segun circunstancias','reg',''],
+  ['allocate','allocated / allocated','asignar / destinar recursos','reg',''],
+  ['bear','bore / borne','soportar / tolerar / dar a luz','irreg',''],
+];
+
+    var VB_TOTAL=147,vbFilter='all';
+    function getVBLearned(){try{return JSON.parse(localStorage.getItem(LS_VERBS)||'[]');}catch(e){return [];}}
+    function saveVBLearned(a){localStorage.setItem(LS_VERBS,JSON.stringify(a));}
+    var TYPE_LABEL={irreg:'Irregular',reg:'Regular',phrasal:'Phrasal Verb',prep:'Prep. Verb',adjprep:'Adj+Prep'};
+    function buildVerbCardsMobile(){
+      var cont=document.getElementById('verbCardsMobile');if(!cont)return;
+      var learned=getVBLearned();cont.innerHTML='';
+      VERBS.forEach(function(v,i){
+        var base=v[0],forms=v[1],meaning=v[2],vtype=v[3],note=v[4];
+        var isL=learned.indexOf(i)!==-1;
+        var el=document.createElement('div');
+        el.className='vmc'+(isL?' v-learned':'');el.id='vmc-'+i;
+        el.dataset.vtype=vtype;
+        el.dataset.search=(base+' '+forms+' '+meaning+' '+note).toLowerCase();
+        el.dataset.learned=isL?'1':'0';
+        var isAdj=(vtype==='adjprep');
+        var formsHTML='';
+        if(!isAdj&&forms&&forms!=='—'){
+          var lbl=(vtype==='phrasal'||vtype==='prep')?'Formas':'Pasado / PP';
+          formsHTML='<div class="vmc-row"><span class="vmc-lbl">'+lbl+'</span><span class="vmc-val">'+forms+'</span></div>';
+        }
+        var noteHTML=note?'<div class="vmc-note">'+note+'</div>':'';
+        el.innerHTML=
+          '<div class="vmc-top"><span class="vmc-base">'+base+'</span><span class="vmc-meaning">'+meaning+'</span><span class="vmc-type '+vtype+'">'+(TYPE_LABEL[vtype]||vtype)+'</span></div>'+
+          formsHTML+noteHTML+
+          '<div class="vmc-actions">'+
+            '<button class="vmc-practice" onclick="copyVerbPrompt('+i+',this)">&#9679; Practicar</button>'+
+            '<button class="vmc-learn" id="vmcl-'+i+'" onclick="toggleVBLearned('+i+')">'+(isL?'&#10003; Aprendido':'&#9675; Marcar')+'</button>'+
+          '</div>';
+        cont.appendChild(el);
+      });
+    }
+    function copyVerbPrompt(i,btn){
+      var v=VERBS[i],base=v[0],forms=v[1],meaning=v[2],vtype=v[3],note=v[4];
+      var TM={irreg:'IRREGULAR',reg:'REGULAR',phrasal:'PHRASAL VERB',prep:'VERBO PREPOSICIONAL',adjprep:'ADJETIVO + FRASE PREPOSICIONAL'};
+      var lines=[
+        'Eres un profesor universitario de ingles nivel B1. Quiero practicar: "'+base+'" ('+meaning+').',
+        'Tipo: '+TM[vtype],
+        (forms&&forms!=='—')?'Formas: '+forms:'',
+        note?'Nota: '+note:'',
+        '',
+        'Desarrolla una minileccion completa en espanol:',
+        '1. EXPLICACION Y CONTEXTO B1: Cuando y como se usa, matices con expresiones similares.',
+        '2. ESTRUCTURA: '+(vtype==='irreg'||vtype==='reg'?'Las 3 formas verbales con pronunciacion.':'Patron de uso, posicion en la oracion, variantes.'),
+        '3. EJEMPLOS REALES: 5 oraciones en ingles B1 en contextos variados (formal, informal, escrito, oral). Con traduccion.',
+        '4. ERRORES TIPICOS B1: Los 2-3 errores mas frecuentes de hispanohablantes con esta expresion.',
+        '5. DIFERENCIAS CON SIMILARES: Compara con 2 expresiones parecidas y explica cuando elegir cada una.',
+        '6. PRACTICA: Hazme 3 preguntas en ingles usando esta expresion, una por una. Corrigeme senalando errores de gramatica, registro o uso.'
+      ].filter(Boolean);
+      navigator.clipboard.writeText(lines.join('\n')).then(function(){
+        btn.textContent='Copiado';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Practicar';btn.classList.remove('copied');},2000);
+        var t=document.getElementById('toast');t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);
+      });
+    }
+    function toggleVBLearned(i){
+      var learned=getVBLearned(),idx=learned.indexOf(i);
+      var mc=document.getElementById('vmc-'+i);
+      if(idx===-1){learned.push(i);if(mc){mc.classList.add('v-learned');mc.dataset.learned='1';};var lb=document.getElementById('vmcl-'+i);if(lb)lb.innerHTML='&#10003; Aprendido';}
+      else{learned.splice(idx,1);if(mc){mc.classList.remove('v-learned');mc.dataset.learned='0';};var lb=document.getElementById('vmcl-'+i);if(lb)lb.innerHTML='&#9675; Marcar';}
+      saveVBLearned(learned);updateVerbProgress();
+    }
+    function updateVerbProgress(){
+      var count=getVBLearned().length,pct=Math.round(count/VB_TOTAL*100);
+      var f=document.getElementById('verbProgFill'),t=document.getElementById('verbProgText');
+      if(f)f.style.width=pct+'%';if(t)t.innerHTML='<span>'+count+'</span> / '+VB_TOTAL+' aprendidos';
+    }
+    function filterVerbs(){
+      var q=(document.getElementById('verbSearch').value||'').toLowerCase().trim(),shown=0;
+      document.querySelectorAll('.vmc').forEach(function(el){
+        var mt;
+        if(vbFilter==='all')mt=true;
+        else if(vbFilter==='pending')mt=el.dataset.learned==='0';
+        else if(vbFilter==='learned')mt=el.dataset.learned==='1';
+        else mt=el.dataset.vtype===vbFilter;
+        var ms=!q||el.dataset.search.includes(q);
+        el.classList.toggle('v-hidden',!(mt&&ms));if(mt&&ms)shown++;
+      });
+      var vc=document.getElementById('verbVisCount');if(vc)vc.textContent=shown;
+    }
+    function setVF(btn){
+      document.querySelectorAll('.vf-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');vbFilter=btn.dataset.vf;filterVerbs();
+    }
+    window.addEventListener('DOMContentLoaded',function(){loadDone();buildVerbCardsMobile();});
+
   </script>
 
 </body>
