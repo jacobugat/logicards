@@ -309,7 +309,7 @@
 
   <div class="tab-switcher">
     <button class="tab-btn active" data-tab="grammar" onclick="switchTab(this)">📚 Gramática · 32 temas</button>
-    <button class="tab-btn" data-tab="verbs" onclick="switchTab(this)">⚡ Verbos B1 · 147</button>
+    <button class="tab-btn" data-tab="verbs" onclick="switchTab(this)">⚡ Verbos B1 · 264</button>
   </div>
   <div id="panelGrammar" class="tab-panel active">
     <div class="cards-list">
@@ -2747,7 +2747,6 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
       <span class="footer-logo">Logi<span>cards</span></span>
       <span class="footer-copy">&copy; 2026 &middot; Jhon Sandoval &middot; Inglés B1 Cambridge</span>
     </footer>
-  </div>
 
   </div><!-- /panelGrammar -->
 
@@ -2756,19 +2755,19 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
   <div id="panelVerbs" class="tab-panel">
     <div class="verb-panel-header">
       <input class="verb-search" id="verbSearch" type="text" placeholder="🔍  Buscar verbo, phrasal verb o expresión…" oninput="filterVerbs()"/>
-      <button class="vf-btn active" data-vf="all"     onclick="setVF(this)">Todos (147)</button>
+      <button class="vf-btn active" data-vf="all"     onclick="setVF(this)">Todos (264)</button>
       <button class="vf-btn"        data-vf="irreg"   onclick="setVF(this)">Irregulares (1)</button>
       <button class="vf-btn"        data-vf="reg"     onclick="setVF(this)">Regulares (56)</button>
-      <button class="vf-btn"        data-vf="phrasal" onclick="setVF(this)">Phrasal (41)</button>
-      <button class="vf-btn"        data-vf="prep"    onclick="setVF(this)">Prep. (23)</button>
-      <button class="vf-btn"        data-vf="adjprep" onclick="setVF(this)">Adj+Prep (26)</button>
+      <button class="vf-btn"        data-vf="phrasal" onclick="setVF(this)">Phrasal (91)</button>
+      <button class="vf-btn"        data-vf="prep"    onclick="setVF(this)">Prep. (60)</button>
+      <button class="vf-btn"        data-vf="adjprep" onclick="setVF(this)">Adj+Prep</button>
       <button class="vf-btn"        data-vf="pending" onclick="setVF(this)">Pendientes</button>
       <button class="vf-btn"        data-vf="learned" onclick="setVF(this)">Aprendidos</button>
-      <span class="verb-stats"><span id="verbVisCount">147</span> entradas</span>
+      <span class="verb-stats"><span id="verbVisCount">264</span> entradas</span>
     </div>
     <div class="verb-progress-row">
       <div class="verb-prog-bar"><div class="verb-prog-fill" id="verbProgFill" style="width:0%"></div></div>
-      <span class="verb-prog-text" id="verbProgText"><span>0</span> / 147 aprendidos</span>
+      <span class="verb-prog-text" id="verbProgText"><span>0</span> / 264 aprendidos</span>
     </div>
     <div class="verb-cards-mobile" id="verbCardsMobile"></div>
   </div>
@@ -2981,12 +2980,129 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
   ['vary','varied / varied','variar / cambiar segun circunstancias','reg',''],
   ['allocate','allocated / allocated','asignar / destinar recursos','reg',''],
   ['bear','bore / borne','soportar / tolerar / dar a luz','irreg',''],
+  ['back up','backed up','respaldar / apoyar / hacer copia de seguridad','phrasal','Ej: You should back up your files regularly.'],
+  ['blow up','blew up','explotar / estallar / ampliar una foto','phrasal','Ej: The building blew up after the gas leak.'],
+  ['break up','broke up','romper una relación / separarse','phrasal','Ej: They broke up after two years together.'],
+  ['build up','built up','acumular / desarrollar gradualmente','phrasal','Ej: She built up her confidence over time.'],
+  ['burn out','burned out','agotarse / quemarse (por exceso de trabajo)','phrasal','Ej: He burned out after working 80-hour weeks.'],
+  ['call for','called for','requerir / exigir / pedir','phrasal','Ej: The situation calls for immediate action.'],
+  ['check in','checked in','registrarse (hotel/vuelo) / reportarse','phrasal','Ej: We need to check in two hours before the flight.'],
+  ['check out','checked out','salir del hotel / investigar / revisar','phrasal','Ej: Check out this article, it\'s really interesting.'],
+  ['clear up','cleared up','aclararse / ordenar / resolver un malentendido','phrasal','Ej: The weather cleared up in the afternoon.'],
+  ['come down with','came down with','enfermarse de algo','phrasal','Ej: I think I\'m coming down with a cold.'],
+  ['count on','counted on','contar con alguien / depender de','phrasal','Ej: You can always count on her.'],
+  ['cut off','cut off','cortar / interrumpir / aislar','phrasal','Ej: The village was cut off by the flood.'],
+  ['die out','died out','extinguirse / desaparecer gradualmente','phrasal','Ej: Many species are dying out due to pollution.'],
+  ['draw up','drew up','redactar / elaborar un documento','phrasal','Ej: The lawyer drew up a contract.'],
+  ['fade out','faded out','desvanecerse / desaparecer gradualmente','phrasal','Ej: The music slowly faded out.'],
+  ['fall apart','fell apart','desmoronarse / deshacerse','phrasal','Ej: The plan fell apart at the last minute.'],
+  ['fall behind','fell behind','quedarse atrás / atrasarse','phrasal','Ej: Don\'t fall behind with your homework.'],
+  ['fit in','fit in','encajar / adaptarse a un grupo','phrasal','Ej: It took time to fit in at the new school.'],
+  ['get rid of','got rid of','deshacerse de algo / eliminar','phrasal','Ej: She got rid of all her old clothes.'],
+  ['give away','gave away','regalar / revelar (un secreto)','phrasal','Ej: He gave away his old books.'],
+  ['give in','gave in','ceder / rendirse finalmente','phrasal','Ej: After hours of arguing, he gave in.'],
+  ['go ahead','went ahead','proceder / adelante / continuar','phrasal','Ej: Go ahead, I\'m listening.'],
+  ['go off','went off','sonar (alarma) / explotar / echarse a perder','phrasal','Ej: The alarm went off at 6am.'],
+  ['hand in','handed in','entregar (un trabajo o documento)','phrasal','Ej: Please hand in your assignments by Friday.'],
+  ['hang up','hung up','colgar el teléfono','phrasal','Ej: She hung up before I could explain.'],
+  ['hold on','held on','esperar / aferrarse a algo','phrasal','Ej: Hold on, I\'ll be right back.'],
+  ['join in','joined in','unirse a una actividad','phrasal','Ej: Everyone joined in the celebration.'],
+  ['keep on','kept on','seguir haciendo algo / continuar','phrasal','Ej: Keep on practicing and you\'ll improve.'],
+  ['lay off','laid off','despedir trabajadores / dejar de hacer algo','phrasal','Ej: The company laid off 200 workers.'],
+  ['let down','let down','decepcionar / fallar a alguien','phrasal','Ej: I felt let down by her reaction.'],
+  ['make do','made do','arreglárselas / conformarse con lo que hay','phrasal','Ej: We\'ll have to make do with what we have.'],
+  ['mix up','mixed up','confundir / mezclar sin querer','phrasal','Ej: I always mix up their names.'],
+  ['pass out','passed out','desmayarse / repartir copias','phrasal','Ej: She passed out from the heat.'],
+  ['pay back','paid back','devolver dinero / vengarse','phrasal','Ej: I\'ll pay you back next week.'],
+  ['put forward','put forward','proponer / presentar una idea','phrasal','Ej: She put forward a new proposal.'],
+  ['put on','put on','ponerse (ropa) / aumentar de peso / fingir','phrasal','Ej: Put on your coat, it\'s cold.'],
+  ['rule out','ruled out','descartar / excluir una posibilidad','phrasal','Ej: The doctor ruled out any serious illness.'],
+  ['run away','ran away','huir / escaparse','phrasal','Ej: The dog ran away from home.'],
+  ['set off','set off','salir de viaje / hacer sonar una alarma','phrasal','Ej: We set off early to avoid traffic.'],
+  ['speak up','spoke up','hablar más fuerte / alzar la voz','phrasal','Ej: Could you speak up? I can\'t hear you.'],
+  ['step up','stepped up','intensificar / asumir más responsabilidad','phrasal','Ej: We need to step up our efforts.'],
+  ['take away','took away','llevarse / quitar / leer para llevar','phrasal','Ej: The experience took away his confidence.'],
+  ['take off','took off','despegar (avión) / quitarse ropa / tener éxito','phrasal','Ej: The plane took off on time.'],
+  ['tear up','tore up','romper en pedazos / destrozar','phrasal','Ej: She tore up the letter.'],
+  ['think over','thought over','pensar detenidamente / reflexionar','phrasal','Ej: I need to think it over before deciding.'],
+  ['throw away','threw away','tirar / desechar algo','phrasal','Ej: Don\'t throw away the receipt.'],
+  ['try out','tried out','probar algo nuevo / hacer una prueba','phrasal','Ej: I want to try out the new restaurant.'],
+  ['turn up','turned up','aparecer / llegar / subir el volumen','phrasal','Ej: He turned up late as usual.'],
+  ['wear out','wore out','desgastarse / agotar a alguien','phrasal','Ej: These shoes wore out quickly.'],
+  ['wind down','wound down','relajarse / ir terminando','phrasal','Ej: I need some time to wind down after work.'],
+  ['aim at','aimed at','apuntar a / dirigirse a','prep','Ej: The campaign is aimed at young people.'],
+  ['apologize to','apologized to','disculparse ante alguien','prep','Ej: He apologized to his colleague.'],
+  ['argue with','argued with','discutir con alguien','prep','Ej: Don\'t argue with your professor.'],
+  ['ask for','asked for','pedir algo','prep','Ej: She asked for more time to finish.'],
+  ['blame for','blamed for','culpar a alguien por algo','prep','Ej: Don\'t blame me for the mistake.'],
+  ['borrow from','borrowed from','pedir prestado a alguien','prep','Ej: Can I borrow this book from you?'],
+  ['care for','cared for','cuidar de alguien / gustar algo','prep','Ej: She cares for her elderly parents.'],
+  ['charge for','charged for','cobrar por algo','prep','Ej: They charge for delivery.'],
+  ['comment on','commented on','comentar sobre algo','prep','Ej: She commented on the new policy.'],
+  ['compete with','competed with','competir con alguien','prep','Ej: We compete with three other companies.'],
+  ['complain about','complained about','quejarse de algo','prep','Ej: They complained about the noise.'],
+  ['concentrate on','concentrated on','concentrarse en algo específico','prep','Ej: Concentrate on the task at hand.'],
+  ['confuse with','confused with','confundir algo con otra cosa','prep','Ej: People often confuse him with his brother.'],
+  ['congratulate on','congratulated on','felicitar por algo','prep','Ej: I congratulated her on her promotion.'],
+  ['deal in','dealt in','comerciar con / trabajar con','prep','Ej: This shop deals in antiques.'],
+  ['decide on','decided on','decidirse por algo','prep','Ej: We finally decided on a name.'],
+  ['disagree with','disagreed with','estar en desacuerdo con','prep','Ej: I disagree with your conclusion.'],
+  ['experiment with','experimented with','experimentar con algo','prep','Ej: Scientists experimented with new methods.'],
+  ['explain to','explained to','explicarle algo a alguien','prep','Ej: Can you explain this to me?'],
+  ['hear about','heard about','enterarse de algo / escuchar sobre','prep','Ej: Did you hear about the new project?'],
+  ['hear from','heard from','tener noticias de alguien','prep','Ej: Have you heard from Maria lately?'],
+  ['hope for','hoped for','esperar que ocurra algo','prep','Ej: We\'re hoping for good weather.'],
+  ['laugh at','laughed at','reírse de alguien o algo','prep','Ej: Don\'t laugh at other people\'s mistakes.'],
+  ['long for','longed for','anhelar algo / echar de menos intensamente','prep','Ej: She longs for a simpler life.'],
+  ['look for','looked for','buscar algo o a alguien','prep','Ej: I\'m looking for my keys.'],
+  ['pay for','paid for','pagar por algo','prep','Ej: Who\'s going to pay for dinner?'],
+  ['prepare for','prepared for','prepararse para algo','prep','Ej: Are you prepared for the exam?'],
+  ['prevent from','prevented from','impedir que alguien haga algo','prep','Ej: The injury prevented him from playing.'],
+  ['protest against','protested against','protestar en contra de algo','prep','Ej: People protested against the new law.'],
+  ['recover from','recovered from','recuperarse de algo','prep','Ej: She recovered from the illness quickly.'],
+  ['remind of','reminded of','recordarle a alguien sobre algo','prep','Ej: This song reminds me of my childhood.'],
+  ['respond to','responded to','responder a algo','prep','Ej: Please respond to my email.'],
+  ['search for','searched for','buscar algo intensamente','prep','Ej: Police searched for the missing child.'],
+  ['stare at','stared at','mirar fijamente a algo o alguien','prep','Ej: Stop staring at me.'],
+  ['think about','thought about','pensar en algo / considerar','prep','Ej: I\'ve been thinking about your offer.'],
+  ['vote for','voted for','votar a favor de algo o alguien','prep','Ej: Who did you vote for?'],
+  ['wait for','waited for','esperar a alguien o algo','prep','Ej: I\'ve been waiting for this moment.'],
+  ['be addicted to','—','ser adicto a algo','adjprep','Ej: He\'s addicted to social media.'],
+  ['be amazed at','—','estar asombrado por algo','adjprep','Ej: I was amazed at her performance.'],
+  ['be angry with','—','estar enojado con alguien','adjprep','Ej: She\'s still angry with me.'],
+  ['be annoyed with','—','estar molesto con alguien','adjprep','Ej: I\'m annoyed with his attitude.'],
+  ['be ashamed of','—','estar avergonzado de algo','adjprep','Ej: He was ashamed of his behavior.'],
+  ['be bad at','—','ser malo en algo','adjprep','Ej: I\'m really bad at cooking.'],
+  ['be bored with','—','estar aburrido de algo','adjprep','Ej: I\'m bored with this routine.'],
+  ['be brilliant at','—','ser brillante en algo / ser excelente','adjprep','Ej: She\'s brilliant at languages.'],
+  ['be crazy about','—','estar loco por algo o alguien','adjprep','Ej: He\'s crazy about football.'],
+  ['be curious about','—','tener curiosidad por algo','adjprep','Ej: I\'m curious about your plans.'],
+  ['be dedicated to','—','estar dedicado a algo','adjprep','Ej: She\'s dedicated to her students.'],
+  ['be dependent on','—','depender de algo o alguien','adjprep','Ej: He\'s too dependent on his parents.'],
+  ['be disappointed in','—','estar decepcionado de alguien','adjprep','Ej: I\'m disappointed in you.'],
+  ['be experienced in','—','tener experiencia en algo','adjprep','Ej: She\'s experienced in project management.'],
+  ['be fed up with','—','estar harto de algo','adjprep','Ej: I\'m fed up with all the excuses.'],
+  ['be impressed by','—','estar impresionado por algo o alguien','adjprep','Ej: I was impressed by their presentation.'],
+  ['be in charge of','—','estar a cargo de algo','adjprep','Ej: She\'s in charge of the whole department.'],
+  ['be jealous of','—','tener celos de alguien / envidiar','adjprep','Ej: He\'s jealous of his colleague\'s success.'],
+  ['be keen to','—','estar ansioso por hacer algo','adjprep','Ej: She\'s keen to learn new skills.'],
+  ['be known for','—','ser conocido por algo','adjprep','Ej: This city is known for its food.'],
+  ['be lucky to','—','tener suerte de hacer algo','adjprep','Ej: I\'m lucky to work with such a great team.'],
+  ['be obsessed with','—','estar obsesionado con algo','adjprep','Ej: She\'s obsessed with perfection.'],
+  ['be opposed to','—','estar en contra de algo','adjprep','Ej: I\'m opposed to the proposed changes.'],
+  ['be passionate about','—','ser apasionado por algo','adjprep','Ej: He\'s passionate about environmental issues.'],
+  ['be ready for','—','estar listo para algo','adjprep','Ej: Are you ready for the challenge?'],
+  ['be relevant to','—','ser relevante para algo','adjprep','Ej: This is relevant to our discussion.'],
+  ['be reluctant to','—','ser reacio a hacer algo','adjprep','Ej: She was reluctant to ask for help.'],
+  ['be skilled at','—','ser hábil en algo','adjprep','Ej: He\'s skilled at negotiation.'],
+  ['be suspicious of','—','sospechar de algo o alguien','adjprep','Ej: I\'m suspicious of his motives.'],
+  ['be terrified of','—','estar aterrorizado por algo','adjprep','Ej: She\'s terrified of public speaking.']
 ];
 
-    var VB_TOTAL=147,vbFilter='all';
+    var VB_TOTAL=264,vbFilter='all';
     function getVBLearned(){try{return JSON.parse(localStorage.getItem(LS_VERBS)||'[]');}catch(e){return [];}}
     function saveVBLearned(a){localStorage.setItem(LS_VERBS,JSON.stringify(a));}
-    var TYPE_LABEL={irreg:'Irregular',reg:'Regular',phrasal:'Phrasal Verb',prep:'Prep. Verb',adjprep:'Adj+Prep'};
+    var TYPE_LABEL={irreg:'Irregular',reg:'Regular',phrasal:'Phrasal Verb',prep:'Verbo Preposicional',adjprep:'Adj + Preposición'};
     function buildVerbCardsMobile(){
       var cont=document.getElementById('verbCardsMobile');if(!cont)return;
       var learned=getVBLearned();cont.innerHTML='';
@@ -3001,8 +3117,17 @@ Todas las correcciones, explicaciones y retroalimentaciones en español. Los eje
         var isAdj=(vtype==='adjprep');
         var formsHTML='';
         if(!isAdj&&forms&&forms!=='—'){
-          var lbl=(vtype==='phrasal'||vtype==='prep')?'Formas':'Pasado / PP';
-          formsHTML='<div class="vmc-row"><span class="vmc-lbl">'+lbl+'</span><span class="vmc-val">'+forms+'</span></div>';
+          if(vtype==='irreg'||vtype==='reg'){
+            // Split "past / pp" into two rows
+            var parts=forms.split(' / ');
+            var ps=parts[0]||forms, pp=parts.slice(1).join(' / ')||forms;
+            formsHTML=
+              '<div class="vmc-row"><span class="vmc-lbl">Past Simple</span><span class="vmc-val">'+ps+'</span></div>'+
+              '<div class="vmc-row"><span class="vmc-lbl">Past Participle</span><span class="vmc-val">'+pp+'</span></div>';
+          } else {
+            // phrasal / prep: single row showing past form
+            formsHTML='<div class="vmc-row"><span class="vmc-lbl">Past Simple</span><span class="vmc-val">'+forms+'</span></div>';
+          }
         }
         var noteHTML=note?'<div class="vmc-note">'+note+'</div>':'';
         el.innerHTML=
