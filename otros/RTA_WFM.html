@@ -1,661 +1,1576 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>RTA Workforce Management — Logicards</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07060a;--bg2:#0e0c14;--card:#120f1a;--card2:#181422;
-  --vio:#7c3aed;--vio-lt:#a78bfa;--vio-dim:rgba(124,58,237,.12);
-  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.10);
-  --green:#22c55e;--green-dim:rgba(34,197,94,.10);
-  --border:rgba(124,58,237,.20);--border2:rgba(255,255,255,.05);
-  --text:#ede8ff;--muted:#3b2f6e;
-  --mono:'Syne Mono',monospace;--sans:'Syne',sans-serif;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-150px;left:-150px;width:550px;height:550px;background:radial-gradient(circle,rgba(124,58,237,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
-.shimmer{position:fixed;top:0;left:0;right:0;height:1px;z-index:300;background:linear-gradient(90deg,transparent,rgba(124,58,237,0) 20%,rgba(167,139,250,.9) 50%,rgba(124,58,237,0) 80%,transparent);background-size:200% 100%;animation:sh 7s ease-in-out infinite}
-@keyframes sh{0%{background-position:-100% 0}100%{background-position:200% 0}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>RTA Workforce Management — Logicards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(7,6,10,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.nav-left{display:flex;align-items:center;gap:1rem}
-.back-link{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
-.back-link:hover{color:var(--vio-lt)}
-.nav-title{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text)}
-.nav-badges{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
-.nbadge{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .55rem;border-radius:2px}
-.nb-vio{color:var(--vio-lt);border:1px solid rgba(167,139,250,.4);background:var(--vio-dim)}
-.nb-gold{color:var(--gold);border:1px solid rgba(245,158,11,.3);background:var(--gold-dim)}
+    :root {
+      --bg: #07060a;
+      --bg2: #0e0c14;
+      --card: #120f1a;
+      --card2: #181422;
+      --vio: #7c3aed;
+      --vio-lt: #a78bfa;
+      --vio-dim: rgba(124, 58, 237, .12);
+      --gold: #f59e0b;
+      --gold-dim: rgba(245, 158, 11, .10);
+      --green: #22c55e;
+      --green-dim: rgba(34, 197, 94, .10);
+      --border: rgba(124, 58, 237, .20);
+      --border2: rgba(255, 255, 255, .05);
+      --text: #ede8ff;
+      --muted: #3b2f6e;
+      --mono: 'Syne Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
 
-/* WRAPPER */
-.wrapper{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.4rem 4rem}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* HEADER */
-header{padding:3.2rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
-.level-badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vio-lt);border:1px solid rgba(167,139,250,.35);background:var(--vio-dim);padding:.22rem .7rem;border-radius:2px;margin-bottom:.9rem}
-h1{font-family:var(--sans);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.35rem}
-h1 .rta{color:var(--vio-lt)}
-h1 .wfm{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.header-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.7rem}
-.header-desc{color:var(--muted);font-size:.86rem;max-width:650px;line-height:1.75}
-.header-meta{display:flex;align-items:center;gap:1.4rem;margin-top:1.1rem;flex-wrap:wrap}
-.meta-item{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.35rem}
-.meta-item::before{content:'◆';color:var(--vio-lt);font-size:.38rem}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden
+    }
 
-/* SKILLS CHECKLIST CARD */
-.skills-card{background:var(--card);border:1px solid var(--border);border-radius:6px;margin-bottom:1.8rem;overflow:hidden}
-.skills-header{padding:.9rem 1.2rem;background:var(--vio-dim);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;cursor:pointer;user-select:none}
-.skills-header-left{display:flex;align-items:center;gap:.7rem}
-.skills-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--vio-lt)}
-.skills-progress-text{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
-.skills-chevron{font-size:.6rem;color:var(--muted);transition:transform .25s}
-.skills-card.open .skills-chevron{transform:rotate(180deg)}
-.skills-body{display:none;padding:1.2rem}
-.skills-card.open .skills-body{display:block}
-.skills-mini-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden;margin-bottom:1.2rem}
-.skills-mini-fill{height:100%;background:linear-gradient(90deg,var(--vio),var(--vio-lt));border-radius:1px;transition:width .4s}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.5rem}
-.skill-section-title{font-family:var(--mono);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:.4rem 0 .2rem;grid-column:1/-1;border-top:1px solid var(--border2);margin-top:.6rem}
-.skill-section-title:first-child{border-top:none;margin-top:0}
-.skill-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .6rem;background:var(--bg2);border:1px solid var(--border2);border-radius:3px;cursor:pointer;transition:all .15s;user-select:none}
-.skill-item:hover{border-color:rgba(124,58,237,.3)}
-.skill-item.checked{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.3)}
-.skill-check{width:15px;height:15px;border:1.5px solid var(--muted);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:.55rem}
-.skill-item.checked .skill-check{background:var(--green);border-color:var(--green);color:#fff}
-.skill-label{font-family:var(--mono);font-size:.58rem;color:var(--text);line-height:1.3}
-.skill-label span{display:block;font-size:.5rem;color:var(--muted);margin-top:.1rem}
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: .022;
+      pointer-events: none;
+      z-index: 0
+    }
 
-/* INSTRUCTIONS */
-.instructions{background:var(--vio-dim);border:1px solid rgba(124,58,237,.22);border-radius:5px;padding:1rem 1.3rem;margin-bottom:1.8rem;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}
-.instructions-icon{font-size:1.1rem;margin-top:1px}
-.instructions p{font-size:.82rem;color:var(--text);opacity:.85;line-height:1.65}
-.instructions strong{color:var(--vio-lt)}
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -150px;
+      left: -150px;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(124, 58, 237, .07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0
+    }
 
-/* PROGRESS */
-.progress-bar-wrap{margin-bottom:1.8rem}
-.progress-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;justify-content:space-between}
-.progress-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--vio),var(--vio-lt));border-radius:1px;transition:width .4s}
+    .shimmer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      z-index: 300;
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0) 20%, rgba(167, 139, 250, .9) 50%, rgba(124, 58, 237, 0) 80%, transparent);
+      background-size: 200% 100%;
+      animation: sh 7s ease-in-out infinite
+    }
 
-/* CONTROLS */
-.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1.5rem}
-.search-input{background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.48rem .85rem;color:var(--text);font-family:var(--mono);font-size:.68rem;outline:none;transition:border-color .2s;min-width:200px}
-.search-input:focus{border-color:var(--vio-lt)}
-.search-input::placeholder{color:var(--muted)}
-.cat-btn{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:.25rem .65rem;color:var(--muted);font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;white-space:nowrap;text-transform:uppercase}
-.cat-btn:hover{border-color:var(--vio-lt);color:var(--vio-lt)}
-.cat-btn.active{background:var(--vio);border-color:var(--vio);color:#fff;font-weight:600}
-.stats-count{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+    @keyframes sh {
+      0% {
+        background-position: -100% 0
+      }
 
-/* UNIT CARDS */
-.units-list{display:flex;flex-direction:column;gap:.5rem}
-.unit-card{background:var(--card);border:1px solid var(--border2);border-radius:5px;overflow:hidden;transition:border-color .2s}
-.unit-card:hover{border-color:rgba(124,58,237,.22)}
-.unit-card.open{border-color:rgba(167,139,250,.4)}
-.unit-card.done{background:rgba(124,58,237,.04);border-color:rgba(124,58,237,.2)}
-.unit-card.hidden{display:none}
-.unit-card.excel-card{border-color:rgba(34,197,94,.18)}
-.unit-card.excel-card:hover{border-color:rgba(34,197,94,.35)}
-.unit-card.excel-card.open{border-color:rgba(34,197,94,.5)}
-.unit-card.project{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.04)}
-.card-header{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s}
-.card-header:hover{background:var(--card2)}
-.unit-num{font-family:var(--mono);font-size:.65rem;color:var(--vio-lt);min-width:2rem;opacity:.65}
-.unit-num.excel{color:var(--green);opacity:1}
-.unit-num.final{color:var(--gold);opacity:1}
-.card-title-wrap{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem}
-.unit-title{font-size:.9rem;font-weight:600;color:var(--text)}
-.sec-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:.07em;color:var(--muted);border:1px solid var(--border2);padding:.08rem .38rem;border-radius:2px;white-space:nowrap}
-.sec-badge.excel-badge{color:var(--green);border-color:rgba(34,197,94,.3);background:var(--green-dim)}
-.sec-badge.final{color:var(--gold);border-color:rgba(245,158,11,.3);background:var(--gold-dim)}
-.card-chevron{color:var(--muted);font-size:.6rem;transition:transform .25s,color .2s;flex-shrink:0}
-.unit-card.open .card-chevron{transform:rotate(180deg);color:var(--vio-lt)}
-.unit-card.excel-card.open .card-chevron{color:var(--green)}
-.card-body{display:none;border-top:1px solid var(--border2);padding:1.1rem 1.15rem;background:var(--bg2)}
-.unit-card.open .card-body{display:block}
-.prompt-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--vio-lt);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;opacity:.75}
-.prompt-label::after{content:'';flex:1;height:1px;background:rgba(167,139,250,.12)}
-.prompt-label.excel-label{color:var(--green)}
-.prompt-label.excel-label::after{background:rgba(34,197,94,.12)}
-.copy-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.75rem 1.1rem;background:var(--vio-dim);border:1px solid rgba(124,58,237,.32);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;cursor:pointer;transition:all .2s;text-transform:uppercase;font-weight:500}
-.copy-btn.excel-btn{background:var(--green-dim);border-color:rgba(34,197,94,.32)}
-.copy-btn:hover{background:rgba(124,58,237,.22);border-color:var(--vio-lt);transform:translateY(-1px)}
-.copy-btn.excel-btn:hover{background:rgba(34,197,94,.2);border-color:var(--green)}
-.copy-btn.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#6ee7b7}
-.copy-hint{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;margin-top:.6rem}
-.prompt-text{display:none}
-.done-row{display:flex;align-items:center;gap:.4rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border2)}
-.done-btn{background:none;border:1px solid var(--border2);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:.56rem;padding:.2rem .55rem;cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
-.done-btn:hover{border-color:rgba(34,197,94,.4);color:#6ee7b7}
-.unit-card.done .done-btn{border-color:rgba(34,197,94,.4);color:#6ee7b7;background:rgba(34,197,94,.07)}
+      100% {
+        background-position: 200% 0
+      }
+    }
 
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(167,139,250,.4);color:var(--vio-lt);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.6rem 1.3rem;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-footer{margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
-.footer-logo{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
-.footer-logo span{color:var(--vio-lt)}
-.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
-@media(max-width:580px){.sec-badge{display:none}.card-header{padding:.8rem 1rem;gap:.55rem}.card-body{padding:.9rem 1rem}.skills-grid{grid-template-columns:1fr}}
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 6, 10, .97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: .85rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
 
-/* GLOSSARY PANEL */
-.glos-card{background:var(--card);border:1px solid var(--border);border-radius:6px;margin-bottom:1.8rem;overflow:hidden}
-.glos-header{padding:.9rem 1.2rem;background:var(--vio-dim);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;cursor:pointer;user-select:none}
-.glos-header-left{display:flex;align-items:center;gap:.7rem}
-.glos-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--vio-lt)}
-.glos-count{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
-.glos-chevron{font-size:.6rem;color:var(--muted);transition:transform .25s}
-.glos-card.open .glos-chevron{transform:rotate(180deg)}
-.glos-body{display:none;padding:1rem 1.2rem 1.4rem}
-.glos-card.open .glos-body{display:block}
-.glos-search{width:100%;background:#0f0d17;border:1px solid rgba(124,58,237,.35);border-radius:3px;padding:.6rem 1rem;color:#ede8ff;font-family:var(--mono);font-size:.75rem;outline:none;transition:border-color .2s;margin-bottom:.9rem;letter-spacing:.03em}
-.glos-search:focus{border-color:#a78bfa;box-shadow:0 0 0 2px rgba(124,58,237,.15)}
-.glos-search::placeholder{color:rgba(167,139,250,.4)}
-.glos-stats{font-family:var(--mono);font-size:.62rem;color:rgba(167,139,250,.6);margin-bottom:.7rem;letter-spacing:.06em}
-.glos-table{width:100%;border-collapse:collapse}
-.glos-table th{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(167,139,250,.55);padding:.6rem 1rem;border-bottom:1px solid var(--border);text-align:left;font-weight:600;position:sticky;top:0;background:#0e0c18;z-index:5}
-.glos-table td{padding:.55rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top;font-size:.84rem}
-.glos-table td:first-child{font-family:var(--mono);font-size:.78rem;color:#c4b5fd;white-space:nowrap;width:210px;font-weight:600;letter-spacing:.03em}
-.glos-table td:last-child{color:#b8b0d4;line-height:1.65}
-.glos-table tr:hover td{background:rgba(124,58,237,.09)}
-.glos-table tr:hover td:first-child{color:#ede8ff}
-.glos-table tr:hover td:last-child{color:#d4cef0}
-.glos-table tr.hidden-row{display:none}
-.glos-table td:last-child{position:relative}
-.glos-copy-btn{
-  display:inline-flex;align-items:center;gap:.3rem;
-  margin-top:.35rem;
-  background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.28);border-radius:3px;
-  color:rgba(167,139,250,.8);font-family:var(--mono);font-size:.52rem;letter-spacing:.07em;
-  padding:.18rem .5rem;cursor:pointer;transition:all .18s;text-transform:uppercase;
-  opacity:0;pointer-events:none;
-}
-.glos-table tr:hover .glos-copy-btn{opacity:1;pointer-events:auto}
-.glos-copy-btn:hover{background:rgba(124,58,237,.25);border-color:#a78bfa;color:#ede8ff;transform:translateY(-1px)}
-.glos-copy-btn.copied{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);color:#6ee7b7}
-.glos-def-wrap{display:flex;flex-direction:column;align-items:flex-start}
-.glos-wrap{max-height:520px;overflow-y:auto;border:1px solid var(--border2);border-radius:3px;scrollbar-width:thin;scrollbar-color:var(--muted) transparent}
-.glos-wrap::-webkit-scrollbar{width:4px}
-.glos-wrap::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem
+    }
 
-</style>
+    .back-link {
+      font-family: var(--mono);
+      font-size: .63rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .back-link:hover {
+      color: var(--vio-lt)
+    }
+
+    .nav-title {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .06em;
+      color: var(--text)
+    }
+
+    .nav-badges {
+      display: flex;
+      gap: .4rem;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .nbadge {
+      font-family: var(--mono);
+      font-size: .56rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .18rem .55rem;
+      border-radius: 2px
+    }
+
+    .nb-vio {
+      color: var(--vio-lt);
+      border: 1px solid rgba(167, 139, 250, .4);
+      background: var(--vio-dim)
+    }
+
+    .nb-gold {
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, .3);
+      background: var(--gold-dim)
+    }
+
+    /* WRAPPER */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.4rem 4rem
+    }
+
+    /* HEADER */
+    header {
+      padding: 3.2rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: .56rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--vio-lt);
+      border: 1px solid rgba(167, 139, 250, .35);
+      background: var(--vio-dim);
+      padding: .22rem .7rem;
+      border-radius: 2px;
+      margin-bottom: .9rem
+    }
+
+    h1 {
+      font-family: var(--sans);
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: .35rem
+    }
+
+    h1 .rta {
+      color: var(--vio-lt)
+    }
+
+    h1 .wfm {
+      background: linear-gradient(135deg, var(--gold), #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .header-sub {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+      margin-bottom: .7rem
+    }
+
+    .header-desc {
+      color: var(--muted);
+      font-size: .86rem;
+      max-width: 650px;
+      line-height: 1.75
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      margin-top: 1.1rem;
+      flex-wrap: wrap
+    }
+
+    .meta-item {
+      font-family: var(--mono);
+      font-size: .58rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .35rem
+    }
+
+    .meta-item::before {
+      content: '◆';
+      color: var(--vio-lt);
+      font-size: .38rem
+    }
+
+    /* SKILLS CHECKLIST CARD */
+    .skills-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1.8rem;
+      overflow: hidden
+    }
+
+    .skills-header {
+      padding: .9rem 1.2rem;
+      background: var(--vio-dim);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+      cursor: pointer;
+      user-select: none
+    }
+
+    .skills-header-left {
+      display: flex;
+      align-items: center;
+      gap: .7rem
+    }
+
+    .skills-title {
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--vio-lt)
+    }
+
+    .skills-progress-text {
+      font-family: var(--mono);
+      font-size: .58rem;
+      color: var(--muted)
+    }
+
+    .skills-chevron {
+      font-size: .6rem;
+      color: var(--muted);
+      transition: transform .25s
+    }
+
+    .skills-card.open .skills-chevron {
+      transform: rotate(180deg)
+    }
+
+    .skills-body {
+      display: none;
+      padding: 1.2rem
+    }
+
+    .skills-card.open .skills-body {
+      display: block
+    }
+
+    .skills-mini-bar {
+      height: 2px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 1px;
+      overflow: hidden;
+      margin-bottom: 1.2rem
+    }
+
+    .skills-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--vio), var(--vio-lt));
+      border-radius: 1px;
+      transition: width .4s
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: .5rem
+    }
+
+    .skill-section-title {
+      font-family: var(--mono);
+      font-size: .52rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .4rem 0 .2rem;
+      grid-column: 1/-1;
+      border-top: 1px solid var(--border2);
+      margin-top: .6rem
+    }
+
+    .skill-section-title:first-child {
+      border-top: none;
+      margin-top: 0
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .45rem .6rem;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none
+    }
+
+    .skill-item:hover {
+      border-color: rgba(124, 58, 237, .3)
+    }
+
+    .skill-item.checked {
+      background: rgba(34, 197, 94, .07);
+      border-color: rgba(34, 197, 94, .3)
+    }
+
+    .skill-check {
+      width: 15px;
+      height: 15px;
+      border: 1.5px solid var(--muted);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      font-size: .55rem
+    }
+
+    .skill-item.checked .skill-check {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff
+    }
+
+    .skill-label {
+      font-family: var(--mono);
+      font-size: .58rem;
+      color: var(--text);
+      line-height: 1.3
+    }
+
+    .skill-label span {
+      display: block;
+      font-size: .5rem;
+      color: var(--muted);
+      margin-top: .1rem
+    }
+
+    /* INSTRUCTIONS */
+    .instructions {
+      background: var(--vio-dim);
+      border: 1px solid rgba(124, 58, 237, .22);
+      border-radius: 5px;
+      padding: 1rem 1.3rem;
+      margin-bottom: 1.8rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .7rem;
+      align-items: start
+    }
+
+    .instructions-icon {
+      font-size: 1.1rem;
+      margin-top: 1px
+    }
+
+    .instructions p {
+      font-size: .82rem;
+      color: var(--text);
+      opacity: .85;
+      line-height: 1.65
+    }
+
+    .instructions strong {
+      color: var(--vio-lt)
+    }
+
+    /* PROGRESS */
+    .progress-bar-wrap {
+      margin-bottom: 1.8rem
+    }
+
+    .progress-label {
+      font-family: var(--mono);
+      font-size: .58rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .45rem;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 1px;
+      overflow: hidden
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--vio), var(--vio-lt));
+      border-radius: 1px;
+      transition: width .4s
+    }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+      margin-bottom: 1.5rem
+    }
+
+    .search-input {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: .48rem .85rem;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: .68rem;
+      outline: none;
+      transition: border-color .2s;
+      min-width: 200px
+    }
+
+    .search-input:focus {
+      border-color: var(--vio-lt)
+    }
+
+    .search-input::placeholder {
+      color: var(--muted)
+    }
+
+    .cat-btn {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      padding: .25rem .65rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .56rem;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+      text-transform: uppercase
+    }
+
+    .cat-btn:hover {
+      border-color: var(--vio-lt);
+      color: var(--vio-lt)
+    }
+
+    .cat-btn.active {
+      background: var(--vio);
+      border-color: var(--vio);
+      color: #fff;
+      font-weight: 600
+    }
+
+    .stats-count {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: .6rem;
+      color: var(--muted)
+    }
+
+    /* UNIT CARDS */
+    .units-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .unit-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      overflow: hidden;
+      transition: border-color .2s
+    }
+
+    .unit-card:hover {
+      border-color: rgba(124, 58, 237, .22)
+    }
+
+    .unit-card.open {
+      border-color: rgba(167, 139, 250, .4)
+    }
+
+    .unit-card.done {
+      background: rgba(124, 58, 237, .04);
+      border-color: rgba(124, 58, 237, .2)
+    }
+
+    .unit-card.hidden {
+      display: none
+    }
+
+    .unit-card.excel-card {
+      border-color: rgba(34, 197, 94, .18)
+    }
+
+    .unit-card.excel-card:hover {
+      border-color: rgba(34, 197, 94, .35)
+    }
+
+    .unit-card.excel-card.open {
+      border-color: rgba(34, 197, 94, .5)
+    }
+
+    .unit-card.project {
+      border-color: rgba(245, 158, 11, .25);
+      background: rgba(245, 158, 11, .04)
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .95rem 1.15rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background .15s
+    }
+
+    .card-header:hover {
+      background: var(--card2)
+    }
+
+    .unit-num {
+      font-family: var(--mono);
+      font-size: .65rem;
+      color: var(--vio-lt);
+      min-width: 2rem;
+      opacity: .65
+    }
+
+    .unit-num.excel {
+      color: var(--green);
+      opacity: 1
+    }
+
+    .unit-num.final {
+      color: var(--gold);
+      opacity: 1
+    }
+
+    .card-title-wrap {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .45rem
+    }
+
+    .unit-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .sec-badge {
+      font-family: var(--mono);
+      font-size: .48rem;
+      letter-spacing: .07em;
+      color: var(--muted);
+      border: 1px solid var(--border2);
+      padding: .08rem .38rem;
+      border-radius: 2px;
+      white-space: nowrap
+    }
+
+    .sec-badge.excel-badge {
+      color: var(--green);
+      border-color: rgba(34, 197, 94, .3);
+      background: var(--green-dim)
+    }
+
+    .sec-badge.final {
+      color: var(--gold);
+      border-color: rgba(245, 158, 11, .3);
+      background: var(--gold-dim)
+    }
+
+    .card-chevron {
+      color: var(--muted);
+      font-size: .6rem;
+      transition: transform .25s, color .2s;
+      flex-shrink: 0
+    }
+
+    .unit-card.open .card-chevron {
+      transform: rotate(180deg);
+      color: var(--vio-lt)
+    }
+
+    .unit-card.excel-card.open .card-chevron {
+      color: var(--green)
+    }
+
+    .card-body {
+      display: none;
+      border-top: 1px solid var(--border2);
+      padding: 1.1rem 1.15rem;
+      background: var(--bg2)
+    }
+
+    .unit-card.open .card-body {
+      display: block
+    }
+
+    .prompt-label {
+      font-family: var(--mono);
+      font-size: .5rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--vio-lt);
+      margin-bottom: .9rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      opacity: .75
+    }
+
+    .prompt-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(167, 139, 250, .12)
+    }
+
+    .prompt-label.excel-label {
+      color: var(--green)
+    }
+
+    .prompt-label.excel-label::after {
+      background: rgba(34, 197, 94, .12)
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: 100%;
+      padding: .75rem 1.1rem;
+      background: var(--vio-dim);
+      border: 1px solid rgba(124, 58, 237, .32);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: .66rem;
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: all .2s;
+      text-transform: uppercase;
+      font-weight: 500
+    }
+
+    .copy-btn.excel-btn {
+      background: var(--green-dim);
+      border-color: rgba(34, 197, 94, .32)
+    }
+
+    .copy-btn:hover {
+      background: rgba(124, 58, 237, .22);
+      border-color: var(--vio-lt);
+      transform: translateY(-1px)
+    }
+
+    .copy-btn.excel-btn:hover {
+      background: rgba(34, 197, 94, .2);
+      border-color: var(--green)
+    }
+
+    .copy-btn.copied {
+      background: rgba(34, 197, 94, .1);
+      border-color: rgba(34, 197, 94, .4);
+      color: #6ee7b7
+    }
+
+    .copy-hint {
+      font-family: var(--mono);
+      font-size: .56rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: .6rem
+    }
+
+    .prompt-text {
+      display: none
+    }
+
+    .done-row {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-top: .75rem;
+      padding-top: .75rem;
+      border-top: 1px solid var(--border2)
+    }
+
+    .done-btn {
+      background: none;
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .56rem;
+      padding: .2rem .55rem;
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .done-btn:hover {
+      border-color: rgba(34, 197, 94, .4);
+      color: #6ee7b7
+    }
+
+    .unit-card.done .done-btn {
+      border-color: rgba(34, 197, 94, .4);
+      color: #6ee7b7;
+      background: rgba(34, 197, 94, .07)
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--card);
+      border: 1px solid rgba(167, 139, 250, .4);
+      color: var(--vio-lt);
+      font-family: var(--mono);
+      font-size: .66rem;
+      letter-spacing: .08em;
+      padding: .6rem 1.3rem;
+      border-radius: 3px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 999
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    footer {
+      margin-top: 3.5rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .8rem
+    }
+
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--muted)
+    }
+
+    .footer-logo span {
+      color: var(--vio-lt)
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: .58rem;
+      color: var(--muted)
+    }
+
+    @media(max-width:580px) {
+      .sec-badge {
+        display: none
+      }
+
+      .card-header {
+        padding: .8rem 1rem;
+        gap: .55rem
+      }
+
+      .card-body {
+        padding: .9rem 1rem
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* GLOSSARY PANEL */
+    .glos-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1.8rem;
+      overflow: hidden
+    }
+
+    .glos-header {
+      padding: .9rem 1.2rem;
+      background: var(--vio-dim);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+      cursor: pointer;
+      user-select: none
+    }
+
+    .glos-header-left {
+      display: flex;
+      align-items: center;
+      gap: .7rem
+    }
+
+    .glos-title {
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--vio-lt)
+    }
+
+    .glos-count {
+      font-family: var(--mono);
+      font-size: .58rem;
+      color: var(--muted)
+    }
+
+    .glos-chevron {
+      font-size: .6rem;
+      color: var(--muted);
+      transition: transform .25s
+    }
+
+    .glos-card.open .glos-chevron {
+      transform: rotate(180deg)
+    }
+
+    .glos-body {
+      display: none;
+      padding: 1rem 1.2rem 1.4rem
+    }
+
+    .glos-card.open .glos-body {
+      display: block
+    }
+
+    .glos-search {
+      width: 100%;
+      background: #0f0d17;
+      border: 1px solid rgba(124, 58, 237, .35);
+      border-radius: 3px;
+      padding: .6rem 1rem;
+      color: #ede8ff;
+      font-family: var(--mono);
+      font-size: .75rem;
+      outline: none;
+      transition: border-color .2s;
+      margin-bottom: .9rem;
+      letter-spacing: .03em
+    }
+
+    .glos-search:focus {
+      border-color: #a78bfa;
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, .15)
+    }
+
+    .glos-search::placeholder {
+      color: rgba(167, 139, 250, .4)
+    }
+
+    .glos-stats {
+      font-family: var(--mono);
+      font-size: .62rem;
+      color: rgba(167, 139, 250, .6);
+      margin-bottom: .7rem;
+      letter-spacing: .06em
+    }
+
+    .glos-table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .glos-table th {
+      font-family: var(--mono);
+      font-size: .56rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(167, 139, 250, .55);
+      padding: .6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      background: #0e0c18;
+      z-index: 5
+    }
+
+    .glos-table td {
+      padding: .55rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      vertical-align: top;
+      font-size: .84rem
+    }
+
+    .glos-table td:first-child {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: #c4b5fd;
+      white-space: nowrap;
+      width: 210px;
+      font-weight: 600;
+      letter-spacing: .03em
+    }
+
+    .glos-table td:last-child {
+      color: #b8b0d4;
+      line-height: 1.65
+    }
+
+    .glos-table tr:hover td {
+      background: rgba(124, 58, 237, .09)
+    }
+
+    .glos-table tr:hover td:first-child {
+      color: #ede8ff
+    }
+
+    .glos-table tr:hover td:last-child {
+      color: #d4cef0
+    }
+
+    .glos-table tr.hidden-row {
+      display: none
+    }
+
+    .glos-table td:last-child {
+      position: relative
+    }
+
+    .glos-copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      margin-top: .35rem;
+      background: rgba(124, 58, 237, .12);
+      border: 1px solid rgba(124, 58, 237, .28);
+      border-radius: 3px;
+      color: rgba(167, 139, 250, .8);
+      font-family: var(--mono);
+      font-size: .52rem;
+      letter-spacing: .07em;
+      padding: .18rem .5rem;
+      cursor: pointer;
+      transition: all .18s;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .glos-table tr:hover .glos-copy-btn {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .glos-copy-btn:hover {
+      background: rgba(124, 58, 237, .25);
+      border-color: #a78bfa;
+      color: #ede8ff;
+      transform: translateY(-1px)
+    }
+
+    .glos-copy-btn.copied {
+      background: rgba(34, 197, 94, .12);
+      border-color: rgba(34, 197, 94, .4);
+      color: #6ee7b7
+    }
+
+    .glos-def-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start
+    }
+
+    .glos-wrap {
+      max-height: 520px;
+      overflow-y: auto;
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--muted) transparent
+    }
+
+    .glos-wrap::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .glos-wrap::-webkit-scrollbar-thumb {
+      background: var(--muted);
+      border-radius: 2px
+    }
+  </style>
 </head>
+
 <body>
-<div class="shimmer"></div>
-<nav>
-  <div class="nav-left">
-    <a href="../index.html" class="back-link">← Logicards</a>
-    <span class="nav-title">RTA · Workforce Management</span>
-  </div>
-  <div class="nav-badges">
-    <span class="nbadge nb-gold">📊 Contact Center · WFM</span>
-    <span class="nbadge nb-vio" id="doneCount">0 / 30 lecciones</span>
-  </div>
-</nav>
-
-<div class="wrapper">
-  <header>
-    <div class="level-badge">◆ Real-Time Analyst · WFM Support · Contact Center</div>
-    <h1><span class="rta">RTA</span> <span class="wfm">Workforce Management</span></h1>
-    <p class="header-sub">30 Lecciones · Teoría · Simulaciones · Práctica Excel</p>
-    <p class="header-desc">Curso completo para el rol de <strong>Real-Time Analyst (RTA)</strong> en Contact Centers. Cubre monitoreo en tiempo real, adherencia, KPIs de servicio, manejo de incidentes, cálculo de staffing y herramientas Excel aplicadas al WFM. Incluye un checklist de habilidades para que puedas evaluar tu propio nivel.</p>
-    <div class="header-meta">
-      <span class="meta-item">30 lecciones</span>
-      <span class="meta-item">+200 términos WFM</span>
-      <span class="meta-item">Teoría + simulaciones</span>
-      <span class="meta-item">Práctica Excel incluida</span>
-      <span class="meta-item">Proyecto final: turno 8h</span>
+  <div class="shimmer"></div>
+  <nav>
+    <div class="nav-left">
+      <a href="../index.html" class="back-link">← Logicards</a>
+      <span class="nav-title">RTA · Workforce Management</span>
     </div>
-  </header>
+    <div class="nav-badges">
+      <span class="nbadge nb-gold">📊 Contact Center · WFM</span>
+      <span class="nbadge nb-vio" id="doneCount">0 / 30 lecciones</span>
+    </div>
+  </nav>
 
-  <!-- SKILLS CHECKLIST -->
-  <div class="skills-card" id="skillsCard">
-    <div class="skills-header" onclick="toggleSkills()">
-      <div class="skills-header-left">
-        <span style="font-size:1rem">✅</span>
-        <span class="skills-title">Checklist de habilidades · RTA Ready</span>
-        <span class="skills-progress-text" id="skillsProgressText">0 / 24 habilidades</span>
+  <div class="wrapper">
+    <header>
+      <div class="level-badge">◆ Real-Time Analyst · WFM Support · Contact Center</div>
+      <h1><span class="rta">RTA</span> <span class="wfm">Workforce Management</span></h1>
+      <p class="header-sub">30 Lecciones · Teoría · Simulaciones · Práctica Excel</p>
+      <p class="header-desc">Curso completo para el rol de <strong>Real-Time Analyst (RTA)</strong> en Contact Centers.
+        Cubre monitoreo en tiempo real, adherencia, KPIs de servicio, manejo de incidentes, cálculo de staffing y
+        herramientas Excel aplicadas al WFM. Incluye un checklist de habilidades para que puedas evaluar tu propio
+        nivel.</p>
+      <div class="header-meta">
+        <span class="meta-item">30 lecciones</span>
+        <span class="meta-item">+200 términos WFM</span>
+        <span class="meta-item">Teoría + simulaciones</span>
+        <span class="meta-item">Práctica Excel incluida</span>
+        <span class="meta-item">Proyecto final: turno 8h</span>
       </div>
-      <span class="skills-chevron" id="skillsChevron">▼</span>
-    </div>
-    <div class="skills-body" id="skillsBody">
-      <div class="skills-mini-bar"><div class="skills-mini-fill" id="skillsMiniBar" style="width:0%"></div></div>
-      <div class="skills-grid" id="skillsGrid"></div>
-    </div>
-  </div>
+    </header>
 
-
-  <!-- GLOSSARY PANEL -->
-  <div class="glos-card" id="glosCard">
-    <div class="glos-header" onclick="toggleGlos()">
-      <div class="glos-header-left">
-        <span style="font-size:1rem">📖</span>
-        <span class="glos-title">Glosario WFM · 200 Términos</span>
-        <span class="glos-count">Diccionario completo del Contact Center</span>
+    <!-- SKILLS CHECKLIST -->
+    <div class="skills-card" id="skillsCard">
+      <div class="skills-header" onclick="toggleSkills()">
+        <div class="skills-header-left">
+          <span style="font-size:1rem">✅</span>
+          <span class="skills-title">Checklist de habilidades · RTA Ready</span>
+          <span class="skills-progress-text" id="skillsProgressText">0 / 24 habilidades</span>
+        </div>
+        <span class="skills-chevron" id="skillsChevron">▼</span>
       </div>
-      <span class="glos-chevron" id="glosChevron">▼</span>
-    </div>
-    <div class="glos-body" id="glosBody">
-      <input class="glos-search" id="glosSearch" type="text" placeholder="🔍  Buscar término WFM…" oninput="filterGlos()"/>
-      <div class="glos-stats" id="glosStats">200 términos · haz clic en una fila para resaltarla</div>
-      <div class="glos-wrap">
-        <table class="glos-table" id="glosTable">
-          <thead><tr><th>Término / Sigla</th><th>Definición</th></tr></thead>
-          <tbody id="glosTbody"></tbody>
-        </table>
+      <div class="skills-body" id="skillsBody">
+        <div class="skills-mini-bar">
+          <div class="skills-mini-fill" id="skillsMiniBar" style="width:0%"></div>
+        </div>
+        <div class="skills-grid" id="skillsGrid"></div>
       </div>
     </div>
+
+
+    <!-- GLOSSARY PANEL -->
+    <div class="glos-card" id="glosCard">
+      <div class="glos-header" onclick="toggleGlos()">
+        <div class="glos-header-left">
+          <span style="font-size:1rem">📖</span>
+          <span class="glos-title">Glosario WFM · 200 Términos</span>
+          <span class="glos-count">Diccionario completo del Contact Center</span>
+        </div>
+        <span class="glos-chevron" id="glosChevron">▼</span>
+      </div>
+      <div class="glos-body" id="glosBody">
+        <input class="glos-search" id="glosSearch" type="text" placeholder="🔍  Buscar término WFM…"
+          oninput="filterGlos()" />
+        <div class="glos-stats" id="glosStats">200 términos · haz clic en una fila para resaltarla</div>
+        <div class="glos-wrap">
+          <table class="glos-table" id="glosTable">
+            <thead>
+              <tr>
+                <th>Término / Sigla</th>
+                <th>Definición</th>
+              </tr>
+            </thead>
+            <tbody id="glosTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <div class="instructions-icon">💡</div>
+      <p>Abre cualquier lección, copia el prompt y pégalo en <strong>ChatGPT, Claude o Gemini</strong>. La IA actuará
+        como un <strong>profesor universitario de Workforce Management</strong> especializado en Contact Centers. Las
+        <strong>lecciones marcadas en verde 🟢 incluyen práctica de Excel</strong>: el profesor explica la fórmula o
+        técnica con un ejemplo, y luego te pide que lo repitas tú paso a paso. El <strong>Glosario WFM completo de 200+
+          términos</strong> está disponible en el panel de arriba — ábrelo y busca cualquier término en tiempo real.</p>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 30 lecciones
+          completadas</span></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input class="search-input" type="text" id="search" placeholder="🔍  Buscar lección o término WFM…"
+        oninput="applyFilters()" />
+      <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
+      <button class="cat-btn" data-cat="fundamentos" onclick="selectCat(this)">📐 Fundamentos</button>
+      <button class="cat-btn" data-cat="kpis" onclick="selectCat(this)">📊 KPIs</button>
+      <button class="cat-btn" data-cat="intraday" onclick="selectCat(this)">⚡ Intraday</button>
+      <button class="cat-btn" data-cat="staff" onclick="selectCat(this)">👥 Staff</button>
+      <button class="cat-btn" data-cat="excel" onclick="selectCat(this)">🟢 Excel</button>
+      <button class="cat-btn" data-cat="herramientas" onclick="selectCat(this)">🛠 Herramientas</button>
+      <button class="cat-btn" data-cat="soft" onclick="selectCat(this)">💬 Soft Skills</button>
+      <button class="cat-btn" data-cat="proyecto" onclick="selectCat(this)">🏆 Proyecto</button>
+      <span class="stats-count" id="counter">30 lecciones</span>
+    </div>
+
+    <div class="units-list" id="unitsList"></div>
+
+    <footer>
+      <span class="footer-logo">Logi<span>cards</span></span>
+      <span class="footer-copy">© 2026 · Jhon Sandoval · RTA Workforce Management</span>
+    </footer>
   </div>
+  <div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
 
-  <div class="instructions">
-    <div class="instructions-icon">💡</div>
-    <p>Abre cualquier lección, copia el prompt y pégalo en <strong>ChatGPT, Claude o Gemini</strong>. La IA actuará como un <strong>profesor universitario de Workforce Management</strong> especializado en Contact Centers. Las <strong>lecciones marcadas en verde 🟢 incluyen práctica de Excel</strong>: el profesor explica la fórmula o técnica con un ejemplo, y luego te pide que lo repitas tú paso a paso. El <strong>Glosario WFM completo de 200+ términos</strong> está disponible en el panel de arriba — ábrelo y busca cualquier término en tiempo real.</p>
-  </div>
+  <script>
 
-  <div class="progress-bar-wrap">
-    <div class="progress-label"><span>Progreso del curso</span><span id="progressText">0 de 30 lecciones completadas</span></div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-  </div>
+    // ═══════════════════════════════════════════════
+    // GLOSSARY DATA — 200 terms
+    // ═══════════════════════════════════════════════
+    const GLOS = [
+      ["AHT", "Average Handle Time — Tiempo promedio de gestión de una llamada (Talk + Hold + ACW)."],
+      ["ACW", "After Call Work — Tiempo administrativo que toma el agente después de colgar la llamada."],
+      ["ASA", "Average Speed of Answer — Tiempo promedio que tarda el centro en contestar una llamada."],
+      ["Adherence", "Grado de cumplimiento del horario programado por parte del agente."],
+      ["Attrition", "Deserción o rotación de personal en un periodo determinado."],
+      ["Aux Codes", "Códigos de estado del agente: Lunch, Break, Training, etc."],
+      ["Abandon Rate", "Porcentaje de llamadas colgadas por el cliente antes de ser atendidas."],
+      ["Agent Occupancy", "Porcentaje de tiempo que el agente está ocupado (en llamada o ACW) vs disponible."],
+      ["Availability", "Tiempo total en que el agente está listo y disponible para recibir llamadas."],
+      ["Backlog", "Carga de trabajo acumulada y pendiente de procesar (llamadas, chats, emails)."],
+      ["Base Staff", "Número mínimo de agentes necesarios para cubrir la demanda de una fila."],
+      ["Benchmarking", "Comparación de métricas propias contra estándares de la industria."],
+      ["Billable Hours", "Horas que el BPO puede facturar al cliente final según contrato."],
+      ["Burnout", "Agotamiento físico y mental del agente causado por alta ocupación sostenida."],
+      ["Business Rules", "Reglas de negocio que dictan las prioridades de atención en la operación."],
+      ["Capacity Planning", "Planeación de recursos humanos a largo plazo (meses o años)."],
+      ["Call Flow", "Ruta lógica que sigue una llamada dentro del IVR antes de llegar al agente."],
+      ["Concurrency", "Número de chats simultáneos que un agente puede atender al mismo tiempo."],
+      ["CSAT", "Customer Satisfaction Score — Puntuación de satisfacción del cliente."],
+      ["Cross-Skilling", "Capacitación de un agente en múltiples habilidades o líneas de negocio."],
+      ["Dashboard", "Tablero visual que muestra métricas clave en tiempo real."],
+      ["Data Mining", "Extracción de patrones y tendencias de datos históricos de llamadas."],
+      ["Deflection", "Clientes que resuelven su consulta vía self-service sin hablar con un agente."],
+      ["Delayed Call", "Llamada que no es atendida de inmediato y entra a la fila de espera (Queue)."],
+      ["Direct Talk Time", "Tiempo neto real de conversación entre el agente y el cliente."],
+      ["Downtime", "Tiempo de inactividad por fallas técnicas, de sistema o de plataforma."],
+      ["Erlang C", "Algoritmo estadístico estándar para calcular el staff requerido en llamadas entrantes."],
+      ["Erlang B", "Algoritmo para calcular el número de líneas telefónicas (troncales) necesarias."],
+      ["FCR", "First Contact Resolution — Resolución del problema del cliente en el primer contacto."],
+      ["Forecast", "Pronóstico del volumen de llamadas o contactos basado en datos históricos."],
+      ["FTE", "Full Time Equivalent — Equivalencia de horas a un empleado de tiempo completo."],
+      ["Ghost Call", "Llamada silenciosa o sin audio que afecta negativamente el AHT."],
+      ["GOS", "Grade of Service — Grado de servicio; similar al SLA, mide el nivel de atención."],
+      ["Handle Time", "Tiempo total que toma procesar una transacción completa de inicio a fin."],
+      ["Headcount", "Número total de personas físicas en el equipo, independiente de sus horas."],
+      ["Hold Time", "Tiempo que el cliente permanece en espera con música mientras el agente gestiona."],
+      ["Idle Time", "Tiempo en que el agente está disponible (Ready) pero sin recibir llamadas."],
+      ["Intraday", "Gestión y ajuste de métricas, personal y estados durante el día en curso."],
+      ["Inbound", "Tráfico de llamadas entrantes iniciadas por los clientes hacia el Contact Center."],
+      ["IVR", "Interactive Voice Response — Sistema de menú de voz automatizado."],
+      ["KPI", "Key Performance Indicator — Indicador clave de desempeño operativo."],
+      ["Line of Business", "Línea de negocio o campaña específica (LOB) dentro del Contact Center."],
+      ["Load Balancing", "Distribución equitativa de carga de trabajo entre centros, filas o equipos."],
+      ["Logged Time", "Tiempo total que un agente permanece activo y conectado en el sistema."],
+      ["Longest Delay", "La llamada individual que lleva más tiempo esperando en la fila en un momento."],
+      ["Max Delay", "El tiempo máximo de espera registrado dentro de un intervalo de medición."],
+      ["Multi-skilling", "Capacidad de un agente de atender múltiples canales: voz, chat y email."],
+      ["Net Staffing", "Diferencia entre el staff requerido y el staff real disponible en un intervalo."],
+      ["Non-Productive", "Tiempo pagado al agente que no genera atención directa al cliente (reuniones, etc.)."],
+      ["NPS", "Net Promoter Score — Mide la lealtad del cliente y la probabilidad de recomendación."],
+      ["Outbound", "Llamadas salientes iniciadas por el Contact Center hacia los clientes."],
+      ["Overstaffing", "Exceso de agentes disponibles para el volumen de contactos actual."],
+      ["Overflow", "Envío del excedente de llamadas a otra fila, grupo o centro de atención."],
+      ["Pacing", "Ritmo de marcación en campañas salientes; controla la velocidad del dialer."],
+      ["Peak Hour", "La hora o intervalo del día con el mayor volumen de llamadas registrado."],
+      ["Phantom Abandon", "Llamada que se corta por fallas de red o técnicas, no por decisión del cliente."],
+      ["Predictive Dialer", "Marcador automático que predice cuándo un agente estará libre para recibir una llamada."],
+      ["Queue", "Fila de espera virtual donde los clientes aguardan a ser atendidos."],
+      ["RTA", "Real-Time Analyst — Analista encargado del monitoreo y ajuste en tiempo real."],
+      ["Real-Time Adherence", "Monitoreo del cumplimiento del horario del agente en el momento exacto."],
+      ["Remote Agent", "Agente que trabaja desde casa o fuera de las instalaciones físicas del centro."],
+      ["Reporting", "Proceso de generar, analizar y enviar datos históricos de la operación."],
+      ["Roster", "Calendario o malla de turnos del personal en un periodo dado."],
+      ["Schedule", "Horario asignado a cada colaborador con sus tiempos de entrada, pausa y salida."],
+      ["SLA", "Service Level Agreement — Contrato que define el nivel mínimo de servicio exigido."],
+      ["Shrinkage", "Porcentaje de tiempo que reduce la disponibilidad real del agente."],
+      ["Staffing Model", "Modelo matemático usado para proyectar las necesidades de personal."],
+      ["Staffing Requirement", "Número exacto de agentes necesarios para cumplir el SL en un intervalo."],
+      ["Supervisor", "Responsable directo de la gestión y desempeño de un grupo de agentes."],
+      ["Talk Time", "Tiempo neto que el agente habla activamente con el cliente."],
+      ["Task Switching", "Tiempo perdido productividad al cambiar entre diferentes tipos de tareas."],
+      ["Threshold", "Umbral o límite definido para una métrica operativa (ej: máx. 20 seg de ASA)."],
+      ["Traffic Study", "Análisis detallado de los patrones de llamadas por hora, día y semana."],
+      ["Training Gap", "Necesidad de capacitación identificada por bajo desempeño en métricas."],
+      ["Turnover", "Rotación voluntaria o involuntaria de agentes en un periodo."],
+      ["Understaffing", "Falta de agentes suficientes para cubrir la demanda actual de contactos."],
+      ["Utilization", "Relación entre el tiempo de trabajo efectivo y el tiempo total logueado."],
+      ["Varianza", "Diferencia entre el volumen o KPI planeado y el ejecutado realmente."],
+      ["Voice of Customer", "Feedback directo del cliente sobre su experiencia de atención (VoC)."],
+      ["Volume", "Cantidad total de llamadas, chats o correos recibidos en un periodo."],
+      ["VTO", "Voluntary Time Off — Salida voluntaria del agente sin pago en periodos de bajo volumen."],
+      ["WFM", "Workforce Management — Gestión integral de la fuerza de trabajo."],
+      ["WFMS", "Workforce Management System — Software especializado en gestión de personal."],
+      ["Wrap-up Time", "Sinónimo de ACW; tiempo de trabajo administrativo post-llamada."],
+      ["Yield", "Rendimiento o productividad neta obtenida de una fila o grupo de agentes."],
+      ["Zero Volume", "Intervalos del día donde no entra tráfico, comúnmente en la madrugada."],
+      ["Smoothing", "Técnica estadística para promediar picos de volumen en el forecast."],
+      ["Interval", "Bloque de tiempo (usualmente 15 o 30 min) en que se miden los KPIs."],
+      ["Self-Service", "Opciones donde el cliente resuelve su consulta solo, sin intervención humana."],
+      ["Agent Status", "El estado actual del agente en el sistema: Ready, Not Ready, Aux, etc."],
+      ["Average Delay", "Tiempo promedio que todas las llamadas en un intervalo esperaron en la fila."],
+      ["Blocking", "Cuando el sistema rechaza llamadas por falta de líneas disponibles."],
+      ["Cost Per Call", "Costo total que representa cada interacción para el Contact Center."],
+      ["Long Call", "Llamada que supera significativamente el AHT promedio del equipo."],
+      ["Manual Outbound", "Llamada saliente marcada manualmente dígito por dígito por el agente."],
+      ["On-Hook", "Estado en que el agente está desconectado o no disponible en el sistema."],
+      ["Peer Review", "Evaluación del desempeño de un agente realizada por sus compañeros."],
+      ["Shift Swap", "Intercambio de turnos entre dos agentes con aprobación del supervisor."],
+      ["Workforce Mastery", "Nivel experto en la gestión de recursos humanos y análisis de datos WFM."],
+      ["ACD", "Automatic Call Distributor — Sistema que distribuye las llamadas entrantes automáticamente a los agentes disponibles."],
+      ["ACF", "After Contact Follow-up — Seguimiento realizado después de una interacción con el cliente."],
+      ["Agent Groups", "Grupos de agentes organizados por habilidad, campaña o línea de negocio."],
+      ["Agent Productivity", "Medida de la eficiencia del agente basada en sus métricas de desempeño."],
+      ["Alert", "Notificación automática del sistema cuando una métrica supera su threshold."],
+      ["Allocation", "Asignación de agentes a diferentes campañas o filas según la demanda."],
+      ["Average Abandonment Time", "Tiempo promedio que los clientes esperan antes de colgar sin ser atendidos."],
+      ["Average Wait Time", "Tiempo promedio de espera en la fila antes de ser atendido por un agente."],
+      ["Blended Agent", "Agente que atiende tanto llamadas entrantes como salientes según la demanda."],
+      ["BPO", "Business Process Outsourcing — Tercerización de procesos de negocio."],
+      ["Break", "Pausa corta programada del agente durante su turno."],
+      ["Call Abandonment", "Cuando el cliente cuelga antes de ser atendido por un agente."],
+      ["Call Center", "Centro de atención telefónica donde se gestionan llamadas entrantes y salientes."],
+      ["Call Distribution", "Distribución de las llamadas entrantes entre los agentes disponibles."],
+      ["Call Recording", "Grabación de llamadas para control de calidad y capacitación."],
+      ["Call Routing", "Proceso de dirigir una llamada al agente o grupo correcto."],
+      ["Campaign", "Proyecto o línea de trabajo específico dentro del Contact Center."],
+      ["Coaching", "Sesión de retroalimentación y mejora del desempeño entre supervisor y agente."],
+      ["Contact Center", "Centro de atención multicanal (voz, chat, email, redes sociales)."],
+      ["Contingency Plan", "Plan de acción ante situaciones inesperadas que afectan la operación."],
+      ["CRM", "Customer Relationship Management — Sistema de gestión de relaciones con el cliente."],
+      ["Dialer", "Sistema automático de marcación para campañas salientes."],
+      ["Email Queue", "Fila de correos pendientes de respuesta por los agentes."],
+      ["Escalation", "Proceso de elevar un problema o incidente a un nivel superior de atención."],
+      ["Exception", "Evento no planeado que altera el horario o la disponibilidad del agente."],
+      ["Expected Handle Time", "Tiempo estimado que debería tomar gestionar un tipo de contacto."],
+      ["First Call Resolution", "Resolución del problema del cliente en la primera llamada sin seguimiento."],
+      ["Fixed Schedule", "Horario fijo e invariable asignado a un agente semana a semana."],
+      ["Flexible Schedule", "Horario adaptable según las necesidades de la operación y la demanda."],
+      ["Floor Manager", "Gerente o coordinador responsable de la operación en el piso del Contact Center."],
+      ["Half-Hour Interval", "Intervalo estándar de 30 minutos usado para medir y reportar KPIs."],
+      ["Historical Data", "Datos históricos de llamadas, AHT, volumen y SL usados para el forecast."],
+      ["IEX", "Sistema de WFM desarrollado por NICE (anteriormente conocido como IEX TotalView)."],
+      ["Inbound Queue", "Fila de llamadas entrantes en espera de ser atendidas."],
+      ["Incentive", "Bonificación o incentivo económico basado en el desempeño del agente."],
+      ["Interaction", "Cualquier contacto entre el cliente y el Contact Center (voz, chat, email)."],
+      ["Interval Report", "Reporte que muestra métricas segmentadas por intervalos de tiempo."],
+      ["Knowledge Base", "Base de conocimiento interna que los agentes consultan durante las llamadas."],
+      ["LOB", "Line of Business — Línea de negocio o campaña específica."],
+      ["Lunch Break", "Pausa de almuerzo programada en el horario del agente."],
+      ["Metrics", "Medidas cuantitativas usadas para evaluar el desempeño operativo."],
+      ["Monitoring", "Supervisión en tiempo real de las llamadas y estados de los agentes."],
+      ["NICE WFM", "Plataforma líder de Workforce Management desarrollada por NICE Systems."],
+      ["Off-phone Time", "Tiempo que el agente pasa fuera del teléfono en actividades no relacionadas con llamadas."],
+      ["Omnichannel", "Estrategia de atención integrada a través de múltiples canales simultáneos."],
+      ["Operational Efficiency", "Eficiencia operativa medida como la relación entre resultados y recursos usados."],
+      ["Outbound Queue", "Lista de llamadas salientes pendientes de ser realizadas por los agentes."],
+      ["Overtime", "Horas extras trabajadas por el agente más allá de su jornada regular."],
+      ["Performance Review", "Evaluación periódica del desempeño del agente basada en KPIs."],
+      ["Planned Shrinkage", "Shrinkage que puede anticiparse: capacitaciones, vacaciones, reuniones."],
+      ["Power Dialer", "Tipo de marcador automático que llama a un número a la vez por agente disponible."],
+      ["Priority Queue", "Fila de atención prioritaria para clientes VIP o casos urgentes."],
+      ["QA", "Quality Assurance — Proceso de evaluación de la calidad de las interacciones."],
+      ["Queue Management", "Gestión estratégica de las filas de espera para optimizar el SL."],
+      ["Quota", "Objetivo o meta de producción asignada a un agente o equipo."],
+      ["RFP", "Request For Proposal — Solicitud de propuesta a proveedores de servicios WFM."],
+      ["Ring Time", "Tiempo que una llamada suena antes de ser contestada por el agente."],
+      ["Schedule Adherence", "Porcentaje en que el agente cumple con su horario programado."],
+      ["Schedule Compliance", "Nivel de cumplimiento del horario asignado por parte del agente."],
+      ["Seasonal Forecast", "Pronóstico que considera variaciones estacionales del volumen de llamadas."],
+      ["Service Level", "Porcentaje de llamadas atendidas dentro de un tiempo objetivo (ej. 80/20)."],
+      ["Shift", "Turno de trabajo asignado a un agente en un día específico."],
+      ["Short Abandonment", "Llamadas abandonadas en menos de 5 segundos; se excluyen del cálculo de SL."],
+      ["Simulation", "Prueba virtual de escenarios operativos para evaluar decisiones de staffing."],
+      ["Skill-Based Routing", "Enrutamiento de llamadas al agente con la habilidad más adecuada para atenderla."],
+      ["SLA", "Service Level Agreement — Acuerdo de nivel de servicio entre el BPO y el cliente."],
+      ["Speed of Answer", "Velocidad con que el Contact Center responde las llamadas entrantes."],
+      ["Staff Plan", "Plan de personal que detalla la asignación de agentes por turno e intervalo."],
+      ["Staffing Gap", "Diferencia entre el personal disponible y el personal requerido."],
+      ["Ticket", "Registro digital de una interacción o solicitud del cliente."],
+      ["Transfer Rate", "Porcentaje de llamadas transferidas a otro agente o departamento."],
+      ["Trend Analysis", "Análisis de tendencias históricas para mejorar el forecast y la planeación."],
+      ["Unplanned Shrinkage", "Shrinkage imprevisto: ausentismo, problemas técnicos, emergencias."],
+      ["Verint WFM", "Plataforma de Workforce Management desarrollada por Verint Systems."],
+      ["Virtual Queue", "Sistema que permite al cliente conservar su turno sin esperar en línea."],
+      ["Wait Time", "Tiempo que el cliente espera en la fila antes de ser atendido."],
+      ["WFO", "Workforce Optimization — Optimización integral de la fuerza de trabajo."],
+      ["Workload", "Carga total de trabajo asignada a un agente o equipo en un periodo."],
+      ["Wrap Code", "Código que el agente selecciona al finalizar una llamada para clasificar el resultado."],
+      ["Absenteeism", "Ausentismo — Inasistencia del agente a su turno programado."],
+      ["Agent Profile", "Perfil del agente con sus habilidades, campañas asignadas y métricas históricas."],
+      ["Auto-Schedule", "Asignación automática de horarios generada por el sistema WFM."],
+      ["Best Practices", "Mejores prácticas operativas adoptadas de la industria del Contact Center."],
+      ["Break Schedule", "Distribución programada de las pausas del agente a lo largo del turno."],
+      ["Call Center Analytics", "Análisis avanzado de datos operativos del Contact Center."],
+      ["Call Handling", "Proceso completo de gestionar una llamada desde que entra hasta que cierra."],
+      ["Call Volume", "Número total de llamadas recibidas en un periodo determinado."],
+      ["Contact Rate", "Porcentaje de contactos exitosos en campañas salientes."],
+      ["Daily Report", "Reporte diario con el resumen de métricas de la jornada operativa."],
+      ["Demand Planning", "Planeación de la demanda proyectada de contactos para un periodo futuro."],
+      ["Efficiency Ratio", "Relación entre el output producido y los recursos utilizados."],
+      ["Floor Walk", "Recorrido del supervisor o RTA por el piso para verificar el estado operativo."],
+      ["Grace Period", "Tiempo de tolerancia antes de marcar a un agente como fuera de adherencia."],
+      ["Intraday Report", "Reporte generado durante el turno para monitorear métricas en tiempo real."],
+      ["Macro Forecast", "Pronóstico a largo plazo (mensual, trimestral, anual) del volumen de contactos."],
+      ["Micro Forecast", "Pronóstico detallado por intervalos de 15 o 30 minutos del día."],
+      ["Occupancy Rate", "Porcentaje del tiempo logueado que el agente está ocupado atendiendo contactos."],
+      ["Off-Peak", "Periodo de bajo volumen de llamadas, generalmente fuera de las horas pico."],
+      ["On-Peak", "Periodo de alto volumen de llamadas; requiere máxima disponibilidad de agentes."],
+      ["Open Time Off", "Tiempo libre sin pago que el agente puede solicitar voluntariamente."],
+      ["Outage", "Interrupción total o parcial de los sistemas o servicios del Contact Center."],
+      ["Productivity Metric", "Indicador que mide la producción o eficiencia de un agente o equipo."],
+      ["Real-Time Dashboard", "Panel de control que muestra las métricas operativas en tiempo real."],
+      ["Real-Time Monitoring", "Supervisión continua de agentes, colas y métricas durante el turno."],
+      ["Service Recovery", "Proceso de recuperar la satisfacción del cliente tras una mala experiencia."],
+      ["Shrinkage Factor", "Factor aplicado al staff base para calcular el headcount real necesario."],
+      ["Skill Set", "Conjunto de habilidades y competencias asignadas a un agente."],
+      ["SLA Breach", "Incumplimiento del nivel de servicio acordado en el contrato."],
+      ["Staff Scheduling", "Proceso de crear y asignar horarios de trabajo al personal."],
+      ["Transactional Data", "Datos individuales de cada interacción registrada en el sistema."],
+      ["Voice Channel", "Canal de atención por voz (llamadas telefónicas)."],
+      ["Workforce Analytics", "Análisis avanzado de datos de la fuerza de trabajo para optimizar la operación."],
+    ];
 
-  <div class="controls">
-    <input class="search-input" type="text" id="search" placeholder="🔍  Buscar lección o término WFM…" oninput="applyFilters()"/>
-    <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">All</button>
-    <button class="cat-btn" data-cat="fundamentos" onclick="selectCat(this)">📐 Fundamentos</button>
-    <button class="cat-btn" data-cat="kpis" onclick="selectCat(this)">📊 KPIs</button>
-    <button class="cat-btn" data-cat="intraday" onclick="selectCat(this)">⚡ Intraday</button>
-    <button class="cat-btn" data-cat="staff" onclick="selectCat(this)">👥 Staff</button>
-    <button class="cat-btn" data-cat="excel" onclick="selectCat(this)">🟢 Excel</button>
-    <button class="cat-btn" data-cat="herramientas" onclick="selectCat(this)">🛠 Herramientas</button>
-    <button class="cat-btn" data-cat="soft" onclick="selectCat(this)">💬 Soft Skills</button>
-    <button class="cat-btn" data-cat="proyecto" onclick="selectCat(this)">🏆 Proyecto</button>
-    <span class="stats-count" id="counter">30 lecciones</span>
-  </div>
+    function buildGlosTable() {
+      var tbody = document.getElementById('glosTbody');
+      GLOS.forEach(function (row, i) {
+        var term = row[0];
+        var def = row[1];
+        var tr = document.createElement('tr');
+        tr.dataset.search = (term + ' ' + def).toLowerCase();
 
-  <div class="units-list" id="unitsList"></div>
+        // Build prompt via DOM (no template literals, no escaping issues)
+        var prompt = 'Eres un profesor experto en Workforce Management (WFM) y Contact Centers. '
+          + 'Explicame el termino "' + term + '" de forma clara y profunda. Sigue esta estructura:\n\n'
+          + '1. DEFINICION CLARA: Que es exactamente ' + term + '? '
+          + 'Explicalo como si se lo dijeras a alguien sin experiencia en Contact Centers, sin jerga innecesaria.\n\n'
+          + '2. EXPLICACION TECNICA: Explicalo con precision tecnica para alguien que quiere trabajar '
+          + 'como RTA (Real-Time Analyst). Incluye la formula o calculo si aplica.\n\n'
+          + '3. EJEMPLO REAL Y SENCILLO: Dame un ejemplo concreto del dia a dia en un Contact Center. '
+          + 'Usa numeros reales (porcentajes, tiempos, cantidad de agentes). '
+          + 'Que sea una situacion que podria ocurrir en un turno real.\n\n'
+          + '4. IMPACTO EN LA OPERACION: Que pasa si este indicador se deteriora? '
+          + 'Que consecuencias tiene para el SLA, los agentes y el cliente?\n\n'
+          + '5. QUE HACE EL RTA: Cual es la accion especifica del Real-Time Analyst '
+          + 'cuando debe gestionar o monitorear este termino?\n\n'
+          + '6. PREGUNTA PRACTICA: Hazme una pregunta de analisis sobre ' + term
+          + ' para que yo aplique lo aprendido. Espera mi respuesta y dame retroalimentacion detallada.\n\n'
+          + 'Explica todo en espanol. Usa ejemplos simples y reales.';
 
-  <footer>
-    <span class="footer-logo">Logi<span>cards</span></span>
-    <span class="footer-copy">© 2026 · Jhon Sandoval · RTA Workforce Management</span>
-  </footer>
-</div>
-<div class="toast" id="toast">⧉ Prompt copiado — pégalo en tu IA</div>
+        // Term cell
+        var tdTerm = document.createElement('td');
+        tdTerm.textContent = term;
 
-<script>
+        // Def cell
+        var tdDef = document.createElement('td');
 
-// ═══════════════════════════════════════════════
-// GLOSSARY DATA — 200 terms
-// ═══════════════════════════════════════════════
-const GLOS = [
-["AHT","Average Handle Time — Tiempo promedio de gestión de una llamada (Talk + Hold + ACW)."],
-["ACW","After Call Work — Tiempo administrativo que toma el agente después de colgar la llamada."],
-["ASA","Average Speed of Answer — Tiempo promedio que tarda el centro en contestar una llamada."],
-["Adherence","Grado de cumplimiento del horario programado por parte del agente."],
-["Attrition","Deserción o rotación de personal en un periodo determinado."],
-["Aux Codes","Códigos de estado del agente: Lunch, Break, Training, etc."],
-["Abandon Rate","Porcentaje de llamadas colgadas por el cliente antes de ser atendidas."],
-["Agent Occupancy","Porcentaje de tiempo que el agente está ocupado (en llamada o ACW) vs disponible."],
-["Availability","Tiempo total en que el agente está listo y disponible para recibir llamadas."],
-["Backlog","Carga de trabajo acumulada y pendiente de procesar (llamadas, chats, emails)."],
-["Base Staff","Número mínimo de agentes necesarios para cubrir la demanda de una fila."],
-["Benchmarking","Comparación de métricas propias contra estándares de la industria."],
-["Billable Hours","Horas que el BPO puede facturar al cliente final según contrato."],
-["Burnout","Agotamiento físico y mental del agente causado por alta ocupación sostenida."],
-["Business Rules","Reglas de negocio que dictan las prioridades de atención en la operación."],
-["Capacity Planning","Planeación de recursos humanos a largo plazo (meses o años)."],
-["Call Flow","Ruta lógica que sigue una llamada dentro del IVR antes de llegar al agente."],
-["Concurrency","Número de chats simultáneos que un agente puede atender al mismo tiempo."],
-["CSAT","Customer Satisfaction Score — Puntuación de satisfacción del cliente."],
-["Cross-Skilling","Capacitación de un agente en múltiples habilidades o líneas de negocio."],
-["Dashboard","Tablero visual que muestra métricas clave en tiempo real."],
-["Data Mining","Extracción de patrones y tendencias de datos históricos de llamadas."],
-["Deflection","Clientes que resuelven su consulta vía self-service sin hablar con un agente."],
-["Delayed Call","Llamada que no es atendida de inmediato y entra a la fila de espera (Queue)."],
-["Direct Talk Time","Tiempo neto real de conversación entre el agente y el cliente."],
-["Downtime","Tiempo de inactividad por fallas técnicas, de sistema o de plataforma."],
-["Erlang C","Algoritmo estadístico estándar para calcular el staff requerido en llamadas entrantes."],
-["Erlang B","Algoritmo para calcular el número de líneas telefónicas (troncales) necesarias."],
-["FCR","First Contact Resolution — Resolución del problema del cliente en el primer contacto."],
-["Forecast","Pronóstico del volumen de llamadas o contactos basado en datos históricos."],
-["FTE","Full Time Equivalent — Equivalencia de horas a un empleado de tiempo completo."],
-["Ghost Call","Llamada silenciosa o sin audio que afecta negativamente el AHT."],
-["GOS","Grade of Service — Grado de servicio; similar al SLA, mide el nivel de atención."],
-["Handle Time","Tiempo total que toma procesar una transacción completa de inicio a fin."],
-["Headcount","Número total de personas físicas en el equipo, independiente de sus horas."],
-["Hold Time","Tiempo que el cliente permanece en espera con música mientras el agente gestiona."],
-["Idle Time","Tiempo en que el agente está disponible (Ready) pero sin recibir llamadas."],
-["Intraday","Gestión y ajuste de métricas, personal y estados durante el día en curso."],
-["Inbound","Tráfico de llamadas entrantes iniciadas por los clientes hacia el Contact Center."],
-["IVR","Interactive Voice Response — Sistema de menú de voz automatizado."],
-["KPI","Key Performance Indicator — Indicador clave de desempeño operativo."],
-["Line of Business","Línea de negocio o campaña específica (LOB) dentro del Contact Center."],
-["Load Balancing","Distribución equitativa de carga de trabajo entre centros, filas o equipos."],
-["Logged Time","Tiempo total que un agente permanece activo y conectado en el sistema."],
-["Longest Delay","La llamada individual que lleva más tiempo esperando en la fila en un momento."],
-["Max Delay","El tiempo máximo de espera registrado dentro de un intervalo de medición."],
-["Multi-skilling","Capacidad de un agente de atender múltiples canales: voz, chat y email."],
-["Net Staffing","Diferencia entre el staff requerido y el staff real disponible en un intervalo."],
-["Non-Productive","Tiempo pagado al agente que no genera atención directa al cliente (reuniones, etc.)."],
-["NPS","Net Promoter Score — Mide la lealtad del cliente y la probabilidad de recomendación."],
-["Outbound","Llamadas salientes iniciadas por el Contact Center hacia los clientes."],
-["Overstaffing","Exceso de agentes disponibles para el volumen de contactos actual."],
-["Overflow","Envío del excedente de llamadas a otra fila, grupo o centro de atención."],
-["Pacing","Ritmo de marcación en campañas salientes; controla la velocidad del dialer."],
-["Peak Hour","La hora o intervalo del día con el mayor volumen de llamadas registrado."],
-["Phantom Abandon","Llamada que se corta por fallas de red o técnicas, no por decisión del cliente."],
-["Predictive Dialer","Marcador automático que predice cuándo un agente estará libre para recibir una llamada."],
-["Queue","Fila de espera virtual donde los clientes aguardan a ser atendidos."],
-["RTA","Real-Time Analyst — Analista encargado del monitoreo y ajuste en tiempo real."],
-["Real-Time Adherence","Monitoreo del cumplimiento del horario del agente en el momento exacto."],
-["Remote Agent","Agente que trabaja desde casa o fuera de las instalaciones físicas del centro."],
-["Reporting","Proceso de generar, analizar y enviar datos históricos de la operación."],
-["Roster","Calendario o malla de turnos del personal en un periodo dado."],
-["Schedule","Horario asignado a cada colaborador con sus tiempos de entrada, pausa y salida."],
-["SLA","Service Level Agreement — Contrato que define el nivel mínimo de servicio exigido."],
-["Shrinkage","Porcentaje de tiempo que reduce la disponibilidad real del agente."],
-["Staffing Model","Modelo matemático usado para proyectar las necesidades de personal."],
-["Staffing Requirement","Número exacto de agentes necesarios para cumplir el SL en un intervalo."],
-["Supervisor","Responsable directo de la gestión y desempeño de un grupo de agentes."],
-["Talk Time","Tiempo neto que el agente habla activamente con el cliente."],
-["Task Switching","Tiempo perdido productividad al cambiar entre diferentes tipos de tareas."],
-["Threshold","Umbral o límite definido para una métrica operativa (ej: máx. 20 seg de ASA)."],
-["Traffic Study","Análisis detallado de los patrones de llamadas por hora, día y semana."],
-["Training Gap","Necesidad de capacitación identificada por bajo desempeño en métricas."],
-["Turnover","Rotación voluntaria o involuntaria de agentes en un periodo."],
-["Understaffing","Falta de agentes suficientes para cubrir la demanda actual de contactos."],
-["Utilization","Relación entre el tiempo de trabajo efectivo y el tiempo total logueado."],
-["Varianza","Diferencia entre el volumen o KPI planeado y el ejecutado realmente."],
-["Voice of Customer","Feedback directo del cliente sobre su experiencia de atención (VoC)."],
-["Volume","Cantidad total de llamadas, chats o correos recibidos en un periodo."],
-["VTO","Voluntary Time Off — Salida voluntaria del agente sin pago en periodos de bajo volumen."],
-["WFM","Workforce Management — Gestión integral de la fuerza de trabajo."],
-["WFMS","Workforce Management System — Software especializado en gestión de personal."],
-["Wrap-up Time","Sinónimo de ACW; tiempo de trabajo administrativo post-llamada."],
-["Yield","Rendimiento o productividad neta obtenida de una fila o grupo de agentes."],
-["Zero Volume","Intervalos del día donde no entra tráfico, comúnmente en la madrugada."],
-["Smoothing","Técnica estadística para promediar picos de volumen en el forecast."],
-["Interval","Bloque de tiempo (usualmente 15 o 30 min) en que se miden los KPIs."],
-["Self-Service","Opciones donde el cliente resuelve su consulta solo, sin intervención humana."],
-["Agent Status","El estado actual del agente en el sistema: Ready, Not Ready, Aux, etc."],
-["Average Delay","Tiempo promedio que todas las llamadas en un intervalo esperaron en la fila."],
-["Blocking","Cuando el sistema rechaza llamadas por falta de líneas disponibles."],
-["Cost Per Call","Costo total que representa cada interacción para el Contact Center."],
-["Long Call","Llamada que supera significativamente el AHT promedio del equipo."],
-["Manual Outbound","Llamada saliente marcada manualmente dígito por dígito por el agente."],
-["On-Hook","Estado en que el agente está desconectado o no disponible en el sistema."],
-["Peer Review","Evaluación del desempeño de un agente realizada por sus compañeros."],
-["Shift Swap","Intercambio de turnos entre dos agentes con aprobación del supervisor."],
-["Workforce Mastery","Nivel experto en la gestión de recursos humanos y análisis de datos WFM."],
-["ACD","Automatic Call Distributor — Sistema que distribuye las llamadas entrantes automáticamente a los agentes disponibles."],
-["ACF","After Contact Follow-up — Seguimiento realizado después de una interacción con el cliente."],
-["Agent Groups","Grupos de agentes organizados por habilidad, campaña o línea de negocio."],
-["Agent Productivity","Medida de la eficiencia del agente basada en sus métricas de desempeño."],
-["Alert","Notificación automática del sistema cuando una métrica supera su threshold."],
-["Allocation","Asignación de agentes a diferentes campañas o filas según la demanda."],
-["Average Abandonment Time","Tiempo promedio que los clientes esperan antes de colgar sin ser atendidos."],
-["Average Wait Time","Tiempo promedio de espera en la fila antes de ser atendido por un agente."],
-["Blended Agent","Agente que atiende tanto llamadas entrantes como salientes según la demanda."],
-["BPO","Business Process Outsourcing — Tercerización de procesos de negocio."],
-["Break","Pausa corta programada del agente durante su turno."],
-["Call Abandonment","Cuando el cliente cuelga antes de ser atendido por un agente."],
-["Call Center","Centro de atención telefónica donde se gestionan llamadas entrantes y salientes."],
-["Call Distribution","Distribución de las llamadas entrantes entre los agentes disponibles."],
-["Call Recording","Grabación de llamadas para control de calidad y capacitación."],
-["Call Routing","Proceso de dirigir una llamada al agente o grupo correcto."],
-["Campaign","Proyecto o línea de trabajo específico dentro del Contact Center."],
-["Coaching","Sesión de retroalimentación y mejora del desempeño entre supervisor y agente."],
-["Contact Center","Centro de atención multicanal (voz, chat, email, redes sociales)."],
-["Contingency Plan","Plan de acción ante situaciones inesperadas que afectan la operación."],
-["CRM","Customer Relationship Management — Sistema de gestión de relaciones con el cliente."],
-["Dialer","Sistema automático de marcación para campañas salientes."],
-["Email Queue","Fila de correos pendientes de respuesta por los agentes."],
-["Escalation","Proceso de elevar un problema o incidente a un nivel superior de atención."],
-["Exception","Evento no planeado que altera el horario o la disponibilidad del agente."],
-["Expected Handle Time","Tiempo estimado que debería tomar gestionar un tipo de contacto."],
-["First Call Resolution","Resolución del problema del cliente en la primera llamada sin seguimiento."],
-["Fixed Schedule","Horario fijo e invariable asignado a un agente semana a semana."],
-["Flexible Schedule","Horario adaptable según las necesidades de la operación y la demanda."],
-["Floor Manager","Gerente o coordinador responsable de la operación en el piso del Contact Center."],
-["Half-Hour Interval","Intervalo estándar de 30 minutos usado para medir y reportar KPIs."],
-["Historical Data","Datos históricos de llamadas, AHT, volumen y SL usados para el forecast."],
-["IEX","Sistema de WFM desarrollado por NICE (anteriormente conocido como IEX TotalView)."],
-["Inbound Queue","Fila de llamadas entrantes en espera de ser atendidas."],
-["Incentive","Bonificación o incentivo económico basado en el desempeño del agente."],
-["Interaction","Cualquier contacto entre el cliente y el Contact Center (voz, chat, email)."],
-["Interval Report","Reporte que muestra métricas segmentadas por intervalos de tiempo."],
-["Knowledge Base","Base de conocimiento interna que los agentes consultan durante las llamadas."],
-["LOB","Line of Business — Línea de negocio o campaña específica."],
-["Lunch Break","Pausa de almuerzo programada en el horario del agente."],
-["Metrics","Medidas cuantitativas usadas para evaluar el desempeño operativo."],
-["Monitoring","Supervisión en tiempo real de las llamadas y estados de los agentes."],
-["NICE WFM","Plataforma líder de Workforce Management desarrollada por NICE Systems."],
-["Off-phone Time","Tiempo que el agente pasa fuera del teléfono en actividades no relacionadas con llamadas."],
-["Omnichannel","Estrategia de atención integrada a través de múltiples canales simultáneos."],
-["Operational Efficiency","Eficiencia operativa medida como la relación entre resultados y recursos usados."],
-["Outbound Queue","Lista de llamadas salientes pendientes de ser realizadas por los agentes."],
-["Overtime","Horas extras trabajadas por el agente más allá de su jornada regular."],
-["Performance Review","Evaluación periódica del desempeño del agente basada en KPIs."],
-["Planned Shrinkage","Shrinkage que puede anticiparse: capacitaciones, vacaciones, reuniones."],
-["Power Dialer","Tipo de marcador automático que llama a un número a la vez por agente disponible."],
-["Priority Queue","Fila de atención prioritaria para clientes VIP o casos urgentes."],
-["QA","Quality Assurance — Proceso de evaluación de la calidad de las interacciones."],
-["Queue Management","Gestión estratégica de las filas de espera para optimizar el SL."],
-["Quota","Objetivo o meta de producción asignada a un agente o equipo."],
-["RFP","Request For Proposal — Solicitud de propuesta a proveedores de servicios WFM."],
-["Ring Time","Tiempo que una llamada suena antes de ser contestada por el agente."],
-["Schedule Adherence","Porcentaje en que el agente cumple con su horario programado."],
-["Schedule Compliance","Nivel de cumplimiento del horario asignado por parte del agente."],
-["Seasonal Forecast","Pronóstico que considera variaciones estacionales del volumen de llamadas."],
-["Service Level","Porcentaje de llamadas atendidas dentro de un tiempo objetivo (ej. 80/20)."],
-["Shift","Turno de trabajo asignado a un agente en un día específico."],
-["Short Abandonment","Llamadas abandonadas en menos de 5 segundos; se excluyen del cálculo de SL."],
-["Simulation","Prueba virtual de escenarios operativos para evaluar decisiones de staffing."],
-["Skill-Based Routing","Enrutamiento de llamadas al agente con la habilidad más adecuada para atenderla."],
-["SLA","Service Level Agreement — Acuerdo de nivel de servicio entre el BPO y el cliente."],
-["Speed of Answer","Velocidad con que el Contact Center responde las llamadas entrantes."],
-["Staff Plan","Plan de personal que detalla la asignación de agentes por turno e intervalo."],
-["Staffing Gap","Diferencia entre el personal disponible y el personal requerido."],
-["Ticket","Registro digital de una interacción o solicitud del cliente."],
-["Transfer Rate","Porcentaje de llamadas transferidas a otro agente o departamento."],
-["Trend Analysis","Análisis de tendencias históricas para mejorar el forecast y la planeación."],
-["Unplanned Shrinkage","Shrinkage imprevisto: ausentismo, problemas técnicos, emergencias."],
-["Verint WFM","Plataforma de Workforce Management desarrollada por Verint Systems."],
-["Virtual Queue","Sistema que permite al cliente conservar su turno sin esperar en línea."],
-["Wait Time","Tiempo que el cliente espera en la fila antes de ser atendido."],
-["WFO","Workforce Optimization — Optimización integral de la fuerza de trabajo."],
-["Workload","Carga total de trabajo asignada a un agente o equipo en un periodo."],
-["Wrap Code","Código que el agente selecciona al finalizar una llamada para clasificar el resultado."],
-["Absenteeism","Ausentismo — Inasistencia del agente a su turno programado."],
-["Agent Profile","Perfil del agente con sus habilidades, campañas asignadas y métricas históricas."],
-["Auto-Schedule","Asignación automática de horarios generada por el sistema WFM."],
-["Best Practices","Mejores prácticas operativas adoptadas de la industria del Contact Center."],
-["Break Schedule","Distribución programada de las pausas del agente a lo largo del turno."],
-["Call Center Analytics","Análisis avanzado de datos operativos del Contact Center."],
-["Call Handling","Proceso completo de gestionar una llamada desde que entra hasta que cierra."],
-["Call Volume","Número total de llamadas recibidas en un periodo determinado."],
-["Contact Rate","Porcentaje de contactos exitosos en campañas salientes."],
-["Daily Report","Reporte diario con el resumen de métricas de la jornada operativa."],
-["Demand Planning","Planeación de la demanda proyectada de contactos para un periodo futuro."],
-["Efficiency Ratio","Relación entre el output producido y los recursos utilizados."],
-["Floor Walk","Recorrido del supervisor o RTA por el piso para verificar el estado operativo."],
-["Grace Period","Tiempo de tolerancia antes de marcar a un agente como fuera de adherencia."],
-["Intraday Report","Reporte generado durante el turno para monitorear métricas en tiempo real."],
-["Macro Forecast","Pronóstico a largo plazo (mensual, trimestral, anual) del volumen de contactos."],
-["Micro Forecast","Pronóstico detallado por intervalos de 15 o 30 minutos del día."],
-["Occupancy Rate","Porcentaje del tiempo logueado que el agente está ocupado atendiendo contactos."],
-["Off-Peak","Periodo de bajo volumen de llamadas, generalmente fuera de las horas pico."],
-["On-Peak","Periodo de alto volumen de llamadas; requiere máxima disponibilidad de agentes."],
-["Open Time Off","Tiempo libre sin pago que el agente puede solicitar voluntariamente."],
-["Outage","Interrupción total o parcial de los sistemas o servicios del Contact Center."],
-["Productivity Metric","Indicador que mide la producción o eficiencia de un agente o equipo."],
-["Real-Time Dashboard","Panel de control que muestra las métricas operativas en tiempo real."],
-["Real-Time Monitoring","Supervisión continua de agentes, colas y métricas durante el turno."],
-["Service Recovery","Proceso de recuperar la satisfacción del cliente tras una mala experiencia."],
-["Shrinkage Factor","Factor aplicado al staff base para calcular el headcount real necesario."],
-["Skill Set","Conjunto de habilidades y competencias asignadas a un agente."],
-["SLA Breach","Incumplimiento del nivel de servicio acordado en el contrato."],
-["Staff Scheduling","Proceso de crear y asignar horarios de trabajo al personal."],
-["Transactional Data","Datos individuales de cada interacción registrada en el sistema."],
-["Voice Channel","Canal de atención por voz (llamadas telefónicas)."],
-["Workforce Analytics","Análisis avanzado de datos de la fuerza de trabajo para optimizar la operación."],
-];
+        var wrap = document.createElement('div');
+        wrap.className = 'glos-def-wrap';
 
-function buildGlosTable() {
-  var tbody = document.getElementById('glosTbody');
-  GLOS.forEach(function(row, i) {
-    var term = row[0];
-    var def  = row[1];
-    var tr   = document.createElement('tr');
-    tr.dataset.search = (term + ' ' + def).toLowerCase();
+        var defSpan = document.createElement('span');
+        defSpan.textContent = def;
 
-    // Build prompt via DOM (no template literals, no escaping issues)
-    var prompt = 'Eres un profesor experto en Workforce Management (WFM) y Contact Centers. '
-      + 'Explicame el termino "' + term + '" de forma clara y profunda. Sigue esta estructura:\n\n'
-      + '1. DEFINICION CLARA: Que es exactamente ' + term + '? '
-      + 'Explicalo como si se lo dijeras a alguien sin experiencia en Contact Centers, sin jerga innecesaria.\n\n'
-      + '2. EXPLICACION TECNICA: Explicalo con precision tecnica para alguien que quiere trabajar '
-      + 'como RTA (Real-Time Analyst). Incluye la formula o calculo si aplica.\n\n'
-      + '3. EJEMPLO REAL Y SENCILLO: Dame un ejemplo concreto del dia a dia en un Contact Center. '
-      + 'Usa numeros reales (porcentajes, tiempos, cantidad de agentes). '
-      + 'Que sea una situacion que podria ocurrir en un turno real.\n\n'
-      + '4. IMPACTO EN LA OPERACION: Que pasa si este indicador se deteriora? '
-      + 'Que consecuencias tiene para el SLA, los agentes y el cliente?\n\n'
-      + '5. QUE HACE EL RTA: Cual es la accion especifica del Real-Time Analyst '
-      + 'cuando debe gestionar o monitorear este termino?\n\n'
-      + '6. PREGUNTA PRACTICA: Hazme una pregunta de analisis sobre ' + term
-      + ' para que yo aplique lo aprendido. Espera mi respuesta y dame retroalimentacion detallada.\n\n'
-      + 'Explica todo en espanol. Usa ejemplos simples y reales.';
+        var btn = document.createElement('button');
+        btn.className = 'glos-copy-btn';
+        btn.id = 'gcb-' + i;
+        btn.title = 'Copiar prompt para estudiar este termino con tu IA';
+        btn.innerHTML = '&#x29BF; Estudiar con IA';
+        btn.addEventListener('click', function () { copyGlosTerm(i); });
 
-    // Term cell
-    var tdTerm = document.createElement('td');
-    tdTerm.textContent = term;
+        var ta = document.createElement('textarea');
+        ta.style.display = 'none';
+        ta.id = 'gpt-' + i;
+        ta.value = prompt;
 
-    // Def cell
-    var tdDef = document.createElement('td');
+        wrap.appendChild(defSpan);
+        wrap.appendChild(btn);
+        tdDef.appendChild(wrap);
+        tdDef.appendChild(ta);
 
-    var wrap = document.createElement('div');
-    wrap.className = 'glos-def-wrap';
+        tr.appendChild(tdTerm);
+        tr.appendChild(tdDef);
+        tbody.appendChild(tr);
+      });
+      document.getElementById('glosStats').textContent = GLOS.length + ' terminos \u00B7 escribe para filtrar';
+    }
 
-    var defSpan = document.createElement('span');
-    defSpan.textContent = def;
+    function filterGlos() {
+      var q = document.getElementById('glosSearch').value.toLowerCase().trim();
+      var shown = 0;
+      document.querySelectorAll('#glosTbody tr').forEach(function (tr) {
+        var match = !q || tr.dataset.search.includes(q);
+        tr.classList.toggle('hidden-row', !match);
+        if (match) shown++;
+      });
+      document.getElementById('glosStats').textContent = q
+        ? (shown + ' de ' + GLOS.length + ' terminos coinciden con "' + q + '"')
+        : (GLOS.length + ' terminos · escribe para filtrar');
+    }
 
-    var btn = document.createElement('button');
-    btn.className = 'glos-copy-btn';
-    btn.id = 'gcb-' + i;
-    btn.title = 'Copiar prompt para estudiar este termino con tu IA';
-    btn.innerHTML = '&#x29BF; Estudiar con IA';
-    btn.addEventListener('click', function() { copyGlosTerm(i); });
+    function copyGlosTerm(i) {
+      var ta = document.getElementById('gpt-' + i);
+      var btn = document.getElementById('gcb-' + i);
+      var term = GLOS[i][0];
+      navigator.clipboard.writeText(ta.value).then(function () {
+        btn.innerHTML = '\u2713 Copiado';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.innerHTML = '&#x29BF; Estudiar con IA';
+          btn.classList.remove('copied');
+        }, 2200);
+        var t = document.getElementById('toast');
+        t.textContent = '\u29BF Prompt de "' + term + '" copiado \u2014 pegalo en tu IA';
+        t.classList.add('show');
+        setTimeout(function () { t.classList.remove('show'); }, 2600);
+      });
+    }
 
-    var ta = document.createElement('textarea');
-    ta.style.display = 'none';
-    ta.id = 'gpt-' + i;
-    ta.value = prompt;
+    function toggleGlos() {
+      var card = document.getElementById('glosCard');
+      var chevron = document.getElementById('glosChevron');
+      var isOpen = card.classList.toggle('open');
+      chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+      if (isOpen) buildGlosTableOnce();
+    }
 
-    wrap.appendChild(defSpan);
-    wrap.appendChild(btn);
-    tdDef.appendChild(wrap);
-    tdDef.appendChild(ta);
+    var glosBuilt = false;
+    function buildGlosTableOnce() {
+      if (glosBuilt) return;
+      glosBuilt = true;
+      buildGlosTable();
+    }
 
-    tr.appendChild(tdTerm);
-    tr.appendChild(tdDef);
-    tbody.appendChild(tr);
-  });
-  document.getElementById('glosStats').textContent = GLOS.length + ' terminos \u00B7 escribe para filtrar';
-}
+    // ═══════════════════════════════════════════════
+    // SKILLS CHECKLIST
+    // ═══════════════════════════════════════════════
+    const SKILLS = [
+      { section: "🌐 Idiomas" },
+      { id: "sk1", label: "Inglés B2 o superior", hint: "Leer, escribir y comunicar reportes en inglés" },
+      { id: "sk2", label: "Español fluido", hint: "Comunicación con agentes y supervisores" },
+      { section: "📊 Excel — Básico" },
+      { id: "sk3", label: "Fórmulas de tiempo (TIME, HOUR, MINUTE)", hint: "Calcular AHT, talk time, hold time" },
+      { id: "sk4", label: "Formato condicional", hint: "Semáforos de métricas (verde/amarillo/rojo)" },
+      { id: "sk5", label: "Filtros y ordenamiento", hint: "Ordenar agentes por adherencia o AHT" },
+      { id: "sk6", label: "Tablas y referencias absolutas ($)", hint: "Reportes dinámicos con datos cambiantes" },
+      { section: "📊 Excel — Intermedio" },
+      { id: "sk7", label: "IF / IFS / COUNTIF / SUMIF", hint: "Condicionales para reportes de KPIs" },
+      { id: "sk8", label: "VLOOKUP / XLOOKUP", hint: "Cruzar listas de agentes con métricas" },
+      { id: "sk9", label: "Tablas dinámicas (Pivot Tables)", hint: "Resúmenes por intervalo, agente o campaña" },
+      { id: "sk10", label: "Gráficos básicos (línea, barra)", hint: "Visualizar tendencias de SL y AHT" },
+      { section: "📊 Excel — Avanzado" },
+      { id: "sk11", label: "Fórmulas de varianza y porcentaje", hint: "Varianza Forecast vs Real, % de adherencia" },
+      { id: "sk12", label: "Reportes intradiarios automáticos", hint: "Plantillas que se actualizan solas" },
+      { id: "sk13", label: "Consolidación de datos entre hojas", hint: "Unir datos de múltiples turnos" },
+      { section: "🎯 Conocimiento WFM" },
+      { id: "sk14", label: "Sé qué es AHT y sus componentes", hint: "Talk + Hold + ACW" },
+      { id: "sk15", label: "Entiendo el Service Level y cómo medirlo", hint: "% llamadas atendidas en X segundos" },
+      { id: "sk16", label: "Manejo de Aux Codes y estados de agente", hint: "Ready, Not Ready, Lunch, Break..." },
+      { id: "sk17", label: "Conozco la diferencia Shrinkage interno vs externo", hint: "Impacto en disponibilidad real" },
+      { id: "sk18", label: "Sé calcular Net Staffing", hint: "Staff requerido vs staff real disponible" },
+      { id: "sk19", label: "Entiendo el Forecast y la varianza", hint: "Por qué difiere el real del planeado" },
+      { section: "🛠 Herramientas y Soft Skills" },
+      { id: "sk20", label: "He navegado un WFM Software (NICE/Verint/otro)", hint: "Plataformas especializadas de WFM" },
+      { id: "sk21", label: "Sé leer un Dashboard en tiempo real", hint: "Interpretar semáforos y alertas" },
+      { id: "sk22", label: "Comunicación bajo presión", hint: "Reportar incidentes a liderazgo con claridad" },
+      { id: "sk23", label: "Gestión de conflictos básica", hint: "Manejo de agentes y supervisores" },
+      { id: "sk24", label: "Atención al detalle y enfoque analítico", hint: "Detectar desvíos antes de que escalen" },
+    ];
 
-function filterGlos() {
-  var q = document.getElementById('glosSearch').value.toLowerCase().trim();
-  var shown = 0;
-  document.querySelectorAll('#glosTbody tr').forEach(function(tr) {
-    var match = !q || tr.dataset.search.includes(q);
-    tr.classList.toggle('hidden-row', !match);
-    if (match) shown++;
-  });
-  document.getElementById('glosStats').textContent = q
-    ? (shown + ' de ' + GLOS.length + ' terminos coinciden con "' + q + '"')
-    : (GLOS.length + ' terminos · escribe para filtrar');
-}
-
-function copyGlosTerm(i) {
-  var ta   = document.getElementById('gpt-' + i);
-  var btn  = document.getElementById('gcb-' + i);
-  var term = GLOS[i][0];
-  navigator.clipboard.writeText(ta.value).then(function() {
-    btn.innerHTML = '\u2713 Copiado';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.innerHTML = '&#x29BF; Estudiar con IA';
-      btn.classList.remove('copied');
-    }, 2200);
-    var t = document.getElementById('toast');
-    t.textContent = '\u29BF Prompt de "' + term + '" copiado \u2014 pegalo en tu IA';
-    t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 2600);
-  });
-}
-
-function toggleGlos() {
-  var card    = document.getElementById('glosCard');
-  var chevron = document.getElementById('glosChevron');
-  var isOpen  = card.classList.toggle('open');
-  chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
-  if (isOpen) buildGlosTableOnce();
-}
-
-var glosBuilt = false;
-function buildGlosTableOnce() {
-  if (glosBuilt) return;
-  glosBuilt = true;
-  buildGlosTable();
-}
-
-// ═══════════════════════════════════════════════
-// SKILLS CHECKLIST
-// ═══════════════════════════════════════════════
-const SKILLS = [
-  { section:"🌐 Idiomas" },
-  { id:"sk1",  label:"Inglés B2 o superior", hint:"Leer, escribir y comunicar reportes en inglés" },
-  { id:"sk2",  label:"Español fluido", hint:"Comunicación con agentes y supervisores" },
-  { section:"📊 Excel — Básico" },
-  { id:"sk3",  label:"Fórmulas de tiempo (TIME, HOUR, MINUTE)", hint:"Calcular AHT, talk time, hold time" },
-  { id:"sk4",  label:"Formato condicional", hint:"Semáforos de métricas (verde/amarillo/rojo)" },
-  { id:"sk5",  label:"Filtros y ordenamiento", hint:"Ordenar agentes por adherencia o AHT" },
-  { id:"sk6",  label:"Tablas y referencias absolutas ($)", hint:"Reportes dinámicos con datos cambiantes" },
-  { section:"📊 Excel — Intermedio" },
-  { id:"sk7",  label:"IF / IFS / COUNTIF / SUMIF", hint:"Condicionales para reportes de KPIs" },
-  { id:"sk8",  label:"VLOOKUP / XLOOKUP", hint:"Cruzar listas de agentes con métricas" },
-  { id:"sk9",  label:"Tablas dinámicas (Pivot Tables)", hint:"Resúmenes por intervalo, agente o campaña" },
-  { id:"sk10", label:"Gráficos básicos (línea, barra)", hint:"Visualizar tendencias de SL y AHT" },
-  { section:"📊 Excel — Avanzado" },
-  { id:"sk11", label:"Fórmulas de varianza y porcentaje", hint:"Varianza Forecast vs Real, % de adherencia" },
-  { id:"sk12", label:"Reportes intradiarios automáticos", hint:"Plantillas que se actualizan solas" },
-  { id:"sk13", label:"Consolidación de datos entre hojas", hint:"Unir datos de múltiples turnos" },
-  { section:"🎯 Conocimiento WFM" },
-  { id:"sk14", label:"Sé qué es AHT y sus componentes", hint:"Talk + Hold + ACW" },
-  { id:"sk15", label:"Entiendo el Service Level y cómo medirlo", hint:"% llamadas atendidas en X segundos" },
-  { id:"sk16", label:"Manejo de Aux Codes y estados de agente", hint:"Ready, Not Ready, Lunch, Break..." },
-  { id:"sk17", label:"Conozco la diferencia Shrinkage interno vs externo", hint:"Impacto en disponibilidad real" },
-  { id:"sk18", label:"Sé calcular Net Staffing", hint:"Staff requerido vs staff real disponible" },
-  { id:"sk19", label:"Entiendo el Forecast y la varianza", hint:"Por qué difiere el real del planeado" },
-  { section:"🛠 Herramientas y Soft Skills" },
-  { id:"sk20", label:"He navegado un WFM Software (NICE/Verint/otro)", hint:"Plataformas especializadas de WFM" },
-  { id:"sk21", label:"Sé leer un Dashboard en tiempo real", hint:"Interpretar semáforos y alertas" },
-  { id:"sk22", label:"Comunicación bajo presión", hint:"Reportar incidentes a liderazgo con claridad" },
-  { id:"sk23", label:"Gestión de conflictos básica", hint:"Manejo de agentes y supervisores" },
-  { id:"sk24", label:"Atención al detalle y enfoque analítico", hint:"Detectar desvíos antes de que escalen" },
-];
-
-// ═══════════════════════════════════════════════
-// GLOSSARY
-// ═══════════════════════════════════════════════
-// GLOSSARY_FULL kept for reference but no longer injected in prompts (panel handles this)
-const GLOSSARY_FULL = `
+    // ═══════════════════════════════════════════════
+    // GLOSSARY
+    // ═══════════════════════════════════════════════
+    // GLOSSARY_FULL kept for reference but no longer injected in prompts (panel handles this)
+    const GLOSSARY_FULL = `
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 GLOSARIO WFM — 200+ TÉRMINOS ESENCIALES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -742,93 +1657,153 @@ Training Gap: necesidad de capacitación detectada
 Volume: cantidad total de llamadas/chats recibidos
 Workforce Mastery: nivel experto en gestión de recursos y datos
 `;
-const GLOSSARY_SHORT = `💡 GLOSARIO: Usa los términos técnicos exactos del WFM en tus explicaciones (AHT, SLA, Adherence, Aux Codes, Net Staffing, etc.). El glosario completo de 200+ términos está disponible en el panel de búsqueda del curso.`;
+    const GLOSSARY_SHORT = `💡 GLOSARIO: Usa los términos técnicos exactos del WFM en tus explicaciones (AHT, SLA, Adherence, Aux Codes, Net Staffing, etc.). El glosario completo de 200+ términos está disponible en el panel de búsqueda del curso.`;
 
-// ═══════════════════════════════════════════════
-// UNITS DATA
-// ═══════════════════════════════════════════════
-const UNITS = [
-  {n:1,  cat:"fundamentos", title:"Introducción al WFM: El rol del RTA en el Contact Center",
-   vocab:"RTA, WFM, WFMS, KPI, Dashboard, Intraday, Real-Time Adherence, Roster, Schedule, Headcount, FTE, Line of Business, Supervisor, Inbound, Outbound, Queue", intro:true},
-  {n:2,  cat:"kpis",        title:"KPIs de Eficiencia: Diferencia entre productividad y calidad",
-   vocab:"KPI, AHT, ACW, Talk Time, Hold Time, Utilization, Agent Occupancy, Idle Time, FCR, CSAT, NPS, Billable Hours, Non-Productive, Burnout, Yield"},
-  {n:3,  cat:"kpis",        title:"KPIs de Nivel de Servicio: Cómo leer intervalos de 30 min",
-   vocab:"SLA, GOS, ASA, Abandon Rate, Service Level, Threshold, Interval, Smoothing, Peak Hour, Longest Delay, Max Delay, Delayed Call, Blocking, Zero Volume, Traffic Study"},
-  {n:4,  cat:"kpis",        title:"Anatomía de la Llamada: Desglose del AHT (Talk, Hold, Wrap)",
-   vocab:"AHT, Talk Time, Hold Time, ACW, Wrap-up Time, Handle Time, Direct Talk Time, Long Call, Ghost Call, Phantom Abandon, Call Flow, IVR, Logged Time, Deflection, Cost Per Call"},
-  {n:5,  cat:"fundamentos", title:"Shrinkage Interno vs Externo: Impacto en la disponibilidad",
-   vocab:"Shrinkage, Availability, Base Staff, Attrition, Burnout, Non-Productive, Idle Time, Logged Time, FTE, Headcount, Turnover, Training Gap, Backlog, Adherence, Schedule"},
-  {n:6,  cat:"intraday",    title:"Gestión de Estados (Aux Codes): Clasificación de estados",
-   vocab:"Aux Codes, Agent Status, Ready, Not Ready, Adherence, Real-Time Adherence, Logged Time, Availability, Idle Time, Utilization, Intraday, Dashboard, Threshold, Business Rules, Multi-skilling"},
-  {n:7,  cat:"intraday",    title:"Monitoreo de Adherencia: Identificación de desvíos en vivo",
-   vocab:"Adherence, Real-Time Adherence, Threshold, Aux Codes, Intraday, Dashboard, Schedule, Roster, Agent Status, Longest Delay, ASA, SLA, Shrinkage, Non-Productive, Varianza"},
-  {n:8,  cat:"intraday",    title:"Auditoría de estados: Ready vs Not Ready en tiempo real",
-   vocab:"Ready, Not Ready, Aux Codes, Agent Status, Adherence, Utilization, Availability, Idle Time, Threshold, Real-Time Adherence, Intraday, Logged Time, Occupancy, Queue, SLA"},
-  {n:9,  cat:"intraday",    title:"Alertas de Piso: Escalación de problemas de staff",
-   vocab:"RTA, Supervisor, Threshold, SLA, Understaffing, Overstaffing, Net Staffing, Longest Delay, Queue, Peak Hour, Load Balancing, Overflow, Downtime, Backlog, Intraday"},
-  {n:10, cat:"intraday",    title:"Taller de Excepciones: Registro de fallos técnicos",
-   vocab:"Downtime, Ghost Call, Phantom Abandon, Blocking, Backlog, Deflection, IVR, Call Flow, Reporting, Dashboard, Varianza, SLA, Threshold, Business Rules"},
-  {n:11, cat:"intraday",    title:"Simulación: Ajuste de estados en picos de tráfico",
-   vocab:"Peak Hour, Overstaffing, Understaffing, Net Staffing, Load Balancing, Overflow, Aux Codes, Cross-Skilling, Real-Time Adherence, Intraday, Queue, ASA, Longest Delay, SLA, Varianza"},
-  {n:12, cat:"kpis",        title:"Volumen vs Forecast: Varianza en la demanda",
-   vocab:"Forecast, Volume, Varianza, Interval, Smoothing, Traffic Study, Capacity Planning, Backlog, Zero Volume, Peak Hour, Intraday, Inbound, Outbound, Staffing Requirement"},
-  {n:13, cat:"kpis",        title:"Impacto del AHT en el SL: Simulación de subida de tiempos",
-   vocab:"AHT, SLA, GOS, ASA, Abandon Rate, Talk Time, Hold Time, ACW, Erlang C, Net Staffing, Overstaffing, Understaffing, Queue, Longest Delay, Staffing Model"},
-  {n:14, cat:"herramientas",title:"Lectura de Dashboards: Interpretación de semáforos de control",
-   vocab:"Dashboard, Threshold, SLA, AHT, ASA, Abandon Rate, Adherence, Real-Time Adherence, Occupancy, Queue, Longest Delay, Peak Hour, Net Staffing, Intraday, KPI"},
-  {n:15, cat:"excel",       title:"Excel para RTA I: Fórmulas de tiempo y formato condicional",
-   vocab:"AHT, Talk Time, Hold Time, ACW, Interval, SLA, Threshold, Adherence", excel:true,
-   excelFocus:"TIME(), HOUR(), MINUTE(), TEXT() para calcular AHT · Formato condicional para semáforos de métricas (verde/amarillo/rojo)"},
-  {n:16, cat:"intraday",    title:"Protocolo de Contingencia I: Fallos de telefonía",
-   vocab:"Downtime, Blocking, IVR, Call Flow, Ghost Call, Phantom Abandon, Deflection, Self-Service, Load Balancing, Overflow, Backlog, SLA, Reporting, Business Rules, Threshold"},
-  {n:17, cat:"staff",       title:"Protocolo de Contingencia II: Ausentismo masivo",
-   vocab:"Attrition, Turnover, Understaffing, Net Staffing, Shrinkage, Headcount, FTE, Roster, Schedule, Overstaffing, Cross-Skilling, Multi-skilling, VTO, Load Balancing, Overflow"},
-  {n:18, cat:"intraday",    title:"Manejo Multicanal: Priorización de Chat sobre Email",
-   vocab:"Multi-skilling, Concurrency, Inbound, Backlog, Business Rules, Queue, AHT, Utilization, Occupancy, Load Balancing, Task Switching, Idle Time, SLA, Deflection, Cross-Skilling"},
-  {n:19, cat:"staff",       title:"Cálculo de Net Staffing: Sobrantes vs Faltantes",
-   vocab:"Net Staffing, Understaffing, Overstaffing, Base Staff, Staffing Requirement, Erlang C, FTE, Headcount, Shrinkage, Forecast, Volume, Interval, Peak Hour, SLA, Varianza"},
-  {n:20, cat:"excel",       title:"Excel para RTA II: IF, COUNTIF y cálculo de adherencia",
-   vocab:"Adherence, Schedule, Logged Time, Aux Codes, Threshold, SLA, Net Staffing", excel:true,
-   excelFocus:"IF() / IFS() para clasificar estados · COUNTIF() para contar agentes en cada Aux Code · Cálculo de % de adherencia por agente"},
-  {n:21, cat:"staff",       title:"Optimización de Pausas: Reacomodo de breaks para salvar SL",
-   vocab:"Schedule, Roster, Shrinkage, SLA, Net Staffing, Peak Hour, Interval, Adherence, Aux Codes, Non-Productive, Understaffing, Overstaffing, Intraday, Queue, ASA"},
-  {n:22, cat:"staff",       title:"Gestión de Horas Extra (OT): Justificación de costos",
-   vocab:"Overtime, Understaffing, Net Staffing, Billable Hours, Cost Per Call, FTE, Headcount, Utilization, Burnout, SLA, Forecast, Varianza, Capacity Planning, Staffing Model, Non-Productive"},
-  {n:23, cat:"staff",       title:"VTO (Voluntary Time Off): Gestión en bajo volumen",
-   vocab:"VTO, Overstaffing, Zero Volume, Idle Time, Utilization, Cost Per Call, Billable Hours, Roster, Schedule, Forecast, Volume, SLA, Intraday, Interval, Shrinkage"},
-  {n:24, cat:"staff",       title:"Planificación de Almuerzos: El reto de la hora pico",
-   vocab:"Peak Hour, Lunch, Schedule, Roster, Shrinkage, Adherence, Understaffing, SLA, Interval, Net Staffing, Queue, Intraday, Aux Codes, Base Staff, Overstaffing"},
-  {n:25, cat:"excel",       title:"Excel para RTA III: VLOOKUP, Pivot Tables y reporte intradiario",
-   vocab:"Reporting, Intraday, Interval, AHT, SLA, Varianza, Forecast, Volume, Net Staffing, Adherence, Abandon Rate, ASA, Shrinkage, FTE", excel:true,
-   excelFocus:"VLOOKUP() / XLOOKUP() para cruzar datos de agentes · Tablas dinámicas para resúmenes por intervalo · Plantilla de reporte intradiario automático"},
-  {n:26, cat:"herramientas",title:"Reporting de Cierre: Resumen ejecutivo de la jornada",
-   vocab:"Reporting, Dashboard, SLA, AHT, ASA, Abandon Rate, Adherence, Varianza, Forecast, Volume, Net Staffing, Shrinkage, Intraday, FTE, KPI"},
-  {n:27, cat:"herramientas",title:"Sistemas WFM: Navegación en plataformas NICE y Verint",
-   vocab:"WFMS, Dashboard, Real-Time Adherence, Roster, Schedule, Forecast, Adherence, Aux Codes, Reporting, Intraday, Staffing Model, KPI, SLA, Interval, Shrinkage"},
-  {n:28, cat:"soft",        title:"Gestión de Conflictos: Comunicación con agentes y supervisores",
-   vocab:"Supervisor, Adherence, Aux Codes, Threshold, Real-Time Adherence, Shift Swap, Peer Review, Training Gap, Business Rules, Non-Productive, Burnout, Turnover, Attrition, VTO, Roster"},
-  {n:29, cat:"soft",        title:"Comunicación Bajo Presión: Reporte de incidentes críticos",
-   vocab:"RTA, Supervisor, Downtime, SLA, Threshold, Backlog, Understaffing, Reporting, Dashboard, Overflow, Load Balancing, Business Rules, Varianza"},
-  {n:30, cat:"proyecto",    title:"PROYECTO FINAL: Simulación de un turno completo de 8 horas",
-   vocab:"RTA, WFM, AHT, SLA, ASA, Abandon Rate, Adherence, Net Staffing, Forecast, Volume, Shrinkage, Intraday, Aux Codes, Dashboard, Reporting, Cross-Skilling, VTO, Peak Hour, Varianza", final:true},
-];
+    // ═══════════════════════════════════════════════
+    // UNITS DATA
+    // ═══════════════════════════════════════════════
+    const UNITS = [
+      {
+        n: 1, cat: "fundamentos", title: "Introducción al WFM: El rol del RTA en el Contact Center",
+        vocab: "RTA, WFM, WFMS, KPI, Dashboard, Intraday, Real-Time Adherence, Roster, Schedule, Headcount, FTE, Line of Business, Supervisor, Inbound, Outbound, Queue", intro: true
+      },
+      {
+        n: 2, cat: "kpis", title: "KPIs de Eficiencia: Diferencia entre productividad y calidad",
+        vocab: "KPI, AHT, ACW, Talk Time, Hold Time, Utilization, Agent Occupancy, Idle Time, FCR, CSAT, NPS, Billable Hours, Non-Productive, Burnout, Yield"
+      },
+      {
+        n: 3, cat: "kpis", title: "KPIs de Nivel de Servicio: Cómo leer intervalos de 30 min",
+        vocab: "SLA, GOS, ASA, Abandon Rate, Service Level, Threshold, Interval, Smoothing, Peak Hour, Longest Delay, Max Delay, Delayed Call, Blocking, Zero Volume, Traffic Study"
+      },
+      {
+        n: 4, cat: "kpis", title: "Anatomía de la Llamada: Desglose del AHT (Talk, Hold, Wrap)",
+        vocab: "AHT, Talk Time, Hold Time, ACW, Wrap-up Time, Handle Time, Direct Talk Time, Long Call, Ghost Call, Phantom Abandon, Call Flow, IVR, Logged Time, Deflection, Cost Per Call"
+      },
+      {
+        n: 5, cat: "fundamentos", title: "Shrinkage Interno vs Externo: Impacto en la disponibilidad",
+        vocab: "Shrinkage, Availability, Base Staff, Attrition, Burnout, Non-Productive, Idle Time, Logged Time, FTE, Headcount, Turnover, Training Gap, Backlog, Adherence, Schedule"
+      },
+      {
+        n: 6, cat: "intraday", title: "Gestión de Estados (Aux Codes): Clasificación de estados",
+        vocab: "Aux Codes, Agent Status, Ready, Not Ready, Adherence, Real-Time Adherence, Logged Time, Availability, Idle Time, Utilization, Intraday, Dashboard, Threshold, Business Rules, Multi-skilling"
+      },
+      {
+        n: 7, cat: "intraday", title: "Monitoreo de Adherencia: Identificación de desvíos en vivo",
+        vocab: "Adherence, Real-Time Adherence, Threshold, Aux Codes, Intraday, Dashboard, Schedule, Roster, Agent Status, Longest Delay, ASA, SLA, Shrinkage, Non-Productive, Varianza"
+      },
+      {
+        n: 8, cat: "intraday", title: "Auditoría de estados: Ready vs Not Ready en tiempo real",
+        vocab: "Ready, Not Ready, Aux Codes, Agent Status, Adherence, Utilization, Availability, Idle Time, Threshold, Real-Time Adherence, Intraday, Logged Time, Occupancy, Queue, SLA"
+      },
+      {
+        n: 9, cat: "intraday", title: "Alertas de Piso: Escalación de problemas de staff",
+        vocab: "RTA, Supervisor, Threshold, SLA, Understaffing, Overstaffing, Net Staffing, Longest Delay, Queue, Peak Hour, Load Balancing, Overflow, Downtime, Backlog, Intraday"
+      },
+      {
+        n: 10, cat: "intraday", title: "Taller de Excepciones: Registro de fallos técnicos",
+        vocab: "Downtime, Ghost Call, Phantom Abandon, Blocking, Backlog, Deflection, IVR, Call Flow, Reporting, Dashboard, Varianza, SLA, Threshold, Business Rules"
+      },
+      {
+        n: 11, cat: "intraday", title: "Simulación: Ajuste de estados en picos de tráfico",
+        vocab: "Peak Hour, Overstaffing, Understaffing, Net Staffing, Load Balancing, Overflow, Aux Codes, Cross-Skilling, Real-Time Adherence, Intraday, Queue, ASA, Longest Delay, SLA, Varianza"
+      },
+      {
+        n: 12, cat: "kpis", title: "Volumen vs Forecast: Varianza en la demanda",
+        vocab: "Forecast, Volume, Varianza, Interval, Smoothing, Traffic Study, Capacity Planning, Backlog, Zero Volume, Peak Hour, Intraday, Inbound, Outbound, Staffing Requirement"
+      },
+      {
+        n: 13, cat: "kpis", title: "Impacto del AHT en el SL: Simulación de subida de tiempos",
+        vocab: "AHT, SLA, GOS, ASA, Abandon Rate, Talk Time, Hold Time, ACW, Erlang C, Net Staffing, Overstaffing, Understaffing, Queue, Longest Delay, Staffing Model"
+      },
+      {
+        n: 14, cat: "herramientas", title: "Lectura de Dashboards: Interpretación de semáforos de control",
+        vocab: "Dashboard, Threshold, SLA, AHT, ASA, Abandon Rate, Adherence, Real-Time Adherence, Occupancy, Queue, Longest Delay, Peak Hour, Net Staffing, Intraday, KPI"
+      },
+      {
+        n: 15, cat: "excel", title: "Excel para RTA I: Fórmulas de tiempo y formato condicional",
+        vocab: "AHT, Talk Time, Hold Time, ACW, Interval, SLA, Threshold, Adherence", excel: true,
+        excelFocus: "TIME(), HOUR(), MINUTE(), TEXT() para calcular AHT · Formato condicional para semáforos de métricas (verde/amarillo/rojo)"
+      },
+      {
+        n: 16, cat: "intraday", title: "Protocolo de Contingencia I: Fallos de telefonía",
+        vocab: "Downtime, Blocking, IVR, Call Flow, Ghost Call, Phantom Abandon, Deflection, Self-Service, Load Balancing, Overflow, Backlog, SLA, Reporting, Business Rules, Threshold"
+      },
+      {
+        n: 17, cat: "staff", title: "Protocolo de Contingencia II: Ausentismo masivo",
+        vocab: "Attrition, Turnover, Understaffing, Net Staffing, Shrinkage, Headcount, FTE, Roster, Schedule, Overstaffing, Cross-Skilling, Multi-skilling, VTO, Load Balancing, Overflow"
+      },
+      {
+        n: 18, cat: "intraday", title: "Manejo Multicanal: Priorización de Chat sobre Email",
+        vocab: "Multi-skilling, Concurrency, Inbound, Backlog, Business Rules, Queue, AHT, Utilization, Occupancy, Load Balancing, Task Switching, Idle Time, SLA, Deflection, Cross-Skilling"
+      },
+      {
+        n: 19, cat: "staff", title: "Cálculo de Net Staffing: Sobrantes vs Faltantes",
+        vocab: "Net Staffing, Understaffing, Overstaffing, Base Staff, Staffing Requirement, Erlang C, FTE, Headcount, Shrinkage, Forecast, Volume, Interval, Peak Hour, SLA, Varianza"
+      },
+      {
+        n: 20, cat: "excel", title: "Excel para RTA II: IF, COUNTIF y cálculo de adherencia",
+        vocab: "Adherence, Schedule, Logged Time, Aux Codes, Threshold, SLA, Net Staffing", excel: true,
+        excelFocus: "IF() / IFS() para clasificar estados · COUNTIF() para contar agentes en cada Aux Code · Cálculo de % de adherencia por agente"
+      },
+      {
+        n: 21, cat: "staff", title: "Optimización de Pausas: Reacomodo de breaks para salvar SL",
+        vocab: "Schedule, Roster, Shrinkage, SLA, Net Staffing, Peak Hour, Interval, Adherence, Aux Codes, Non-Productive, Understaffing, Overstaffing, Intraday, Queue, ASA"
+      },
+      {
+        n: 22, cat: "staff", title: "Gestión de Horas Extra (OT): Justificación de costos",
+        vocab: "Overtime, Understaffing, Net Staffing, Billable Hours, Cost Per Call, FTE, Headcount, Utilization, Burnout, SLA, Forecast, Varianza, Capacity Planning, Staffing Model, Non-Productive"
+      },
+      {
+        n: 23, cat: "staff", title: "VTO (Voluntary Time Off): Gestión en bajo volumen",
+        vocab: "VTO, Overstaffing, Zero Volume, Idle Time, Utilization, Cost Per Call, Billable Hours, Roster, Schedule, Forecast, Volume, SLA, Intraday, Interval, Shrinkage"
+      },
+      {
+        n: 24, cat: "staff", title: "Planificación de Almuerzos: El reto de la hora pico",
+        vocab: "Peak Hour, Lunch, Schedule, Roster, Shrinkage, Adherence, Understaffing, SLA, Interval, Net Staffing, Queue, Intraday, Aux Codes, Base Staff, Overstaffing"
+      },
+      {
+        n: 25, cat: "excel", title: "Excel para RTA III: VLOOKUP, Pivot Tables y reporte intradiario",
+        vocab: "Reporting, Intraday, Interval, AHT, SLA, Varianza, Forecast, Volume, Net Staffing, Adherence, Abandon Rate, ASA, Shrinkage, FTE", excel: true,
+        excelFocus: "VLOOKUP() / XLOOKUP() para cruzar datos de agentes · Tablas dinámicas para resúmenes por intervalo · Plantilla de reporte intradiario automático"
+      },
+      {
+        n: 26, cat: "herramientas", title: "Reporting de Cierre: Resumen ejecutivo de la jornada",
+        vocab: "Reporting, Dashboard, SLA, AHT, ASA, Abandon Rate, Adherence, Varianza, Forecast, Volume, Net Staffing, Shrinkage, Intraday, FTE, KPI"
+      },
+      {
+        n: 27, cat: "herramientas", title: "Sistemas WFM: Navegación en plataformas NICE y Verint",
+        vocab: "WFMS, Dashboard, Real-Time Adherence, Roster, Schedule, Forecast, Adherence, Aux Codes, Reporting, Intraday, Staffing Model, KPI, SLA, Interval, Shrinkage"
+      },
+      {
+        n: 28, cat: "soft", title: "Gestión de Conflictos: Comunicación con agentes y supervisores",
+        vocab: "Supervisor, Adherence, Aux Codes, Threshold, Real-Time Adherence, Shift Swap, Peer Review, Training Gap, Business Rules, Non-Productive, Burnout, Turnover, Attrition, VTO, Roster"
+      },
+      {
+        n: 29, cat: "soft", title: "Comunicación Bajo Presión: Reporte de incidentes críticos",
+        vocab: "RTA, Supervisor, Downtime, SLA, Threshold, Backlog, Understaffing, Reporting, Dashboard, Overflow, Load Balancing, Business Rules, Varianza"
+      },
+      {
+        n: 30, cat: "proyecto", title: "PROYECTO FINAL: Simulación de un turno completo de 8 horas",
+        vocab: "RTA, WFM, AHT, SLA, ASA, Abandon Rate, Adherence, Net Staffing, Forecast, Volume, Shrinkage, Intraday, Aux Codes, Dashboard, Reporting, Cross-Skilling, VTO, Peak Hour, Varianza", final: true
+      },
+    ];
 
-const SEC_LABELS = {
-  fundamentos:"📐 Fundamentos", kpis:"📊 KPIs", intraday:"⚡ Intraday",
-  staff:"👥 Staff", excel:"🟢 Excel", herramientas:"🛠 Herramientas",
-  soft:"💬 Soft Skills", proyecto:"🏆 Proyecto"
-};
+    const SEC_LABELS = {
+      fundamentos: "📐 Fundamentos", kpis: "📊 KPIs", intraday: "⚡ Intraday",
+      staff: "👥 Staff", excel: "🟢 Excel", herramientas: "🛠 Herramientas",
+      soft: "💬 Soft Skills", proyecto: "🏆 Proyecto"
+    };
 
-// ═══════════════════════════════════════════════
-// PROMPT BUILDER
-// ═══════════════════════════════════════════════
-function buildPrompt(u) {
-  const isL1    = u.n === 1;
-  const isFinal = u.n === 30;
-  const glossary = GLOSSARY_SHORT; // Full glossary is in the course panel
+    // ═══════════════════════════════════════════════
+    // PROMPT BUILDER
+    // ═══════════════════════════════════════════════
+    function buildPrompt(u) {
+      const isL1 = u.n === 1;
+      const isFinal = u.n === 30;
+      const glossary = GLOSSARY_SHORT; // Full glossary is in the course panel
 
-  if (isFinal) {
-    return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers, especializado en el rol de Real-Time Analyst (RTA).
+      if (isFinal) {
+        return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers, especializado en el rol de Real-Time Analyst (RTA).
 
 LECCIÓN 30: PROYECTO FINAL — Simulación de un turno completo de 8 horas
 
@@ -863,10 +1838,10 @@ Evalúa si el reporte es claro, completo y con el lenguaje técnico correcto par
 Califica cada escenario (1-10). Indica qué haría un RTA experto diferente en cada situación. Da un veredicto global: ¿está el estudiante listo para asumir el rol de RTA en un Contact Center?
 
 Todas las explicaciones en español. Los términos técnicos en inglés (estándar WFM de la industria).`;
-  }
+      }
 
-  if (u.excel) {
-    return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers y en el uso de Excel aplicado al rol de Real-Time Analyst (RTA).
+      if (u.excel) {
+        return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers y en el uso de Excel aplicado al rol de Real-Time Analyst (RTA).
 ${GLOSSARY_SHORT}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 LECCIÓN ${u.n} — PRÁCTICA DE EXCEL: ${u.title}
@@ -914,9 +1889,9 @@ Desarrolla la clase en este orden exacto:
 7. RESUMEN Y PLANTILLA: Al final, describe una plantilla de Excel recomendada para un RTA (qué columnas, qué fórmulas en cada una, qué formato condicional aplicar) que el estudiante pueda replicar para su trabajo diario.
 
 Todas las explicaciones en español. Las fórmulas de Excel en inglés (sintaxis universal).`;
-  }
+      }
 
-  return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers, especializado en el rol de Real-Time Analyst (RTA).
+      return `Eres un profesor universitario experto en Workforce Management (WFM) para Contact Centers, especializado en el rol de Real-Time Analyst (RTA).
 ${glossary}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLASE DE HOY — Lección ${u.n}: ${u.title}
@@ -954,110 +1929,110 @@ Desarrolla la clase magistral completa:
 6. EVALUACION: Qué conceptos domino, cuáles necesito reforzar y qué habilidad del perfil RTA (Excel, análisis, comunicación bajo presión) debería practicar más.
 
 Todas las explicaciones en español. Los términos técnicos en inglés (estándar de la industria WFM).`;
-}
-
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
-let activeCat = "all";
-let done    = JSON.parse(localStorage.getItem("rtawfm_done")    || "{}");
-let skills  = JSON.parse(localStorage.getItem("rtawfm_skills")  || "{}");
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-window.addEventListener("DOMContentLoaded", () => {
-  buildSkills();
-  buildUnits();
-  // Restore done state
-  Object.keys(done).forEach(n => {
-    const card = document.getElementById("card-"+n);
-    const btn  = document.getElementById("done-"+n);
-    if (card) card.classList.add("done");
-    if (btn)  btn.textContent = "✓ Completada";
-  });
-  updateProgress();
-  updateSkillsProgress();
-});
-
-// ═══════════════════════════════════════════════
-// SKILLS
-// ═══════════════════════════════════════════════
-function buildSkills() {
-  const grid = document.getElementById("skillsGrid");
-  grid.innerHTML = "";
-  SKILLS.forEach(s => {
-    if (s.section) {
-      const el = document.createElement("div");
-      el.className = "skill-section-title";
-      el.textContent = s.section;
-      grid.appendChild(el);
-      return;
     }
-    const el = document.createElement("div");
-    el.className = "skill-item" + (skills[s.id] ? " checked" : "");
-    el.onclick = () => toggleSkill(s.id, el);
-    el.innerHTML = `<div class="skill-check">${skills[s.id] ? "✓" : ""}</div>
+
+    // ═══════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════
+    let activeCat = "all";
+    let done = JSON.parse(localStorage.getItem("rtawfm_done") || "{}");
+    let skills = JSON.parse(localStorage.getItem("rtawfm_skills") || "{}");
+
+    // ═══════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════
+    window.addEventListener("DOMContentLoaded", () => {
+      buildSkills();
+      buildUnits();
+      // Restore done state
+      Object.keys(done).forEach(n => {
+        const card = document.getElementById("card-" + n);
+        const btn = document.getElementById("done-" + n);
+        if (card) card.classList.add("done");
+        if (btn) btn.textContent = "✓ Completada";
+      });
+      updateProgress();
+      updateSkillsProgress();
+    });
+
+    // ═══════════════════════════════════════════════
+    // SKILLS
+    // ═══════════════════════════════════════════════
+    function buildSkills() {
+      const grid = document.getElementById("skillsGrid");
+      grid.innerHTML = "";
+      SKILLS.forEach(s => {
+        if (s.section) {
+          const el = document.createElement("div");
+          el.className = "skill-section-title";
+          el.textContent = s.section;
+          grid.appendChild(el);
+          return;
+        }
+        const el = document.createElement("div");
+        el.className = "skill-item" + (skills[s.id] ? " checked" : "");
+        el.onclick = () => toggleSkill(s.id, el);
+        el.innerHTML = `<div class="skill-check">${skills[s.id] ? "✓" : ""}</div>
       <div class="skill-label">${s.label}<span>${s.hint}</span></div>`;
-    grid.appendChild(el);
-  });
-}
+        grid.appendChild(el);
+      });
+    }
 
-function toggleSkill(id, el) {
-  if (skills[id]) delete skills[id]; else skills[id] = true;
-  localStorage.setItem("rtawfm_skills", JSON.stringify(skills));
-  el.classList.toggle("checked", !!skills[id]);
-  el.querySelector(".skill-check").textContent = skills[id] ? "✓" : "";
-  updateSkillsProgress();
-}
+    function toggleSkill(id, el) {
+      if (skills[id]) delete skills[id]; else skills[id] = true;
+      localStorage.setItem("rtawfm_skills", JSON.stringify(skills));
+      el.classList.toggle("checked", !!skills[id]);
+      el.querySelector(".skill-check").textContent = skills[id] ? "✓" : "";
+      updateSkillsProgress();
+    }
 
-function updateSkillsProgress() {
-  const total   = SKILLS.filter(s => s.id).length;
-  const checked = Object.keys(skills).length;
-  const pct     = total ? (checked / total * 100).toFixed(0) : 0;
-  document.getElementById("skillsProgressText").textContent = `${checked} / ${total} habilidades`;
-  document.getElementById("skillsMiniBar").style.width = pct + "%";
-}
+    function updateSkillsProgress() {
+      const total = SKILLS.filter(s => s.id).length;
+      const checked = Object.keys(skills).length;
+      const pct = total ? (checked / total * 100).toFixed(0) : 0;
+      document.getElementById("skillsProgressText").textContent = `${checked} / ${total} habilidades`;
+      document.getElementById("skillsMiniBar").style.width = pct + "%";
+    }
 
-function toggleSkills() {
-  const card    = document.getElementById("skillsCard");
-  const chevron = document.getElementById("skillsChevron");
-  const isOpen  = card.classList.toggle("open");
-  chevron.style.transform = isOpen ? "rotate(180deg)" : "";
-}
+    function toggleSkills() {
+      const card = document.getElementById("skillsCard");
+      const chevron = document.getElementById("skillsChevron");
+      const isOpen = card.classList.toggle("open");
+      chevron.style.transform = isOpen ? "rotate(180deg)" : "";
+    }
 
-// ═══════════════════════════════════════════════
-// UNITS
-// ═══════════════════════════════════════════════
-function buildUnits() {
-  const list = document.getElementById("unitsList");
-  list.innerHTML = "";
-  UNITS.forEach(u => {
-    const card = document.createElement("div");
-    card.className = "unit-card" + (u.excel ? " excel-card" : "") + (u.final ? " project" : "");
-    card.id = "card-" + u.n;
-    card.dataset.cat   = u.cat;
-    card.dataset.search = (u.title + " " + u.vocab + " " + (SEC_LABELS[u.cat]||"")).toLowerCase();
+    // ═══════════════════════════════════════════════
+    // UNITS
+    // ═══════════════════════════════════════════════
+    function buildUnits() {
+      const list = document.getElementById("unitsList");
+      list.innerHTML = "";
+      UNITS.forEach(u => {
+        const card = document.createElement("div");
+        card.className = "unit-card" + (u.excel ? " excel-card" : "") + (u.final ? " project" : "");
+        card.id = "card-" + u.n;
+        card.dataset.cat = u.cat;
+        card.dataset.search = (u.title + " " + u.vocab + " " + (SEC_LABELS[u.cat] || "")).toLowerCase();
 
-    const prompt = buildPrompt(u);
-    const esc    = prompt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+        const prompt = buildPrompt(u);
+        const esc = prompt.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    const numClass  = u.final ? "unit-num final" : u.excel ? "unit-num excel" : "unit-num";
-    const badgeClass= u.final ? "sec-badge final" : u.excel ? "sec-badge excel-badge" : "sec-badge";
-    const lblClass  = u.excel ? "prompt-label excel-label" : "prompt-label";
-    const btnClass  = u.excel ? "copy-btn excel-btn" : "copy-btn";
+        const numClass = u.final ? "unit-num final" : u.excel ? "unit-num excel" : "unit-num";
+        const badgeClass = u.final ? "sec-badge final" : u.excel ? "sec-badge excel-badge" : "sec-badge";
+        const lblClass = u.excel ? "prompt-label excel-label" : "prompt-label";
+        const btnClass = u.excel ? "copy-btn excel-btn" : "copy-btn";
 
-    card.innerHTML = `
+        card.innerHTML = `
       <div class="card-header" onclick="toggle(${u.n})">
-        <span class="${numClass}">${String(u.n).padStart(2,"0")}${u.final?"🏆":u.excel?"🟢":""}</span>
+        <span class="${numClass}">${String(u.n).padStart(2, "0")}${u.final ? "🏆" : u.excel ? "🟢" : ""}</span>
         <div class="card-title-wrap">
           <span class="unit-title">${u.title}</span>
-          <span class="${badgeClass}">${SEC_LABELS[u.cat]||u.cat}</span>
+          <span class="${badgeClass}">${SEC_LABELS[u.cat] || u.cat}</span>
         </div>
         <span class="card-chevron">▼</span>
       </div>
       <div class="card-body">
-        <div class="${lblClass}">📋 Prompt · ${u.excel?"práctica Excel WFM":"clase magistral WFM"}</div>
+        <div class="${lblClass}">📋 Prompt · ${u.excel ? "práctica Excel WFM" : "clase magistral WFM"}</div>
         <button class="${btnClass}" id="cb-${u.n}" onclick="copyPrompt(${u.n})">
           <span>⧉</span> Copiar prompt completo
         </button>
@@ -1067,61 +2042,62 @@ function buildUnits() {
         </div>
       </div>
       <textarea class="prompt-text" id="pt-${u.n}">${esc}</textarea>`;
-    list.appendChild(card);
-  });
-}
+        list.appendChild(card);
+      });
+    }
 
-function toggle(n) {
-  const card   = document.getElementById("card-" + n);
-  const isOpen = card.classList.contains("open");
-  document.querySelectorAll(".unit-card.open").forEach(c => c.classList.remove("open"));
-  if (!isOpen) card.classList.add("open");
-}
+    function toggle(n) {
+      const card = document.getElementById("card-" + n);
+      const isOpen = card.classList.contains("open");
+      document.querySelectorAll(".unit-card.open").forEach(c => c.classList.remove("open"));
+      if (!isOpen) card.classList.add("open");
+    }
 
-function copyPrompt(n) {
-  const ta  = document.getElementById("pt-" + n);
-  const btn = document.getElementById("cb-" + n);
-  navigator.clipboard.writeText(ta.value).then(() => {
-    btn.innerHTML = "<span>✓</span> Copiado";
-    btn.classList.add("copied");
-    setTimeout(() => { btn.innerHTML = "<span>⧉</span> Copiar prompt completo"; btn.classList.remove("copied"); }, 2000);
-    const t = document.getElementById("toast");
-    t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500);
-  });
-}
+    function copyPrompt(n) {
+      const ta = document.getElementById("pt-" + n);
+      const btn = document.getElementById("cb-" + n);
+      navigator.clipboard.writeText(ta.value).then(() => {
+        btn.innerHTML = "<span>✓</span> Copiado";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.innerHTML = "<span>⧉</span> Copiar prompt completo"; btn.classList.remove("copied"); }, 2000);
+        const t = document.getElementById("toast");
+        t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500);
+      });
+    }
 
-function toggleDone(n) {
-  if (done[n]) delete done[n]; else done[n] = true;
-  localStorage.setItem("rtawfm_done", JSON.stringify(done));
-  const card = document.getElementById("card-" + n);
-  const btn  = document.getElementById("done-" + n);
-  if (done[n]) { card.classList.add("done");    if (btn) btn.textContent = "✓ Completada"; }
-  else          { card.classList.remove("done"); if (btn) btn.textContent = "○ Marcar completada"; }
-  updateProgress();
-}
+    function toggleDone(n) {
+      if (done[n]) delete done[n]; else done[n] = true;
+      localStorage.setItem("rtawfm_done", JSON.stringify(done));
+      const card = document.getElementById("card-" + n);
+      const btn = document.getElementById("done-" + n);
+      if (done[n]) { card.classList.add("done"); if (btn) btn.textContent = "✓ Completada"; }
+      else { card.classList.remove("done"); if (btn) btn.textContent = "○ Marcar completada"; }
+      updateProgress();
+    }
 
-function updateProgress() {
-  const total = 30, count = Object.keys(done).length;
-  const pct   = (count / total * 100).toFixed(0);
-  document.getElementById("progressFill").style.width   = pct + "%";
-  document.getElementById("progressText").textContent   = `${count} de ${total} lecciones completadas`;
-  document.getElementById("doneCount").textContent      = `${count} / ${total} lecciones`;
-}
+    function updateProgress() {
+      const total = 30, count = Object.keys(done).length;
+      const pct = (count / total * 100).toFixed(0);
+      document.getElementById("progressFill").style.width = pct + "%";
+      document.getElementById("progressText").textContent = `${count} de ${total} lecciones completadas`;
+      document.getElementById("doneCount").textContent = `${count} / ${total} lecciones`;
+    }
 
-function selectCat(btn) {
-  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active"); activeCat = btn.dataset.cat; applyFilters();
-}
+    function selectCat(btn) {
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active"); activeCat = btn.dataset.cat; applyFilters();
+    }
 
-function applyFilters() {
-  const q = document.getElementById("search").value.toLowerCase().trim();
-  let visible = 0;
-  document.querySelectorAll(".unit-card").forEach(c => {
-    const show = c.dataset.search.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
-    c.classList.toggle("hidden", !show); if (show) visible++;
-  });
-  document.getElementById("counter").textContent = `${visible} lecciones`;
-}
-</script>
+    function applyFilters() {
+      const q = document.getElementById("search").value.toLowerCase().trim();
+      let visible = 0;
+      document.querySelectorAll(".unit-card").forEach(c => {
+        const show = c.dataset.search.includes(q) && (activeCat === "all" || c.dataset.cat === activeCat);
+        c.classList.toggle("hidden", !show); if (show) visible++;
+      });
+      document.getElementById("counter").textContent = `${visible} lecciones`;
+    }
+  </script>
 </body>
+
 </html>
