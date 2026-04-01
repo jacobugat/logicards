@@ -50,10 +50,10 @@
       display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
     }
     .nav-left { display: flex; align-items: center; gap: 1rem; }
-    .back-link { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link { font-family: var(--mono); font-size: 0.84rem; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .back-link:hover { color: var(--blue-light); }
-    .nav-title { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em; color: var(--text); }
-    .nav-badge { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.35); background: var(--blue-dim); padding: 0.2rem 0.6rem; border-radius: 2px; }
+    .nav-title { font-family: var(--mono); font-size: 0.94rem; letter-spacing: 0.05em; color: var(--text); }
+    .nav-badge { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.35); background: var(--blue-dim); padding: 0.2rem 0.6rem; border-radius: 2px; }
 
     .wrapper { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 0 1.4rem 4rem; }
 
@@ -61,18 +61,18 @@
     header { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
     .cambridge-badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--gold); border: 1px solid rgba(245,158,11,0.3); background: var(--gold-dim);
       padding: 0.25rem 0.8rem; border-radius: 2px; margin-bottom: 1rem;
     }
-    h1 { font-family: var(--sans); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    h1 { font-family: var(--sans); font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
     h1 .biz { color: var(--blue-light); }
     h1 .vocab { color: var(--gold); }
-    .header-sub { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
-    .header-desc { color: var(--muted); font-size: 0.88rem; max-width: 600px; line-height: 1.75; }
+    .header-sub { font-family: var(--mono); font-size: 0.91rem; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    .header-desc { color: var(--muted); font-size: 1.14rem; max-width: 600px; line-height: 1.75; }
     .header-meta { display: flex; align-items: center; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
-    .meta-item { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
-    .meta-item::before { content: '▪'; color: var(--blue-light); font-size: 0.45rem; }
+    .meta-item { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+    .meta-item::before { content: '▪'; color: var(--blue-light); font-size: 0.58rem; }
 
     /* INSTRUCTIONS */
     .instructions {
@@ -80,23 +80,23 @@
       padding: 1.1rem 1.4rem; margin-bottom: 2rem;
       display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start;
     }
-    .instructions-icon { font-size: 1.2rem; margin-top: 1px; }
-    .instructions p { font-size: 0.84rem; color: var(--text); opacity: 0.85; line-height: 1.65; }
+    .instructions-icon { font-size: 1.56rem; margin-top: 1px; }
+    .instructions p { font-size: 1.09rem; color: var(--text); opacity: 0.85; line-height: 1.65; }
     .instructions strong { color: var(--blue-light); }
 
     /* CONTROLS */
     .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-bottom: 1.6rem; }
-    .search-input { background: var(--card); border: 1px solid var(--border2); border-radius: 3px; padding: 0.5rem 0.9rem; color: var(--text); font-family: var(--mono); font-size: 0.7rem; outline: none; transition: border-color 0.2s; min-width: 200px; }
+    .search-input { background: var(--card); border: 1px solid var(--border2); border-radius: 3px; padding: 0.5rem 0.9rem; color: var(--text); font-family: var(--mono); font-size: 0.91rem; outline: none; transition: border-color 0.2s; min-width: 200px; }
     .search-input:focus { border-color: var(--blue-light); }
     .search-input::placeholder { color: var(--muted); }
-    .cat-btn { background: var(--card); border: 1px solid var(--border2); border-radius: 2px; padding: 0.28rem 0.7rem; color: var(--muted); font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .cat-btn { background: var(--card); border: 1px solid var(--border2); border-radius: 2px; padding: 0.28rem 0.7rem; color: var(--muted); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
     .cat-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
     .cat-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
-    .stats { margin-left: auto; font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
+    .stats { margin-left: auto; font-family: var(--mono); font-size: 0.81rem; color: var(--muted); }
 
     /* PROGRESS */
     .progress-bar-wrap { margin-bottom: 2rem; }
-    .progress-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+    .progress-label { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
     .progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
     .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-light)); border-radius: 2px; transition: width 0.4s; }
 
@@ -110,50 +110,87 @@
 
     .card-header { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; cursor: pointer; user-select: none; transition: background 0.15s; }
     .card-header:hover { background: var(--card2); }
-    .card-num { font-family: var(--mono); font-size: 0.68rem; color: var(--blue-light); min-width: 2.2rem; opacity: 0.7; }
+    .card-num { font-family: var(--mono); font-size: 0.88rem; color: var(--blue-light); min-width: 2.2rem; opacity: 0.7; }
     .card-title-wrap { flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-    .card-title { font-size: 0.92rem; font-weight: 600; color: var(--text); }
-    .sec-badge { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; color: var(--muted); border: 1px solid var(--border2); padding: 0.1rem 0.4rem; border-radius: 2px; white-space: nowrap; }
-    .card-chevron { color: var(--muted); font-size: 0.6rem; transition: transform 0.25s, color 0.2s; flex-shrink: 0; }
+    .card-title { font-size: 1.2rem; font-weight: 600; color: var(--text); }
+    .sec-badge { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--muted); border: 1px solid var(--border2); padding: 0.1rem 0.4rem; border-radius: 2px; white-space: nowrap; }
+    .card-chevron { color: var(--muted); font-size: 0.78rem; transition: transform 0.25s, color 0.2s; flex-shrink: 0; }
     .unit-card.open .card-chevron { transform: rotate(180deg); color: var(--blue-light); }
 
     .card-body { display: none; border-top: 1px solid var(--border2); padding: 1.2rem; background: var(--bg2); }
     .unit-card.open .card-body { display: block; }
 
-    .prompt-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.8; }
+    .prompt-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.8; }
     .prompt-label::after { content: ''; flex: 1; height: 1px; background: rgba(96,165,250,0.15); }
 
     .copy-btn {
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
       width: 100%; padding: 0.8rem 1.2rem;
       background: var(--blue-dim); border: 1px solid rgba(37,99,235,0.35); border-radius: 4px;
-      color: var(--text); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--text); font-family: var(--mono); font-size: 0.88rem; letter-spacing: 0.1em;
       cursor: pointer; transition: all 0.2s; text-transform: uppercase; font-weight: 500;
     }
     .copy-btn:hover { background: rgba(37,99,235,0.2); border-color: var(--blue-light); transform: translateY(-1px); }
     .copy-btn:active { transform: translateY(0); }
     .copy-btn.copied { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.4); color: #6ee7b7; }
-    .copy-hint { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); text-align: center; margin-top: 0.65rem; }
+    .copy-hint { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.65rem; }
 
     .prompt-text { display: none; }
 
     .done-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border2); }
-    .done-btn { background: transparent; border: 1px solid var(--border2); border-radius: 3px; color: var(--muted); font-family: var(--mono); font-size: 0.58rem; padding: 0.22rem 0.6rem; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; text-transform: uppercase; }
+    .done-btn { background: transparent; border: 1px solid var(--border2); border-radius: 3px; color: var(--muted); font-family: var(--mono); font-size: 0.75rem; padding: 0.22rem 0.6rem; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; text-transform: uppercase; }
     .done-btn:hover { border-color: rgba(34,197,94,0.4); color: #6ee7b7; }
     .unit-card.done .done-btn { border-color: rgba(34,197,94,0.45); color: #6ee7b7; background: rgba(34,197,94,0.08); }
 
-    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: #0d1220; border: 1px solid rgba(96,165,250,0.4); color: var(--blue-light); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.65rem 1.4rem; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999; }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: #0d1220; border: 1px solid rgba(96,165,250,0.4); color: var(--blue-light); font-family: var(--mono); font-size: 0.88rem; letter-spacing: 0.08em; padding: 0.65rem 1.4rem; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 999; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
-    .footer-logo { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .footer-logo { font-family: var(--mono); font-size: 0.91rem; color: var(--muted); }
     .footer-logo span { color: var(--blue-light); }
-    .footer-copy { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); }
+    .footer-copy { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
 
-    @media (max-width: 600px) {
+    /* ── Done / Completada ── */
+    .unit-card.done { border-color: rgba(34,197,94,.35) !important; background: rgba(34,197,94,.04); }
+    .unit-card.done .card-header { background: rgba(34,197,94,.05); }
+    .unit-card.done .card-title { opacity: .75; }
+    .done-badge {
+      font-family: var(--mono); font-size: 0.67rem; letter-spacing: .14em;
+      text-transform: uppercase; color: #4ade80;
+      background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3);
+      border-radius: 2px; padding: .12rem .45rem; display: none; white-space: nowrap;
+    }
+    .unit-card.done .done-badge { display: inline-flex; align-items: center; gap: .25rem; }
+    .done-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: .45rem; width: 100%; padding: .58rem 1rem; margin-top: .55rem;
+      background: transparent; border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px; color: rgba(255,255,255,.4);
+      font-family: var(--mono); font-size: 0.74rem; letter-spacing: .1em;
+      text-transform: uppercase; cursor: pointer; transition: all .2s;
+    }
+    .done-btn:hover { border-color: rgba(34,197,94,.45); color: #4ade80; background: rgba(34,197,94,.07); }
+    .unit-card.done .done-btn { border-color: rgba(34,197,94,.45); color: #4ade80; background: rgba(34,197,94,.1); }
+    /* ── Progress bar ── */
+    .progress-wrap {
+      position: sticky; top: 58px; z-index: 90;
+      background: rgba(5,8,14,.95); backdrop-filter: blur(8px);
+      padding: .5rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,.05);
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .progress-bar-outer { flex:1; height:3px; background:rgba(255,255,255,.07); border-radius:2px; overflow:hidden; }
+    .progress-bar-inner { height:100%; background:linear-gradient(90deg,#16a34a,#4ade80); border-radius:2px; transition:width .4s; }
+    .progress-text { font-family:var(--mono); font-size:0.7rem; letter-spacing:.08em; color:rgba(255,255,255,.3); white-space:nowrap; }
+    .progress-text span { color:#4ade80; }
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
       .sec-badge { display: none; }
       .card-header { padding: 0.85rem 1rem; gap: 0.6rem; }
       .card-body { padding: 1rem; }
+      .card-title { font-size: 1.05rem; }
+      .copy-btn { font-size: 0.85rem; }
+      .done-btn { font-size: 0.8rem; }
+      .filter-btn, .cat-btn { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -166,6 +203,8 @@
   </div>
   <span class="nav-badge" id="doneCount">0 / 62 unidades</span>
 </nav>
+
+<div class="progress-wrap" id="progressWrap"><div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div><span class="progress-text" id="progressText"><span>0</span> / 62 lecciones</span></div>
 
 <div class="wrapper">
   <header>
@@ -221,7 +260,7 @@
             <span class="card-title">Jobs and industries</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -229,6 +268,7 @@
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-1" onclick="toggleDone(1)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-1">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -266,7 +306,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Places and departments</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -274,6 +314,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-2" onclick="toggleDone(2)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-2">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -311,7 +352,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Types of work</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -319,6 +360,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-3" onclick="toggleDone(3)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-3">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -356,7 +398,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Work and numbers</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -364,6 +406,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-4" onclick="toggleDone(4)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-4">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -401,7 +444,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Getting to work</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -409,6 +452,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-5" onclick="toggleDone(5)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-5">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -446,7 +490,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business travel 1: at the airport</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -454,6 +498,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-6" onclick="toggleDone(6)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-6">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -491,7 +536,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business travel 2: at the hotel</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -499,6 +544,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-7" onclick="toggleDone(7)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-7">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -536,7 +582,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Numbers and years</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -544,6 +590,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-8" onclick="toggleDone(8)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-8">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -581,7 +628,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Ordering numbers, parts of numbers</span>
             <span class="sec-badge">💼 Work & Jobs</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -589,6 +636,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-9" onclick="toggleDone(9)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-9">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -626,7 +674,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Who's the boss?</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -634,6 +682,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-10" onclick="toggleDone(10)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-10">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -671,7 +720,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Ways of working</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -679,6 +728,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-11" onclick="toggleDone(11)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-11">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -716,7 +766,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Getting to the top</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -724,6 +774,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-12" onclick="toggleDone(12)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-12">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -761,7 +812,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Skills</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -769,6 +820,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-13" onclick="toggleDone(13)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-13">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -806,7 +858,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Qualifications and training</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -814,6 +866,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-14" onclick="toggleDone(14)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-14">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -851,7 +904,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">E-learning</span>
             <span class="sec-badge">📈 Careers</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -859,6 +912,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-15" onclick="toggleDone(15)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-15">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -896,7 +950,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Numbers and time</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -904,6 +958,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-16" onclick="toggleDone(16)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-16">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -941,7 +996,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Timetables</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -949,6 +1004,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-17" onclick="toggleDone(17)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-17">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -986,7 +1042,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Days and dates</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -994,6 +1050,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-18" onclick="toggleDone(18)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-18">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1031,7 +1088,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Time expressions</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1039,6 +1096,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-19" onclick="toggleDone(19)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-19">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1076,7 +1134,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Do you have time?</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1084,6 +1142,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-20" onclick="toggleDone(20)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-20">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1121,7 +1180,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Project management</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1129,6 +1188,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-21" onclick="toggleDone(21)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-21">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1166,7 +1226,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Free time and holidays</span>
             <span class="sec-badge">🕐 Time</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1174,6 +1234,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-22" onclick="toggleDone(22)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-22">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1211,7 +1272,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Notes and coins</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1219,6 +1280,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-23" onclick="toggleDone(23)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-23">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1256,7 +1318,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Prices</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1264,6 +1326,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-24" onclick="toggleDone(24)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-24">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1301,7 +1364,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Numbers and money</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1309,6 +1372,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-25" onclick="toggleDone(25)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-25">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1346,7 +1410,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Can we afford it?</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1354,6 +1418,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-26" onclick="toggleDone(26)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-26">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1391,7 +1456,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Pay and benefits</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1399,6 +1464,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-27" onclick="toggleDone(27)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-27">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1436,7 +1502,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Company banking</span>
             <span class="sec-badge">💰 Money</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1444,6 +1510,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-28" onclick="toggleDone(28)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-28">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1481,7 +1548,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Companies and money 1</span>
             <span class="sec-badge">🏢 Companies</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1489,6 +1556,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-29" onclick="toggleDone(29)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-29">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1526,7 +1594,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Companies and money 2</span>
             <span class="sec-badge">🏢 Companies</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1534,6 +1602,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-30" onclick="toggleDone(30)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-30">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1571,7 +1640,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Product details 1</span>
             <span class="sec-badge">🏢 Companies</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1579,6 +1648,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-31" onclick="toggleDone(31)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-31">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1616,7 +1686,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Product details 2</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1624,6 +1694,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-32" onclick="toggleDone(32)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-32">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1661,7 +1732,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Services 1</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1669,6 +1740,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-33" onclick="toggleDone(33)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-33">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1706,7 +1778,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Services 2</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1714,6 +1786,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-34" onclick="toggleDone(34)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-34">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1751,7 +1824,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">What's it made of?</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1759,6 +1832,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-35" onclick="toggleDone(35)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-35">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1796,7 +1870,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">From producer to customer 1</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1804,6 +1878,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-36" onclick="toggleDone(36)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-36">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1841,7 +1916,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">From producer to customer 2</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1849,6 +1924,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-37" onclick="toggleDone(37)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-37">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1886,7 +1962,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Where's it sold?</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1894,6 +1970,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-38" onclick="toggleDone(38)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-38">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1931,7 +2008,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Product instructions</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1939,6 +2016,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-39" onclick="toggleDone(39)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-39">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -1976,7 +2054,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Problems with products 1</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -1984,6 +2062,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-40" onclick="toggleDone(40)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-40">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2021,7 +2100,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Problems with products 2</span>
             <span class="sec-badge">📦 Products & Services</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2029,6 +2108,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-41" onclick="toggleDone(41)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-41">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2066,7 +2146,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Socializing 1: nice to meet you</span>
             <span class="sec-badge">🤝 Socializing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2074,6 +2154,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-42" onclick="toggleDone(42)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-42">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2111,7 +2192,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Socializing 2: at the restaurant</span>
             <span class="sec-badge">🤝 Socializing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2119,6 +2200,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-43" onclick="toggleDone(43)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-43">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2156,7 +2238,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Socializing 3: networking</span>
             <span class="sec-badge">🤝 Socializing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2164,6 +2246,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-44" onclick="toggleDone(44)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-44">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2201,7 +2284,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Telephoning 1: starting and ending</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2209,6 +2292,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-45" onclick="toggleDone(45)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-45">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2246,7 +2330,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Telephoning 2: spelling and numbers</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2254,6 +2338,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-46" onclick="toggleDone(46)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-46">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2291,7 +2376,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Telephoning 3: checking information</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2299,6 +2384,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-47" onclick="toggleDone(47)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-47">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2336,7 +2422,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Telephoning 4: messages</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2344,6 +2430,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-48" onclick="toggleDone(48)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-48">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2381,7 +2468,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Telephoning 5: the wrong number</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2389,6 +2476,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-49" onclick="toggleDone(49)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-49">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2426,7 +2514,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business writing: introduction</span>
             <span class="sec-badge">📞 Telephoning</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2434,6 +2522,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-50" onclick="toggleDone(50)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-50">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2471,7 +2560,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business writing: emails 1</span>
             <span class="sec-badge">✉️ Business Writing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2479,6 +2568,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-51" onclick="toggleDone(51)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-51">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2516,7 +2606,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business writing: emails 2</span>
             <span class="sec-badge">✉️ Business Writing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2524,6 +2614,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-52" onclick="toggleDone(52)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-52">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2561,7 +2652,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Business writing: letters</span>
             <span class="sec-badge">✉️ Business Writing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2569,6 +2660,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-53" onclick="toggleDone(53)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-53">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2606,7 +2698,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Presentations 1: getting started</span>
             <span class="sec-badge">✉️ Business Writing</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2614,6 +2706,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-54" onclick="toggleDone(54)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-54">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2651,7 +2744,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Presentations 2: the main part</span>
             <span class="sec-badge">🎤 Presentations</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2659,6 +2752,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-55" onclick="toggleDone(55)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-55">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2696,7 +2790,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Presentations 3: charts and graphs</span>
             <span class="sec-badge">🎤 Presentations</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2704,6 +2798,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-56" onclick="toggleDone(56)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-56">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2741,7 +2836,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Presentations 4: comparing trends</span>
             <span class="sec-badge">🎤 Presentations</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2749,6 +2844,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-57" onclick="toggleDone(57)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-57">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2786,7 +2882,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Presentations 5: site tours</span>
             <span class="sec-badge">🎤 Presentations</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2794,6 +2890,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-58" onclick="toggleDone(58)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-58">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2831,7 +2928,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Meetings 1: organizing a meeting</span>
             <span class="sec-badge">🎤 Presentations</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2839,6 +2936,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-59" onclick="toggleDone(59)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-59">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2876,7 +2974,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Meetings 2: chairing a meeting</span>
             <span class="sec-badge">👥 Meetings</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2884,6 +2982,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-60" onclick="toggleDone(60)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-60">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2921,7 +3020,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Meetings 3: opinions and suggestions</span>
             <span class="sec-badge">👥 Meetings</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2929,6 +3028,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-61" onclick="toggleDone(61)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-61">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -2966,7 +3066,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span class="card-title">Meetings 4: agreeing action and closing</span>
             <span class="sec-badge">👥 Meetings</span>
           </div>
-          <span class="card-chevron">▼</span>
+          <span class="done-badge">✓ Completada</span><span class="card-chevron">▼</span>
         </div>
         <div class="card-body">
           <div class="prompt-label">📋 Prompt · copiar y pegar en tu IA</div>
@@ -2974,6 +3074,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
             <span>⧉</span> Copiar prompt completo
           </button>
           <p class="copy-hint">Pégalo en ChatGPT, Claude o Gemini</p>
+          <button class="done-btn" id="done-62" onclick="toggleDone(62)">○ Marcar como completada</button>
         </div>
         <textarea class="prompt-text" id="prompt-62">Eres un profesor universitario de Business English, nivel Elementary to Pre-Intermediate, basado en el libro "Business Vocabulary in Use" de Cambridge University Press (Bill Mascull).
 
@@ -3081,6 +3182,8 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
     });
     document.getElementById("counter").textContent = `${visible} unidades`;
   }
+
+
 </script>
 </body>
 </html>
