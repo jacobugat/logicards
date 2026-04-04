@@ -191,6 +191,12 @@
       .copy-btn { font-size: 1.1rem; }
       .done-btn { font-size: 1.04rem; }
       .filter-btn, .cat-btn { font-size: 0.94rem; }
+      .vtopic-btn { font-size: 0.72rem; padding: .28rem .55rem; }
+      .vocab-search { font-size: 0.88rem; }
+      .vc-word { font-size: 0.98rem; }
+      .vc-def  { font-size: 0.84rem; }
+      .vc-practice { font-size: 0.72rem; }
+      .vc-learn    { font-size: 0.72rem; }
     }
 
     /* ── Tab switcher ── */
@@ -200,6 +206,11 @@
     .tab-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
     .tab-panel{display:none}
     .tab-panel.active{display:block}
+    /* ── Vocab practice button ── */
+    .vc-practice{flex:1;font-family:var(--mono);font-size:0.72rem;letter-spacing:.07em;text-transform:uppercase;padding:.45rem .8rem;border-radius:3px;border:1px solid rgba(37,99,235,.3);background:var(--blue-dim);color:rgba(255,255,255,.8);cursor:pointer;transition:all .18s}
+    .vc-practice:hover{border-color:var(--blue-light);color:#fff;background:rgba(37,99,235,.2)}
+    .vc-practice.copied{border-color:rgba(34,197,94,.45);color:#4ade80;background:rgba(34,197,94,.1)}
+
     /* ── Vocab cards ── */
     .vocab-panel-header{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-bottom:.8rem}
     .vocab-search{flex:1;min-width:160px;background:var(--card);border:1px solid var(--border2);border-radius:3px;padding:.5rem .9rem;color:var(--text);font-family:var(--mono);font-size:0.8rem;outline:none;transition:border-color .2s}
@@ -3577,6 +3588,7 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
         '</div>'+
         '<div class="vc-def">'+def+'</div>'+
         '<div class="vc-actions">'+
+          '<button class="vc-practice" onclick="copyVocabPrompt('+i+',this)">&#9679; Practicar</button>'+
           '<button class="vc-learn" id="vcl-'+i+'" onclick="toggleVLearned('+i+')">'+(isL?'&#10003; Aprendida':'&#9675; Marcar')+'</button>'+
         '</div>';
       cont.appendChild(el);
@@ -3584,7 +3596,31 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
     updateVocabProgress();
   }
 
-  function toggleVLearned(i) {
+  function copyVocabPrompt(i, btn) {
+    var v = VOCAB[i];
+    var word=v[0], type=v[1], def=v[2], topic=v[3];
+    var typeMap = {noun:'SUSTANTIVO',verb:'VERBO',adjective:'ADJETIVO',phrase:'EXPRESION',phrasal:'PHRASAL VERB',abbrev:'ABREVIATURA',adverb:'ADVERBIO'};
+    var lines = [
+      'Eres un profesor universitario de ingles de negocios (Business English). Quiero practicar la palabra/expresion "'+word+'" ('+def+').',
+      '',
+      'Tipo: '+(typeMap[type]||type.toUpperCase()),
+      'Tema: Business English - '+topic,
+      '',
+      'Desarrolla una minileccion completa en espanol:',
+      '1. CONTEXTO DE NEGOCIOS: Cuando y como se usa "'+word+'" en un entorno profesional o empresarial. Diferencias de uso formal vs informal.',
+      '2. EJEMPLOS AUTENTICOS: 4 oraciones reales en ingles de negocios - una en email, una en reunion, una en presentacion y una en conversacion. Con traduccion al espanol.',
+      '3. COLOCACIONES: Las 3-4 palabras que mas naturalmente acompanan a "'+word+'" en contextos empresariales.',
+      '4. ERRORES COMUNES: El error mas frecuente de hispanohablantes al usar esta palabra en ingles de negocios.',
+      '5. PRACTICA: Hazme 2 preguntas en ingles usando "'+word+'" en un contexto de negocios real. Corrigeme indicando errores de vocabulario, registro o uso.'
+    ];
+    navigator.clipboard.writeText(lines.join('\n')).then(function() {
+      btn.textContent = 'Copiado';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = '\u25cf Practicar'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+    function toggleVLearned(i) {
     var learned = getVLearned(), idx = learned.indexOf(i);
     var el = document.getElementById('vc-'+i);
     var btn = document.getElementById('vcl-'+i);
