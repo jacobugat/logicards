@@ -197,6 +197,7 @@
       .vc-def  { font-size: 0.84rem; }
       .vc-practice { font-size: 0.72rem; }
       .vc-learn    { font-size: 0.72rem; }
+      #panelVocab { padding: 0 1rem 3rem; }
     }
 
     /* ── Tab switcher ── */
@@ -226,7 +227,7 @@
     .vocab-prog-fill{height:100%;background:linear-gradient(90deg,#1d4ed8,#60a5fa);border-radius:1px;transition:width .35s}
     .vocab-prog-text{font-family:var(--mono);font-size:0.7rem;color:var(--muted);white-space:nowrap}
     .vocab-prog-text span{color:#60a5fa}
-    .vocab-cards{display:flex;flex-direction:column;gap:.5rem}
+    #panelVocab{max-width:920px;margin:0 auto;padding:0 1.4rem 4rem}.vocab-cards{display:flex;flex-direction:column;gap:.5rem}
     .vc{background:var(--card);border:1px solid var(--border2);border-radius:5px;padding:.85rem 1rem;transition:border-color .18s}
     .vc:hover{border-color:rgba(37,99,235,.25)}
     .vc.vc-learned{background:rgba(37,99,235,.05);border-color:rgba(37,99,235,.3)}
@@ -3180,7 +3181,9 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
   <div id="panelVocab" class="tab-panel">
     <div class="vocab-panel-header">
       <input class="vocab-search" id="vocabSearch" type="text" placeholder="🔍  Buscar palabra o significado…" oninput="filterVocab()"/>
-      <button class="vtopic-btn active" data-vt="all" onclick="setVT(this)">Todos (243)</button>
+      <button class="vtopic-btn active" data-vt="all"      onclick="setVT(this)">Todos (243)</button>
+      <button class="vtopic-btn"        data-vt="pending"  onclick="setVT(this)">Pendientes</button>
+      <button class="vtopic-btn"        data-vt="learned"  onclick="setVT(this)">Aprendidas</button>
       <button class="vtopic-btn" data-vt="Careers" onclick="setVT(this)">Careers (19)</button>
       <button class="vtopic-btn" data-vt="Companies" onclick="setVT(this)">Companies (24)</button>
       <button class="vtopic-btn" data-vt="Departments" onclick="setVT(this)">Departments (12)</button>
@@ -3647,7 +3650,11 @@ Todas las explicaciones, correcciones y retroalimentaciones en español. Los eje
     var q = (document.getElementById('vocabSearch').value||'').toLowerCase().trim();
     var shown = 0;
     document.querySelectorAll('.vc').forEach(function(el) {
-      var mt = vtFilter==='all' || el.dataset.vt===vtFilter;
+      var mt;
+      if      (vtFilter === 'all')     mt = true;
+      else if (vtFilter === 'pending') mt = el.dataset.learned === '0';
+      else if (vtFilter === 'learned') mt = el.dataset.learned === '1';
+      else                             mt = el.dataset.vt === vtFilter;
       var ms = !q || el.dataset.search.includes(q);
       el.classList.toggle('vc-hidden', !(mt&&ms));
       if(mt&&ms) shown++;
